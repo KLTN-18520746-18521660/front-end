@@ -1,0 +1,20 @@
+{
+  "home": {
+    "title": "Home",
+    "description": "Home page",
+    "keywords": "home, page"
+  },
+  "action": {},
+  "label": {
+    "search": "Hi {{name}}, let's search for something here ...",
+    "recommend": {
+      "foryou": "For you: ",
+      "tags": "Recommend tags for you: ",
+      "posts": "Recommend posts for you:"
+    },
+    "popular": {
+      "tag": "Popular tags: ",
+      "post": "Popular posts: "
+    }
+  }
+}

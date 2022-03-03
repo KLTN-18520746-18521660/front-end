@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .search-input {
+    background: linear-gradient(104.01deg, #d0e4ec 9.98%, #EAF2F5 90.02%);
+
+    .p-inputtext {
+      border: none !important;
+      height: 50px;
+
+      &:focus {
+        border: 1px solid #d4d4d8 !important;
+      }
+    }
+  }
+}

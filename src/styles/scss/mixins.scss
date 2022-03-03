@@ -1,0 +1,7 @@
+@import "./variables.scss";
+
+@mixin breakpoint($type: min, $width){
+  @media only screen and (#{$type}-width: $width) {
+    @content;
+  }
+}

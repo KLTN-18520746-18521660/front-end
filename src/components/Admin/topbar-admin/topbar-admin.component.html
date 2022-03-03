@@ -1,0 +1,34 @@
+<div class="layout-topbar">
+  <a class="p-link layout-menu-button layout-topbar-button" href="#" (click)="appMain.toggleMenu($event)">
+    <i class="pi pi-bars"></i>
+  </a>
+
+  <a class="layout-topbar-logo" routerLink="">
+    <img src="assets/layout/images/logo-white.svg" alt="logo">
+    <span>HEOVI</span>
+  </a>
+
+  <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#" (click)="appMain.toggleTopMenu($event)">
+    <i class="pi pi-ellipsis-v"></i>
+  </a>
+
+  <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
+    <a href="#" class="p-link layout-topbar-button">
+      <i class="pi pi-bell"></i>
+      <span>Notification</span>
+    </a>
+    <a href="#" class="p-link layout-topbar-button">
+      <i class="pi pi-cog"></i>
+      <span>Settings</span>
+    </a>
+    <button href="#" class="p-link layout-topbar-button" (click)="menu.toggle($event)">
+      <i class="pi pi-user"></i>
+      <span>Profile</span>
+    </button>
+    <button pButton pRipple type="button" class="p-button-raised p-button-danger p-button-text layout-topbar-button">
+      <i class="pi pi-sign-out"></i>
+      <span>Log out</span>
+    </button>
+    <p-menu #menu [popup]="true" [model]="items"></p-menu>
+  </div>
+</div>

@@ -31,9 +31,24 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css",
+              {
+                "input": "src/assets/themes/theme-tailwind-light.scss",
+                "bundleName": "tailwind-light",
+                "inject": false
+              },
+              {
+                "input": "src/assets/themes/theme-arya-blue.scss",
+                "bundleName": "arya-blue",
+                "inject": false
+              }
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/quill/dist/quill.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -101,7 +116,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/chart.js"
+            ]
           }
         }
       }

@@ -1,0 +1,16 @@
+<p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custom-scrollbar">
+  <div class="layout-menu-container">
+    <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
+      <li appp-menu class="layout-menuitem-category" *ngFor="let item of model; let i = index;">
+        <div class="layout-menuitem-root-text" [attr.aria-label]="item.label">{{item.label}}</div>
+        <ul role="menu">
+          <li app-menuitem *ngFor="let child of item.items" [item]="child" [index]="i" role="none"></li>
+        </ul>
+      </li>
+      <a href="https://www.primefaces.org/primeblocks-ng/#/">
+        <img src="assets/layout/images/{{appMain.config.dark ? 'banner-primeblocks-dark' : 'banner-primeblocks'}}.png"
+          alt="Prime Blocks" class="w-full mt-3" />
+      </a>
+    </ul>
+  </div>
+</p-scrollPanel>

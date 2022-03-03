@@ -1,0 +1,18 @@
+<div class="search-input py-2">
+  <div class="flex align-items-center justify-content-center">
+    <div class="col-12 md:col-6 align-items-center justify-content-center">
+      <div class="p-field p-fluid my-3">
+        <span class="p-input-icon-right">
+          <i class="pi pi-search"></i>
+          <input type="text" class="" pInputText placeholder="{{'label.search' | translate:params}}" />
+        </span>
+      </div>
+      <div class="mt-4">
+        <span class="mr-2 white-space-nowrap">{{'label.popular.tag' | translate}}</span>
+        <div class="tag-recommend py-2 inline-flex flex-wrap">
+          <app-tag [tag]="tag" *ngFor="let tag of tags"></app-tag>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
