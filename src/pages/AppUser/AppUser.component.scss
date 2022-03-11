@@ -1,6 +1,9 @@
-@import 'styles/scss/variables.scss';
 @import 'styles/scss/mixins.scss';
 
 .main {
-  background: linear-gradient(rgb(248, 250, 253) 0%, rgba(248, 250, 253, 0) 813px);
+  // background: linear-gradient(rgb(248, 250, 253) 0%, rgba(248, 250, 253, 0) 813px);
+
+  .wrapper {
+    min-height: 90vh;
+  }
 }

@@ -1,3 +1,7 @@
+import { RecommendPostCardComponent } from './../components/Cards/recommend-post-card/recommend-post-card.component';
+import { UserInfoPageComponent } from './../pages/UserInfoPage/UserInfoPage.component';
+import { PostCardComponent } from './../components/Cards/post-card/post-card.component';
+import { ReadMoreComponent } from './../components/read-more/read-more.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,7 +15,6 @@ import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ng
 
 // Import packages
 import { NgprimeModule } from './modules/ngprime.module';
-import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
 
 // Import pages
 import { HomePageComponent } from 'pages/HomePage/HomePage.component';
@@ -40,6 +43,15 @@ import { AppConfigComponent } from 'pages/Admin/app.config.component';
 import { TagsPageComponent } from 'pages/TagsPage/TagsPage.component';
 import { MyMissingTranslationHandler } from 'shared/mising-translation';
 import { MyAppConfigComponent } from 'components/app-config/app-config.component';
+import { BtnFabComponent } from 'components/Buttons/btn-fab/btn-fab.component';
+import { BtnMenuComponent } from 'components/Buttons/btn-menu/btn-menu.component';
+import { PostsPageComponent } from 'pages/PostsPage/PostsPage.component';
+import { ShortNumberPipe } from 'shared/pipes/shortnumber.pipe';
+import { CreatePostPageComponent } from 'pages/CreatePostPage/CreatePostPage.component';
+import { ProfilePageComponent } from 'pages/ProfilePage/ProfilePage.component';
+import { ImageOnErrorDirective } from 'shared/directives/imageOnError.directive';
+import { BtnScrollToTopComponent } from 'components/Buttons/btn-scroll-to-top/btn-scroll-to-top.component';
+import { LanguageSelectorComponent } from 'components/language-selector/language-selector.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -66,6 +78,19 @@ export function createTranslateLoader(http: HttpClient) {
     TagComponent,
     TagsPageComponent,
     MyAppConfigComponent,
+    BtnFabComponent,
+    ReadMoreComponent,
+    PostCardComponent,
+    UserInfoPageComponent,
+    BtnMenuComponent,
+    PostsPageComponent,
+    ShortNumberPipe,
+    RecommendPostCardComponent,
+    CreatePostPageComponent,
+    ProfilePageComponent,
+    ImageOnErrorDirective,
+    BtnScrollToTopComponent,
+    LanguageSelectorComponent,
 
     TopbarAdminComponent,
     MenuComponent,
@@ -81,9 +106,8 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     NgprimeModule,
-    NgScrollbarModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'vn',
+      defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
         useFactory: (createTranslateLoader),
@@ -96,18 +120,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
   ],
   providers: [
-    authInterceptorProviders,
-    {
-      provide: NG_SCROLLBAR_OPTIONS,
-      useValue: {
-        scrollAuditTime: 20,
-        scrollEasing: 'ease-out',
-        autoHeightDisabled: false,
-        visibility: 'hover',
-        track: 'all',
-
-      }
-    }
+    authInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

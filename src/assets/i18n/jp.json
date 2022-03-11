@@ -1,0 +1,68 @@
+{
+  "home": {
+    "title": "Home",
+    "description": "Home page",
+    "keywords": "home, page",
+    "viewOption": {
+      "foryou": "For you ",
+      "following": "Following",
+      "trending": "Trending"
+    }
+  },
+  "titlePage": {
+    "default": "Home - Heovi",
+    "home": "Home",
+    "post": "Post",
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "search": "Search result for {{query}}",
+    "trending": "Trending"
+  },
+  "action": {},
+  "label": {
+    "search": "こんにちは {{name}}, 検索 ...",
+    "recommend": {
+      "foryou": "For you: ",
+      "tags": "Recommend tags for you: ",
+      "posts": "Recommend:"
+    },
+    "popular": {
+      "tags": "Popular tags: ",
+      "posts": "Popular posts: "
+    },
+    "trending": "Trending",
+    "connectus": "Connect us"
+  },
+  "card": {
+    "time_read": "{{time_read}} mins read",
+    "like": "Like",
+    "comment": "Comment",
+    "view": "View",
+    "read_more": "Read more",
+    "action": {
+      "save": "Save",
+      "copy": "Copy link",
+      "share": "Share",
+      "report": "Report"
+    }
+  },
+  "language": {
+    "en": {
+      "name": "英語",
+      "lang": "en",
+      "code": "us"
+    },
+    "vi": {
+      "name": "ベトナム語",
+      "lang": "vi",
+      "code": "vn"
+    },
+    "jp": {
+      "name": "日本",
+      "lang": "jp",
+      "code": "jp"
+    }
+  }
+}

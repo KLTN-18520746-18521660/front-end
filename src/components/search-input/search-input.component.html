@@ -7,8 +7,8 @@
           <input type="text" class="" pInputText placeholder="{{'label.search' | translate:params}}" />
         </span>
       </div>
-      <div class="mt-4">
-        <span class="mr-2 white-space-nowrap">{{'label.popular.tag' | translate}}</span>
+      <div class="mt-4 px-5">
+        <span class="mr-2 white-space-nowrap">{{'label.popular.tags' | translate}}</span>
         <div class="tag-recommend py-2 inline-flex flex-wrap">
           <app-tag [tag]="tag" *ngFor="let tag of tags"></app-tag>
         </div>

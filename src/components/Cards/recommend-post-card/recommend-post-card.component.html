@@ -1,0 +1,19 @@
+<div class="card p-2 recommend-post-card mb-1">
+  <div class="card-container flex flex-wrap">
+    <a [routerLink]="['/post', post.postId]">
+      <div class="flex flex-wrap">
+        <div class="col-12">
+          <img imageOnError [src]="post.thumbnail" alt="{{ post.title }}" class="card-image border-round w-full mt-2" />
+        </div>
+        <div class="col-12">
+          <h3 class="card-heading text-800 text-lg font-semibold">
+            {{ post.title }}
+          </h3>
+          <p class="card-description text-gray-600">
+            {{ post.content }}
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

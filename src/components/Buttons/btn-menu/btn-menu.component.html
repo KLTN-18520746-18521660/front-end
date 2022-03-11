@@ -1,0 +1,12 @@
+<ng-template [ngIf]="true">
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="{{ icon }}"
+    class="p-button-rounded p-button-plain p-button-text btn-menu"
+    (click)="onClickMenu($event)"
+  ></button>
+
+  <p-menu #menu [popup]="true" [model]="items"></p-menu>
+</ng-template>

@@ -8,6 +8,13 @@ import { Router } from '@angular/router';
 })
 export class TagComponent implements OnInit {
   @Input() tag;
+
+  @Input() size = 'sm';
+
+  @Input() color = 'bg-indigo'
+
+  @Input() width = '';
+  
   constructor(private router: Router) { }
 
   ngOnInit() {

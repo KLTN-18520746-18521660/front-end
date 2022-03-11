@@ -3,7 +3,7 @@ export const TopBarMenuItem = [
     id: '1',
     label: 'Technology',
     tooltip: 'Technology hiatus',
-    routerLink: ['/pagename']
+    routerLink: ['/post']
   },
   {
     id: '2',

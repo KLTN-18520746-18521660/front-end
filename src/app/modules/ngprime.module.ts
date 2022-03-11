@@ -34,6 +34,7 @@ import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { StepsModule } from 'primeng/steps';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -82,6 +83,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     RippleModule,
     ScrollPanelModule,
     ScrollTopModule,
+    SelectButtonModule,
     SkeletonModule,
     StepsModule,
     StyleClassModule,

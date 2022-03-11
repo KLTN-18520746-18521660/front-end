@@ -1,17 +1,72 @@
 <app-search-input></app-search-input>
 
-<div class="home-layout container">
-  <div class="grid">
-    <div class="col-3 h-8rem">
-      <div class="card">
-        
+<div class="home-layout container py-6">
+  <div class="flex flex-wrap justify-content-center">
+    <div class="col-12 md:col-3 lg:col-2 xl:col-2 md:px-2 xl:px-4">
+      <div class="contact-block">
+        <p class="font-semibold text-lg">{{ 'label.connectus' | translate }}</p>
+        <app-btn-fab *ngFor="let item of contacts" [data]="item"></app-btn-fab>
+      </div>
+      <div class="popular-tags w-full hidden md:block">
+        <p class="font-semibold text-lg mt-4">{{ 'label.popular.tags' | translate }}</p>
+        <app-tag [tag]="tag" [size]="'base py-3'" [color]="'bg-teal'" [width]="'w-full'" *ngFor="let tag of tags">
+        </app-tag>
       </div>
     </div>
-    <div class="col-6 h-8rem">
-2
-    </div>
-    <div class="col-3 h-8rem">
-3
+    <div class="col-12 md:col-9 lg:col-10 xl:col-10">
+      <div class="grid">
+        <div class="col-12 md:col-12 lg:col-9 xl:col-8">
+          <div class="flex flex-wrap justify-content-between align-items-center mb-3">
+            <div class="main-header-left ">
+              <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600"
+                [ngClass]="{ 'font-bold text-blue-600' : viewOption == 'foryou'}"
+                (click)="onChangeViewOption('foryou')">
+                {{ 'home.viewOption.foryou' | translate }}
+              </span>
+              <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600"
+                [ngClass]="{ 'font-bold text-blue-600' : viewOption == 'following'}"
+                (click)="onChangeViewOption('following')">
+                {{ 'home.viewOption.following' | translate }}
+              </span>
+              <!-- <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600"
+                [ngClass]="{ 'font-bold text-blue-600' : viewOption == 'trending'}"
+                (click)="onChangeViewOption('trending')">
+                {{ 'home.viewOption.trending' | translate }}
+              </span> -->
+            </div>
+            <div class="main-header-right">
+              <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="icon" optionValue="value"
+                (onChange)="onChangeLayout($event)">
+                <ng-template let-item>
+                  <i [class]="item.icon"></i>
+                </ng-template>
+              </p-selectButton>
+            </div>
+          </div>
+          <div class="grid">
+            <ng-template [ngIf]="isGrid" [ngIfElse]="LayoutList">
+              <div class="col-12 sm:col-6 md:col-6 lg:col-6" *ngFor="let item of listPosts; index as indexPost">
+                <app-post-card [post]="item" [isGrid]="isGrid"></app-post-card>
+              </div>
+            </ng-template>
+            <ng-template #LayoutList>
+              <div class="col-12" *ngFor="let item of listPosts; index as indexPost">
+                <app-post-card [post]="item"></app-post-card>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="col-12 md:col-12 lg:col-3 xl:col-4 md:px-2 xl:px-4">
+          <div class="card-wrapper border-round bg-bluegray-100 px-3 py-2">
+            <p class="text-xl font-semibold py-1">{{'label.trending' | translate}}</p>
+            <div class="grid">
+              <div class="col-12 sm:col-6 md:col-6 lg:col-12" *ngFor="let item of listPosts; index as indexPost">
+                <app-recommend-post-card></app-recommend-post-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

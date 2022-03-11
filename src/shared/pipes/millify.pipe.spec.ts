@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { SafePipe } from './safe.pipe';
+import { MillifyPipe } from './millify.pipe';
 
-describe('Pipe: Safee', () => {
+describe('Pipe: Millifye', () => {
   it('create an instance', () => {
-    let pipe = new SafePipe();
+    let pipe = new MillifyPipe();
     expect(pipe).toBeTruthy();
   });
 });
