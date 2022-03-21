@@ -1,4 +1,4 @@
-export default class post {
+export default class Post {
   postId: number;
   title: string;
   content: string;

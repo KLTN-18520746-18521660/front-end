@@ -4,10 +4,10 @@
       <a [routerLink]="''">HeoVi</a>
     </ng-template>
     <ng-template pTemplate="end">
-      <span class="p-input-icon-right">
-        <input type="text" pInputText placeholder="Search">
-        <i class="pi pi-search"></i>
-      </span>
+      <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/register']"
+        style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
+      <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/login']"
+        style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>
     </ng-template>
   </p-menubar>
 </div>

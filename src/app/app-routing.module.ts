@@ -57,11 +57,11 @@ const routes: Routes = [
         path: 'profile',
         component: ProfilePageComponent
       },
+      {
+        path: 'auth',
+        loadChildren: () => import('./modules/auth.module').then(m => m.AuthModule)
+      }
     ],
-  },
-  {
-    path: 'login',
-    component: LoginPageComponent
   },
   {
     path: 'admin',

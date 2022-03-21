@@ -1,0 +1,38 @@
+<div class="card p-2 user-info-card mb-1">
+  <div class="card-container flex flex-wrap">
+    <div class="flex flex-wrap">
+      <div class="col-12 align-items-center">
+        <a [routerLink]="['/user', user.username]">
+          <p-avatar label={{user.fullname.substring(0,1)}} size="large" shape="circle"></p-avatar>
+          <span class="mx-2 font-semibold">{{ user.fullname }}</span>
+        </a>
+      </div>
+      <div class="col-12">
+        <p class="user-bio">{{ user.bio }}</p>
+      </div>
+      <div class="col-12 md:col-12">
+        <div class="flex flex-wrap justify-content-center">
+          <div class="col-3 text-center justify-content-center">
+            <p class="user-rate-value">{{ user.values.post }}</p>
+            <p class="user-rate-text">{{ (user.values.post > 1 ? 'common.posts' : 'common.post') | translate }}</p>
+          </div>
+          <div class="col-3 text-center justify-content-center">
+            <p class="user-rate-value">{{ user.values.following }}</p>
+            <p class="user-rate-text">{{ 'common.following' | translate }}</p>
+          </div>
+          <div class="col-3 text-center justify-content-center">
+            <p class="user-rate-value">{{ user.values.view }}</p>
+            <p class="user-rate-text">{{ (user.values.view > 1 ? 'common.views' : 'common.view') | translate }}</p>
+          </div>
+          <div class="col-3 text-center justify-content-center">
+            <p class="user-rate-value">{{ user.values.like }}</p>
+            <p class="user-rate-text">{{ (user.values.like > 1 ? 'common.likes' : 'common.like') | translate }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 md:col-12">
+        <app-button [raised]="true" [label]="(isFollowing ? 'common.following' : 'common.follow') | translate" [className]="'w-full'" (onClick)="onClickFollow()"></app-button>
+      </div>
+    </div>
+  </div>
+</div>
