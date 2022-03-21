@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+import { REST_URL } from 'utils/apiConstant';
 
-const BASE_URL = 'http://localhost:3000/api/';
-
-// const gen (salt, date) = () => {}
+const BASE_URL = environment.baseApiUrl;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,13 +20,13 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post(BASE_URL + 'signin', {
+    return this.http.post(BASE_URL + REST_URL.USER_LOGIN, {
       username,
       password
     }, httpOptions);
   }
   register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(BASE_URL + 'signup', {
+    return this.http.post(BASE_URL + REST_URL.USER_SIGNUP, {
       username,
       email,
       password

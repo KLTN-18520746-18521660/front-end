@@ -1,8 +1,10 @@
-export const TopBarMenuItem = [
+import { MenuItem } from "primeng/api";
+
+export const TopBarMenuItem: MenuItem[] = [
   {
     id: '1',
     label: 'Technology',
-    tooltip: 'Technology hiatus',
+
     routerLink: ['/post']
   },
   {

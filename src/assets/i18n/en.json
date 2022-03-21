@@ -1,4 +1,15 @@
 {
+  "common": {
+    "post": "Post",
+    "posts": "Posts",
+    "follow": "Follow",
+    "following": "Following",
+    "followers": "Followers",
+    "view": "View",
+    "views": "Views",
+    "like": "Like",
+    "likes": "Likes"
+  },
   "home": {
     "title": "Home",
     "description": "Home page",
@@ -20,7 +31,22 @@
     "search": "Search result for {{query}}",
     "trending": "Trending"
   },
-  "action": {},
+  "topbar": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile",
+    "search": "Search"
+  },
+  "action": {
+    "like": "Like",
+    "unlike": "Unlike",
+    "report": "Report",
+    "view": "View",
+    "save": "Save",
+    "copy": "Copy link",
+    "share": "Share"
+  },
   "label": {
     "search": "Hi {{name}}, let's search for something here ...",
     "recommend": {
@@ -33,7 +59,69 @@
       "posts": "Popular posts: "
     },
     "trending": "Trending",
-    "connectus": "Connect us"
+    "connectus": "Connect us",
+    "login": {
+      "title": "Login",
+      "description": "Login to your account to continue",
+      "email": "Email or username",
+      "emailPlaceholder": "Enter email or username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "remember": "Remember me",
+      "forgot": "Forgot password",
+      "submit": "Login",
+      "register": "Register",
+      "or": "Or",
+      "facebook": "Login with Facebook",
+      "google": "Login with Google",
+      "dontHaveAccount": "Don't have an account?",
+      "registerHere": "Register here",
+      "validation": {
+        "email": "Please enter a valid email or username",
+        "password": "Please enter a valid password"
+      }
+    },
+    "signup": {
+      "title": "Signup",
+      "description": "Signup to your account",
+      "fullname": "Full Name",
+      "fullnamePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Enter your password again",
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "accept": "I already read and accept all the terms and conditions.",
+      "submit": "Sign Up",
+      "alreadyHaveAccount": "Already have an account?",
+      "loginHere": "Login here",
+      "validation": {
+        "email": {
+          "required": "Please enter your email",
+          "invalid": "Please enter a valid email"
+        },
+        "fullname": {
+          "required": "Please enter your fullname",
+          "minlength": "Your fullname must be at least 3 characters long",
+          "maxlength": "Your fullname cannot be more than 50 characters long"
+        },
+        "password": {
+          "required": "Please enter your password",
+          "min": "Password must be at least 6 characters",
+          "max": "Password must be less than 40 characters"
+        },
+        "confirmPassword": {
+          "required": "Please enter your password again",
+          "min": "Confirm password must be at least 6 characters",
+          "max": "Confirm password must be less than 40 characters",
+          "match": "Confirm password does not match"
+        },
+        "accept": "Please accept our terms and conditions"
+      }
+    }
   },
   "card": {
     "time_read": "{{time_read}} mins read",
@@ -47,6 +135,10 @@
       "share": "Share",
       "report": "Report"
     }
+  },
+  "postDetail": {
+    "postedOn": "Posted on ",
+    "updatedOn": "Updated on "
   },
   "language": {
     "en": {
@@ -64,5 +156,86 @@
       "lang": "jp",
       "code": "jp"
     }
+  },
+  "primeng": {
+    "startsWith": "Starts with",
+    "contains": "Contains",
+    "notContains": "Not contains",
+    "endsWith": "Ends with",
+    "equals": "Equals",
+    "notEquals": "Not equals",
+    "noFilter": "No Filter",
+    "lt": "Less than",
+    "lte": "Less than or equal to",
+    "gt": "Greater than",
+    "gte": "Greater than or equal to",
+    "is": "Is",
+    "isNot": "Is not",
+    "before": "Before",
+    "after": "After",
+    "dateIs": "Date is",
+    "dateIsNot": "Date is not",
+    "dateBefore": "Date is before",
+    "dateAfter": "Date is after",
+    "clear": "Clear",
+    "apply": "Apply",
+    "matchAll": "Match All",
+    "matchAny": "Match Any",
+    "addRule": "Add Rule",
+    "removeRule": "Remove Rule",
+    "accept": "Yes",
+    "reject": "No",
+    "choose": "Choose",
+    "upload": "Upload",
+    "cancel": "Cancel",
+    "dayNames": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    "monthNames": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "monthNamesShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "dateFormat": "mm/dd/yy",
+    "firstDayOfWeek": 0,
+    "today": "Today",
+    "weekHeader": "Wk",
+    "weak": "Weak",
+    "medium": "Medium",
+    "strong": "Strong",
+    "passwordPrompt": "Enter a password",
+    "emptyMessage": "No results found",
+    "emptyFilterMessage": "No results found"
   }
 }

@@ -1,39 +1,71 @@
-<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden login-block">
-  <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
-    <div class="col-12 mt-5 xl:mt-0 text-center">
-      <img src="assets/layout/images/{{config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="Sakai logo" class="mb-5"
-        style="width:81px; height:60px;">
+<div class="col-12 mt-5 xl:mt-0 text-center w-full">
+  <img src="assets/layout/images/{{config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="Sakai logo" class="mb-5"
+    style="width:81px; height:60px;">
+</div>
+<div class="col-12 w-full"
+  style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+  <div class="h-full w-full m-0 py-7 px-4"
+    style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+    <div class="text-center mb-5">
+      <img src="assets/layout/images/avatar.png" alt="Image" height="50" class="mb-3">
+      <div class="text-900 text-3xl font-medium mb-3">{{ 'label.login.title' | translate }}</div>
+      <span class="text-600 font-medium">{{ 'label.login.description' | translate }}</span>
     </div>
-    <div class="col-12 xl:col-6"
-      style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-      <div class="h-full w-full m-0 py-7 px-4"
-        style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
-        <div class="text-center mb-5">
-          <img src="assets/layout/images/avatar.png" alt="Image" height="50" class="mb-3">
-          <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
-          <span class="text-600 font-medium">Sign in to continue</span>
-        </div>
 
-        <div class="w-full md:w-10 mx-auto">
-          <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-          <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3"
-            style="padding:1rem;">
-
-          <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-          <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true"
-            styleClass="w-full mb-3 input-password">
-          </p-password>
-
-          <div class="flex align-items-center justify-content-between mb-5">
-            <div class="flex align-items-center">
-              <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-              <label for="rememberme1">Remember me</label>
-            </div>
-            <a class="font-medium no-underline ml-2 text-right cursor-pointer"
-              style="color: var(--primary-color)">Forgot password?</a>
+    <div class="w-full md:w-10 mx-auto">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <label for="email" class="block text-900 text-lg font-medium mb-2">{{'label.login.email' | translate }}
+        </label>
+        <input formControlName="email" id="email" type="text" autofocus
+          placeholder="{{'label.login.emailPlaceholder' | translate}}" pInputText class="w-full mb-1"
+          style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div class="flex align-items-end" *ngIf="f['email'].errors['required']">
+            <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+            <small class="p-error inline">{{'label.login.validation.email' | translate}}</small>
           </div>
-          <button pButton pRipple label="Sign In" class="w-full p-3 text-xl"></button>
         </div>
+
+        <label for="password" class="block text-900 font-medium text-lg mt-3 mb-2">{{'label.login.password' | translate }}
+        </label>
+        <p-password formControlName="password" id="password" placeholder="{{'label.login.passwordPlaceholder' | translate }}" [feedback]="false"
+          [toggleMask]="true" styleClass="w-full mb-1 input-password" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }">
+        </p-password>
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div class="flex align-items-end" *ngIf="f['password'].errors['required']">
+            <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+            <small class="p-error inline">{{'label.login.validation.password' | translate}}</small>
+          </div>
+        </div>
+
+        <div class="flex align-items-center justify-content-between mt-3 mb-3">
+          <div class="flex align-items-center">
+            <p-checkbox formControlName="remember" inputId="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
+            <label for="rememberme">{{'label.login.remember' | translate }}</label>
+          </div>
+          <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/forgotpassword']"
+            style="color: var(--primary-color)">{{'label.login.forgot' | translate }}</a>
+        </div>
+        <button type="submit" pButton pRipple label="{{'label.login.submit' | translate}}" icon="pi pi-sign-in"
+          iconPos="right" class="w-full p-3 text-xl"></button>
+
+      </form>
+
+      <p-divider align="center">
+        <div class="inline-flex align-items-center">
+          <b class="text-500">{{'label.login.or' | translate}}</b>
+          <!-- <i class="pi pi-sign-in ml-2"></i> -->
+        </div>
+      </p-divider>
+
+      <button pButton pRipple type="button" icon="pi pi-google" label="{{'label.login.google' | translate}}"
+        class="w-full text-lg mb-3 p-button-raised p-button-danger p-button-text"></button>
+      <button pButton pRipple type="button" icon="pi pi-facebook" label="{{'label.login.facebook' | translate}}"
+        class="w-full text-lg mb-3 p-button-raised p-button-text"></button>
+      <div class="flex align-items-center justify-content-center mt-5">
+        <label>{{'label.login.dontHaveAccount' | translate}}</label>
+        <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/register']"
+          style="color: var(--primary-color)">{{'label.login.registerHere' | translate }}</a>
       </div>
     </div>
   </div>

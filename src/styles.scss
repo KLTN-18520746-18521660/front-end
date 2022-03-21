@@ -25,10 +25,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+img {
+  width: 100%;
+}
+
 .p-button:focus {
   box-shadow: none !important;
 }
 
+// For ripples effect
 .p-ink {
   background: rgba(75, 175, 80, 0.1) !important;
 }

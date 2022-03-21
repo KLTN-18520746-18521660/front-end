@@ -1,5 +1,54 @@
 <app-search-input></app-search-input>
 
 <div class="detail-post-layout container">
-  <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
+  <div class="grid py-4">
+    <div class="col-0 md:col-1 lg:col-1">
+      <app-btn-fab></app-btn-fab>
+      <app-btn-fab></app-btn-fab>
+      <app-btn-fab></app-btn-fab>
+      <app-btn-fab></app-btn-fab>
+    </div>
+    <div class="col-12 md:col-11 lg:col-8">
+      <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
+      <div class="detail-wrapper">
+        <div class="detail-container border-round border-1">
+        <div class="thumnail-post">
+            <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}" class="card-image border-round mt-2" />
+          </div>
+          <div class="main-post">
+            <div class="post-info">
+              <div class="inline-flex">
+                <div class="avatar">
+                  <a [routerLink]="['/user', post.owner.uid]">
+                    <p-avatar label="W" size="large" shape="circle"></p-avatar>
+                  </a>
+                </div>
+                <div class="name-info">
+                  <p class="mx-2 font-semibold">{{ post.owner.username }}</p>
+                  <p>
+                    <span title="{{post.created_at}}">{{'postDetail.postedOn' | translate}} {{post.createdTime}}</span>
+                    &#183;
+                    <span *ngIf="post.updated_at" title="{{post.updated_at}}">{{'postDetail.updatedOn' | translate}} {{post.updatedTime}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="post-content">
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 lg:col-3">
+      <div class="grid">
+        <div class="col-12 md:col-12 lg:col-12">
+          <app-user-info-card></app-user-info-card>
+        </div>
+        <div class="col-6 md:col-4 lg:col-12" *ngFor="let item of [1,2,3,4,5,6]">
+          <app-recommend-post-card></app-recommend-post-card>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

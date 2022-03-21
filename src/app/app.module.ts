@@ -5,7 +5,7 @@ import { ReadMoreComponent } from './../components/read-more/read-more.component
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,6 +52,11 @@ import { ProfilePageComponent } from 'pages/ProfilePage/ProfilePage.component';
 import { ImageOnErrorDirective } from 'shared/directives/imageOnError.directive';
 import { BtnScrollToTopComponent } from 'components/Buttons/btn-scroll-to-top/btn-scroll-to-top.component';
 import { LanguageSelectorComponent } from 'components/language-selector/language-selector.component';
+import { AuthModule } from './modules/auth.module';
+import { AuthPageComponent } from 'pages/AuthPage/AuthPage.component';
+import { ForgotPasswordPageComponent } from 'pages/ForgotPasswordPage/ForgotPasswordPage.component';
+import { UserInfoCardComponent } from 'components/Cards/user-info-card/user-info-card.component';
+import { ButtonComponent } from 'components/Buttons/button/button.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -91,6 +96,10 @@ export function createTranslateLoader(http: HttpClient) {
     ImageOnErrorDirective,
     BtnScrollToTopComponent,
     LanguageSelectorComponent,
+    AuthPageComponent,
+    ForgotPasswordPageComponent,
+    UserInfoCardComponent,
+    ButtonComponent,
 
     TopbarAdminComponent,
     MenuComponent,
@@ -105,7 +114,9 @@ export function createTranslateLoader(http: HttpClient) {
     CommonModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     NgprimeModule,
+    AuthModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
