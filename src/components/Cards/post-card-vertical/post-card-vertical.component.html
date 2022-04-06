@@ -1,0 +1,42 @@
+<a class="post-card-vertical" [routerLink]="['/post', post.id]">
+  <div class="card p-3">
+    <div class="card-container overflow-hidden">
+      <div class="flex">
+        <div class="flex card-avatar mr-3 align-items-center">
+          <ng-template [ngIf]="post.owner.avatar" [ngIfElse]="avatar">
+            <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
+          </ng-template>
+          <ng-template #avatar>
+            <p-avatar label="{{post.owner.display_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
+          </ng-template>
+        </div>
+        <div class="flex-auto flex card-content align-items-center">
+          <div>
+            <p class="card-title text-lg font-semibold mb-2" pTooltip="{{ post.title }}" tooltipPosition="bottom">
+              {{ post.title }}
+            </p>
+            <span class="card-text" pTooltip="{{post.created_timestamp}}" tooltipPosition="bottom">{{
+              post.fromNow.created }}</span>
+          </div>
+        </div>
+        <div class="flex card-value">
+          <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
+            pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom">
+            <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
+            <i style="font-size: 1.1rem" class="pi pi-thumbs-up text-primary"></i>
+          </div>
+          <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
+            pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom">
+            <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
+            <i style="font-size: 1.2rem" class="pi pi-comment text-primary"></i>
+          </div>
+          <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
+            pTooltip="{{post.view | number:'1.0-2'}}" tooltipPosition="bottom">
+            <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
+            <i style="font-size: 1.25rem" class="pi pi-eye text-primary"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

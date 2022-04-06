@@ -2,6 +2,7 @@ export const REST_URL = {
   USER_LOGIN: 'login',
   USER_SIGNUP: 'signup',
   USER_LOGOUT: 'logout',
+  GET_USER_BY_SESSIONID: 'session/user',
   GET_USER_BY_APIKEY: 'getuser',
   GET_USER_BY_ID: 'getUserById',
   GET_USER_BY_USERNAME: 'getUserByUsername',
@@ -9,6 +10,7 @@ export const REST_URL = {
   GET_ALL_SESSION_USER: 'sessions',
   EXTENSION_SESSION_USER: 'session',
   DELETE_SESSION_USER: 'session',
+  CONFIRM_USER: 'user/confirm',
 
   ADMIN_LOGIN: 'admin/login',
   ADMIN_SIGNUP: 'admin/logout',

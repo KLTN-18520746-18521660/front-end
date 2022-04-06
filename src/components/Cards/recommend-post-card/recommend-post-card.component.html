@@ -1,19 +1,39 @@
 <div class="card p-2 recommend-post-card mb-1">
   <div class="card-container flex flex-wrap">
-    <a [routerLink]="['/post', post.postId]">
-      <div class="flex flex-wrap">
-        <div class="col-12">
-          <img imageOnError [src]="post.thumbnail" alt="{{ post.title }}" class="card-image border-round w-full mt-2" />
-        </div>
-        <div class="col-12">
+    <div class="flex flex-wrap">
+      <div class="col-12">
+        <!-- <img imageOnError [src]="post.thumbnail" alt="{{ post.title }}" class="card-image border-round w-full mt-2" /> -->
+      </div>
+      <div class="col-12">
+        <a [routerLink]="['/post', post.id]">
           <h3 class="card-heading text-800 text-lg font-semibold">
             {{ post.title }}
           </h3>
           <p class="card-description text-gray-600">
-            {{ post.content }}
+            {{ post.content_search }}
           </p>
+        </a>
+      </div>
+      <div class="col-12">
+        <div
+          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
+          pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom">
+          <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
+          <i style="font-size: 1.1rem" class="pi pi-thumbs-up text-primary"></i>
+        </div>
+        <div
+          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
+          pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom">
+          <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
+          <i style="font-size: 1.2rem" class="pi pi-comment text-primary"></i>
+        </div>
+        <div
+          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
+          pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom">
+          <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
+          <i style="font-size: 1.25rem" class="pi pi-eye text-primary"></i>
         </div>
       </div>
-    </a>
+    </div>
   </div>
 </div>

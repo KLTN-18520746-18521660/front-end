@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import Tag from 'models/tag.model';
+import { tagsMockData } from 'shared/mockData/tagsMockData';
+import { randomArray } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-search-input',
@@ -6,60 +11,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-input.component.scss']
 })
 export class SearchInputComponent implements OnInit {
-  tags = []
+
+  @Input() onSearch = new EventEmitter<string>();
+
+  form: FormGroup = new FormGroup({
+    search: new FormControl('')
+  })
+
+  tags: Tag[] = randomArray(tagsMockData, 5)
+
   params = {
     name: "Vinh"
   }
-  constructor() { }
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.tags = [
-      {
-        id: 'angular',
-        name: 'Angular',
-        color: '#dd0031'
-      },
-      {
-        id: 'react',
-        name: 'React',
-        color: '#00dd31'
-      },
-      {
-        id: 'vue',
-        name: 'Vue',
-        color: '#0031dd'
-      },
-      {
-        id: 'nodejs',
-        name: 'NodeJS',
-        color: '#dd0031'
-      },
-      {
-        id: 'typescript',
-        name: 'TypeScript',
-        color: '#0031dd'
-      },
-      {
-        id: 'javascript',
-        name: 'JavaScript',
-        color: '#dd0031'
-      },
-      // {
-      //   id: 'css',
-      //   name: 'CSS',
-      //   color: '#0031dd'
-      // },
-      // {
-      //   id: 'html',
-      //   name: 'HTML',
-      //   color: '#dd0031'
-      // },
-      // {
-      //   id: 'csharp',
-      //   name: 'C#',
-      //   color: '#0031dd'
-      // }
-    ]
   }
 
+  onSubmit() {
+    if (this.form.value.search.trim()) {
+      this.router.navigate(['/search'], { queryParams: { q: this.form.value.search } });
+      this.onSearch.emit(this.form.value.search);
+    }
+    this.form.get('search').setValue('');
+  }
 }

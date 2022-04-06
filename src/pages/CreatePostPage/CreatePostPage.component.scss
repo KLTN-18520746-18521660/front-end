@@ -1,0 +1,30 @@
+:host ::ng-deep .p-tabview {
+  .p-tabview-panels {
+    min-height: 500px;
+  }
+
+  .p-tabview-nav li {
+    width: 50% !important;
+
+    .p-tabview-nav-link {
+      justify-content: center !important;
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .p-tabview-nav-content {
+    border-top-right-radius: 6px !important;
+    border-top-left-radius: 6px !important;
+  }
+
+  .ql-container {
+    font-size: 1rem !important;
+  }
+
+  .p-dialog .p-dialog-footer {
+    text-align: right !important;
+  }
+}

@@ -2,36 +2,58 @@
   <div class="card-container flex flex-wrap">
     <div class="flex flex-wrap">
       <div class="col-12 align-items-center">
-        <a [routerLink]="['/user', user.username]">
-          <p-avatar label={{user.fullname.substring(0,1)}} size="large" shape="circle"></p-avatar>
-          <span class="mx-2 font-semibold">{{ user.fullname }}</span>
+        <a [routerLink]="['/user', user.username]" class="flex align-items-center">
+          <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
+            <p-avatar shape="circle" image="{{ user.avatar }}" size="large"></p-avatar>
+          </ng-template>
+          <ng-template #avatar>
+            <p-avatar label="{{user.display_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
+          </ng-template>
+          <span class="mx-2 font-semibold">{{ user.display_name }}</span>
         </a>
       </div>
       <div class="col-12">
         <p class="user-bio">{{ user.bio }}</p>
+        <p-divider styleClass="mb-0"></p-divider>
       </div>
       <div class="col-12 md:col-12">
         <div class="flex flex-wrap justify-content-center">
           <div class="col-3 text-center justify-content-center">
-            <p class="user-rate-value">{{ user.values.post }}</p>
-            <p class="user-rate-text">{{ (user.values.post > 1 ? 'common.posts' : 'common.post') | translate }}</p>
+            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.post" [short]="true"
+              tooltipPosition="bottom" pTooltip="{{ user.values.post | number:'1.0-2' }}">
+              {{ user.values.post }}
+            </p>
+            <p class="user-rate-text font-normal text-base">{{ (user.values.post > 1 ? 'common.posts' : 'common.post') |
+              translate }}</p>
           </div>
           <div class="col-3 text-center justify-content-center">
-            <p class="user-rate-value">{{ user.values.following }}</p>
-            <p class="user-rate-text">{{ 'common.following' | translate }}</p>
+            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.follower" [short]="true"
+              tooltipPosition="bottom" pTooltip="{{ user.values.follower | number:'1.0-2' }}">
+              {{ user.values.follower }}
+            </p>
+            <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
           </div>
           <div class="col-3 text-center justify-content-center">
-            <p class="user-rate-value">{{ user.values.view }}</p>
-            <p class="user-rate-text">{{ (user.values.view > 1 ? 'common.views' : 'common.view') | translate }}</p>
+            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.view" [short]="true"
+              tooltipPosition="bottom" pTooltip="{{ user.values.view | number:'1.0-2' }}">
+              {{ user.values.view }}
+            </p>
+            <p class="user-rate-text font-normal text-base">{{ (user.values.view > 1 ? 'common.views' : 'common.view') |
+              translate }}</p>
           </div>
           <div class="col-3 text-center justify-content-center">
-            <p class="user-rate-value">{{ user.values.like }}</p>
-            <p class="user-rate-text">{{ (user.values.like > 1 ? 'common.likes' : 'common.like') | translate }}</p>
+            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.like" [short]="true"
+              tooltipPosition="bottom" pTooltip="{{ user.values.like | number:'1.0-2' }}">
+              {{ user.values.like }}
+            </p>
+            <p class="user-rate-text font-normal text-base">{{ (user.values.like > 1 ? 'common.likes' : 'common.like') |
+              translate }}</p>
           </div>
         </div>
       </div>
       <div class="col-12 md:col-12">
-        <app-button [raised]="true" [label]="(isFollowing ? 'common.following' : 'common.follow') | translate" [className]="'w-full'" (onClick)="onClickFollow()"></app-button>
+        <app-button [raised]="!isFollowing" [label]="(isFollowing ? 'common.following' : 'common.follow') | translate"
+          [className]="'w-full'" (onClick)="onClickFollow()"></app-button>
       </div>
     </div>
   </div>

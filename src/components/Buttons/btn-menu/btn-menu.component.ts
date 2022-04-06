@@ -20,7 +20,15 @@ export class BtnMenuComponent implements OnInit {
 
   @Input() icon = 'pi pi-cog';
 
-  @ViewChild('menu', { static: false }) menu: Menu;
+  @Input() menuClass = '';
+
+  @Input() btnClass = 'p-button-rounded p-button-primary p-button-text';
+
+  @ViewChild('menu') menu: Menu;
+
+  @Input() appendTo: any;
+
+  @ViewChild('container') containerViewChild: ElementRef;
 
   constructor() { }
 
@@ -28,6 +36,6 @@ export class BtnMenuComponent implements OnInit {
   }
 
   onClickMenu(event) {
-    this.menu.toggle(event);
+    this.menu.toggle({ currentTarget: this.containerViewChild.nativeElement, relativeAlign: this.appendTo == null });
   }
 }

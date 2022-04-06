@@ -18,6 +18,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
@@ -35,7 +37,9 @@ import { RippleModule } from 'primeng/ripple';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { SidebarModule } from 'primeng/sidebar';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { StyleClassModule } from 'primeng/styleclass';
 import { TableModule } from 'primeng/table';
@@ -68,6 +72,8 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     EditorModule,
     FieldsetModule,
     FileUploadModule,
+    ImageModule,
+    InputTextareaModule,
     InputTextModule,
     MenubarModule,
     MenuModule,
@@ -84,7 +90,9 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     ScrollPanelModule,
     ScrollTopModule,
     SelectButtonModule,
+    SidebarModule,
     SkeletonModule,
+    SplitButtonModule,
     StepsModule,
     StyleClassModule,
     TableModule,

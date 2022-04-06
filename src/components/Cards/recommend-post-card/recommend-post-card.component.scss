@@ -1,4 +1,4 @@
-@import '../../../styles/scss/mixins.scss';
+@import 'styles/scss/mixins.scss';
 
 .recommend-post-card {
   transition: transform .36s cubic-bezier(0, 0, 0.2, 1), opacity .36s cubic-bezier(0, 0, 0.2, 1) !important;
@@ -10,7 +10,7 @@
   }
 
   .card-heading {
-    @include maxline(1);
+    @include maxline(2);
   }
 
   .card-description {

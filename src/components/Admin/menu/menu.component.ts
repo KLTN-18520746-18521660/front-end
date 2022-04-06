@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
           {
             label: 'Dashboard',
             icon: 'pi pi-fw pi-home',
-            routerLink: ['/']
+            routerLink: ['/admin']
           }
         ]
       },
@@ -30,22 +30,22 @@ export class MenuComponent implements OnInit {
           {
             label: 'List Users',
             icon: 'pi pi-fw pi-list',
-            routerLink: ['/pages/crud']
+            routerLink: ['./manage-user']
           },
           {
             label: 'Verify User',
             icon: 'pi pi-fw pi-plus-circle',
-            routerLink: ['pages/landing']
+            routerLink: ['./verify-user']
           },
           {
             label: 'Unlock User',
             icon: 'pi pi-fw pi-unlock',
-            routerLink: ['/pages/timeline']
+            routerLink: ['./unlock-user']
           },
           {
             label: 'Role',
             icon: 'pi pi-fw pi-plus-circle',
-            routerLink: ['pages/login']
+            routerLink: ['./role']
           }
         ]
       },
@@ -55,17 +55,17 @@ export class MenuComponent implements OnInit {
           {
             label: 'List Posts',
             icon: 'pi pi-fw pi-list',
-            routerLink: ['/documentation']
+            routerLink: ['./posts']
           },
           {
             label: 'Create post',
             icon: 'pi pi-fw pi-plus-circle',
-            url: ['https://github.com/primefaces/sakai-ng'],
-            target: '_blank'
+            routerLink: ['./create-post']
           },
           {
             label: 'Deleted post',
             icon: 'pi pi-fw pi-trash',
+            routerLink: ['./delete-post']
           }
         ]
       },

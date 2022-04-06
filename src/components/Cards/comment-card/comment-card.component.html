@@ -1,0 +1,74 @@
+<ng-template [ngIf]="comment">
+  <div class="comment-card-wrapper mb-2">
+    <div class="comment-card-main flex">
+      <div class="comment-card_left mr-2">
+        <a [routerLink]="['/user', comment?.owner?.id]">
+          <ng-template [ngIf]="comment.owner.avatar" [ngIfElse]="avatar">
+            <p-avatar shape="circle" image="{{ comment.owner.avatar }}" size="large"></p-avatar>
+          </ng-template>
+          <ng-template #avatar>
+            <p-avatar label="{{comment.owner.last_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
+          </ng-template>
+        </a>
+      </div>
+      <div class="w-full comment-card-right">
+        <div class="card comment-card px-3 py-3 md:px-4 m-0">
+          <div class="card-container flex justify-content-between align-items-center comment-card_header mb-2 h-2rem">
+            <div class="comment-card_header_left align-items-center flex">
+              <a [routerLink]="['/user', comment.owner.id]">
+                <span class="font-semibold text-lg mr-2">{{ comment.owner.display_name }}</span>
+              </a>
+              &#183;
+              <span class="mx-2 text-sm" title="{{ comment.created_timestamp }}">{{ comment.fromNow.created }}</span>
+              <ng-template [ngIf]="comment?.last_modified_timestamp">
+                &#183;
+                <p-chip label="{{'postDetail.edited' | translate}}" styleClass="mx-2"
+                  pTooltip="{{ 'postDetail.edited' | translate }} {{ comment.fromNow.updated }}"
+                  tooltipPosition="bottom" title="{{ comment.last_modified_timestamp }}">
+                </p-chip>
+              </ng-template>
+            </div>
+            <div class="comment-card_header_right align-items-center">
+              <button pButton pRipple type="button" icon="pi pi-flag-fill"
+                class="p-button-rounded p-button-secondary p-button-text button-menu mr-2"
+                (click)="onClickReport($event)"></button>
+              <app-btn-menu [menuClass]="'shadow-6'" [items]="menuitem" [icon]="'pi pi-ellipsis-v'">
+              </app-btn-menu>
+            </div>
+          </div>
+          <p-divider></p-divider>
+          <div class="comment-card_content mt-3 mb-1">
+            <p #textContent class="read-more inline">
+              <markdown [data]="comment.content | linkify"></markdown>
+            </p>
+            <span class="read-more-link cursor-pointer">
+              <a readMore [readMore-length]="300" [readMore-element]="textContent">
+                <span class="less underline font-medium">{{'postDetail.readLess' | translate}}<i
+                    class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <span class="more underline font-medium">{{'postDetail.readMore' | translate}}<i
+                    class="fa fa-angle-right" aria-hidden="true"></i></span>
+              </a>
+            </span>
+          </div>
+        </div>
+        <div class="comment-action py-2">
+          <div class="flex">
+            <p-button label="{{'postDetail.commentAction.like' | translate:{ count: comment.like | shortNumber } }}"
+              (click)="onClickLike($event)" icon="pi pi-thumbs-up"
+              styleClass="p-button-sm p-button-plain p-button-text p-2"></p-button>
+            <p-button
+              label="{{'postDetail.commentAction.unlike' | translate:{ count: comment.dislike | shortNumber } }}"
+              (click)="onClickDislike($event)" icon="pi pi-thumbs-down"
+              styleClass="p-button-sm p-button-plain p-button-text p-2"></p-button>
+            <p-button
+              label="{{'postDetail.commentAction.reply' | translate:{ count: comment.children.length | shortNumber } }}"
+              (click)="onClickReply()" icon="pi pi-reply" styleClass="p-button-sm p-button-secondary p-button-text p-2">
+            </p-button>
+          </div>
+        </div>
+        <app-comment-input #replyForm (submit)="onSubmitReply()" *ngIf="isShowReply" [parent_id]="comment.id"></app-comment-input>
+        <app-comment-card *ngFor="let c of comment.children" [comment]="c"></app-comment-card>
+      </div>
+    </div>
+  </div>
+</ng-template>

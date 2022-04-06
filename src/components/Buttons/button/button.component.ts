@@ -7,6 +7,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ButtonComponent implements OnInit {
 
+  @Input() type = 'button';
+
   @Input() label: string = 'My Button';
 
   @Input() loading: boolean = false;
@@ -43,6 +45,11 @@ export class ButtonComponent implements OnInit {
 
   handleClick() {
     this.onClick.emit();
+  }
+
+  
+  ngOnChanges() {
+    this.classButton = `${this.size ? 'p-button-' + this.size : 'p-button'} p-button-${this.color} ${this.className} ${this.outline ? 'p-button-outlined' : ''} ${this.raised ? 'p-button-raised p-button-text' : ''} ${this.rounded ? 'p-button-rounded' : ''}`;
   }
 
 }

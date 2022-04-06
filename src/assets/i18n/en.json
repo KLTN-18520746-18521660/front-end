@@ -4,6 +4,7 @@
     "posts": "Posts",
     "follow": "Follow",
     "following": "Following",
+    "follower": "Follower",
     "followers": "Followers",
     "view": "View",
     "views": "Views",
@@ -14,19 +15,39 @@
     "title": "Home",
     "description": "Home page",
     "keywords": "home, page",
+    "viewMore": "View More",
+    "createPost": "Create Post",
     "viewOption": {
       "foryou": "For you ",
       "following": "Following",
       "trending": "Trending"
     }
   },
+  "dialog": {
+    "confirmation": "Confirmation",
+    "login": "You need to login to continue",
+    "discard": "Do you want to discard this changes?",
+    "publish": "Do you want to publish this post?"
+  },
   "titlePage": {
     "default": "Home - Heovi",
     "home": "Home",
     "post": "Post",
+    "postdetail": "Post Detail",
+    "createPost": "Create Post",
     "profile": "Profile",
     "login": "Login",
     "register": "Register",
+    "forgotpassword": "Forgot Password",
+    "confirm-account": "Confirm Account",
+    "dashboard": "Dashboard",
+    "notification": "Notification",
+    "setting": "Setting",
+    "manage-post": "Manage Post",
+    "user-info": "User Info",
+    "edit-info": "Edit Info",
+    "change-password": "Change Password",
+    "manageUser": "Manage User",
     "logout": "Logout",
     "search": "Search result for {{query}}",
     "trending": "Trending"
@@ -34,9 +55,106 @@
   "topbar": {
     "login": "Login",
     "register": "Register",
-    "logout": "Logout",
     "profile": "Profile",
-    "search": "Search"
+    "search": "Search",
+    "home": "Home",
+    "more": "More",
+    "user": {
+      "profile": "My Profile",
+      "edit": "Edit Profile",
+      "setting": "Setting",
+      "help": "Help & Support",
+      "separator": "|",
+      "logout": "Logout"
+    }
+  },
+  "profile": {
+    "show": "Show Menu",
+    "hide": "Hide Menu",
+    "menu": {
+      "dashboard": {
+        "title": "Dashboard",
+        "items": {
+          "profile": "Dashboard"
+        }
+      },
+      "account": {
+        "title": "Account",
+        "items": {
+          "profile": "Profile",
+          "edit": "Edit Profile",
+          "change-password": "Change Password"
+        }
+      },
+      "manage-post": {
+        "title": "Management",
+        "items": {
+          "manage-post": "Manage Post",
+          "save-post": "Save Post",
+          "following": "Following",
+          "follower": "Follower"
+        }
+      },
+      "notifications": {
+        "title": "Notification",
+        "items": {
+          "notification": "Notification"
+        }
+      },
+      "others": {
+        "title": "Other",
+        "items": {
+          "setting": "Setting",
+          "help": "Help & Support"
+        }
+      }
+    },
+    "dashboard": {
+      "card": {
+        "post": {
+          "title": "Posts",
+          "desc": "since last week"
+        },
+        "follow": {
+          "title": "Followers",
+          "desc": "since last week"
+        },
+        "view": {
+          "title": "Views",
+          "desc": "since last week"
+        },
+        "like": {
+          "title": "Likes",
+          "desc": "since last week"
+        },
+        "read": {
+          "title": "Reading posts",
+          "desc": "since last week"
+        },
+        "save": {
+          "title": "Saved posts",
+          "desc": "since last week"
+        },
+        "likes": {
+          "title": "Likes posts",
+          "desc": "since last week"
+        },
+        "comment": {
+          "title": "Comments posts",
+          "desc": "since last week"
+        }
+      }
+    },
+    "user": {
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "email": "Email",
+      "verified": "Verified",
+      "country": "Country",
+      "sex": "Gender",
+      "phone": "Phone",
+      "joined": "Joined day"
+    }
   },
   "action": {
     "like": "Like",
@@ -77,23 +195,33 @@
       "dontHaveAccount": "Don't have an account?",
       "registerHere": "Register here",
       "validation": {
-        "email": "Please enter a valid email or username",
-        "password": "Please enter a valid password"
+        "email": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        },
+        "password": {
+          "required": "Password is required",
+          "min": "Password must be at least 6 characters"
+        }
       }
     },
     "signup": {
       "title": "Signup",
       "description": "Signup to your account",
       "fullname": "Full Name",
-      "fullnamePlaceholder": "Enter your full name",
+      "fullnamePlaceholder": "Enter full name",
+      "firstname": "First Name",
+      "firstnamePlaceholder": "Enter first name",
+      "lastname": "Last Name",
+      "lastnamePlaceholder": "Enter last name",
       "email": "Email",
-      "emailPlaceholder": "Enter your email",
+      "emailPlaceholder": "Enter email",
       "password": "Password",
-      "passwordPlaceholder": "Enter your password",
+      "passwordPlaceholder": "Enter password",
       "confirmPassword": "Confirm password",
-      "confirmPasswordPlaceholder": "Enter your password again",
+      "confirmPasswordPlaceholder": "Enter password again",
       "name": "Name",
-      "namePlaceholder": "Enter your name",
+      "namePlaceholder": "Enter name",
       "accept": "I already read and accept all the terms and conditions.",
       "submit": "Sign Up",
       "alreadyHaveAccount": "Already have an account?",
@@ -108,6 +236,16 @@
           "minlength": "Your fullname must be at least 3 characters long",
           "maxlength": "Your fullname cannot be more than 50 characters long"
         },
+        "firstname": {
+          "required": "Please enter your firstname",
+          "minlength": "Your firstname must be at least 3 characters long",
+          "maxlength": "Your firstname cannot be more than 50 characters long"
+        },
+        "lastname": {
+          "required": "Please enter your lastname",
+          "minlength": "Your lastname must be at least 3 characters long",
+          "maxlength": "Your lastname cannot be more than 50 characters long"
+        },
         "password": {
           "required": "Please enter your password",
           "min": "Password must be at least 6 characters",
@@ -121,6 +259,22 @@
         },
         "accept": "Please accept our terms and conditions"
       }
+    },
+    "confirm": {
+      "title": "Confirm your account",
+      "description": "Type password again to verify your account",
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter email address",
+        "required": "Email is required"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter password",
+        "required": "Password is required!",
+        "min": "Confirm password must be at least 6 characters"
+      },
+      "submit": "Confirm"
     }
   },
   "card": {
@@ -138,7 +292,54 @@
   },
   "postDetail": {
     "postedOn": "Posted on ",
-    "updatedOn": "Updated on "
+    "updatedOn": "Updated on ",
+    "action": {
+      "edit": "Edit",
+      "save": "Save",
+      "copy": "Copy link",
+      "share": "Share",
+      "report": "Report"
+    },
+    "disscussion": "Dissussion ({{count}})",
+    "comment": "Comment",
+    "commentPlaceholder": "Put your comment here ...",
+    "commentError": "Comment is invalid. Please enter your comment, and try again!",
+    "edited": "Edited",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "commentAction": {
+      "like": "({{count}}) Like",
+      "unlike": "({{count}}) Dislike",
+      "report": "Report",
+      "reply": "({{count}}) Reply"
+    },
+    "moreComment": "View more comments",
+    "readNext": "Read next",
+    "commentMenu": {
+      "like": "Like",
+      "unlike": "Dislike",
+      "reply": "Reply",
+      "edit": "Edit",
+      "delete": "Delete",
+      "report": "Report"
+    },
+    "sort": "Sort by ",
+    "commentFilter": {
+      "dateDesc": "Date descending",
+      "dateAsc": "Date ascending",
+      "likesDesc": "Likes descending",
+      "likesAsc": "Likes ascending"
+    },
+    "suggest": "Suggest for you"
+  },
+  "createPost": {
+    "edit": "Edit",
+    "preview": "Preview",
+    "placeholder": "Write something here ...",
+    "saveDraft": "Save as draft",
+    "publish": "Publish",
+    "cancel": "Cancel",
+    "discard": "Discard"
   },
   "language": {
     "en": {

@@ -1,10 +1,22 @@
-.btn-menu {
-  height: 2.4rem !important;
-  width: 2.4rem !important;
-  border-radius: 1.2rem !important;
-  outline: none !important;
-  box-shadow: none !important;
-  span {
-    font-size: 0.8rem !important;
+.app-btn-menu {
+  position: relative;
+
+  .btn-menu {
+    height: 2.4rem !important;
+    width: 2.4rem !important;
+    border-radius: 1.2rem !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    span {
+      font-size: 0.8rem !important;
+    }
+  }
+}
+
+:host ::ng-deep p-menu {
+  .p-menu {
+    left: auto !important;
+    right: -2rem !important;
   }
 }

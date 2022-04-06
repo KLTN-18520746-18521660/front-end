@@ -1,4 +1,4 @@
-<div class="w-full"
+<div class="col-12 w-full"
   style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
   <div class="h-full w-full m-0 py-7 px-4"
     style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
@@ -10,9 +10,9 @@
 
     <div class="w-full md:w-10 mx-auto">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <label for="email" class="block text-900 text-lg font-medium mb-2">{{'label.signup.email' | translate }}
+        <label for="emailSignUp" class="block text-900 text-lg font-medium mb-2">{{'label.signup.email' | translate }}
         </label>
-        <input formControlName="email" id="email" type="text" autofocus
+        <input formControlName="email" id="emailSignUp" type="text" autofocus
           placeholder="{{'label.signup.emailPlaceholder' | translate}}" pInputText class="w-full mb-1"
           style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
         <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
@@ -24,24 +24,42 @@
           </div>
         </div>
 
-        <label for="fullname" class="block text-900 text-lg font-medium mb-2 mt-3">
-          {{'label.signup.fullname' | translate}}
-        </label>
-        <input formControlName="fullname" id="fullname" type="text"
-          [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['fullname'].errors }"
-          placeholder="{{'label.signup.fullnamePlaceholder' | translate}}" pInputText class="w-full mb-1"
-          style="padding:1rem;">
-        <div *ngIf="submitted && f['fullname'].errors" class="invalid-feedback">
-          <div class="flex align-items-end" *ngIf="f['fullname'].errors['required']">
-            <small class="p-error inline">{{'label.signup.validation.fullname.required' | translate}}</small>
+        <div class="flex">
+          <div class="col mr-1 p-0">
+            <label for="firstname" class="block text-900 text-lg font-medium mb-2 mt-3">
+              {{'label.signup.firstname' | translate}}
+            </label>
+            <input formControlName="firstname" id="firstname" type="text" autofocus
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['firstname'].errors }"
+              placeholder="{{'label.signup.firstnamePlaceholder' | translate}}" pInputText class="w-full mb-1"
+              style="padding:1rem;">
+            <div *ngIf="submitted && f['firstname'].errors" class="invalid-feedback">
+              <div class="flex align-items-end" *ngIf="f['firstname'].errors['required']">
+                <small class="p-error inline">{{'label.signup.validation.firstname.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+          <div class="col ml-1 p-0">
+            <label for="lastname" class="block text-900 text-lg font-medium mb-2 mt-3">
+              {{'label.signup.lastname' | translate}}
+            </label>
+            <input formControlName="lastname" id="lastname" type="text" autofocus
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['lastname'].errors }"
+              placeholder="{{'label.signup.lastnamePlaceholder' | translate}}" pInputText class="w-full mb-1"
+              style="padding:1rem;">
+            <div *ngIf="submitted && f['lastname'].errors" class="invalid-feedback">
+              <div class="flex align-items-end" *ngIf="f['lastname'].errors['required']">
+                <small class="p-error inline">{{'label.signup.validation.lastname.required' | translate}}</small>
+              </div>
+            </div>
           </div>
         </div>
 
-        <label for="password" class="block text-900 font-medium text-lg mb-2 mt-3">
+        <label for="passwordSignUp" class="block text-900 font-medium text-lg mb-2 mt-3">
           {{'label.signup.password' | translate}}
         </label>
-        <p-password formControlName="password" id="password"
-          [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }"
+        <p-password formControlName="password" id="passwordSignUp"
+          [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }" autofocus
           placeholder="{{'label.signup.passwordPlaceholder' | translate }}" [feedback]="false" [toggleMask]="true"
           styleClass="w-full mb-1 input-password">
         </p-password>
@@ -60,7 +78,7 @@
         <label for="confirmPassword" class="block text-900 font-medium text-lg mb-2 mt-3">
           {{'label.signup.confirmPassword' | translate }}
         </label>
-        <p-password formControlName="confirmPassword" id="confirmPassword"
+        <p-password formControlName="confirmPassword" id="confirmPassword" autofocus
           [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['confirmPassword'].errors }"
           placeholder="{{'label.signup.confirmPasswordPlaceholder' | translate }}" [feedback]="false"
           [toggleMask]="true" styleClass="w-full mb-1 input-password">
@@ -68,6 +86,9 @@
         <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
           <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['required']">
             <small class="p-error inline">{{'label.signup.validation.confirmPassword.required' | translate}}</small>
+          </div>
+          <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['minlength']">
+            <small class="p-error inline">{{'label.signup.validation.confirmPassword.min' | translate}}</small>
           </div>
           <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['matching']">
             <small class="p-error inline">{{'label.signup.validation.confirmPassword.match' | translate}}</small>
@@ -97,9 +118,12 @@
 
       <div class="flex align-items-center justify-content-center mt-5">
         <label>{{'label.signup.alreadyHaveAccount' | translate}}</label>
-        <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/login']"
+        <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/auth/login']"
           style="color: var(--primary-color)">{{'label.signup.loginHere' | translate }}</a>
       </div>
     </div>
   </div>
 </div>
+
+<app-loading [loading]="isLoading"></app-loading>
+<p-toast></p-toast>

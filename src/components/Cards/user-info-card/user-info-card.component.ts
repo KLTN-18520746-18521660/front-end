@@ -9,14 +9,14 @@ export class UserInfoCardComponent implements OnInit {
 
   user: any = {
     id: 1,
-    fullname: 'John Doe',
-    username: 'john_doe05',
+    display_name: 'John Doe',
+    user_name: 'john_doe05',
     email: 'john@doe.com',
     phone: '+1 (555) 555-5555',
     country: 'USA',
     isVip: false,
     dateOfBirth: new Date(),
-    avatar: 'https://randomuser.me/api/portraits/',
+    avatar: 'https://placeimg.com/320/320',
     bio: 'I am font-end developer with 3 year experience. I can find bugs and fix them. I am very good at HTML, CSS, JavaScript, TypeScript, Angular, React, and more. I will be working with other languages. Contact me at https://github.com/john, let me know what you are doing and i will help you to get started. I am very happy to help you. By me a coffee on http://paypal.com/john.           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi alias deleniti facere ex recusandae fuga quam ea adipisci iusto? Explicabo quos amet vitae minima quaerat alias repellat laudantium iste animi.',
     skills: [
       'Angular',
@@ -41,6 +41,7 @@ export class UserInfoCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.checkisFollowing();
   }
 
   checkisFollowing() {

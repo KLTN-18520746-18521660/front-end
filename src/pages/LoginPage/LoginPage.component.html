@@ -1,7 +1,3 @@
-<div class="col-12 mt-5 xl:mt-0 text-center w-full">
-  <img src="assets/layout/images/{{config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="Sakai logo" class="mb-5"
-    style="width:81px; height:60px;">
-</div>
 <div class="col-12 w-full"
   style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
   <div class="h-full w-full m-0 py-7 px-4"
@@ -22,7 +18,7 @@
         <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
           <div class="flex align-items-end" *ngIf="f['email'].errors['required']">
             <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-            <small class="p-error inline">{{'label.login.validation.email' | translate}}</small>
+            <small class="p-error inline">{{'label.login.validation.email.required' | translate}}</small>
           </div>
         </div>
 
@@ -34,7 +30,11 @@
         <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
           <div class="flex align-items-end" *ngIf="f['password'].errors['required']">
             <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-            <small class="p-error inline">{{'label.login.validation.password' | translate}}</small>
+            <small class="p-error inline">{{'label.login.validation.password.required' | translate}}</small>
+          </div>
+          <div class="flex align-items-end" *ngIf="f['password'].errors['minlength']">
+            <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+            <small class="p-error inline">{{'label.login.validation.password.min' | translate}}</small>
           </div>
         </div>
 
@@ -43,7 +43,7 @@
             <p-checkbox formControlName="remember" inputId="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
             <label for="rememberme">{{'label.login.remember' | translate }}</label>
           </div>
-          <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/forgotpassword']"
+          <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/auth/forgotpassword']"
             style="color: var(--primary-color)">{{'label.login.forgot' | translate }}</a>
         </div>
         <button type="submit" pButton pRipple label="{{'label.login.submit' | translate}}" icon="pi pi-sign-in"
@@ -59,14 +59,19 @@
       </p-divider>
 
       <button pButton pRipple type="button" icon="pi pi-google" label="{{'label.login.google' | translate}}"
-        class="w-full text-lg mb-3 p-button-raised p-button-danger p-button-text"></button>
+        class="w-full text-lg mb-3 p-button-raised p-button-danger p-button-text" (click)="loginWithGoogle()">
+      </button>
       <button pButton pRipple type="button" icon="pi pi-facebook" label="{{'label.login.facebook' | translate}}"
-        class="w-full text-lg mb-3 p-button-raised p-button-text"></button>
+        class="w-full text-lg mb-3 p-button-raised p-button-text">
+      </button>
       <div class="flex align-items-center justify-content-center mt-5">
         <label>{{'label.login.dontHaveAccount' | translate}}</label>
-        <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/u/register']"
+        <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/auth/register']"
           style="color: var(--primary-color)">{{'label.login.registerHere' | translate }}</a>
       </div>
     </div>
   </div>
 </div>
+
+<app-loading [loading]="isLoading"></app-loading>
+<p-toast></p-toast>

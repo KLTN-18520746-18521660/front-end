@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Tag from 'models/tag.model';
 
 @Component({
   selector: 'app-tag',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./tag.component.scss']
 })
 export class TagComponent implements OnInit {
-  @Input() tag;
+  @Input() tag: Tag;
 
   @Input() size = 'sm';
 
@@ -18,6 +19,7 @@ export class TagComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.tag.short = this.tag.tag?.replace(/\s/g, '');
   }
 
   onClickTag() {

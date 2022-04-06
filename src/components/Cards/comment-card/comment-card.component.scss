@@ -1,0 +1,48 @@
+.comment-card-wrapper {
+  .comment-card-main {
+    .comment-card-right {
+      .comment-card_header {
+        .comment-card_header_right {
+          display: none;
+        }
+      }
+
+      &:hover {
+
+        .comment-card_header {
+          .comment-card_header_right {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}
+
+:host ::ng-deep .comment-card-wrapper {
+  .p-divider-horizontal {
+    margin: 0.6rem !important;
+  }
+
+  .p-chip {
+    padding: 0 0.5rem !important;
+    border-radius: 6px !important;
+  }
+
+  .p-chip,
+  .p-chip-icon {
+    font-size: 0.75rem !important;
+  }
+
+  .p-chip-text {
+    margin: 0.1rem 0 !important;
+  }
+
+  .p-button-sm {
+    .p-button-icon {
+      &::before {
+        color: var(--primary-color) !important;
+      }
+    }
+  }
+}

@@ -1,24 +1,34 @@
-<div class="card post-card mb-1" [ngClass]="isGrid ? 'p-2' : 'p-3'">
+<div class="card post-card mb-1" [ngClass]="isGrid ? 'p-2' : 'p-2 md:p-3'">
   <div class="card-container flex flex-wrap">
     <div [ngClass]="{ 'flex-order-1': isGrid }"
-      class="card-header w-full p-2 flex flex-wrap justify-content-between align-items-baseline">
-      <div class="card-hear-left" [ngClass]="{ 'w-full mb-3': isGrid }">
-        <a [routerLink]="['/user', post.owner.uid]">
-          <p-avatar label="W" size="large" shape="circle"></p-avatar>
-          <span class="mx-2 font-semibold">{{ post.owner.username }}</span>
+      class="card-header w-full p-2 flex flex-wrap justify-content-between align-items-center">
+      <div class="card-hear-left flex align-items-center" [ngClass]="{ 'w-full mb-3': isGrid }">
+        <a [routerLink]="['/user', post.owner.id]" class="flex align-items-center">
+          <ng-template [ngIf]="post.owner?.avatar" [ngIfElse]="avatar">
+            <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
+          </ng-template>
+          <ng-template #avatar>
+            <p-avatar label="{{post.owner?.display_name.substring(0,1)}}" shape="circle" size="large">
+            </p-avatar>
+          </ng-template>
+          <span class="mx-2 font-semibold">{{ post.owner.display_name }}</span>
         </a>
         <p-tag severity="danger" value="New"></p-tag>
       </div>
-      <div class="card-hear-right flex align-items-center pl-2">
-        <span class="text-sm text-600 mr-2" title="{{ post.created_at }}">
-          {{ post.fromNow }}
-        </span>
-        &#183;
-        <span class="text-sm text-600 mx-2">
-          {{ "card.time_read" | translate: post }}
-        </span>
-        <app-btn-menu class="" [ngClass]="{ 'hidden': isGrid }" [items]="menuitem" [icon]="'pi pi-ellipsis-v'">
-        </app-btn-menu>
+      <div class="card-hear-right flex align-items-center" [ngClass]="isGrid ? 'pl-0 w-full justify-content-between' : 'pl-2'">
+        <div class="post-time flex">
+          <span class="text-600 mr-2" title="{{ post.created_timestamp }}">
+            {{ post.fromNow.created }}
+          </span>
+          &#183;
+          <span class="text-600 mx-2">
+            {{ "card.time_read" | translate: post }}
+          </span>
+        </div>
+        <div class="flex">
+          <app-btn-menu [menuClass]="'shadow-6'" [items]="menuitem" [icon]="'pi pi-ellipsis-v'">
+          </app-btn-menu>
+        </div>
       </div>
     </div>
 
@@ -27,19 +37,19 @@
         <app-tag [tag]="tag" [size]="'xs'" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
       </div>
       <div class="card-content-main cursor-pointer">
-        <a [routerLink]="['/post', post.postId]">
+        <a [routerLink]="['/post', post.id]">
           <div class="flex flex-wrap">
             <div class="col-12" [ngClass]="{ 'md:col-6': !isGrid }">
-              <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}" class="card-image border-round mt-2" />
+              <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}"
+                class="card-image border-round mt-2 shadow-4" />
             </div>
             <div class="col-12" [ngClass]="{ 'md:col-6': !isGrid }">
-              <h3 class="text-800 text-xl font-semibold"
+              <h3 class="text-800 text-xl font-semibold" title="{{ post.title }}"
                 [ngClass]="isGrid ? 'card-heading-grid' : 'card-heading'">
                 {{ post.title }}
               </h3>
-              <p class="text-gray-600"
-                [ngClass]=" isGrid ? 'card-description-grid' : 'card-description'">
-                {{ post.content }}
+              <p class="text-gray-600" [ngClass]=" isGrid ? 'card-description-grid' : 'card-description'">
+                {{ post.content_search }}
               </p>
             </div>
           </div>
@@ -51,29 +61,29 @@
       <div class="card-footer-left inline-">
         <div
           class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
-          pTooltip="👍 {{post.likes | number:'1.0-2'}}" tooltipPosition="bottom">
+          pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom">
           <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
-          <i style="font-size: 1.2rem" class="pi pi-thumbs-up"></i>
+          <i style="font-size: 1.1rem" class="pi pi-thumbs-up text-primary"></i>
         </div>
         <div
           class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
-          pTooltip="💬 {{post.comments | number:'1.0-2'}}" tooltipPosition="bottom">
+          pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom">
           <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
-          <i style="font-size: 1.25rem" class="pi pi-comment"></i>
+          <i style="font-size: 1.2rem" class="pi pi-comment text-primary"></i>
         </div>
         <div
           class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
-          pTooltip="👁 {{post.view | number:'1.0-2'}}" tooltipPosition="bottom">
-          <span class="text-sm mr-1 font-normal">{{ post.view | shortNumber }}</span>
-          <i style="font-size: 1.25rem" class="pi pi-eye"></i>
+          pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom">
+          <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
+          <i style="font-size: 1.25rem" class="pi pi-eye text-primary"></i>
         </div>
       </div>
       <div class="card-footer-right pr-2">
-        <a class="read-more text-blue-700 hover:text-blue-500" [routerLink]="['/post', post.postId]">
+        <a class="read-more-button text-blue-700 hover:text-blue-500" [routerLink]="['/post', post.id]"
+          pTooltip="{{ 'card.read_more' | translate }}" tooltipPosition="bottom">
           <span class="read-more-text mr-2 font-medium" [ngClass]="{ 'hidden xl:inline': isGrid }">
             {{ "card.read_more" |translate }}</span>
-          <i class="fadeinLeft pi pi-arrow-right" pTooltip="{{ 'card.read_more' | translate }}"
-            tooltipPosition="bottom"></i>
+          <i class="fadeinLeft pi pi-arrow-right"></i>
         </a>
       </div>
     </div>

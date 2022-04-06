@@ -1,11 +1,13 @@
-@import '../../../styles/scss/mixins.scss';
+@import 'styles/scss/mixins.scss';
 
-.user-info-card{
-  .user-bio{
+.user-info-card {
+  .user-bio {
     @include maxline(3);
+
     @include breakpoint(max, 992px) {
-      @include maxline(1);
+      @include maxline(2);
     }
+
     @include breakpoint(max, 768px) {
       @include maxline(1);
     }
@@ -14,4 +16,10 @@
       @include maxline(2);
     }
   }
+
+  .user-rate-value {
+    
+  }
+
+  .user-rate-text {}
 }

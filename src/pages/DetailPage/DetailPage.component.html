@@ -3,52 +3,121 @@
 <div class="detail-post-layout container">
   <div class="grid py-4">
     <div class="col-0 md:col-1 lg:col-1">
-      <app-btn-fab></app-btn-fab>
-      <app-btn-fab></app-btn-fab>
-      <app-btn-fab></app-btn-fab>
-      <app-btn-fab></app-btn-fab>
+      <div class="flex flex-wrap justify-content-center">
+        <div class="col-12 flex justify-content-center" *ngFor="let item of contacts">
+          <app-btn-fab [data]="item"></app-btn-fab>
+        </div>
+      </div>
     </div>
     <div class="col-12 md:col-11 lg:col-8">
       <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
-      <div class="detail-wrapper">
-        <div class="detail-container border-round border-1">
-        <div class="thumnail-post">
-            <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}" class="card-image border-round mt-2" />
+      <div class="detail-wrapper mt-3">
+        <div class="detail-container border-round surface-0 shadow-2" *ngIf="post">
+          <div class="thumnail-post">
+            <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}"
+              class="post-thumbnail-image border-round-top shadow-4" />
           </div>
-          <div class="main-post">
-            <div class="post-info">
-              <div class="inline-flex">
-                <div class="avatar">
-                  <a [routerLink]="['/user', post.owner.uid]">
-                    <p-avatar label="W" size="large" shape="circle"></p-avatar>
+          <div class="main-post p-4 mt-3">
+            <div class="post-info mb-4">
+              <div class="flex">
+                <div class="flex avatar">
+                  <a [routerLink]="['/user', post.owner?.id]">
+                    <ng-template [ngIf]="post.owner?.avatar" [ngIfElse]="avatar">
+                      <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
+                    </ng-template>
+                    <ng-template #avatar>
+                      <p-avatar label="{{post.owner?.display_name.substring(0,1)}}" shape="circle" size="large">
+                      </p-avatar>
+                    </ng-template>
                   </a>
                 </div>
-                <div class="name-info">
-                  <p class="mx-2 font-semibold">{{ post.owner.username }}</p>
-                  <p>
-                    <span title="{{post.created_at}}">{{'postDetail.postedOn' | translate}} {{post.createdTime}}</span>
+                <div class="flex-auto name-info mx-2 py-1">
+                  <div class="block mb-2">
+                    <a [routerLink]="['/user', post.owner?.id]">
+                      <span class="font-semibold">{{ post.owner?.display_name }}</span>
+                    </a>
+                  </div>
+                  <span>
+                    <span class="spacing-1 text-600 text-sm" title="{{post.created_timestamp}}">
+                      {{'postDetail.postedOn' | translate}} {{post.fromNow.created}}
+                    </span>
                     &#183;
-                    <span *ngIf="post.updated_at" title="{{post.updated_at}}">{{'postDetail.updatedOn' | translate}} {{post.updatedTime}}</span>
-                  </p>
+                    <span class="spacing-1 text-600 text-sm" *ngIf="post.fromNow.updated"
+                      title="{{post.last_modified_timestamp}}">
+                      {{'postDetail.updatedOn' | translate}} {{post.fromNow.updated}}
+                    </span>
+                  </span>
+                </div>
+                <div>
+                  <app-btn-menu [btnClass]="'p-button-rounded p-button-secondary'" [menuClass]="'shadow-4'" [ngClass]=""
+                    [items]="menuitem" [icon]="'pi pi-ellipsis-v'">
+                  </app-btn-menu>
                 </div>
               </div>
             </div>
+            <div class="post-title mb-5">
+              <p class="text-5xl font-bold">{{post.title}}</p>
+              <app-tag [tag]="tag" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
+            </div>
             <div class="post-content">
-  
+              <markdown class="variable-binding" [data]="post.content"></markdown>
+              <!-- <div [innerHTML]="post.content"></div> -->
+              <!-- <p-editor [(ngModel)]="post.content" (onTextChange)="onTextChange($event)"></p-editor> -->
+              <!-- <markdown class="variable-binding" [src]="'assets/test.md'"></markdown> -->
             </div>
           </div>
+        </div>
+        <div class="lg:hidden mt-4">
+          <app-user-info-card></app-user-info-card>
+        </div>
+        <div class="post-comment mt-2">
+          <div class="post-comment-header my-4">
+            <p class="text-2xl font-semibold">{{'postDetail.disscussion' | translate:{ count: numberComments} }}</p>
+          </div>
+          <div class="post-comment-input">
+            <app-comment-input (submit)="onSubmitComment()"></app-comment-input>
+            <div class="flex justify-content-between comment-option my-3">
+              <div class="comment-option-left">
+                <span>{{'postDetail.sort' | translate }}</span>
+                <p-dropdown *ngIf="filterComments" [options]="filterComments" [(ngModel)]="currentFilter"
+                  optionLabel="label" (onChange)="onFilterComments($event)">
+                </p-dropdown>
+              </div>
+              <div class="comment-option-right">
+
+              </div>
+            </div>
+            <div pDefer (onLoad)="initLoadComment()" id="comments">
+              <ng-template>
+                <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingSpinner">
+                  <app-comment-card *ngFor="let comment of listComments" [comment]="comment"></app-comment-card>
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="read-next-wrapper mt-4">
+          <p class="font-semibold text-2xl">{{'postDetail.readNext' | translate}}</p>
+          <app-post-card-vertical *ngFor="let item of listRecommend" [post]="item"></app-post-card-vertical>
         </div>
       </div>
     </div>
     <div class="col-12 lg:col-3">
       <div class="grid">
-        <div class="col-12 md:col-12 lg:col-12">
+        <div class="col-12 md:col-12 lg:col-12 hidden lg:flex">
           <app-user-info-card></app-user-info-card>
         </div>
-        <div class="col-6 md:col-4 lg:col-12" *ngFor="let item of [1,2,3,4,5,6]">
-          <app-recommend-post-card></app-recommend-post-card>
+        <div class="col-12 mt-4">
+          <span class="font-semibold text-xl">{{'postDetail.suggest' | translate}}</span>
+        </div>
+        <div class="col-6 md:col-4 lg:col-12" *ngFor="let item of listRecommend">
+          <app-recommend-post-card [post]="item"></app-recommend-post-card>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #loadingSpinner>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

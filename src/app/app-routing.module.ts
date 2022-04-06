@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppMainComponent } from 'pages/Admin/AppMain/AppMain.component';
-import { DashboardPageComponent } from 'pages/Admin/DashboardPage/DashboardPage.component';
-import { ManageUserPageComponent } from 'pages/Admin/ManageUserPage/ManageUserPage.component';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
+import { CategoryPageComponent } from 'pages/CategoryPage/CategoryPage.component';
 import { CreatePostPageComponent } from 'pages/CreatePostPage/CreatePostPage.component';
 import { DetailPageComponent } from 'pages/DetailPage/DetailPage.component';
 import { HomePageComponent } from 'pages/HomePage/HomePage.component';
-import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';
 import { NoAccessPageComponent } from 'pages/NoAccessPage/NoAccessPage.component';
 import { NotFoundPageComponent } from 'pages/NotFoundPage/NotFoundPage.component';
 import { PostsPageComponent } from 'pages/PostsPage/PostsPage.component';
 import { ProfilePageComponent } from 'pages/ProfilePage/ProfilePage.component';
-import { SignUpPageComponent } from 'pages/SignUpPage/SignUpPage.component';
+import { SearchPageComponent } from 'pages/SearchPage/SearchPage.component';
 import { TagsPageComponent } from 'pages/TagsPage/TagsPage.component';
 import { UserInfoPageComponent } from 'pages/UserInfoPage/UserInfoPage.component';
 
@@ -30,23 +27,20 @@ const routes: Routes = [
       {
         path: 'post',
         component: PostsPageComponent,
-        data: {
-          key: "post"
-        }
       },
       {
-        path: 'post/create',
+        path: 'create',
         component: CreatePostPageComponent,
         data: {
-          key: ""
+          key: "createPost"
         }
       },
       {
         path: 'post/:id',
-        component: DetailPageComponent
+        component: DetailPageComponent,
       },
       {
-        path: 'tags/:id',
+        path: 'tag/:id',
         component: TagsPageComponent
       },
       {
@@ -54,28 +48,30 @@ const routes: Routes = [
         component: UserInfoPageComponent
       },
       {
+        path: 'category/:id',
+        component: CategoryPageComponent
+      },
+      {
+        path: 'search',
+        component: SearchPageComponent
+      },
+      {
         path: 'profile',
-        component: ProfilePageComponent
+        loadChildren: () => import('./modules/profile.module').then(m => m.ProfileModule)
       },
       {
         path: 'auth',
         loadChildren: () => import('./modules/auth.module').then(m => m.AuthModule)
+      },
+      {
+        path: '**',
+        component: NotFoundPageComponent
       }
     ],
   },
   {
     path: 'admin',
-    component: AppMainComponent,
-    children: [
-      {
-        path: '',
-        component: DashboardPageComponent
-      },
-      {
-        path: 'manage-user',
-        component: ManageUserPageComponent
-      },
-    ]
+    loadChildren: () => import('./modules/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'no-access',

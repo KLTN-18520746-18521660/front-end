@@ -1,0 +1,17 @@
+<ng-template [ngIf]="loading">
+  <div class="loading-overlay">
+    <div class="w-full h-full flex flex-wrap justify-content-center align-items-center relative">
+      <div class="spinner-box">
+        <div class="configure-border-1">
+          <div class="configure-core"></div>
+        </div>
+        <div class="configure-border-2">
+          <div class="configure-core"></div>
+        </div>
+        <div class="loading-text z-5 text-0 absolute">
+          <i class="pi pi-spin pi-spinner text-3xl"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

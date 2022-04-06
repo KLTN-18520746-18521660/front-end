@@ -3,6 +3,8 @@ import { AppConfig } from 'models/appconfig';
 import { ConfigService } from 'pages/Admin/service/app.config.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { UserConfigService } from 'services/user-config.service';
+import { THEMES } from 'utils/themeConstant';
 
 @Component({
   selector: 'app-app-config',
@@ -13,10 +15,16 @@ export class MyAppConfigComponent implements OnInit, OnDestroy {
   config: AppConfig;
   subscription: Subscription;
 
-  constructor(public configService: ConfigService, public primengConfig: PrimeNGConfig) { }
+  constructor(
+    public configService: ConfigService,
+    public primengConfig: PrimeNGConfig,
+    private userConfig: UserConfigService
+  ) { }
 
   ngOnInit() {
     this.config = this.configService.config;
+    this.changeTheme(this.config.theme, this.config.dark);
+
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
@@ -24,6 +32,7 @@ export class MyAppConfigComponent implements OnInit, OnDestroy {
 
   changeTheme(theme: string, dark: boolean) {
     let themeElement = document.getElementById('theme-css');
+    this.userConfig.addConfig('theme', theme);
     themeElement.setAttribute('href', 'assets/themes/' + theme + '/theme.css');
     this.configService.updateConfig({ ...this.config, ...{ theme, dark } });
   }

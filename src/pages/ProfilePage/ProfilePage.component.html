@@ -1,3 +1,37 @@
-<p>
-  ProfilePage works!
-</p>
+<div class="page-user-profile-wrapper container py-4" [ngClass]="{'layout-profile-menuactive' : !isShowMenu}">
+  <div class="button-show-menu">
+    <ng-template [ngIf]="isShowMenu" [ngIfElse]="button_show">
+      <button pButton label="" icon="pi pi-angle-double-left" iconPos="left" pTooltip="{{'profile.hide' | translate}}" tooltipPosition="top"
+        (click)="onClickShowMenu()"></button>
+    </ng-template>
+    <ng-template #button_show>
+      <button pButton label="" icon="pi pi-angle-double-right" iconPos="right" pTooltip="{{'profile.show' | translate}}" tooltipPosition="top"
+        (click)="onClickShowMenu()"></button>
+    </ng-template>
+  </div>
+  <div class="layout-profile-sidebar card mt-6">
+    <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custom-scrollbar">
+      <div class="layout-menu-container">
+        <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
+          <li appp-menu class="layout-menuitem-category" *ngFor="let item of menu; let i = index;">
+            <div class="layout-menuitem-root-text" [attr.aria-label]="item.label">{{item.label}}</div>
+            <a [routerLink]="i.routerLink" [ngClass]="{'active': activeLink == i.id}" title="{{i.label}}" *ngFor="let i of item.items"
+              (click)="onClickMenu(i)"><i class="{{i.icon}} mr-2"></i>{{i.label}}</a>
+          </li>
+        </ul>
+      </div>
+    </p-scrollPanel>
+  </div>
+  <div #layoutProfile class="layout-profile-container">
+    <div class="flex align-items-center mb-1">
+      <div class="flex">
+
+      </div>
+      <p class="font-semibold text-xl ml-4">{{labelHeader}}</p>
+    </div>
+    <div class="layout-profile-main border-round shadow-1 p-2 md:p-3 min-h-screen"
+      [ngClass]="config?.dark ? 'bg-black-alpha-20' : 'bg-bluegray-50'">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

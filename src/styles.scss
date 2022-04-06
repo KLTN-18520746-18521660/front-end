@@ -7,15 +7,20 @@
 @import "../node_modules/primeflex/primeflex.scss";
 @import "../node_modules/primeicons/primeicons.css";
 @import "assets/styles/flags/flags.css";
-@import "assets/styles/documentation.scss";
+// @import "assets/styles/documentation.scss";
 @import "assets/sass/layout/_variables";
 @import "assets/sass/layout/_layout";
 @import "assets/sass/overrides/_overrides";
 
+// Syntax highlight
+// @import 'prismjs/themes/prism-twilight.min.css';
+// @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+// @import 'prismjs/plugins/line-highlight/prism-line-highlight.css';
+
 html,
 body {
   box-sizing: border-box;
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -25,8 +30,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 img {
+  max-width: 100%;
+}
+
+ion-icon {
+  font-size: 1.5rem;
+}
+
+ion-icon:before {
+  content: '';
+  position: absolute;
   width: 100%;
+  height: 100%;
 }
 
 .p-button:focus {
@@ -38,31 +61,41 @@ img {
   background: rgba(75, 175, 80, 0.1) !important;
 }
 
-.my-custom-scrollbar {
-  --scrollbar-border-radius: 7px !important;
-  --scrollbar-padding: 0px;
-  --scrollbar-viewport-margin: 0 !important;
-  --scrollbar-track-color: transparent !important;
-  --scrollbar-wrapper-color: transparent !important;
-  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2) !important;
-  --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color) !important;
-  --scrollbar-size: 7px !important;
-  --scrollbar-hover-size: var(--scrollbar-size) !important;
-  --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms !important;
-  --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms !important;
+.p-tooltip-text {
+  font-size: 0.8rem !important;
+  padding: 0.5rem !important;
 }
 
-@media screen and (max-width: 768px) {
-  .my-custom-scrollbar {
-    --scrollbar-size: 4px !important;
+.p-toast-top-right {
+  top: 80px !important;
+}
+
+.spacing-0 {
+  letter-spacing: -0.02em !important;
+}
+
+.spacing-1 {
+  letter-spacing: -0.03em !important;
+}
+
+// Fab button menu
+.button-menu {
+  height: 2.4rem !important;
+  width: 2.4rem !important;
+  border-radius: 1.2rem !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  span {
+    font-size: 0.9rem !important;
   }
 }
 
-// For scrolbar thumb
-.scrollbar-control {
-  margin-top: 4rem;
+.p-dialog-footer {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  padding-top: 2rem !important;
 }
-
 
 // Container code
 .container {
@@ -107,4 +140,89 @@ img {
   .container {
     max-width: 1330px;
   }
+}
+
+
+// Animation Keyframes
+.slide-down {
+  animation: slide-down 0.3s linear both;
+}
+
+.slide-up {
+  animation: slide-up 0.3s linear both;
+}
+
+@keyframes slide-down {
+  0% {
+    visibility: hidden;
+    height: 0;
+  }
+
+  95% {
+    visibility: visible;
+    height: 100%;
+  }
+
+  /* Set height to 'auto' after animation for spacing showing form-invalid feedback message */
+  100% {
+    visibility: visible;
+    height: auto;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    visibility: visible;
+    height: 100%;
+  }
+
+  to {
+    visibility: hidden;
+    height: 0;
+  }
+}
+
+// Other
+.up-down {
+  animation: updown 1.5s linear infinite;
+  -webkit-animation: updown 1.5s linear infinite;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+  }
+
+  20% {
+    transform: translateY(-1px);
+    -webkit-transform: translateY(-1px);
+    -moz-transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    -o-transform: translateY(-1px);
+  }
+
+  40% {
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+  }
+
+  60%,
+  100% {
+    transform: translateY(-1px);
+    -webkit-transform: translateY(-1px);
+    -moz-transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    -o-transform: translateY(-1px);
+  }
+}
+
+.tranform {
+  transition: transform 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
 }

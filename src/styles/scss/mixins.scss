@@ -11,3 +11,11 @@
   -webkit-line-clamp: $number;
   -webkit-box-orient: vertical;
 }
+
+@mixin borderRadius($radius: 10) {
+  border-radius: #{$radius}px !important;
+  -webkit-border-radius: #{$radius}px !important;
+  -moz-border-radius: #{$radius}px !important;
+  -ms-border-radius: #{$radius}px !important;
+  -o-border-radius: #{$radius}px !important;
+}

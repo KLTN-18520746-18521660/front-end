@@ -1,0 +1,23 @@
+<ng-template [ngIf]="isShow">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="comment-input-wrapper">
+    <div class="flex flex-wrap justify-content-end">
+      <div class="flex col-12 p-0">
+        <p-avatar icon="pi pi-user" shape="circle" size="large"></p-avatar>
+        <span class="p-input-icon-right w-full ml-2">
+          <i *ngIf="isLoading" class="pi pi-spin pi-spinner"></i>
+          <input formControlName="value" id="value" type="text" class="w-full comment-input px-3" pInputText
+            placeholder="{{'postDetail.commentPlaceholder' | translate}}">
+          <div *ngIf="submitted && f['value'].errors" class="invalid-feedback">
+            <div class="flex align-items-end" *ngIf="f['value'].errors['required']">
+              <small class="p-error inline pl-3">{{'postDetail.commentError' | translate}}</small>
+            </div>
+          </div>
+        </span>
+      </div>
+      <div class="flex col justify-content-end">
+        <button type="submit" pButton pRipple label="{{'postDetail.comment' | translate}}"
+          icon="pi pi-plus-circle"></button>
+      </div>
+    </div>
+  </form>
+</ng-template>

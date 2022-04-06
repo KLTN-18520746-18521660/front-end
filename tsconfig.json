@@ -10,7 +10,7 @@
     "strict": true,
     "noImplicitAny": false,
     "noImplicitOverride": false,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "noImplicitReturns": true,

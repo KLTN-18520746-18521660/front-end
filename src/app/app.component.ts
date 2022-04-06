@@ -3,14 +3,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { ThemeService } from 'services/theme.service';
 import { Title } from "@angular/platform-browser";
-import { ActivatedRouteSnapshot, ResolveEnd, Router } from "@angular/router";
-import { filter } from "rxjs/operators";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { filter, map } from "rxjs/operators";
 import { UserConfigService } from 'services/user-config.service';
+import { UserService } from 'services/user.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [DialogService, DynamicDialogRef]
 })
 export class AppComponent {
   menuMode = 'static';
@@ -19,9 +22,13 @@ export class AppComponent {
     private primengConfig: PrimeNGConfig,
     private themeService: ThemeService,
     private translate: TranslateService,
+    private primeConfig: PrimeNGConfig,
     private title: Title,
     private router: Router,
-    private config: UserConfigService
+    private config: UserConfigService,
+    private userService: UserService,
+    private dialog: DialogService,
+    private dialogRef: DynamicDialogRef,
   ) {
     translate.addLangs(['en', 'vi', 'jp']);
 
@@ -39,8 +46,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.setupTitleListener();
+    this.translate.get('primeng').subscribe(res => this.primeConfig.setTranslation(res));
     this.primengConfig.ripple = true;
-    document.documentElement.style.fontSize = '14px';
+    document.documentElement.style.fontSize = '13px';
   }
 
   changeTheme(theme: string) {
@@ -49,24 +57,35 @@ export class AppComponent {
 
   private setupTitleListener() {
     this.router.events
-      .pipe(filter(e => e instanceof ResolveEnd))
-      .subscribe((e: any) => {
-        const { data } = getDeepestChildSnapshot(e.state.root);
-        if (data?.['key']) {
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let route: ActivatedRoute = this.router.routerState.root;
+          let key;
+          while (route!.firstChild) {
+            route = route.firstChild;
+          }
+          if (route?.snapshot?.data) {
+            key = route?.snapshot?.data['key'];
+          }
+          this.userService.addHistory(this.router.routerState.snapshot.url);
+
+          // remove ref dialog
+          if (this.userService.ref) {
+            this.userService.ref.forEach(ref => {
+              ref.close();
+            })
+          }
+          return key;
+        })
+      )
+      .subscribe((key: any) => {
+        if (key) {
           // Get title page when router changes
-          const keyTranslate = "titlePage." + data['key'];
-          this.translate.get(keyTranslate).subscribe((title) =>
+          this.translate.get(`titlePage.${key}`).subscribe((title) =>
             this.title.setTitle(title)
           );
         }
       });
   }
-}
-
-function getDeepestChildSnapshot(snapshot: ActivatedRouteSnapshot) {
-  let deepestChild = snapshot.firstChild;
-  while (deepestChild?.firstChild) {
-    deepestChild = deepestChild.firstChild
-  };
-  return deepestChild || snapshot
 }

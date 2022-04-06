@@ -1,8 +1,9 @@
+import { CommentInputComponent } from './../components/Input/comment-input/comment-input.component';
 import { RecommendPostCardComponent } from './../components/Cards/recommend-post-card/recommend-post-card.component';
 import { UserInfoPageComponent } from './../pages/UserInfoPage/UserInfoPage.component';
 import { PostCardComponent } from './../components/Cards/post-card/post-card.component';
 import { ReadMoreComponent } from './../components/read-more/read-more.component';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +16,10 @@ import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ng
 
 // Import packages
 import { NgprimeModule } from './modules/ngprime.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
+import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
+
 
 // Import pages
 import { HomePageComponent } from 'pages/HomePage/HomePage.component';
@@ -57,6 +62,37 @@ import { AuthPageComponent } from 'pages/AuthPage/AuthPage.component';
 import { ForgotPasswordPageComponent } from 'pages/ForgotPasswordPage/ForgotPasswordPage.component';
 import { UserInfoCardComponent } from 'components/Cards/user-info-card/user-info-card.component';
 import { ButtonComponent } from 'components/Buttons/button/button.component';
+import { CountUpDirective } from 'shared/directives/countUp.directive';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { LoadingComponent } from 'components/loading/loading.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { CommentCardComponent } from 'components/Cards/comment-card/comment-card.component';
+import { ReadMoreDirective } from 'shared/directives/readMore.directive';
+import { LoadingSpinnerComponent } from 'components/loading-spinner/loading-spinner.component';
+import { CategoryPageComponent } from 'pages/CategoryPage/CategoryPage.component';
+import { PostCardVerticalComponent } from 'components/Cards/post-card-vertical/post-card-vertical.component';
+import { SearchPageComponent } from 'pages/SearchPage/SearchPage.component';
+import { AdminModule } from './modules/admin.module';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmAccountPageComponent } from 'pages/ConfirmAccountPage/ConfirmAccountPage.component';
+import { ProfileModule } from './modules/profile.module';
+import { MenuModule } from 'primeng/menu';
+import { UserDashboardComponent } from 'components/Profile/user-dashboard/user-dashboard.component';
+import { ChangePasswordComponent } from 'components/Profile/change-password/change-password.component';
+import { UserInfoComponent } from 'components/Profile/user-info/user-info.component';
+import { UserSettingComponent } from 'components/Profile/user-setting/user-setting.component';
+import { UserNotificationComponent } from 'components/Profile/user-notification/user-notification.component';
+import { UserManagePostComponent } from 'components/Profile/user-manage-post/user-manage-post.component';
+
+// import 'prismjs';
+// import 'prismjs/components/prism-typescript.min.js';
+// import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
+// import 'prismjs/plugins/line-highlight/prism-line-highlight.js';
+
+import 'ionicons/dist/ionicons/ionicons.js';
+import 'ionicons/dist/ionicons/ionicons.esm.js';
+import { SafePipe } from 'shared/pipes/safe.pipe';
+import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-edit-info.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -100,6 +136,24 @@ export function createTranslateLoader(http: HttpClient) {
     ForgotPasswordPageComponent,
     UserInfoCardComponent,
     ButtonComponent,
+    CountUpDirective,
+    LoadingComponent,
+    CommentInputComponent,
+    CommentCardComponent,
+    ReadMoreDirective,
+    LoadingSpinnerComponent,
+    CategoryPageComponent,
+    PostCardVerticalComponent,
+    SearchPageComponent,
+    ConfirmAccountPageComponent,
+    ChangePasswordComponent,
+    UserDashboardComponent,
+    UserInfoComponent,
+    UserSettingComponent,
+    UserNotificationComponent,
+    UserManagePostComponent,
+    SafePipe,
+    UserEditInfoComponent,
 
     TopbarAdminComponent,
     MenuComponent,
@@ -117,6 +171,19 @@ export function createTranslateLoader(http: HttpClient) {
     ReactiveFormsModule,
     NgprimeModule,
     AuthModule,
+    MenuModule,
+    AdminModule,
+    ProfileModule,
+    InfiniteScrollModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: markedOptionsFactory,
+      }
+    }),
+    NgxLinkifyjsModule.forRoot(),
+    SocialLoginModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
@@ -130,9 +197,50 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
   ],
-  providers: [
-    authInterceptorProviders
+  entryComponents: [
+    LoginPageComponent,
+    SignUpPageComponent,
   ],
+  providers: [
+    authInterceptorProviders,
+    MessageService,
+    ConfirmationService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '371642256601-n9lv5qu9j8qh9msq9388li0sp2gk1th2.apps.googleusercontent.com'
+            ),
+          },
+        ]
+      } as SocialAuthServiceConfig
+    }
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// function that returns `MarkedOptions` with renderer override
+export function markedOptionsFactory(): MarkedOptions {
+  const renderer = new MarkedRenderer();
+  renderer.code = function (code, language) {
+    if (language.match(/^mermaid/)) {
+      return '<div class="mermaid">' + code + '</div>';
+    } else {
+      return '<pre><code>' + code + '</code></pre>';
+    }
+  };
+  return {
+    renderer: renderer,
+    gfm: true,
+    breaks: false,
+    pedantic: false,
+    smartLists: true,
+    smartypants: false
+  };
+}
