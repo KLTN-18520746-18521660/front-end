@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { mapActionWithPost } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-post-card-vertical',
@@ -17,7 +18,7 @@ export class PostCardVerticalComponent implements OnInit {
     thumbnail: 'https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/777588/top-18-most-common-angularjs-developer-mistakes-41f9ad303a51db70e4a5204e101e7414.png',
     owner: {
       uid: 2,
-      username: '@john_doe',
+      user_name: '@john_doe',
       display_name: 'Jenny Wilson',
       avatar: 'https://placeimg.com/320/320'
     },
@@ -52,10 +53,12 @@ export class PostCardVerticalComponent implements OnInit {
     this.post = {
       ...this.post,
       fromNow: {
-        created: dayjs(this.post.created_timestamp).fromNow(),
-        updated: dayjs(this.post.last_modified_timestamp)?.fromNow() || null
+        created: dayjs(this.post.created_timestamp).fromNow(true),
+        updated: dayjs(this.post.last_modified_timestamp)?.fromNow(true) || null
       }
     }
+
+    this.post.mapAction = mapActionWithPost(this.post.actions || []);
   }
 
 }

@@ -1,4 +1,4 @@
-<a class="post-card-vertical" [routerLink]="['/post', post.id]">
+<a class="post-card-vertical" [routerLink]="['/post', post.slug]">
   <div class="card p-3">
     <div class="card-container overflow-hidden">
       <div class="flex">
@@ -7,7 +7,7 @@
             <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
           </ng-template>
           <ng-template #avatar>
-            <p-avatar label="{{post.owner.display_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
+            <app-avatar [label]="post.owner.display_name.substring(0,1) | uppercase"></app-avatar>
           </ng-template>
         </div>
         <div class="flex-auto flex card-content align-items-center">
@@ -21,19 +21,19 @@
         </div>
         <div class="flex card-value">
           <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
-            pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom">
+            pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom" [ngClass]="{'bg-gray-100 text-primary text-primary': post.mapAction.like}">
             <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
-            <i style="font-size: 1.1rem" class="pi pi-thumbs-up text-primary"></i>
+            <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
           </div>
           <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
-            pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom">
+            pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom" [ngClass]="{'bg-gray-100 text-primary': post.mapAction.comment}">
             <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
-            <i style="font-size: 1.2rem" class="pi pi-comment text-primary"></i>
+            <i style="font-size: 1.2rem" class="pi pi-comment"></i>
           </div>
           <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
-            pTooltip="{{post.view | number:'1.0-2'}}" tooltipPosition="bottom">
+            pTooltip="{{post.view | number:'1.0-2'}}" tooltipPosition="bottom" [ngClass]="{'bg-gray-100 text-primary': post.mapAction.visited}">
             <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
-            <i style="font-size: 1.25rem" class="pi pi-eye text-primary"></i>
+            <i style="font-size: 1.25rem" class="pi pi-eye"></i>
           </div>
         </div>
       </div>

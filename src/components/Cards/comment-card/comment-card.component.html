@@ -1,13 +1,13 @@
 <ng-template [ngIf]="comment">
-  <div class="comment-card-wrapper mb-2">
+  <div class="comment-card-wrapper">
     <div class="comment-card-main flex">
       <div class="comment-card_left mr-2">
-        <a [routerLink]="['/user', comment?.owner?.id]">
+        <a [routerLink]="['/user', comment?.owner?.user_name]">
           <ng-template [ngIf]="comment.owner.avatar" [ngIfElse]="avatar">
             <p-avatar shape="circle" image="{{ comment.owner.avatar }}" size="large"></p-avatar>
           </ng-template>
           <ng-template #avatar>
-            <p-avatar label="{{comment.owner.last_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
+            <app-avatar [label]="comment.owner.display_name.substring(0,1) | uppercase"></app-avatar>
           </ng-template>
         </a>
       </div>
@@ -15,8 +15,8 @@
         <div class="card comment-card px-3 py-3 md:px-4 m-0">
           <div class="card-container flex justify-content-between align-items-center comment-card_header mb-2 h-2rem">
             <div class="comment-card_header_left align-items-center flex">
-              <a [routerLink]="['/user', comment.owner.id]">
-                <span class="font-semibold text-lg mr-2">{{ comment.owner.display_name }}</span>
+              <a [routerLink]="['/user', comment.owner.user_name]" class="text-700">
+                <span class="font-semibold text-lg mr-2 capitalize">{{ comment.owner.display_name | lowercase}}</span>
               </a>
               &#183;
               <span class="mx-2 text-sm" title="{{ comment.created_timestamp }}">{{ comment.fromNow.created }}</span>
@@ -30,8 +30,8 @@
             </div>
             <div class="comment-card_header_right align-items-center">
               <button pButton pRipple type="button" icon="pi pi-flag-fill"
-                class="p-button-rounded p-button-secondary p-button-text button-menu mr-2"
-                (click)="onClickReport($event)"></button>
+                class="p-button-rounded p-button-secondary p-button-text button-menu mr-2 hidden md:block"
+                (click)="onClickReport()"></button>
               <app-btn-menu [menuClass]="'shadow-6'" [items]="menuitem" [icon]="'pi pi-ellipsis-v'">
               </app-btn-menu>
             </div>
@@ -53,21 +53,37 @@
         </div>
         <div class="comment-action py-2">
           <div class="flex">
-            <p-button label="{{'postDetail.commentAction.like' | translate:{ count: comment.like | shortNumber } }}"
-              (click)="onClickLike($event)" icon="pi pi-thumbs-up"
-              styleClass="p-button-sm p-button-plain p-button-text p-2"></p-button>
-            <p-button
-              label="{{'postDetail.commentAction.unlike' | translate:{ count: comment.dislike | shortNumber } }}"
-              (click)="onClickDislike($event)" icon="pi pi-thumbs-down"
-              styleClass="p-button-sm p-button-plain p-button-text p-2"></p-button>
-            <p-button
-              label="{{'postDetail.commentAction.reply' | translate:{ count: comment.children.length | shortNumber } }}"
-              (click)="onClickReply()" icon="pi pi-reply" styleClass="p-button-sm p-button-secondary p-button-text p-2">
-            </p-button>
+            <button pButton pRipple
+              label="{{'postDetail.commentAction.like' | translate:{ count: comment.likes | shortNumber } }}"
+              (click)="onClickLike()" icon="pi pi-thumbs-up"
+              [ngClass]="comment?.mapAction?.like ? 'font-bold text-primary p-button-outlined' : 'p-button-text'"
+              class="p-button-sm p-button-secondary p-2 font-normal">
+            </button>
+            <button pButton pRipple
+              label="{{'postDetail.commentAction.unlike' | translate:{ count: comment.dislikes | shortNumber } }}"
+              (click)="onClickDislike()" icon="pi pi-thumbs-down"
+              [ngClass]="comment?.mapAction?.dislike ? 'font-bold text-primary p-button-outlined' : 'p-button-text'"
+              class="p-button-sm p-button-secondary p-2 font-normal mr-4">
+            </button>
+            <button pButton pRipple *ngIf="!comment.parent_id"
+              label="{{'postDetail.commentAction.reply' | translate:{ count: comment.reply_comments?.total_size | shortNumber } }}"
+              (click)="onClickReply()" icon="pi pi-reply"
+              [ngClass]="comment?.mapAction?.reply ? 'font-bold text-primary p-button-outlined' : 'p-button-text'"
+              class="p-button-sm p-button-plain p-2 font-normal">
+            </button>
           </div>
         </div>
-        <app-comment-input #replyForm (submit)="onSubmitReply()" *ngIf="isShowReply" [parent_id]="comment.id"></app-comment-input>
-        <app-comment-card *ngFor="let c of comment.children" [comment]="c"></app-comment-card>
+        <app-comment-input #replyForm (submit)="onSubmitReply()" *ngIf="isShowReply" [parent_id]="comment.id">
+        </app-comment-input>
+        <app-comment-card *ngFor="let c of comment?.reply_comments?.comments" [comment]="c">
+        </app-comment-card>
+        <div class="pb-4 pt-2 text-center"
+          *ngIf="comment?.reply_comments?.total_size > comment?.reply_comments?.comments?.length">
+          <span class="text-primary text-lg font-medium cursor-pointer button-link" (click)="loadMoreComment()">
+            {{'postDetail.showMoreReply' | translate}}
+            <i *ngIf="isLoadingMoreComment" class="pi pi-spin pi-spinner" style="font-size: 1.2rem"></i>
+          </span>
+        </div>
       </div>
     </div>
   </div>

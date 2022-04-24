@@ -3,19 +3,20 @@
     <div [ngClass]="{ 'flex-order-1': isGrid }"
       class="card-header w-full p-2 flex flex-wrap justify-content-between align-items-center">
       <div class="card-hear-left flex align-items-center" [ngClass]="{ 'w-full mb-3': isGrid }">
-        <a [routerLink]="['/user', post.owner.id]" class="flex align-items-center">
+        <a [routerLink]="['/user', post.owner.user_name]" class="flex align-items-center">
           <ng-template [ngIf]="post.owner?.avatar" [ngIfElse]="avatar">
             <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
           </ng-template>
           <ng-template #avatar>
-            <p-avatar label="{{post.owner?.display_name.substring(0,1)}}" shape="circle" size="large">
-            </p-avatar>
+            <app-avatar [label]="post.owner?.display_name.substring(0,1) | uppercase">
+            </app-avatar>
           </ng-template>
-          <span class="mx-2 font-semibold">{{ post.owner.display_name }}</span>
+          <span class="mx-2 font-semibold capitalize">{{ post.owner.display_name | lowercase}}</span>
         </a>
         <p-tag severity="danger" value="New"></p-tag>
       </div>
-      <div class="card-hear-right flex align-items-center" [ngClass]="isGrid ? 'pl-0 w-full justify-content-between' : 'pl-2'">
+      <div class="card-hear-right flex align-items-center"
+        [ngClass]="isGrid ? 'pl-0 w-full justify-content-between' : 'pl-2'">
         <div class="post-time flex">
           <span class="text-600 mr-2" title="{{ post.created_timestamp }}">
             {{ post.fromNow.created }}
@@ -37,7 +38,7 @@
         <app-tag [tag]="tag" [size]="'xs'" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
       </div>
       <div class="card-content-main cursor-pointer">
-        <a [routerLink]="['/post', post.id]">
+        <a [routerLink]="['/post', post.slug]">
           <div class="flex flex-wrap">
             <div class="col-12" [ngClass]="{ 'md:col-6': !isGrid }">
               <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}"
@@ -49,7 +50,7 @@
                 {{ post.title }}
               </h3>
               <p class="text-gray-600" [ngClass]=" isGrid ? 'card-description-grid' : 'card-description'">
-                {{ post.content_search }}
+                {{ post.short_content }}
               </p>
             </div>
           </div>
@@ -58,28 +59,31 @@
     </div>
     <!-- Info post reaction -->
     <div class="card-footer flex-order-2 w-full px-2 py-3 flex justify-content-between align-items-center">
-      <div class="card-footer-left inline-">
+      <div class="card-footer-left inline-flex">
         <div
-          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
-          pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom">
+          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
+          pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom"
+          [ngClass]="{'bg-gray-100 text-primary': post.mapAction.like}">
           <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
-          <i style="font-size: 1.1rem" class="pi pi-thumbs-up text-primary"></i>
+          <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
         </div>
         <div
-          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
-          pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom">
+          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
+          pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom"
+          [ngClass]="{'bg-gray-100 text-primary': post.mapAction.comment}">
           <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
-          <i style="font-size: 1.2rem" class="pi pi-comment text-primary"></i>
+          <i style="font-size: 1.2rem" class="pi pi-comment"></i>
         </div>
         <div
-          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-200 p-1 border-round cursor-pointer"
-          pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom">
+          class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
+          pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom"
+          [ngClass]="{'bg-gray-100 text-primary': post.mapAction.visited}">
           <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
-          <i style="font-size: 1.25rem" class="pi pi-eye text-primary"></i>
+          <i style="font-size: 1.25rem" class="pi pi-eye"></i>
         </div>
       </div>
       <div class="card-footer-right pr-2">
-        <a class="read-more-button text-blue-700 hover:text-blue-500" [routerLink]="['/post', post.id]"
+        <a class="read-more-button text-blue-700 hover:text-blue-500" [routerLink]="['/post', post.slug]"
           pTooltip="{{ 'card.read_more' | translate }}" tooltipPosition="bottom">
           <span class="read-more-text mr-2 font-medium" [ngClass]="{ 'hidden xl:inline': isGrid }">
             {{ "card.read_more" |translate }}</span>

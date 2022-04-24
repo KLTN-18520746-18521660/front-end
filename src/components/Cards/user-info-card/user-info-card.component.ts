@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { mapActionWithUser } from './../../../utils/commonFunction';
+import { AppUserComponent } from 'pages/AppUser/AppUser.component';
+import { Component, Input, OnInit } from '@angular/core';
+import User from 'models/user.model';
+import { ActionType } from 'utils/apiConstant';
+import { UserService } from 'services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-info-card',
@@ -7,55 +13,84 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserInfoCardComponent implements OnInit {
 
-  user: any = {
-    id: 1,
-    display_name: 'John Doe',
-    user_name: 'john_doe05',
-    email: 'john@doe.com',
-    phone: '+1 (555) 555-5555',
-    country: 'USA',
-    isVip: false,
-    dateOfBirth: new Date(),
-    avatar: 'https://placeimg.com/320/320',
-    bio: 'I am font-end developer with 3 year experience. I can find bugs and fix them. I am very good at HTML, CSS, JavaScript, TypeScript, Angular, React, and more. I will be working with other languages. Contact me at https://github.com/john, let me know what you are doing and i will help you to get started. I am very happy to help you. By me a coffee on http://paypal.com/john.           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi alias deleniti facere ex recusandae fuga quam ea adipisci iusto? Explicabo quos amet vitae minima quaerat alias repellat laudantium iste animi.',
-    skills: [
-      'Angular',
-      'React',
-      'HTML',
-    ],
-    social: [
-      'http://facebook.com/john.doe',
-      'http://twitter.com/john.doe'
-    ],
-    values: {
-      post: 1,
-      following: 12099,
-      follower: 12,
-      view: 213131,
-      like: 1231,
-    }
-  }
+  @Input() user_name: string;
 
-  isFollowing: boolean = false;
+  user: User;
 
-  constructor() { }
+  subcription: Subscription;
+
+  actionUserSubcription: Subscription;
+
+  isLoading: boolean = false;
+
+  constructor(
+    private userService: UserService,
+    private appUser: AppUserComponent,
+  ) { }
 
   ngOnInit() {
-    this.checkisFollowing();
-  }
-
-  checkisFollowing() {
-    this.isFollowing = false;
+    this.getUserInfo();
   }
 
   onClickFollow() {
-    if (this.isFollowing) {
-      this.user.values.following--;
+    if (this.user.mapAction.follow) {
+      this.actionWithUser('unfollow');
     }
     else {
-      this.user.values.following++;
+      this.actionWithUser('follow');
     }
-    this.isFollowing = !this.isFollowing;
   }
 
+  getUserInfo() {
+    this.isLoading = true;
+    this.subcription = this.userService.getUserInfoByUserName(this.user_name, this.userService.getSessionId()).subscribe(
+      (res) => {
+        this.user = res.data.user;
+
+        this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
+        this.isLoading = false;
+      },
+      (err) => {
+        this.isLoading = false;
+        console.log(err);
+      }
+    );
+  }
+
+  actionWithUser(action: ActionType) {
+    const sessionId = this.userService.getSessionId();
+    if (this.actionUserSubcription) {
+      this.actionUserSubcription.unsubscribe();
+    }
+    if (sessionId) {
+      this.actionUserSubcription = this.userService.sendActionWithUser(this.user_name, action, sessionId).subscribe(
+        (res) => {
+          console.log(res);
+          if (action === 'follow') {
+            this.user.followers++;
+            this.user.mapAction.follow = true;
+          }
+          else if (action === 'unfollow') {
+            this.user.followers--;
+            this.user.mapAction.follow = false;
+          }
+        },
+        (err) => {
+          console.log(err)
+        }
+      );
+    }
+    else {
+      this.appUser.openLoginPopup();
+      return;
+    }
+  }
+  ngOnDestroy() {
+    if (this.subcription) {
+      this.subcription.unsubscribe();
+    }
+    if (this.actionUserSubcription) {
+      this.actionUserSubcription.unsubscribe();
+    }
+  }
 }

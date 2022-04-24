@@ -1,9 +1,15 @@
+@import 'styles/scss/mixins.scss';
+
 .comment-card-wrapper {
   .comment-card-main {
     .comment-card-right {
       .comment-card_header {
         .comment-card_header_right {
           display: none;
+
+          @include breakpoint(max, 768px) {
+            display: flex !important;
+          }
         }
       }
 
@@ -39,8 +45,8 @@
   }
 
   .p-button-sm {
-    .p-button-icon {
-      &::before {
+    &.action-active {
+      .p-button-plain {
         color: var(--primary-color) !important;
       }
     }

@@ -11,9 +11,17 @@
 
   .card-heading {
     @include maxline(2);
+
+    @include breakpoint(min, 768px) {
+      min-height: 36px;
+    }
   }
 
   .card-description {
     @include maxline(2);
+
+    @include breakpoint(min, 768px) {
+      min-height: 40px;
+    }
   }
 }
