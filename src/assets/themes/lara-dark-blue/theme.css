@@ -4465,7 +4465,7 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   background: #091a32;
   color: rgba(255, 255, 255, 0.87);
   border: 1px solid #0b213f;
-  border-radius: 6px;
+  border-radius: 2px;
   width: 12.5rem;
 }
 .p-menu .p-menuitem-link {

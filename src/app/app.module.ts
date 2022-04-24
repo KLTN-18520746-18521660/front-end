@@ -1,9 +1,14 @@
+import { StatusBadgeComponent } from './../components/status-badge/status-badge.component';
+import { NotificationCardComponent } from './../components/Cards/notification-card/notification-card.component';
+import { UserFollowingComponent } from './../components/Profile/user-following/user-following.component';
+import { UserFollowerComponent } from './../components/Profile/user-follower/user-follower.component';
+import { UserCardComponent } from './../components/Cards/user-card/user-card.component';
 import { CommentInputComponent } from './../components/Input/comment-input/comment-input.component';
 import { RecommendPostCardComponent } from './../components/Cards/recommend-post-card/recommend-post-card.component';
 import { UserInfoPageComponent } from './../pages/UserInfoPage/UserInfoPage.component';
 import { PostCardComponent } from './../components/Cards/post-card/post-card.component';
 import { ReadMoreComponent } from './../components/read-more/read-more.component';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, SecurityContext } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,12 +18,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { APPCONSTANT } from 'utils/appConstant';
 
 // Import packages
 import { NgprimeModule } from './modules/ngprime.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
+import { CookieService } from 'services/cookie.service';
 
 
 // Import pages
@@ -44,7 +52,6 @@ import { TopbarAdminComponent } from 'components/Admin/topbar-admin/topbar-admin
 import { MenuComponent } from 'components/Admin/menu/menu.component';
 import { AppMenuitemComponent } from 'components/Admin/menu/menuitem.component';
 import { AdminLoginPageComponent } from 'pages/Admin/AdminLoginPage/AdminLoginPage.component';
-import { AppConfigComponent } from 'pages/Admin/app.config.component';
 import { TagsPageComponent } from 'pages/TagsPage/TagsPage.component';
 import { MyMissingTranslationHandler } from 'shared/mising-translation';
 import { MyAppConfigComponent } from 'components/app-config/app-config.component';
@@ -76,7 +83,6 @@ import { AdminModule } from './modules/admin.module';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmAccountPageComponent } from 'pages/ConfirmAccountPage/ConfirmAccountPage.component';
 import { ProfileModule } from './modules/profile.module';
-import { MenuModule } from 'primeng/menu';
 import { UserDashboardComponent } from 'components/Profile/user-dashboard/user-dashboard.component';
 import { ChangePasswordComponent } from 'components/Profile/change-password/change-password.component';
 import { UserInfoComponent } from 'components/Profile/user-info/user-info.component';
@@ -84,15 +90,22 @@ import { UserSettingComponent } from 'components/Profile/user-setting/user-setti
 import { UserNotificationComponent } from 'components/Profile/user-notification/user-notification.component';
 import { UserManagePostComponent } from 'components/Profile/user-manage-post/user-manage-post.component';
 
-// import 'prismjs';
+// import 'prismjs/prism.js';
 // import 'prismjs/components/prism-typescript.min.js';
 // import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 // import 'prismjs/plugins/line-highlight/prism-line-highlight.js';
 
-import 'ionicons/dist/ionicons/ionicons.js';
-import 'ionicons/dist/ionicons/ionicons.esm.js';
 import { SafePipe } from 'shared/pipes/safe.pipe';
 import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-edit-info.component';
+import { RequiredFieldDirective } from 'shared/directives/requiredField.directive';
+import { AvatarComponent } from 'components/avatar/avatar.component';
+import { ManagePostsPageComponent } from 'pages/Admin/ManagePostsPage/ManagePostsPage.component';
+import { ReportPopupComponent } from 'components/Popups/report-popup/report-popup.component';
+import { UserIdleModule } from 'angular-user-idle';
+import { CheckIconComponent } from 'components/check-icon/check-icon.component';
+import { NotFoundComponent } from 'components/not-found/not-found.component';
+import { AutoFocusDirective } from 'shared/directives/autofocus.directive';
+import { NAPipe } from 'shared/pipes/n-a.pipe';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -153,12 +166,24 @@ export function createTranslateLoader(http: HttpClient) {
     UserNotificationComponent,
     UserManagePostComponent,
     SafePipe,
+    NAPipe,
+    AutoFocusDirective,
     UserEditInfoComponent,
+    RequiredFieldDirective,
+    AvatarComponent,
+    ManagePostsPageComponent,
+    ReportPopupComponent,
+    CheckIconComponent,
+    NotFoundComponent,
+    UserCardComponent,
+    UserFollowerComponent,
+    UserFollowingComponent,
+    NotificationCardComponent,
+    StatusBadgeComponent,
 
     TopbarAdminComponent,
     MenuComponent,
     AppMenuitemComponent,
-    AppConfigComponent,
     AdminLoginPageComponent,
   ],
   imports: [
@@ -171,12 +196,18 @@ export function createTranslateLoader(http: HttpClient) {
     ReactiveFormsModule,
     NgprimeModule,
     AuthModule,
-    MenuModule,
     AdminModule,
     ProfileModule,
+    ClipboardModule,
+    UserIdleModule.forRoot({
+      idle: APPCONSTANT.USER_IDLE.IDLE,
+      timeout: APPCONSTANT.USER_IDLE.TIMEOUT,
+      ping: APPCONSTANT.USER_IDLE.PING
+    }),
     InfiniteScrollModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
+      sanitize: SecurityContext.NONE,
       markedOptions: {
         provide: MarkedOptions,
         useFactory: markedOptionsFactory,
@@ -199,28 +230,29 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   entryComponents: [
     LoginPageComponent,
-    SignUpPageComponent,
+    ReportPopupComponent
   ],
   providers: [
     authInterceptorProviders,
     MessageService,
+    CookieService,
     ConfirmationService,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '371642256601-n9lv5qu9j8qh9msq9388li0sp2gk1th2.apps.googleusercontent.com'
-            ),
-          },
-        ]
-      } as SocialAuthServiceConfig
-    }
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider(
+    //           '371642256601-n9lv5qu9j8qh9msq9388li0sp2gk1th2.apps.googleusercontent.com'
+    //         ),
+    //       },
+    //     ]
+    //   } as SocialAuthServiceConfig
+    // }
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

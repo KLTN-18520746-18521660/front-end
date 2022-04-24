@@ -6,9 +6,8 @@ import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter, map } from "rxjs/operators";
 import { UserConfigService } from 'services/user-config.service';
-import { UserService } from 'services/user.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-
+import { APPCONSTANT } from 'utils/appConstant';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,9 +25,6 @@ export class AppComponent {
     private title: Title,
     private router: Router,
     private config: UserConfigService,
-    private userService: UserService,
-    private dialog: DialogService,
-    private dialogRef: DynamicDialogRef,
   ) {
     translate.addLangs(['en', 'vi', 'jp']);
 
@@ -42,13 +38,17 @@ export class AppComponent {
       this.translate.use(browserLang.match(/vi|en|jp/) ? browserLang : 'en');
       this.config.addConfig('language', this.translate.currentLang);
     }
+
+    config.getConfigs();
   }
 
   ngOnInit() {
     this.setupTitleListener();
     this.translate.get('primeng').subscribe(res => this.primeConfig.setTranslation(res));
     this.primengConfig.ripple = true;
-    document.documentElement.style.fontSize = '13px';
+
+    // set font size for all pages ... = 1rem
+    document.documentElement.style.fontSize = APPCONSTANT.FONT_SIZE + 'px';
   }
 
   changeTheme(theme: string) {
@@ -68,14 +68,7 @@ export class AppComponent {
           if (route?.snapshot?.data) {
             key = route?.snapshot?.data['key'];
           }
-          this.userService.addHistory(this.router.routerState.snapshot.url);
 
-          // remove ref dialog
-          if (this.userService.ref) {
-            this.userService.ref.forEach(ref => {
-              ref.close();
-            })
-          }
           return key;
         })
       )

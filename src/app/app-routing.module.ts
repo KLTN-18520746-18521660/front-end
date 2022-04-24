@@ -36,7 +36,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'post/:id',
+        path: 'post/:slug',
         component: DetailPageComponent,
       },
       {
@@ -44,7 +44,7 @@ const routes: Routes = [
         component: TagsPageComponent
       },
       {
-        path: 'user/:id',
+        path: 'user/:username',
         component: UserInfoPageComponent
       },
       {
@@ -62,10 +62,6 @@ const routes: Routes = [
       {
         path: 'auth',
         loadChildren: () => import('./modules/auth.module').then(m => m.AuthModule)
-      },
-      {
-        path: '**',
-        component: NotFoundPageComponent
       }
     ],
   },
@@ -91,9 +87,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(
     routes,
     {
-      scrollPositionRestoration: 'top',
+      scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
-      scrollOffset: [0, 0],
+      // scrollOffset: [0, 0],
       onSameUrlNavigation: 'ignore',
     }
   )],

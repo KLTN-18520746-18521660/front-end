@@ -33,7 +33,7 @@
   --gray-900: #212121;
   --content-padding:1.25rem;
   --inline-spacing:0.5rem;
-  --border-radius:6px;
+  --border-radius:4px;
   --surface-ground:#eff3f8;
   --surface-section:#ffffff;
   --surface-card:#ffffff;
@@ -4465,7 +4465,7 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   background: #ffffff;
   color: #495057;
   border: 1px solid #dee2e6;
-  border-radius: 6px;
+  border-radius: 2px;
   width: 12.5rem;
 }
 .p-menu .p-menuitem-link {

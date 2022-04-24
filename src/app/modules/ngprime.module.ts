@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CaptchaModule } from 'primeng/captcha';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
@@ -18,9 +19,11 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { ImageModule } from 'primeng/image';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
@@ -39,6 +42,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SidebarModule } from 'primeng/sidebar';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SpeedDialModule } from 'primeng/speeddial';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -48,6 +52,7 @@ import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { TreeSelectModule } from 'primeng/treeselect';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 
 @NgModule({
@@ -60,6 +65,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     CaptchaModule,
     CardModule,
     CarouselModule,
+    CascadeSelectModule,
     CheckboxModule,
     ChipModule,
     ChipsModule,
@@ -73,8 +79,10 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     FieldsetModule,
     FileUploadModule,
     ImageModule,
+    InputSwitchModule,
     InputTextareaModule,
     InputTextModule,
+    InputNumberModule,
     MenubarModule,
     MenuModule,
     MessageModule,
@@ -92,6 +100,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     SelectButtonModule,
     SidebarModule,
     SkeletonModule,
+    SpeedDialModule,
     SplitButtonModule,
     StepsModule,
     StyleClassModule,
@@ -101,6 +110,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     TieredMenuModule,
     ToastModule,
     TooltipModule,
+    TreeSelectModule,
     VirtualScrollerModule,
   ],
 })

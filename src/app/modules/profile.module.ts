@@ -1,3 +1,6 @@
+import { UserFollowerComponent } from './../../components/Profile/user-follower/user-follower.component';
+import { UserFollowingComponent } from './../../components/Profile/user-following/user-following.component';
+import { UserPostSavedComponent } from './../../components/Profile/user-post-saved/user-post-saved.component';
 import { UserInfoComponent } from './../../components/Profile/user-info/user-info.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -45,13 +48,7 @@ import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-ed
               key: 'change-password'
             }
           },
-          {
-            path: 'settings',
-            component: UserSettingComponent,
-            data: {
-              key: 'settings'
-            }
-          },
+          
           {
             path: 'manage-post',
             component: UserManagePostComponent,
@@ -60,12 +57,40 @@ import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-ed
             }
           },
           {
+            path: 'saved-post',
+            component: UserPostSavedComponent,
+            data: {
+              key: 'saved-post'
+            }
+          },
+          {
+            path: 'following',
+            component: UserFollowingComponent,
+            data: {
+              key: 'following'
+            }
+          },
+          {
+            path: 'followers',
+            component: UserFollowerComponent,
+            data: {
+              key: 'followers'
+            }
+          },
+          {
             path: 'notifications',
             component: UserNotificationComponent,
             data: {
               key: 'notifications'
             }
-          }
+          },
+          {
+            path: 'settings',
+            component: UserSettingComponent,
+            data: {
+              key: 'settings'
+            }
+          },
         ]
       }
     ])

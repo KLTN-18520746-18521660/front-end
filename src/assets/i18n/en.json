@@ -3,6 +3,9 @@
     "post": "Post",
     "posts": "Posts",
     "follow": "Follow",
+    "unfollow": "Unfollow",
+    "clickFollow": "Click to follow",
+    "clickUnfollow": "Click to unfollow",
     "following": "Following",
     "follower": "Follower",
     "followers": "Followers",
@@ -23,11 +26,41 @@
       "trending": "Trending"
     }
   },
+  "notification": {
+    "viewRead": "View read"
+  },
   "dialog": {
     "confirmation": "Confirmation",
     "login": "You need to login to continue",
-    "discard": "Do you want to discard this changes?",
-    "publish": "Do you want to publish this post?"
+    "logout": {
+      "header": "Log out?",
+      "title": "Are you sure you want to logout?",
+      "yes": "Log Out",
+      "no": "Cancel"
+    }
+  },
+  "status": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "Enabled": "Enabled",
+    "Disabled": "Disabled",
+    "Readonly": "Readonly",
+    "Activated": "Activated",
+    "Deleted": "Deleted",
+    "Blocked": "Blocked",
+    "Created": "Created",
+    "Edited": "Edited",
+    "Sent": "Sent",
+    "Read": "Read",
+
+    "Pending": "Pending",
+    "Approved": "Approved",
+    "Rejected": "Rejected",
+    "Private": "Private",
+    "Ignored": "Ignored",
+    "Handled": "Handled",
+    "Public": "Public"
   },
   "titlePage": {
     "default": "Home - Heovi",
@@ -41,16 +74,25 @@
     "forgotpassword": "Forgot Password",
     "confirm-account": "Confirm Account",
     "dashboard": "Dashboard",
-    "notification": "Notification",
+    "notifications": "Notifications",
     "setting": "Setting",
     "manage-post": "Manage Post",
     "user-info": "User Info",
     "edit-info": "Edit Info",
     "change-password": "Change Password",
+    "saved-post": "Save Post",
+    "following": "Following",
+    "followers": "Followers",
     "manageUser": "Manage User",
     "logout": "Logout",
     "search": "Search result for {{query}}",
-    "trending": "Trending"
+    "trending": "Trending",
+    "admin": {
+      "dashboard": "Admin Dashboard",
+      "login": "Admin Login",
+      "manage-post": "Manage Post",
+      "manage-user": "Manage User"
+    }
   },
   "topbar": {
     "login": "Login",
@@ -60,6 +102,7 @@
     "home": "Home",
     "more": "More",
     "user": {
+      "dashboard": "My Dashboard",
       "profile": "My Profile",
       "edit": "Edit Profile",
       "setting": "Setting",
@@ -90,7 +133,7 @@
         "title": "Management",
         "items": {
           "manage-post": "Manage Post",
-          "save-post": "Save Post",
+          "saved-post": "Save Post",
           "following": "Following",
           "follower": "Follower"
         }
@@ -154,16 +197,39 @@
       "sex": "Gender",
       "phone": "Phone",
       "joined": "Joined day"
+    },
+    "result": {
+      "following": "You is following <b>{{count}}</b> users",
+      "follower": "Have <b>{{count}}</b> Followers"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "description": "Login by admin account to access app",
+      "email": "Email or username",
+      "emailPlaceholder": "Enter email or username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "remember": "Remember me",
+      "submit": "Login",
+      "validation": {
+        "email": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        },
+        "password": {
+          "required": "Password is required",
+          "min": "Password must be at least 6 characters"
+        }
+      }
     }
   },
   "action": {
+    "view": "View",
     "like": "Like",
     "unlike": "Unlike",
-    "report": "Report",
-    "view": "View",
-    "save": "Save",
-    "copy": "Copy link",
-    "share": "Share"
+    "save": "Save"
   },
   "label": {
     "search": "Hi {{name}}, let's search for something here ...",
@@ -178,6 +244,13 @@
     },
     "trending": "Trending",
     "connectus": "Connect us",
+    "session": {
+      "expired": {
+        "title": "Session expired",
+        "message": "Your session has expired, please login again"
+      },
+      "logout": "You have been logged out"
+    },
     "login": {
       "title": "Login",
       "description": "Login to your account to continue",
@@ -261,11 +334,11 @@
       }
     },
     "confirm": {
-      "title": "Confirm your account",
-      "description": "Type password again to verify your account",
+      "title": "Confirm your email",
+      "description": "Type password again to verify your email",
       "email": {
-        "label": "Email",
-        "placeholder": "Enter email address",
+        "label": "Email address",
+        "placeholder": "Email address",
         "required": "Email is required"
       },
       "password": {
@@ -274,7 +347,20 @@
         "required": "Password is required!",
         "min": "Confirm password must be at least 6 characters"
       },
-      "submit": "Confirm"
+      "submit": "Confirm",
+      "login": "Login here",
+      "home": "Go to home page",
+      "success": {
+        "title": "Good job!",
+        "description": "Your email has been confirmed successfully"
+      },
+      "warning": "You only have 3 times to try to confirm your account"
+    },
+    "notfound": {
+      "title": "OOPS!",
+      "description": "Something went wrong or the page you are looking for does not exist, please try again later",
+      "home": "Go to home page",
+      "back": "Go back"
     }
   },
   "card": {
@@ -293,6 +379,7 @@
   "postDetail": {
     "postedOn": "Posted on ",
     "updatedOn": "Updated on ",
+    "share": "Share",
     "action": {
       "edit": "Edit",
       "save": "Save",
@@ -300,16 +387,25 @@
       "share": "Share",
       "report": "Report"
     },
+    "values": {
+      "view": "Views",
+      "like": "Click to like",
+      "unlike": "Click to unlike",
+      "save": "Comments"
+    },
     "disscussion": "Dissussion ({{count}})",
     "comment": "Comment",
+    "submitComment": "Submit this comment",
+    "showMoreComment": "Show more comments",
+    "showMoreReply": "Show more replies",
     "commentPlaceholder": "Put your comment here ...",
     "commentError": "Comment is invalid. Please enter your comment, and try again!",
     "edited": "Edited",
     "readMore": "Read more",
     "readLess": "Read less",
     "commentAction": {
-      "like": "({{count}}) Like",
-      "unlike": "({{count}}) Dislike",
+      "like": "({{count}})",
+      "unlike": "({{count}})",
       "report": "Report",
       "reply": "({{count}}) Reply"
     },
@@ -330,7 +426,15 @@
       "likesDesc": "Likes descending",
       "likesAsc": "Likes ascending"
     },
-    "suggest": "Suggest for you"
+    "suggest": "Suggest for you",
+    "shareAction": {
+      "facebook": "Share on Facebook",
+      "twitter": "Share on Twitter",
+      "linkedin": "Share on Linkedin",
+      "save": "Save to your list",
+      "copy": "Copy link",
+      "report": "Report"
+    }
   },
   "createPost": {
     "edit": "Edit",
@@ -339,7 +443,111 @@
     "saveDraft": "Save as draft",
     "publish": "Publish",
     "cancel": "Cancel",
-    "discard": "Discard"
+    "discard": "Discard",
+    "title": "Title",
+    "thumnail": "Thumnail",
+    "tag": "Tags",
+    "slug": "URL: ",
+    "timeRead": "Time to read (2-50 mins)",
+    "moreTag": "More tags",
+    "category": "Category",
+    "form": {
+      "titlePlaceholder": "Enter title of post here",
+      "thumbnailPlaceholder": "Enter URL image for thumnail",
+      "thumbnailError": "Please enter a valid URL image for thumnail",
+      "tagPlaceHolder": "Enter tag",
+      "moreTagPlaceholder": "Enter more tag",
+      "categoryPlaceHolder": "Enter category",
+      "titleHere": "{{ Title here ... }}",
+      "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
+    },
+    "textTranslate": {
+      "confirmation": "Confirmation",
+      "discard": "Do you want to discard this changes?",
+      "publish": "Do you want to publish this post?",
+      "popup": {
+        "message": "You must be logged in to create a post",
+        "header": " ",
+        "footer": " "
+      },
+      "valid": {
+        "title": "Title must be lenght between 20 and 200 characters",
+        "thumbnail": "Thumbnail is required",
+        "tag": "Tag is required",
+        "category": "You must select at less a category",
+        "timeRead": "Time to read is between 2 and 50 minutes",
+        "content": "Content is empty"
+      }
+    }
+  },
+  "report": {
+    "title": "Report to admins",
+    "description": "Let the admins know what's wrong, select reason to report this post. Once you submit, admins will review your report and take action. Only admins can see your report.",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "reason": "Description",
+    "reasonPlaceholder": "Type more description here ...",
+    "dialog": {
+      "cancel": {
+        "title": "Cancel report",
+        "description": "Do you want to cancel this report?",
+        "confirm": "Yes, cancel",
+        "cancel": "No, keep it"
+      },
+      "submit": {
+        "title": "Submit report",
+        "description": "Do you want to submit this report?",
+        "confirm": "Yes, Submit this report",
+        "cancel": "No, keep editing"
+      }
+    },
+    "success": {
+      "title": "Report has been sent",
+      "description": "Your report has been sent successfully. Thank you for your feedback."
+    },
+    "reasons": {
+      "inappropriate": {
+        "title": "Inappropriate",
+        "description": "This post is inappropriate"
+      },
+      "spam": {
+        "title": "Spam",
+        "description": "Content that is massively posted or otherwise misleading in nature."
+      },
+      "rules": {
+        "title": "Violate rules",
+        "description": "This post violate the rules of the website."
+      },
+      "hate": {
+        "title": "Hate speech",
+        "description": "Hate speech is a form of verbal abuse that aims to damage another's feelings through the use of language, such as cursing, threats of violence, or personal attacks."
+      },
+      "violence": {
+        "title": "Violence",
+        "description": "Content that is violent, graphic, or posted to shock viewers."
+      },
+      "false": {
+        "title": "False information",
+        "description": "Content that is false, misleading, or posted to mislead."
+      },
+      "irrelevant": {
+        "title": "Irrelevant",
+        "description": "Content that is irrelevant to the topic of the website."
+      },
+      "sexual": {
+        "title": "Sexual content",
+        "description": "Content that includes graphic sexual activity, nudity, or other types of sexual content."
+      },
+      "copyright": {
+        "title": "Copyright violation",
+        "description": "Copyright, privacy, trademark, or other intellectual property violation."
+      },
+      "other": {
+        "title": "Other",
+        "description": "Other reason (description is required)"
+      }
+    }
   },
   "language": {
     "en": {

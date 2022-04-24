@@ -1,8 +1,9 @@
+import { UserService } from 'services/user.service';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'models/appconfig';
-import { ConfigService } from 'pages/Admin/service/app.config.service';
+import { ConfigService } from 'services/app.config.service';
 import { MenuItem } from 'primeng/api';
 import { filter, Subscription } from 'rxjs';
 import { BREAKPOINT } from 'utils/appConstant';
@@ -62,10 +63,10 @@ export class ProfilePageComponent implements OnInit {
           routerLink: ['./manage-post'],
         },
         {
-          id: 'save-post',
+          id: 'saved-post',
           label: '',
           icon: 'pi pi-bookmark',
-          routerLink: ['./save-post'],
+          routerLink: ['./saved-post'],
         },
         {
           id: 'following',
@@ -115,11 +116,15 @@ export class ProfilePageComponent implements OnInit {
 
   isShowMenu = false;
 
+  isLoading = false;
+
   activeLink: string;
 
   labelHeader: string;
 
   config: AppConfig;
+
+  configSubscription: Subscription;
 
   subscription: Subscription;
 
@@ -128,13 +133,18 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private configService: ConfigService,
-    private router: Router,
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    if (!this.userService.getSessionId()) {
+      this.router.navigate(['/auth/login']);
+    }
+
     this.activeLink = window.location.pathname.split('/')[2] || '';
     this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
+    this.configSubscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
 
@@ -214,6 +224,10 @@ export class ProfilePageComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+
+    if (this.configSubscription) {
+      this.configSubscription.unsubscribe();
     }
   }
 }
