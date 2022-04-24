@@ -1,9 +1,17 @@
+import { MessageService } from 'primeng/api';
+import { APPCONSTANT, STORAGE_KEY } from './../../../utils/appConstant';
+import { CookieService } from 'services/cookie.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { AdminService } from 'services/admin.service';
 import { Component, AfterViewInit, OnDestroy, Renderer2, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppComponent } from '../../../app/app.component';
-import { ConfigService } from '../service/app.config.service';
+import { ConfigService } from '../../../services/app.config.service';
 import { AppConfig } from '../../../models/appconfig';
-import { Subscription } from 'rxjs';
+import { filter, fromEvent, map, merge, Subscription } from 'rxjs';
+import { UserIdleService } from 'angular-user-idle';
+import { TranslateService } from '@ngx-translate/core';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-main',
@@ -52,13 +60,213 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
   config: AppConfig;
 
+  configSubscription: Subscription;
+
   subscription: Subscription;
 
-  constructor(public renderer: Renderer2, public app: AppComponent, public configService: ConfigService) { }
+  idleChangeSubscription: Subscription;
+
+  timeStartSubscription: Subscription;
+
+  timeOutSubscription: Subscription;
+
+  pingSubscription: Subscription;
+
+  ref: DynamicDialogRef;
+
+  isLoggedIn = false;
+
+  isVisible: boolean;
+  textTranslate: any;
+  previousURL: string;
+  currentURL: string;
+  isWatching: boolean;
+
+  constructor(
+    public renderer: Renderer2,
+    public app: AppComponent,
+    public configService: ConfigService,
+    private adminService: AdminService,
+    private cookieService: CookieService,
+    private router: Router,
+    private messageService: MessageService,
+    private userIdleService: UserIdleService,
+    private translate: TranslateService,
+  ) {
+    this.currentURL = this.router.url;
+    const sessionId = this.adminService.getSessionId();
+    if (sessionId) {
+      this.adminService.getAdminInfor(sessionId).subscribe(
+        (res) => {
+          this.adminService.changeAuth(sessionId, res.data.user, true);
+          this.isLoggedIn = true;
+        },
+        (err) => {
+          this.adminService.changeAuth(sessionId, null, false);
+          // this.adminService.logOut();
+          this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+        }
+      );
+    }
+  }
 
   ngOnInit() {
+    this.userIdleService.setCustomActivityEvents(
+      merge(
+        fromEvent(window, 'mousemove'),
+        fromEvent(window, 'mouseenter'),
+        fromEvent(window, 'resize'),
+        fromEvent(document, 'click'),
+        fromEvent(document, 'scroll'),
+        fromEvent(document, 'keydown'),
+        fromEvent(document, 'touchstart'),
+        fromEvent(document, 'touchend')
+      )
+    );
+
+    this.getPublishConfig();
+
     this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => this.config = config);
+    this.configSubscription = this.configService.configUpdate$.subscribe(config => this.config = config);
+
+    this.translate.get('label.session').subscribe(res => {
+      this.textTranslate = res;
+    })
+
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => {
+
+        // remove ref dialog
+        if (this.adminService.ref) {
+          this.adminService.ref.forEach(ref => {
+            ref.close();
+          })
+        };
+
+        return this.router.routerState.snapshot
+      })
+    ).subscribe((event) => {
+      this.previousURL = this.currentURL;
+      this.currentURL = event.url;
+    });
+  }
+
+  async getPublishConfig() {
+    const { data } = await this.adminService.getPublicConfig().toPromise();
+
+    this.adminService.setConfig(data.configs);
+    this.userIdleService.setConfigValues({
+      idle: data.configs.SessionAdminUserConfig.expiry_time * 60 || APPCONSTANT.USER_IDLE.IDLE,
+      timeout: APPCONSTANT.USER_IDLE.TIMEOUT,
+      ping: APPCONSTANT.USER_IDLE.PING
+    })
+
+    console.log(this.userIdleService.getConfigValue());
+
+    if (this.adminService.isAuthenticated && !this.isWatching) {
+      this.onStartWatching();
+    }
+
+    // User Idle
+    this.subscription = this.adminService.authAdminUpdate$.subscribe(res => {
+      if (res.isAuthenticated) {
+        if (!this.isWatching)
+          this.onStartWatching();
+      }
+      else {
+        this.adminService.updateAdminAuth(null);
+        if (!this.isWatching)
+          this.onStartWatching();
+        this.adminService.messages = [{
+          severity: 'error',
+          summary: 'You have been logged out!',
+          detail: '',
+        }]
+      }
+    });
+
+    this.idleChangeSubscription = this.userIdleService.onIdleStatusChanged().subscribe((res) => {
+      // isvisible == false when focus page
+      this.isVisible = res;
+      console.log("", res)
+    })
+
+    // Start watching when user idle is starting.
+    this.timeStartSubscription = this.userIdleService.onTimerStart().subscribe(count => {
+      this.isVisible = true;
+      // console.log("Timer ", count)
+    });
+
+    this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
+      console.log("Time out")!
+      this.updateAuthenciated();
+    });
+  }
+
+  updateAuthenciated() {
+    if (this.cookieService.check(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)) {
+      console.log("Ping has token");
+      if (this.adminService.isAuthenticated && !this.isVisible) {
+        this.extendSession();
+      }
+      else if (!this.adminService.isAuthenticated) {
+        this.adminService.updateAdminAuth(this.cookieService.get(STORAGE_KEY.ADMIN_SESSIONS_TOKEN));
+      }
+    }
+    else {
+      console.log("Ping no token")
+      if (this.isWatching)
+        this.onStopWatching();
+      this.adminService.messages = [{
+        severity: 'error',
+        summary: 'Session Expired',
+        detail: '',
+      }];
+    }
+  }
+
+  onStartWatching() {
+    this.userIdleService.startWatching();
+    this.isWatching = true;
+    console.log("Start watching");
+
+    this.pingSubscription = this.userIdleService.ping$.subscribe(() => {
+      this.updateAuthenciated();
+    });
+  }
+
+
+  onStopWatching() {
+    console.log("Stop watching")
+    if (this.pingSubscription) {
+      this.pingSubscription.unsubscribe();
+    }
+    if (this.timeOutSubscription) {
+      this.timeOutSubscription.unsubscribe();
+    }
+    if (this.timeStartSubscription) {
+      this.timeStartSubscription.unsubscribe();
+    }
+    if (this.idleChangeSubscription) {
+      this.idleChangeSubscription.unsubscribe();
+    }
+    this.userIdleService.stopWatching();
+    this.isWatching = false;
+    this.isLoggedIn = false;
+    this.router.navigate(['/admin/loginn']);
+  }
+
+  extendSession() {
+    this.adminService.extendSessionAdmin(this.adminService.getSessionId()).subscribe(
+      (res) => {
+        console.log("Extend Session Success");
+      },
+      (err) => {
+        console.log("Error ", err);
+        this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+      }
+    )
   }
 
   ngAfterViewInit() {
@@ -175,9 +383,25 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
       this.documentClickListener();
     }
 
+    if (this.configSubscription) {
+      this.configSubscription.unsubscribe();
+    }
 
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+
+    if (this.pingSubscription) {
+      this.pingSubscription.unsubscribe();
+    }
+    if (this.timeOutSubscription) {
+      this.timeOutSubscription.unsubscribe();
+    }
+    if (this.timeStartSubscription) {
+      this.timeStartSubscription.unsubscribe();
+    }
+    if (this.idleChangeSubscription) {
+      this.idleChangeSubscription.unsubscribe();
     }
   }
 }

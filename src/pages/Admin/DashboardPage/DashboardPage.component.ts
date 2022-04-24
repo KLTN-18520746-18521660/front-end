@@ -1,4 +1,6 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'services/admin.service';
 
 @Component({
   selector: 'app-DashboardPage',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private adminService: AdminService,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit() {
+  }
+
+  reloadConfig() {
+    this.adminService.reloadConfig(this.adminService.getSessionId()).subscribe(
+      (res) => {
+        this.messageService.add({ severity: 'success', summary: res.message, detail: 'Config reloaded' });
+      },
+      (err) => {
+        this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+      }
+    )
   }
 
 }
