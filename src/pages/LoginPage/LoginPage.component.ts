@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ConfigService } from 'pages/Admin/service/app.config.service';
+import { ConfigService } from 'services/app.config.service';
 import { AppConfig } from 'models/appconfig';
 import { Subscription } from 'rxjs';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 import { AuthService } from 'services/auth.service';
 import { LoginUserModel } from 'models/user.model';
-import { MessageService } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { APPCONSTANT } from 'utils/appConstant';
 import { UserService } from 'services/user.service';
-import { TokenService } from 'services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-LoginPage',
@@ -28,6 +28,8 @@ export class LoginPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  message: Message[] = [];
+
   config: AppConfig;
 
   subscription: Subscription;
@@ -36,17 +38,24 @@ export class LoginPageComponent implements OnInit {
     public configService: ConfigService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private socialAuthService: SocialAuthService,
+    // private socialAuthService: SocialAuthService,
     private messageService: MessageService,
     private userService: UserService,
-    private tokenService: TokenService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.message = this.userService.messages;
     this.config = this.configService.config;
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
+
+    // this.subscription = this.userService.authUpdate$.subscribe(res => {
+    //   if (res.isAuthenticated) {
+    //     this.router.navigate(['/']);
+    //   }
+    // });
 
     this.form = new FormGroup({
       email: new FormControl(''),
@@ -65,11 +74,10 @@ export class LoginPageComponent implements OnInit {
       ],
       remember: [false]
     });
-    this.socialAuthService.authState.subscribe((user) => {
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-      console.log(this.socialUser);
-    });
+    // this.socialAuthService.authState.subscribe((user) => {
+    //   this.socialUser = user;
+    //   this.isLoggedin = user != null;
+    // });
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -95,23 +103,24 @@ export class LoginPageComponent implements OnInit {
     this.authService.login(user).subscribe(
       (res: any) => {
         this.isLoading = false;
+        this.userService.alreadyLogin = true;
         this.userService.updateAuth(res?.data?.session_id);
-        this.userService.saveUser(user)
-        this.messageService.add({
+        this.message = [{
           severity: 'success',
-          summary: 'Service Message',
-          detail: res?.message,
+          summary: '',
+          detail: 'Login Success!!!!!!!!',
           life: APPCONSTANT.TOAST_TIMEOUT
-        })
+        }];
+        this.userService.messages = [];
       },
       (err: any) => {
         this.isLoading = false;
-        this.messageService.add({
+        this.message = [{
           severity: 'error',
-          summary: err.message,
+          summary: '',
           detail: err.error,
           life: APPCONSTANT.TOAST_TIMEOUT
-        })
+        }];
       }
     );
   }
@@ -122,19 +131,19 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
-  loginWithGoogle() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (res) => {
+  // loginWithGoogle() {
+  //   this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+  //     (res) => {
 
-      },
-      (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Service Message',
-          detail: err.toString(),
-          life: APPCONSTANT.TOAST_TIMEOUT
-        })
-      }
-    );
-  }
+  //     },
+  //     (err) => {
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Service Message',
+  //         detail: err.toString(),
+  //         life: APPCONSTANT.TOAST_TIMEOUT
+  //       })
+  //     }
+  //   );
+  // }
 }

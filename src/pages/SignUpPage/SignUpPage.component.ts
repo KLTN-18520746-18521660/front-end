@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { AppConfig } from 'models/appconfig';
 import { SignUpUserModel } from 'models/user.model';
-import { ConfigService } from 'pages/Admin/service/app.config.service';
-import { MessageService } from 'primeng/api';
+import { ConfigService } from 'services/app.config.service';
+import { Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
+import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
 @Component({
@@ -27,15 +29,25 @@ export class SignUpPageComponent implements OnInit {
 
   subscription: Subscription;
 
+  message: Message[];
+
   constructor(
     public configService: ConfigService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private socialAuthService: SocialAuthService,
-    private messageService: MessageService
+    private router: Router,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.message = [];
+    this.subscription = this.userService.authUpdate$.subscribe(res => {
+      console.log(res);
+      if (res.isAuthenticated) {
+        this.router.navigate(['/']);
+      }
+    });
+
     this.config = this.configService.config;
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
@@ -99,22 +111,23 @@ export class SignUpPageComponent implements OnInit {
     this.authService.register(user).subscribe(
       (res: any) => {
         this.isLoading = false;
-        this.messageService.add({
+        this.userService.messages = this.message = [{
           severity: 'success',
-          summary: 'Service Message',
-          detail: res.message,
+          summary: '',
+          detail: 'Check your email for verification link or login now at here',
           life: APPCONSTANT.TOAST_TIMEOUT
-        })
+        }];
+        this.router.navigate(['/auth/login']);
       },
       (err: any) => {
         this.isLoading = false;
         console.log(err);
-        this.messageService.add({
+        this.message = [{
           severity: 'error',
-          summary: err.message,
+          summary: '',
           detail: err.error,
           life: APPCONSTANT.TOAST_TIMEOUT,
-        })
+        }]
       }
     );
   }

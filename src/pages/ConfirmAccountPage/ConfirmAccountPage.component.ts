@@ -2,13 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'services/auth.service';
-
+import { Message } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-ConfirmAccountPage',
   templateUrl: './ConfirmAccountPage.component.html',
   styleUrls: ['./ConfirmAccountPage.component.scss']
 })
 export class ConfirmAccountPageComponent implements OnInit {
+
+  success: boolean = true;
+
+  error: boolean = false;
+
+  message: Message[] = [];
 
   form = new FormGroup({
     email: new FormControl(''),
@@ -23,10 +30,13 @@ export class ConfirmAccountPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  textTranslate: any;
+
   constructor(
     private formbuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private translate: TranslateService
   ) { }
 
   get f(): { [key: string]: AbstractControl } {
@@ -47,9 +57,13 @@ export class ConfirmAccountPageComponent implements OnInit {
         },
         (err) => {
           this.isLoading = false;
-          console.log(err);
+          this.error = true;
+          this.message = [{ severity: 'error', summary: '', detail: err.message }];
         }
       );
+      this.translate.get('label.confirm').subscribe(res => {
+        this.textTranslate = res;
+      })
     });
     this.form = this.formbuilder.group({
       email: [{ value: '', disabled: true }, [Validators.required]],
@@ -67,13 +81,25 @@ export class ConfirmAccountPageComponent implements OnInit {
     };
 
     this.authService.confirmUserPost({ ...this.params, password: this.form.get('password').value }).subscribe(
-      (res) => {
-        console.log(res);
+      () => {
         this.isLoading = false;
+        this.success = true;
+        this.message = [{ severity: 'success', summary: '', detail: this.textTranslate.success }];
       },
       (err) => {
-        console.log(err);
         this.isLoading = false;
+        this.message = [
+          {
+            severity: 'error',
+            summary: '',
+            detail: err.message
+          },
+          {
+            severity: 'warn',
+            summary: '',
+            detail: this.textTranslate.warning
+          }
+        ];
       }
     );
   }
