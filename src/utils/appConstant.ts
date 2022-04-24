@@ -1,6 +1,16 @@
 export const APPCONSTANT = {
-  PLACEHOLDER_IMAGE: 'assets/images/placeholder-image.jpg',
+  // PLACEHOLDER_IMAGE: 'assets/images/placeholder-image.jpg',
+  PLACEHOLDER_IMAGE: 'assets/images/svg/thumbnail-placeholder.svg',
   TOAST_TIMEOUT: 6000,
+  LOADING_TIMEOUT: 2000,
+  FONT_SIZE: 13,
+  USER_IDLE: {
+    IDLE: 30,
+    // should be TIMEOUT == PING 
+    TIMEOUT: 10,
+    PING: 10
+  },
+  SESSION_TIMEOUT_DEFAULT: 5
 }
 
 export const CONTACT_INFO = [
@@ -40,4 +50,16 @@ export const BREAKPOINT = {
   md: 768,
   lg: 992,
   xl: 1200
+}
+
+export const STORAGE_KEY = {
+  USER_SESSIONS_TOKEN: 'session_token',
+  CURRENT_USER: 'CURRENT_USER',
+  USER_REMEMBER: 'X-USER-REMEMBER',
+
+  ADMIN_SESSIONS_TOKEN: 'session_token_admin',
+  ADMIN_INFO: 'X-ADMIN-INFO',
+  ADMIN_REMEMBER: 'X-ADMIN-REMEMBER',
+
+  POST_DRAFT: 'POST-DRAFT',
 }

@@ -2,6 +2,6 @@ import { MissingTranslationHandler, MissingTranslationHandlerParams } from '@ngx
 
 export class MyMissingTranslationHandler extends MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams): any {
-    return 'Missing Error!';
+    return 'Missing Translation!';
   }
 }

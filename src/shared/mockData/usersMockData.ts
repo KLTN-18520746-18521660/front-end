@@ -18,13 +18,11 @@ export const usersMockData: User[] = [
     created_timestamp: addDay(-5, new Date()).toString(),
     last_access_timestamp: addDay(-2, new Date()).toString(),
     status: "Actived",
-    values: {
-      post: 5,
-      following: 12,
-      follower: 12113,
-      view: 213131,
-      like: 1231,
-    },
+    posts: 5,
+    followings: 12,
+    followers: 12113,
+    views: 213131,
+    likes: 1231,
     verified_email: true,
   },
   {
@@ -42,13 +40,11 @@ export const usersMockData: User[] = [
     created_timestamp: addDay(-7, new Date()).toString(),
     last_access_timestamp: addDay(-1, new Date()).toString(),
     status: "Actived",
-    values: {
-      post: 10,
-      following: 2,
-      follower: 75,
-      view: 22531,
-      like: 1215,
-    },
+    posts: 10,
+    followings: 2,
+    followers: 75,
+    views: 22531,
+    likes: 1215,
     verified_email: true,
   }
 ]

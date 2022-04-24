@@ -5,6 +5,8 @@ import { environment } from 'environments/environment';
 import { REST_URL } from 'utils/apiConstant';
 import { LoginUserModel, SignUpUserModel } from 'models/user.model';
 import { handleError } from 'utils/commonFunction';
+import { PublicConfig } from 'models/appconfig';
+import ApiResult from 'models/api.model';
 
 const BASE_URL = environment.baseApiUrl;
 
@@ -21,20 +23,36 @@ export class AuthService {
 
   private user: any = {};
 
+  private config: PublicConfig;
+
   constructor(private http: HttpClient) { }
 
   getUser() {
     return this.user;
   }
 
-  login(user: LoginUserModel): Observable<any> {
-    return this.http.post(BASE_URL + REST_URL.USER_LOGIN, user, httpOptions).pipe(catchError(error => {
+  getConfig() {
+    return this.config;
+  }
+
+  setConfig(cf) {
+    this.config = cf;
+  }
+
+  login(user: LoginUserModel): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.USER_LOGIN, user, httpOptions).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  register(user: SignUpUserModel): Observable<any> {
-    return this.http.post(BASE_URL + REST_URL.USER_SIGNUP, user, httpOptions).pipe(catchError(error => {
+  register(user: SignUpUserModel): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.USER_SIGNUP, user, httpOptions).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getPublicConfig(): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.CONFIG, httpOptions).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
@@ -45,25 +63,34 @@ export class AuthService {
     }));
   }
 
-  confirmUser(params: any) {
-    return this.http.get(BASE_URL + REST_URL.CONFIRM_USER, { ...httpOptions, params: params }).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }))
-  }
-
-  confirmUserPost(params: any) {
-    return this.http.post(BASE_URL + REST_URL.CONFIRM_USER, { ...params }, httpOptions);
-  }
-
-  getUserInfor(sessionId?: string): Observable<any> {
-    return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+  confirmUser(params: any): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.CONFIRM_USER, { ...httpOptions, params: params }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  refreshToken(token: string) {
-    return this.http.post(BASE_URL + 'refreshtoken', {
-      refreshToken: token
-    }, httpOptions);
+  // send request confirm user 
+  confirmUserPost(params: any): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.CONFIRM_USER, { ...params }, httpOptions).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getUserInfo(sessionId?: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  extendSessionUser(sessionId: string): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.EXTENSION_SESSION_USER, {}, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  deleteSessionUser(sessionId: string): Observable<ApiResult> {
+    return this.http.delete(BASE_URL + REST_URL.SESSION + `/${sessionId}`, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
 }

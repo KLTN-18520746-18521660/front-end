@@ -1,70 +1,81 @@
+import ApiResult from 'models/api.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Comment from 'models/comment.model';
 import { commentsMockData } from 'shared/mockData/commentsMockData';
-import { convertArrayToNested } from 'utils/commonFunction';
+import { convertArrayToNested, removeChildrenByLevel } from 'utils/commonFunction';
 import _ from 'lodash';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ActionType, REST_URL } from 'utils/apiConstant';
+import { handleError } from 'utils/commonFunction';
+import { environment } from 'environments/environment';
+
+const BASE_URL = environment.baseApiUrl;
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
 
-  listOrginal: any[] = commentsMockData;
+  current_Slug: string;
 
-  listNested: any[] = [];
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  current: Comment = {
-    id: '',
-    parent_id: null,
-    owner: {
-      id: '111',
-      first_name: 'Vinh',
-      last_name: 'Trinh',
-      email: 'tnvinh99@gmail.com',
-      display_name: 'Ngọc Vĩnh',
-      user_name: 'vinhtrinh',
-      avatar: '',
-    },
-    post_id: '1',
-    content: 'English translation for this series is available at ./translations/EN folder',
-    status: 'Active',
-    created_timestamp: new Date().toString(),
-    last_modified_timestamp: new Date(Date.now() + 1).toString(),
-    children: [],
-  };
-
-  getNumberComments(id: string) {
-    return this.listOrginal.length;
+  getCommentByPostSlug(postSlug: string, sessionId, params = {}): Observable<ApiResult> {
+    if (sessionId) {
+      return this.http.get<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { ...httpOptions, headers: { session_token: sessionId }, params }).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+    else {
+      return this.http.get<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { ...httpOptions, params }).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
   }
 
-  getComments(id: string) {
-    // Call api to get comments
-    return this.listNested;
+  postComment(postSlug: string, parenId: number, content: string, sessionId: string): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { parent_id: parenId, content }, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
 
-  constructor() {
-    this.convertToNested();
-    this.sortComments();
+  deleteComment(commentId, sessionId): Observable<ApiResult> {
+    return this.http.delete<ApiResult>(BASE_URL + REST_URL.COMMENT + `/${commentId}`, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
 
-  addComment(comment: Comment) {
-    this.listOrginal.unshift(comment);
+  sendActionWithComment(commentId: number, action: ActionType, sessionId: string): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.COMMENT + `/${commentId}`, {}, { ...httpOptions, headers: { session_token: sessionId }, params: { action } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
 
-  convertToNested(list: any[] = this.listOrginal) {
-    const result = convertArrayToNested(list, 'parent_id');
-    this.listNested = result;
+  convertToNested(list: any[]) {
+    let result = convertArrayToNested(list, 'parent_id');
+    result = removeChildrenByLevel(result, 3);
+    // this.listNested = result;
     return result;
   }
 
-  sortComments(sortField = 'created_timestamp', sortOrder = 'asc', list: any[] = this.listNested) {
+  sortComments(sortField = 'created_timestamp', sortOrder = 'asc', list: any[]) {
     list = _.orderBy(list, [sortField], [sortOrder]);
     list.map((item) => {
       if (item.children && item.children.length > 0) {
         this.sortComments(sortField, sortOrder, item.children);
       }
     });
-    this.listNested = list;
+    // this.listNested = list;
     return list;
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { localStorageFunctions } from 'utils/commonFunction';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +12,7 @@ export class UserConfigService {
   }
 
   getConfigs() {
-    this.configs = localStorage.getItem('CONFIGS') ? JSON.parse(localStorage.getItem('CONFIGS')) : {};
+    this.configs = localStorageFunctions.getConfigs();
     localStorage.setItem('CONFIGS', JSON.stringify(this.configs));
     return this.configs;
   };
@@ -23,11 +23,11 @@ export class UserConfigService {
   }
 
   getConfigByKey(key: string) {
-    return this.configs[key] || null;
+    return localStorageFunctions.getConfigByKey(key);
   }
 
   addConfig(key: any, value: any) {
     this.configs[key] = value;
-    localStorage.setItem('CONFIGS', JSON.stringify(this.configs));
+    localStorageFunctions.addConfig(key, value);
   }
 }

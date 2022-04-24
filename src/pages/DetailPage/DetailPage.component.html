@@ -1,50 +1,69 @@
 <app-search-input></app-search-input>
 
 <div class="detail-post-layout container">
-  <div class="grid py-4">
+  <div class="grid py-4" *ngIf="!error; else errorBlock">
     <div class="col-0 md:col-1 lg:col-1">
-      <div class="flex flex-wrap justify-content-center">
-        <div class="col-12 flex justify-content-center" *ngFor="let item of contacts">
+      <div class="position-sticky hidden md:flex flex-wrap justify-content-center">
+        <ng-template [ngIf]="!isLoadingValue" [ngIfElse]="loadingValue">
+          <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
+            <app-btn-fab [data]="item"></app-btn-fab>
+          </div>
+        </ng-template>
+        <ng-template #loadingValue>
+          <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
+            <app-btn-fab [isLoading]="true" [showValue]="true"></app-btn-fab>
+          </div>
+        </ng-template>
+        <div class="col-12 p-1 flex justify-content-center mt-4">
+          <span class="font-semibold text-xl">{{'postDetail.share' | translate}}</span>
+        </div>
+        <div class="col-12 p-1 flex justify-content-center" *ngFor="let item of contacts">
           <app-btn-fab [data]="item"></app-btn-fab>
         </div>
       </div>
     </div>
     <div class="col-12 md:col-11 lg:col-8">
       <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
-      <div class="detail-wrapper mt-3">
-        <div class="detail-container border-round surface-0 shadow-2" *ngIf="post">
+      <div class="position-sticky mt-1">
+        <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '3px', 'z-index': '100000'}">
+        </p-progressBar>
+      </div>
+      <div class="detail-wrapper mt-3" *ngIf="!isLoading; else loadingSpinner">
+        <div #postContent class="detail-container border-round surface-0 shadow-2" *ngIf="post">
           <div class="thumnail-post">
             <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}"
-              class="post-thumbnail-image border-round-top shadow-4" />
+              class="post-thumbnail-image border-round-top shadow-2" />
           </div>
-          <div class="main-post p-4 mt-3">
+          <div class="main-post p-3 md:p-4 mt-3">
             <div class="post-info mb-4">
               <div class="flex">
                 <div class="flex avatar">
-                  <a [routerLink]="['/user', post.owner?.id]">
+                  <a [routerLink]="['/user', post.owner?.user_name]">
                     <ng-template [ngIf]="post.owner?.avatar" [ngIfElse]="avatar">
                       <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
                     </ng-template>
                     <ng-template #avatar>
-                      <p-avatar label="{{post.owner?.display_name.substring(0,1)}}" shape="circle" size="large">
-                      </p-avatar>
+                      <app-avatar [label]="post.owner?.display_name.substring(0,1) | uppercase">
+                      </app-avatar>
                     </ng-template>
                   </a>
                 </div>
                 <div class="flex-auto name-info mx-2 py-1">
                   <div class="block mb-2">
-                    <a [routerLink]="['/user', post.owner?.id]">
-                      <span class="font-semibold">{{ post.owner?.display_name }}</span>
+                    <a [routerLink]="['/user', post.owner?.user_name]">
+                      <span class="font-semibold capitalize">{{ post.owner?.display_name | lowercase}}</span>
                     </a>
                   </div>
                   <span>
                     <span class="spacing-1 text-600 text-sm" title="{{post.created_timestamp}}">
                       {{'postDetail.postedOn' | translate}} {{post.fromNow.created}}
                     </span>
-                    &#183;
                     <span class="spacing-1 text-600 text-sm" *ngIf="post.fromNow.updated"
                       title="{{post.last_modified_timestamp}}">
-                      {{'postDetail.updatedOn' | translate}} {{post.fromNow.updated}}
+                      &#183; {{'postDetail.updatedOn' | translate}} {{post.fromNow.updated}}
+                    </span>
+                    <span class="spacing-1 text-600 text-sm">
+                      &#183; {{ "card.time_read" | translate: post }}
                     </span>
                   </span>
                 </div>
@@ -55,12 +74,18 @@
                 </div>
               </div>
             </div>
+            <app-status-badge *ngIf="post.status !== 'Approved'" [size]="'base'" [label]="post.status"></app-status-badge>
             <div class="post-title mb-5">
-              <p class="text-5xl font-bold">{{post.title}}</p>
+              <p class="text-6xl font-bold">{{post.title}}</p>
               <app-tag [tag]="tag" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
             </div>
-            <div class="post-content">
-              <markdown class="variable-binding" [data]="post.content"></markdown>
+            <div id="post-content" class="post-content">
+              <ng-template [ngIf]="post.content_type === 'HTML'" [ngIfElse]="markdown">
+                <markdown class="content-HTML" [data]="post.content"></markdown>
+              </ng-template>
+              <ng-template #markdown>
+                <markdown class="" [data]="post.content"></markdown>
+              </ng-template>
               <!-- <div [innerHTML]="post.content"></div> -->
               <!-- <p-editor [(ngModel)]="post.content" (onTextChange)="onTextChange($event)"></p-editor> -->
               <!-- <markdown class="variable-binding" [src]="'assets/test.md'"></markdown> -->
@@ -68,32 +93,41 @@
           </div>
         </div>
         <div class="lg:hidden mt-4">
-          <app-user-info-card></app-user-info-card>
+          <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
         </div>
-        <div class="post-comment mt-2">
-          <div class="post-comment-header my-4">
-            <p class="text-2xl font-semibold">{{'postDetail.disscussion' | translate:{ count: numberComments} }}</p>
+        <div class="post-comment pt-6" id="comments">
+          <div class="flex justify-content-between align-items-center comment-option my-3">
+            <div class="comment-option-left">
+              <div class="post-comment-header my-4">
+                <p class="text-2xl font-semibold">
+                  {{'postDetail.disscussion' | translate:{ count: totalSizeComments} }}
+                </p>
+              </div>
+            </div>
+            <div class="comment-option-right">
+              <span>{{'postDetail.sort' | translate }}</span>
+              <p-dropdown *ngIf="filterComments" [options]="filterComments" [(ngModel)]="currentFilter"
+                optionLabel="label" (onChange)="onFilterComments($event)">
+              </p-dropdown>
+            </div>
           </div>
           <div class="post-comment-input">
-            <app-comment-input (submit)="onSubmitComment()"></app-comment-input>
-            <div class="flex justify-content-between comment-option my-3">
-              <div class="comment-option-left">
-                <span>{{'postDetail.sort' | translate }}</span>
-                <p-dropdown *ngIf="filterComments" [options]="filterComments" [(ngModel)]="currentFilter"
-                  optionLabel="label" (onChange)="onFilterComments($event)">
-                </p-dropdown>
-              </div>
-              <div class="comment-option-right">
-
-              </div>
-            </div>
-            <div pDefer (onLoad)="initLoadComment()" id="comments">
-              <ng-template>
-                <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingSpinner">
-                  <app-comment-card *ngFor="let comment of listComments" [comment]="comment"></app-comment-card>
-                </ng-template>
+            <app-comment-input [autoFocus]="false" [parent_id]="null" (submit)="onSubmitComment($event)">
+            </app-comment-input>
+          </div>
+          <div pDefer (onLoad)="initLoadComment()">
+            <ng-template>
+              <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingSpinner">
+                <app-comment-card (submit)="onSubmitComment($event)" *ngFor="let comment of listComments"
+                  [comment]="comment"></app-comment-card>
+                <div class="pb-4 pt-2" *ngIf="totalSizeComments > listComments?.length">
+                  <span class="text-primary text-lg font-medium cursor-pointer button-link" (click)="loadMoreComment()">
+                    {{'postDetail.showMoreComment' | translate}}
+                    <i *ngIf="isLoadingMoreComments" class="pi pi-spin pi-spinner" style="font-size: 1.2rem"></i>
+                  </span>
+                </div>
               </ng-template>
-            </div>
+            </ng-template>
           </div>
         </div>
         <div class="read-next-wrapper mt-4">
@@ -103,12 +137,12 @@
       </div>
     </div>
     <div class="col-12 lg:col-3">
-      <div class="grid">
+      <div class="grid position-sticky">
         <div class="col-12 md:col-12 lg:col-12 hidden lg:flex">
-          <app-user-info-card></app-user-info-card>
+          <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
         </div>
         <div class="col-12 mt-4">
-          <span class="font-semibold text-xl">{{'postDetail.suggest' | translate}}</span>
+          <span class="font-semibold text-2xl">{{'postDetail.suggest' | translate}}</span>
         </div>
         <div class="col-6 md:col-4 lg:col-12" *ngFor="let item of listRecommend">
           <app-recommend-post-card [post]="item"></app-recommend-post-card>
@@ -118,6 +152,21 @@
   </div>
 </div>
 
-<ng-template #loadingSpinner>
-  <app-loading-spinner></app-loading-spinner>
+<div class="button-share-post">
+  <p-speedDial (onShow)="onShowSpeeDial()" (onHide)="onHideSpeeDial()" [model]="shareItems" [mask]="true"
+    [hideIcon]="'pi pi-times'" [rotateAnimation]="false" [showIcon]="'pi pi-share-alt'" direction="up-right"
+    type="quarter-circle" buttonClassName="p-button-primary">
+  </p-speedDial>
+</div>
+
+<ng-template #errorBlock>
+  <app-NotFoundPage></app-NotFoundPage>
 </ng-template>
+
+<ng-template #loadingSpinner>
+  <app-loading-spinner [height]="'loading-post'"></app-loading-spinner>
+</ng-template>
+
+<app-loading [loading]="isLoading"></app-loading>
+
+<p-toast [preventOpenDuplicates]="true"></p-toast>

@@ -1,10 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { STORAGE_KEY, APPCONSTANT } from 'utils/appConstant';
+import { convertArrayToNested, removeChildrenByLevel, convertToSlug } from 'utils/commonFunction';
+import Category from 'models/category.model';
+import { tagsMockData } from './../../shared/mockData/tagsMockData';
+import { PostsService } from 'services/posts.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import Tag from 'models/tag.model';
+import _ from 'lodash';
+import { TreeNode } from 'primeng/api';
+import { NgxLinkifyjsService } from 'ngx-linkifyjs';
+import { CreatePostModel } from 'models/post.model';
+import { MarkdownService } from 'ngx-markdown';
+import { AppUserComponent } from 'pages/AppUser/AppUser.component';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -18,9 +32,36 @@ export class CreatePostPageComponent implements OnInit {
 
   contentMd: string = '';
 
-  types = ['HTML', 'Markdown'];
+  short_content: string = '';
 
-  selectedType: string = 'HTML';
+  types = ['HTML', 'Markdown'];
+  selectedEditorType: 'HTML' | 'Markdown';
+
+  title: string = '';
+  slug: string = '';
+
+  thumbnail: string = '';
+  validThumbnail: boolean = true;
+
+  listCategory: TreeNode[] = [];
+  selectedCategory: TreeNode[] = [];
+
+  listTagModel: Tag[] = [];
+  listTags: Tag[] = [];
+  listFilterTags: Tag[] = [];
+
+  tags: string[] = [];
+
+  time_read: number = 5;
+
+  draft: object = {
+    type: '',
+    title: '',
+    thumbnail: '',
+    tags: [],
+    HTML: '',
+    Markdown: '',
+  }
 
   ref: DynamicDialogRef;
 
@@ -29,67 +70,358 @@ export class CreatePostPageComponent implements OnInit {
     publish?: string,
     login?: string,
     discard?: string,
+    popup?: any;
+    valid?: any;
   };
 
+  subscription: Subscription;
+
+  uploadSubcription: Subscription;
+
   constructor(
-    private authService: AuthService,
     private userService: UserService,
     public dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private translate: TranslateService,
+    private postsService: PostsService,
+    public linkifyService: NgxLinkifyjsService,
+    private markdownService: MarkdownService,
+    private appUser: AppUserComponent
   ) { }
 
   ngOnInit() {
-    this.translate.get('dialog').subscribe(res => {
+    this.loadDraft();
+    this.translate.get('createPost.textTranslate').subscribe(res => {
       this.textTranslate = res;
+    });
+
+    this.getCategory();
+    this.onChangeTitle(this.title);
+  }
+
+  handleChangeTabView(event) {
+    console.log(event);
+  }
+
+  getCategory() {
+    this.postsService.getListCategories().subscribe((res: any) => {
+      const list = res?.data.categories.map(item => {
+        return {
+          ...item,
+          label: item.display_name,
+          data: item,
+          expandedIcon: '',
+          collapsedIcon: '',
+        }
+      })
+      let result = convertArrayToNested(list);
+      this.listCategory = removeChildrenByLevel(result, 2);
     });
   }
 
-  onTextChange(event: any) {
-    this.content = event.target.value;
+  getListTags() {
+    this.postsService.getListTags().subscribe((res: any) => {
+      this.listTags = res?.data.tags;
+      this.listFilterTags = this.listTags;
+    });
+  }
+
+  // onChange Functions
+  onTextChange(event) {
+    console.log(event);
+    this.short_content = event?.textValue;
+  }
+
+  onChangeContent(event) {
+    console.log(event);
+    this.draft[this.selectedEditorType] = event;
+    this.saveDraft();
+  }
+
+  onChangeContentMd(event) {
+    this.convertToShortContent();
+    this.draft[this.selectedEditorType] = event;
+    this.saveDraft();
+  }
+
+  onChangeTitle(event) {
+    if (event.lenght > 200) {
+      event = event.slice(0, 200);
+    }
+    this.draft['title'] = event;
+    this.slug = convertToSlug(event);
+    this.saveDraft();
+  }
+
+  onChangeThumbnail(event) {
+    this.validThumbnail = this.linkifyService.test(event);
+    if (this.validThumbnail) {
+      this.draft['thumbnail'] = event;
+    }
+    else {
+      this.draft['thumbnail'] = '';
+    }
+    this.saveDraft();
+  }
+
+  myUploader(event) {
+    console.log(event);
+    this.uploadSubcription = this.postsService.upLoadImage(event.files[0], this.userService.getSessionId()).subscribe(
+      (res) => {
+        this.thumbnail = res.data.url;
+        this.draft['thumbnail'] = this.thumbnail;
+        this.saveDraft();
+      },
+      (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+        console.log(err);
+      }
+    );
+  }
+
+  onChangeMoreTag(event) {
+    console.log(event);
+    const list = this.listTagModel.map(item => {
+      return item.tag;
+    })
+    this.tags = this.tags.map(item => {
+      return item.toLowerCase().trim().replace(/\s/g, '');
+    })
+    this.tags = _.difference(this.tags, list);
+    this.draft['tags'] = this.tags;
+    this.saveDraft();
+  }
+
+  loadDraft() {
+    const draft = localStorage.getItem(STORAGE_KEY.POST_DRAFT);
+    if (draft) {
+      this.draft = JSON.parse(draft);
+      this.selectedEditorType = this.draft['type'] || 'HTML';
+      this.thumbnail = this.draft['thumbnail'] || '';
+      this.title = this.draft['title'] || '';
+      this.tags = this.draft['tags'] || [];
+      this.content = this.draft['HTML'] || '';
+      this.contentMd = this.draft['Markdown'] || '';
+      this.convertToShortContent();
+    }
+    else {
+      this.content = '';
+      this.contentMd = '';
+      this.thumbnail = '';
+      this.tags = [];
+      this.validThumbnail = true;
+      this.title = '';
+      this.selectedEditorType = 'HTML';
+
+      this.draft = {
+        type: '',
+        title: '',
+        tags: [],
+        thumbnail: '',
+        HTML: '',
+        Markdown: '',
+      }
+      this.saveDraft();
+    }
+  }
+
+  saveDraft() {
+    localStorage.setItem(STORAGE_KEY.POST_DRAFT, JSON.stringify(this.draft));
+  }
+
+  convertToShortContent() {
+    let temp;
+    try {
+      if (this.selectedEditorType === 'Markdown') {
+        temp = this.markdownService.compile(this.contentMd.toString(), true)
+      }
+      else {
+        temp = this.content;
+      }
+    } catch (error) {
+      console.log(error);
+      this.messageService.add({ severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
+    }
+
+    this.short_content = temp
+      .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
+      .replace(/(&#\d+;)+/g, ' ')
+      .slice(0, 180);
   }
 
   onChangeType(event: any) {
-    this.selectedType = event.value;
+    this.draft['type'] = event.value;
+    this.selectedEditorType = event.value;
+    this.convertToShortContent();
+    this.saveDraft();
   }
 
   onClickSaveDraft() {
+    this.saveDraft();
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Save draft successfully' });
+  }
+
+  onFilterTag(event) {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    let filtered: any[] = [];
+    let query = event.query;
+    console.log(query);
+
+    this.subscription = this.postsService.getListTags(query).subscribe((res: any) => {
+      filtered = res?.data.tags;
+      this.listFilterTags = filtered;
+    });
+  }
+
+  onChangeSelectCategory(event) {
+    console.log(this.selectedCategory)
+    // this.selectedCategory = event.value;
+  }
+
+  onSelectCategory() {
+    console.log(this.selectedCategory);
+  }
+
+  checkValidPost() {
+    let result = true;
+    let message: Message[] = [];
+    if (this.selectedEditorType === 'HTML' && this.content.toString().length == 0) {
+      message.push({
+        severity: 'error',
+        summary: '',
+        detail: this.textTranslate.valid.content
+      })
+      result = false;
+    }
+    else if (this.selectedEditorType === 'Markdown' && this.contentMd.toString().length == 0) {
+      message.push({
+        severity: 'error',
+        summary: '',
+        detail: this.textTranslate.valid.content
+      })
+      result = false;
+    }
+    if (this.title.length == 0) {
+      message.push({
+        severity: 'error',
+        summary: '',
+        detail: this.textTranslate.valid.title
+      })
+      result = false;
+    }
+    // if (this.validThumbnail) {
+    //   message.push({
+    //     severity: 'error',
+    //     summary: '',
+    //     detail: this.textTranslate.valid.thumbnail
+    //   })
+    //   result = false;
+    // }
+    if (this.selectedCategory.length == 0) {
+      message.push({
+        severity: 'error',
+        summary: '',
+        detail: this.textTranslate.valid.category
+      })
+      result = false;
+    }
+    // if (this.listTagModel.length == 0) {
+    //   message.push({
+    //     severity: 'error',
+    //     summary: '',
+    //     detail: this.textTranslate.valid.tag
+    //   })
+    //   result = false;
+    // }
+
+    return {
+      isvalid: result,
+      message: message
+    };
   }
 
   onClickPublish() {
     if (!this.userService.isAuthenticated) {
-      this.ref = this.dialogService.open(LoginPageComponent, {
-        header: 'You no longer login',
-        width: '50%',
-        footer: 'Login to countinue publish this post!'
+      console.log(this.textTranslate.popup)
+      this.appUser.openLoginPopup(
+        this.textTranslate.popup.message,
+        'warn',
+        this.textTranslate.popup.header,
+        this.textTranslate.popup.footer,
+      );
+    }
+    else if (!this.checkValidPost().isvalid) {
+      this.messageService.addAll(this.checkValidPost().message);
+    }
+    else {
+      this.confirmationService.confirm({
+        key: 'createPostDialog',
+        message: this.textTranslate.publish,
+        header: this.textTranslate.confirmation,
+        icon: 'pi pi-exclamation-triangle',
+        rejectButtonStyleClass: 'p-button-danger',
+        accept: () => {
+          const post = new CreatePostModel({
+            title: this.title,
+            thumbnail: this.thumbnail,
+            content: this.selectedEditorType === 'HTML' ? this.content : this.contentMd,
+            short_content: this.short_content,
+            content_type: this.selectedEditorType.toUpperCase(),
+            time_read: this.time_read,
+            categories: this.selectedCategory.map((item: any) => {
+              return item.slug;
+            }),
+            tags: _.concat(this.listTagModel.map(item => {
+              return item.tag;
+            }), this.tags),
+          });
+
+          this.postsService.publishPost(post, this.userService.getSessionId()).subscribe(
+            (res) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Publish post successfully!',
+                life: APPCONSTANT.TOAST_TIMEOUT
+              });
+            },
+            (err: any) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: err.error,
+                detail: err.message,
+                life: APPCONSTANT.TOAST_TIMEOUT
+              });
+            }
+          );
+        }
       });
-      this.ref.onClose.subscribe(() => {
-        this.ref = null;
-        this.userService.ref = [];
-      });
-      this.userService.ref.push(this.ref);
     }
   }
 
   onClickDiscard() {
     this.confirmationService.confirm({
+      key: 'createPostDialog',
       message: this.textTranslate.discard,
       header: this.textTranslate.confirmation,
       icon: 'pi pi-exclamation-triangle',
+      rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-      },
-      reject: (type) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-            break;
-        }
+        localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
+        this.loadDraft();
       }
     });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.uploadSubcription) {
+      this.uploadSubcription.unsubscribe();
+    }
   }
 }

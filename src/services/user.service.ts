@@ -1,17 +1,19 @@
+import { ApiParams } from './../models/api.model';
+import User from 'models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
-import { MessageService } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { catchError, Observable, Subject, throwError } from 'rxjs';
-import { REST_URL } from 'utils/apiConstant';
-import { handleError } from 'utils/commonFunction';
-
-const SESSIONS_ID_KEY = 'auth-session-id';
-const USER_KEY = 'auth-user';
-const REFRESHTOKEN_KEY = 'auth-refresh-token';
-
+import { ActionType, REST_URL } from 'utils/apiConstant';
+import { handleError, localStorageFunctions } from 'utils/commonFunction';
+import _ from 'lodash';
+import { STORAGE_KEY, APPCONSTANT } from 'utils/appConstant';
+import { CookieService } from 'services/cookie.service';
+import { PublicConfig } from 'models/appconfig';
+import ApiResult, { Session } from 'models/api.model';
 
 const BASE_URL = environment.baseApiUrl;
 
@@ -32,77 +34,166 @@ export class UserService {
 
   session_id: string;
 
-  user: any;
+  session: Session;
+
+  user: User;
+
+  remember: boolean = false;
+
+  messages: Message[] = [];
+
+  alreadyLogin: boolean = false;
+
+  config: PublicConfig;
 
   isAuthenticated: boolean = false;
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
-    this.session_id = this.getSessionId();
-    this.updateAuth(this.session_id);
+    console.log("SessionID: ", this.getSessionId());
+    if (this.getSessionId()) {
+      this.session_id = this.getSessionId();
+      this.updateAuth(this.session_id);
+    }
+    this.history = localStorageFunctions.getConfigByKey('history') || [];
   }
 
-  private authUpdate = new Subject<any>();
+  authUpdate = new Subject<any>();
 
   authUpdate$ = this.authUpdate.asObservable();
 
-  addHistory(url) {
-    this.history.unshift(url);
-    // this.history = this.history.filter((item) => !item.includes('auth'));
-  }
-
   updateAuth(sessionId) {
-    this.getUserInfor(sessionId).subscribe(
+    if (!sessionId) {
+      this.isAuthenticated = false;
+      this.authUpdate.next({ session_id: null, user: null, isAuthenticated: false, error: false });
+      localStorage.removeItem(STORAGE_KEY.CURRENT_USER);
+      return;
+    }
+    this.getUserInfo(sessionId).subscribe(
       (res) => {
-        this.user = res.data.user;
-        this.saveUser(res.data.user);
+        setTimeout(() => {
+          this.router.navigate([this.history[0]]);
+        }, APPCONSTANT.LOADING_TIMEOUT);
         this.session_id = sessionId;
-        this.saveSessionId(sessionId);
+        this.user = res.data.user;
         this.isAuthenticated = true;
-        this.authUpdate.next({ session_id: sessionId, user: res.data.user, isAuthenticated: true });
+        this.session = res.data.session;
+        this.remember = res.data.session.saved;
+        this.alreadyLogin = true;
+        this.authUpdate.next({ session_id: sessionId, user: res.data.user, isAuthenticated: true, remember: this.remember, error: false });
+        // close all ref
+        if (this.ref) {
+          this.ref.forEach(item => {
+            item.close();
+          })
+        }
       },
       (err) => {
+        console.log(err);
         this.isAuthenticated = false;
-        this.messageService.add({ severity: 'error', summary: 'Session Error', detail: err.message });
-        if (this.history[0] && this.history[0].includes('auth')) {
-          this.history = this.history.filter((item) => !item.includes('auth'));
-          this.router.navigate(['/']);
-        }
+        this.user = null;
+        this.alreadyLogin = false;
+        this.session = null;
+        this.remember = false;
+        this.authUpdate.next({ session_id: null, user: null, isAuthenticated: false, remember: this.remember, error: true });
+        // this.messages = [{ severity: 'error', summary: err.error, detail: err.error.message }];
+        // this.logOut();
       }
     );
   }
 
-  getUserInfor(sessionId): Observable<any> {
+  getConfigByKey(key: string, sessionId?) {
+    if (sessionId) {
+      return this.http.get(BASE_URL + REST_URL.CONFIG + `/${key}`, { ...httpOptions, headers: { session_id: sessionId } }).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+    else {
+      return this.http.get(BASE_URL + REST_URL.CONFIG + `/${key}`, httpOptions).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+  }
+
+  addHistory(url) {
+    this.history.unshift(url);
+    this.history = this.history.filter((item) => !item.includes('auth') && !item.includes('admin'));
+    this.history = _.uniq(this.history);
+    this.history = this.history.slice(0, 5);
+    localStorageFunctions.addConfig('history', this.history);
+  }
+
+  getUserInfo(sessionId): Observable<ApiResult> {
     return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  logOut(): void {
-    window.localStorage.removeItem(SESSIONS_ID_KEY);
-    window.localStorage.removeItem(USER_KEY);
-    this.authUpdate.next({ session_id: null, user: null, isAuthenticated: false });
+  getUserInfoByUserName(user_name: string, sessionId?: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${user_name}`, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
 
-  public saveSessionId(token: string): void {
-    window.localStorage.removeItem(SESSIONS_ID_KEY);
-    window.localStorage.setItem(SESSIONS_ID_KEY, token);
+  sendActionWithUser(user_name: string, action: ActionType, sessionId: string): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.USER + `/${user_name}`, {}, { ...httpOptions, headers: { session_token: sessionId }, params: { action } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
+
+  getFollowers(params: ApiParams, sessionId: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.FOLLOWER}`, { ...httpOptions, headers: { session_token: sessionId }, params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getFollowings(params: ApiParams, sessionId: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.FOLLOWING}`, { ...httpOptions, headers: { session_token: sessionId }, params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  logOut(): void {
+    this.isAuthenticated = false;
+    this.session_id = null;
+    this.user = null;
+    this.alreadyLogin = false;
+    this.session = null;
+    this.remember = false;
+    this.authUpdate.next({ session_id: null, user: null, isAuthenticated: false, remember: this.remember, error: false });
+  }
+
+  // public saveSessionId(token: string, remember: boolean): void {
+  //   this.remember = remember;
+  //   if (this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
+  //     this.cookieService.delete(STORAGE_KEY.USER_SESSIONS_TOKEN);
+  //   }
+
+  //   const expiry_time = new Date(new Date().getTime() + (1000 * 60 * (this.config?.SessionAdminUserConfig?.expiry_time || 5)));
+  //   if (remember) {
+  //     this.cookieService.set(
+  //       STORAGE_KEY.USER_SESSIONS_TOKEN,
+  //       token,
+  //     );
+  //   }
+  //   else {
+  //     this.cookieService.set(
+  //       STORAGE_KEY.USER_SESSIONS_TOKEN,
+  //       token,
+  //       expiry_time
+  //     );
+  //   }
+  // }
 
   public getSessionId() {
-    return window.localStorage.getItem(SESSIONS_ID_KEY);
+    return this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN) || null;
   }
 
-  public saveUser(user: any): void {
-    window.localStorage.removeItem(USER_KEY);
-    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  public getUser(): any {
-    const user = window.localStorage.getItem(USER_KEY);
+  public getCurrentUser() {
+    const user = localStorage.getItem(STORAGE_KEY.CURRENT_USER);
     if (user) {
       return JSON.parse(user);
     }
