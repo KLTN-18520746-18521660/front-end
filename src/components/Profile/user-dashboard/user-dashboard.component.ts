@@ -93,7 +93,6 @@ export class UserDashboardComponent implements OnInit {
         item.label = result[index].title;
         item.desc = result[index].desc;
       })
-      console.log(this.carditems);
     })
   }
 

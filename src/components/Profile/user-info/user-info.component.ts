@@ -6,6 +6,9 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/en'
 import 'dayjs/locale/vi'
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { UserService } from 'services/user.service';
+import { mapActionWithUser } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-user-info',
@@ -15,21 +18,43 @@ import { TranslateService } from '@ngx-translate/core';
 export class UserInfoComponent implements OnInit {
   user: User;
 
+  subcription: Subscription;
+  isLoading: boolean;
+
   constructor(
-    private translate: TranslateService
+    private translate: TranslateService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.user = usersMockData[0];
-    dayjs.extend(relativeTime);
-    dayjs.locale(this.translate.currentLang);
-    this.user = {
-      ...this.user,
-      fromNow: {
-        created: dayjs(this.user.created_timestamp).fromNow(),
-        updated: dayjs(this.user.last_access_timestamp).fromNow()
+    this.getUserInfo();
+  }
+
+  getUserInfo() {
+    this.isLoading = true;
+    this.subcription = this.userService.getUserInfo(this.userService.getSessionId()).subscribe(
+      (res) => {
+        this.user = res.data.user;
+
+        this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
+
+        dayjs.extend(relativeTime);
+        dayjs.locale(this.translate.currentLang);
+        this.user = {
+          ...this.user,
+          fromNow: {
+            created: dayjs(this.user.created_timestamp).fromNow(),
+            updated: dayjs(this.user.last_access_timestamp).fromNow()
+          }
+        };
+
+        this.isLoading = false;
+      },
+      (err) => {
+        this.isLoading = false;
+        console.log(err);
       }
-    };
+    );
   }
 
 }

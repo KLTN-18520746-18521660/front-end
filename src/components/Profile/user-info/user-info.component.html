@@ -1,108 +1,112 @@
-<div class="user-info-wrapper card flex flex-wrap justify-content-center">
-  <div class="flex col-12 justify-content-center">
-    <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
-      <p-image class="user-avatar" alt="{{user.display_name}}" [preview]="true" src="{{ user.avatar }}"></p-image>
-    </ng-template>
-    <ng-template #avatar>
-      <p-avatar class="user-avatar" label="{{user.last_name.substring(0,1)}}" shape="circle"></p-avatar>
-    </ng-template>
-  </div>
-  <div class="user_name flex col-12 justify-content-center">
-    <p class="mt-2 font-bold text-2xl">{{user.display_name}}</p>
-  </div>
-  <div class="user_description flex col-12 justify-content-center">
-    <div class="col-12 md:col-7 text-center">
-      <p class="inline" #textContent class="font-italic">{{user.description}}</p>
-      <span class="read-more-link inline cursor-pointer">
-        <a readMore [readMore-length]="120" [readMore-element]="textContent">
-          <span class="less underline font-medium">{{'postDetail.readLess' | translate}}<i class="fa fa-angle-right"
-              aria-hidden="true"></i></span>
-          <span class="more underline font-medium">{{'postDetail.readMore' | translate}}<i class="fa fa-angle-right"
-              aria-hidden="true"></i></span>
-        </a>
-      </span>
+<div class="user-info-wrapper flex col-12">
+  <div class="card flex flex-wrap justify-content-center" *ngIf="user">
+    <div class="flex col-12 justify-content-center">
+      <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
+        <p-image class="user-avatar" alt="{{user.display_name}}" [preview]="true" src="{{ user.avatar }}"></p-image>
+      </ng-template>
+      <ng-template #avatar>
+        <p-avatar class="user-avatar" label="{{user.display_name.substring(0,1) | uppercase}}" shape="circle"></p-avatar>
+      </ng-template>
     </div>
-  </div>
-  <div class="user-values px-0 flex col-12 justify-content-center">
-    <div class="flex col-12 md:col-7 lg:col-6">
-      <div class="col text-center justify-content-center" tooltipPosition="top"
-        pTooltip="{{ user.values.post | number:'1.0-2' }}">
-        <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.post" [short]="true">
-          {{ user.values.post }}
-        </p>
-        <p class="user-rate-text font-normal text-base">{{ (user.values.post > 1 ? 'common.posts' : 'common.post') |
-          translate }}</p>
-      </div>
-      <div class="col text-center justify-content-center" tooltipPosition="top"
-        pTooltip="{{ user.values.follower | number:'1.0-2' }}">
-        <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.follower" [short]="true">
-          {{ user.values.follower }}
-        </p>
-        <p class="user-rate-text font-normal text-base">{{ (user.values.follower > 1 ? 'common.followers' :
-          'common.follower') | translate }}</p>
-      </div>
-      <div class="col text-center justify-content-center" tooltipPosition="top"
-        pTooltip="{{ user.values.following | number:'1.0-2' }}">
-        <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.following" [short]="true">
-          {{ user.values.following }}
-        </p>
-        <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
-      </div>
-      <div class="col text-center justify-content-center" tooltipPosition="top"
-        pTooltip="{{ user.values.view | number:'1.0-2' }}">
-        <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.view" [short]="true">
-          {{ user.values.view }}
-        </p>
-        <p class="user-rate-text font-normal text-base">{{ (user.values.view > 1 ? 'common.views' : 'common.view') |
-          translate }}</p>
-      </div>
-      <div class="col text-center justify-content-center" tooltipPosition="top"
-        pTooltip="{{ user.values.like | number:'1.0-2' }}">
-        <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.values.like" [short]="true">
-          {{ user.values.like }}
-        </p>
-        <p class="user-rate-text font-normal text-base">{{ (user.values.like > 1 ? 'common.likes' : 'common.like') |
-          translate }}</p>
+    <div class="user_name flex col-12 justify-content-center">
+      <p class="mt-2 font-bold text-2xl">{{user.display_name}}</p>
+    </div>
+    <div class="user_description flex col-12 justify-content-center">
+      <div class="col-12 md:col-7 text-center">
+        <p class="inline" #textContent class="font-italic">{{user.description | nA}}</p>
+        <span class="read-more-link inline cursor-pointer">
+          <a readMore [readMore-length]="120" [readMore-element]="textContent">
+            <span class="less underline font-medium">{{'postDetail.readLess' | translate}}<i class="fa fa-angle-right"
+                aria-hidden="true"></i></span>
+            <span class="more underline font-medium">{{'postDetail.readMore' | translate}}<i class="fa fa-angle-right"
+                aria-hidden="true"></i></span>
+          </a>
+        </span>
       </div>
     </div>
-  </div>
-  <div class="user-info flex flex-wrap col-12 md:col-8 justify-content-center md:justify-content-start">
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="person-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.firstname' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.first_name}}">{{user.first_name}}</span>
+    <div class="user-values px-0 flex col-12 justify-content-center">
+      <div class="flex col-12 md:col-7 lg:col-6">
+        <div class="col text-center justify-content-center" tooltipPosition="top"
+          pTooltip="{{ user.posts | number:'1.0-2' }}">
+          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.posts" [short]="true">
+            {{ user.posts }}
+          </p>
+          <p class="user-rate-text font-normal text-base">
+            {{ (user.posts > 1 ? 'common.posts' : 'common.post') | translate }}</p>
+        </div>
+        <div class="col text-center justify-content-center" tooltipPosition="top"
+          pTooltip="{{ user.followers | number:'1.0-2' }}">
+          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followers" [short]="true">
+            {{ user.followers }}
+          </p>
+          <p class="user-rate-text font-normal text-base">
+            {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}</p>
+        </div>
+        <div class="col text-center justify-content-center" tooltipPosition="top"
+          pTooltip="{{ user.followings | number:'1.0-2' }}">
+          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followings" [short]="true">
+            {{ user.followings }}
+          </p>
+          <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
+        </div>
+        <div class="col text-center justify-content-center" tooltipPosition="top"
+          pTooltip="{{ user.views | number:'1.0-2' }}">
+          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.views" [short]="true">
+            {{ user.views }}
+          </p>
+          <p class="user-rate-text font-normal text-base">
+            {{ (user.views > 1 ? 'common.views' : 'common.view') | translate }}</p>
+        </div>
+        <div class="col text-center justify-content-center" tooltipPosition="top"
+          pTooltip="{{ user.likes | number:'1.0-2' }}">
+          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.likes" [short]="true">
+            {{ user.likes }}
+          </p>
+          <p class="user-rate-text font-normal text-base">
+            {{ (user.likes > 1 ? 'common.likes' : 'common.like') | translate }}
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="person-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.lastname' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.last_name}}">{{user.last_name}}</span>
-    </div>
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="mail-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.email' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.email}}">{{user.email}}</span>
-      <ion-icon name="checkmark-circle" color="success" style="--ion-color-success: #22C55E" tooltipPosition="top" pTooltip="{{'profile.user.verified' | translate}}">
-      </ion-icon>
-    </div>
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="location-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.country' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.country}}">{{user.country}}</span>
-    </div>
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="male-female-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.sex' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.sex}}">{{user.sex}}</span>
-    </div>
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="call-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.phone' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.phone}}">{{user.phone}}</span>
-    </div>
-    <div class="flex col-10 md:col-6 align-items-center">
-      <ion-icon name="time-outline" color="primary" tooltipPosition="left"
-        pTooltip="{{'profile.user.joined' | translate}}"></ion-icon>
-      <span class="user-info-text-right mx-2" title="{{user.created_timestamp}}">{{user.fromNow.created}}</span>
+    <div class="user-info flex flex-wrap col-12 md:col-8 justify-content-center md:justify-content-start">
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="person-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.firstname' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.first_name}}">{{user.first_name | nA}}</span>
+      </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="person-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.lastname' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.last_name}}">{{user.last_name | nA}}</span>
+      </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="mail-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.email' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.email}}">{{user.email | nA}}</span>
+        <ion-icon name="checkmark-circle" color="success" style="--ion-color-success: #22C55E" tooltipPosition="top"
+          pTooltip="{{'profile.user.verified' | translate}}">
+        </ion-icon>
+      </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="location-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.country' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.country}}">{{user.country | nA}}</span>
+      </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="male-female-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.sex' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.sex}}">{{user.sex | nA}}</span>
+      </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="call-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.phone' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.phone}}">{{user.phone | nA}}</span>
+      </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="time-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.joined' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2" title="{{user.created_timestamp}}">{{user.fromNow.created | nA}}</span>
+      </div>
     </div>
   </div>
 </div>
