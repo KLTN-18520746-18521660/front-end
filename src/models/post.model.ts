@@ -1,9 +1,10 @@
+import { SafeHtml, SafeResourceUrl } from "@angular/platform-browser";
 import Category from "./category.model";
 import Tag from "./tag.model";
 import User from "./user.model";
 
 export default class Post {
-  id: string;
+  id?: number;
   title?: string;
   slug?: string;
   thumbnail?: string;
@@ -14,8 +15,16 @@ export default class Post {
   content_type?: string;
   short_content?: string;
   content_search?: string;
-  category?: Category;
-  owner?: User;
+  categories?: Category[];
+  owner?: {
+    id?: number;
+    user_name?: string;
+    avatar?: string;
+    display_name?: string;
+    status?: string;
+    first_name?: string;
+    last_name?: string;
+  };
   created_timestamp?: string;
   last_modified_timestamp?: string;
   fromNow?: {
@@ -24,5 +33,38 @@ export default class Post {
   };
   comments?: number;
   likes?: number;
+  dislikes?: number;
   tags?: Tag[];
+  visited_count?: number;
+  actions?: string[];
+  mapAction?: {
+    like: boolean;
+    dislike: boolean;
+    saved: boolean;
+    visited: boolean;
+    comment: boolean;
+    follow: boolean;
+  }
+}
+
+export class CreatePostModel {
+  title?: string;
+  thumbnail?: string;
+  content?: string;
+  short_content?: string;
+  time_read?: number;
+  content_type?: string;
+  categories?: string[];
+  tags?: string[];
+
+  constructor(params: any) {
+    this.title = params.title;
+    this.thumbnail = params.thumbnail;
+    this.content = params.content;
+    this.short_content = params.short_content;
+    this.time_read = params.time_read;
+    this.content_type = params.content_type;
+    this.categories = params.categories;
+    this.tags = params.tags;
+  }
 }
