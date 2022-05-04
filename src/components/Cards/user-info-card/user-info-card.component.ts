@@ -43,7 +43,7 @@ export class UserInfoCardComponent implements OnInit {
 
   getUserInfo() {
     this.isLoading = true;
-    this.subcription = this.userService.getUserInfoByUserName(this.user_name, this.userService.getSessionId()).subscribe(
+    this.subcription = this.userService.getUserInfoByUserName(this.user_name).subscribe(
       (res) => {
         this.user = res.data.user;
 
@@ -63,7 +63,7 @@ export class UserInfoCardComponent implements OnInit {
       this.actionUserSubcription.unsubscribe();
     }
     if (sessionId) {
-      this.actionUserSubcription = this.userService.sendActionWithUser(this.user_name, action, sessionId).subscribe(
+      this.actionUserSubcription = this.userService.sendActionWithUser(this.user_name, action).subscribe(
         (res) => {
           console.log(res);
           if (action === 'follow') {

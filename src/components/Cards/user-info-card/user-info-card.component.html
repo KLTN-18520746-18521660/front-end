@@ -3,13 +3,8 @@
     <div class="flex flex-wrap">
       <div class="col-12 align-items-center">
         <a [routerLink]="['/user', user.user_name]" class="flex align-items-center">
-          <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
-            <p-avatar shape="circle" image="{{ user?.avatar }}" size="large"></p-avatar>
-          </ng-template>
-          <ng-template #avatar>
-            <app-avatar [label]="user?.display_name.substring(0,1) | uppercase"></app-avatar>
-          </ng-template>
-          <span class="mx-2 font-semibold capitalize">{{ user.display_name | lowercase}}</span>
+          <app-avatar [user]="user"></app-avatar>
+          <span class="mx-2 font-semibold">{{ user.display_name}}</span>
         </a>
       </div>
       <div class="col-12" *ngIf="user.description">

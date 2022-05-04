@@ -1,0 +1,19 @@
+:host ::ng-deep {
+  .p-avatar {
+    img {
+      object-fit: cover !important;
+
+      &:hover {
+        filter: brightness(.95);
+        -webkit-filter: brightness(.95);
+      }
+    }
+
+    &.p-avatar-circle {
+      &:hover {
+        filter: brightness(.95);
+        -webkit-filter: brightness(.95);
+      }
+    }
+  }
+}
