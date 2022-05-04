@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfig } from 'models/appconfig';
-import { ConfigService } from 'pages/Admin/service/app.config.service';
+import { ConfigService } from 'services/app.config.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { UserConfigService } from 'services/user-config.service';

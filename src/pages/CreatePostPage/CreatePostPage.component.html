@@ -14,17 +14,18 @@
         </span>
 
         <p requiredField class="font-medium mb-1 mt-3">{{'createPost.thumnail' | translate}}</p>
-        <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"
-          [showCancelButton]="false" accept="image/*" [maxFileSize]="5000000"></p-fileUpload>
-        <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate" pInputText
-          [(ngModel)]="thumbnail" (ngModelChange)="onChangeThumbnail($event)">
+        <p-fileUpload #fileUpload name="myfile[]" [customUpload]="true" [showUploadButton]="false"
+          (uploadHandler)="myUploader($event)" accept=".png, .jpg, .jpeg, .svg, .webp"
+          (onSelect)="onSelectThumbnail($event)" (onClear)="onClearSelect()" [maxFileSize]="3000000"></p-fileUpload>
+        <!-- <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate"
+          pInputText [(ngModel)]="thumbnail" (ngModelChange)="onChangeThumbnail($event)"> -->
         <div *ngIf="!validThumbnail" class="invalid-feedback mt-1">
           <div class="flex align-items-end">
             <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
             <small class="p-error inline">{{'createPost.form.thumbnailError' | translate}}</small>
           </div>
         </div>
-        <img imageOnError *ngIf="validThumbnail && thumbnail" src="{{thumbnail}}"
+        <img imageOnError *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}"
           class="post-thumbnail-image border-round mt-2 shadow-2" alt="Post Thumbnail">
 
         <p requiredField class="font-medium mb-1 mt-3">{{'createPost.category' | translate}}</p>
@@ -125,7 +126,10 @@
   </div>
 </div>
 
-<p-confirmDialog key="createPostDialog" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}" [dismissableMask]="true">
+<p-confirmDialog key="createPostDialog" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+  [dismissableMask]="true">
 </p-confirmDialog>
 
-<p-toast></p-toast>
+<p-toast [preventOpenDuplicates]="true"></p-toast>
+
+<app-loading [loading]="isLoading"></app-loading>

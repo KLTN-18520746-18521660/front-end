@@ -31,7 +31,7 @@ export class UserInfoPageComponent implements OnInit {
     const params = {
     }
 
-    this.postService.getPostOfUser(this.user_name, params, this.userService.getSessionId()).subscribe(
+    this.postService.getPostOfUser(this.user_name, params).subscribe(
       (res) => {
         this.listPosts = res.data.posts;
         this.isLoading = false;
@@ -43,7 +43,7 @@ export class UserInfoPageComponent implements OnInit {
       }
     );
 
-    this.postService.getUserByUsername(this.user_name, this.userService.getSessionId()).subscribe(
+    this.postService.getUserByUsername(this.user_name).subscribe(
       (res) => {
         this.user = res.data.user;
       },

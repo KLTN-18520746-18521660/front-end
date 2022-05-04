@@ -5,7 +5,7 @@ import { convertArrayToNested, removeChildrenByLevel, convertToSlug } from 'util
 import Category from 'models/category.model';
 import { tagsMockData } from './../../shared/mockData/tagsMockData';
 import { PostsService } from 'services/posts.service';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from 'services/user.service';
@@ -19,6 +19,7 @@ import { CreatePostModel } from 'models/post.model';
 import { MarkdownService } from 'ngx-markdown';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { Message } from 'primeng/api';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -27,6 +28,8 @@ import { Message } from 'primeng/api';
   providers: [DialogService, ConfirmationService, MessageService]
 })
 export class CreatePostPageComponent implements OnInit {
+
+  isLoading: boolean = false;
 
   content: string = '';
 
@@ -77,6 +80,9 @@ export class CreatePostPageComponent implements OnInit {
   subscription: Subscription;
 
   uploadSubcription: Subscription;
+  isSelectThumbnail: boolean;
+  thumbnailPreview: any;
+  @ViewChild('fileUpload') fileUpload: FileUpload;
 
   constructor(
     private userService: UserService,
@@ -127,7 +133,7 @@ export class CreatePostPageComponent implements OnInit {
     });
   }
 
-  // onChange Functions
+  // onChange content function
   onTextChange(event) {
     console.log(event);
     this.short_content = event?.textValue;
@@ -166,18 +172,36 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   myUploader(event) {
-    console.log(event);
-    this.uploadSubcription = this.postsService.upLoadImage(event.files[0], this.userService.getSessionId()).subscribe(
+    this.isLoading = true;
+    this.uploadSubcription = this.postsService.upLoadImage('post', event.files[0]).subscribe(
       (res) => {
         this.thumbnail = res.data.url;
         this.draft['thumbnail'] = this.thumbnail;
         this.saveDraft();
+        this.publishPost();
       },
       (err) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
         console.log(err);
+        this.isLoading = false;
       }
     );
+  }
+
+  onSelectThumbnail(event) {
+    this.isSelectThumbnail = true;
+    var reader = new FileReader();
+
+    reader.readAsDataURL(event.files[0]);
+    reader.onload = (_event) => {
+      this.thumbnailPreview = reader.result as string;
+    }
+    // this.user.avatar = event.files[0];
+  }
+
+  onClearSelect() {
+    this.isSelectThumbnail = false;
+    this.thumbnailPreview = null;
   }
 
   onChangeMoreTag(event) {
@@ -199,6 +223,7 @@ export class CreatePostPageComponent implements OnInit {
       this.draft = JSON.parse(draft);
       this.selectedEditorType = this.draft['type'] || 'HTML';
       this.thumbnail = this.draft['thumbnail'] || '';
+      this.thumbnailPreview = this.thumbnail ? this.thumbnail : null;
       this.title = this.draft['title'] || '';
       this.tags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || '';
@@ -239,15 +264,15 @@ export class CreatePostPageComponent implements OnInit {
       else {
         temp = this.content;
       }
+      this.short_content = temp
+        .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
+        .replace(/(&#\d+;)+/g, ' ')
+        .slice(0, 180);
     } catch (error) {
       console.log(error);
       this.messageService.add({ severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
     }
 
-    this.short_content = temp
-      .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
-      .replace(/(&#\d+;)+/g, ' ')
-      .slice(0, 180);
   }
 
   onChangeType(event: any) {
@@ -268,7 +293,6 @@ export class CreatePostPageComponent implements OnInit {
     }
     let filtered: any[] = [];
     let query = event.query;
-    console.log(query);
 
     this.subscription = this.postsService.getListTags(query).subscribe((res: any) => {
       filtered = res?.data.tags;
@@ -364,39 +388,12 @@ export class CreatePostPageComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         rejectButtonStyleClass: 'p-button-danger',
         accept: () => {
-          const post = new CreatePostModel({
-            title: this.title,
-            thumbnail: this.thumbnail,
-            content: this.selectedEditorType === 'HTML' ? this.content : this.contentMd,
-            short_content: this.short_content,
-            content_type: this.selectedEditorType.toUpperCase(),
-            time_read: this.time_read,
-            categories: this.selectedCategory.map((item: any) => {
-              return item.slug;
-            }),
-            tags: _.concat(this.listTagModel.map(item => {
-              return item.tag;
-            }), this.tags),
-          });
-
-          this.postsService.publishPost(post, this.userService.getSessionId()).subscribe(
-            (res) => {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Publish post successfully!',
-                life: APPCONSTANT.TOAST_TIMEOUT
-              });
-            },
-            (err: any) => {
-              this.messageService.add({
-                severity: 'error',
-                summary: err.error,
-                detail: err.message,
-                life: APPCONSTANT.TOAST_TIMEOUT
-              });
-            }
-          );
+          if (this.isSelectThumbnail) {
+            this.fileUpload.upload();
+          }
+          else {
+            this.publishPost();
+          }
         }
       });
     }
@@ -414,6 +411,45 @@ export class CreatePostPageComponent implements OnInit {
         this.loadDraft();
       }
     });
+  }
+
+  publishPost() {
+    this.isLoading = true;
+    const post = new CreatePostModel({
+      title: this.title,
+      thumbnail: this.thumbnail,
+      content: this.selectedEditorType === 'HTML' ? this.content : this.contentMd,
+      short_content: this.short_content,
+      content_type: this.selectedEditorType.toUpperCase(),
+      time_read: this.time_read,
+      categories: this.selectedCategory.map((item: any) => {
+        return item.slug;
+      }),
+      tags: _.concat(this.listTagModel.map(item => {
+        return item.tag;
+      }), this.tags),
+    });
+
+    this.postsService.publishPost(post).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Publish post successfully!',
+          life: APPCONSTANT.TOAST_TIMEOUT
+        });
+      },
+      (err: any) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error,
+          detail: err.message,
+          life: APPCONSTANT.TOAST_TIMEOUT
+        });
+      }
+    );
   }
 
   ngOnDestroy() {

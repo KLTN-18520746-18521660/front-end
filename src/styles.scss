@@ -346,7 +346,7 @@ ion-icon:before {
 @keyframes fadeinleft {
   0% {
     opacity: 0;
-    transform: translate(-100%);
+    transform: translate(-10px);
     transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
   }
 
@@ -424,7 +424,7 @@ ion-icon:before {
 @keyframes fadeindown {
   0% {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(10px);
     transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
   }
 
@@ -500,8 +500,7 @@ ion-icon:before {
 .fadeinleft {
   animation: fadeinleft .15s linear;
   -webkit-animation: fadeinleft .15s linear;
-  animation-duration: 2s;
-  animation-delay: 1s;
+  animation-duration: 1s;
   animation-timing-function: cubic-bezier(0, 0, .2, 1);
 }
 
@@ -548,8 +547,7 @@ ion-icon:before {
 .fadeindown {
   animation: fadeindown .15s linear;
   -webkit-animation: fadeindown .15s linear;
-  animation-duration: 2s;
-  animation-delay: 1s;
+  animation-duration: 1s;
   animation-timing-function: cubic-bezier(0, 0, .2, 1);
 }
 

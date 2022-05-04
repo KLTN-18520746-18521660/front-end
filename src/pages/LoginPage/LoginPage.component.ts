@@ -118,7 +118,7 @@ export class LoginPageComponent implements OnInit {
         this.message = [{
           severity: 'error',
           summary: '',
-          detail: err.error,
+          detail: err.message,
           life: APPCONSTANT.TOAST_TIMEOUT
         }];
       }

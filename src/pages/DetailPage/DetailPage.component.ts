@@ -1,4 +1,4 @@
-import { ReportSendModel } from 'models/report.model';
+import { ReportSendModel, ReportType } from 'models/report.model';
 import Comment, { CommentInput } from 'models/comment.model';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
@@ -104,6 +104,7 @@ export class DetailPageComponent implements OnInit {
     this.listRecommend = randomArray(postsMockData, 6);
 
     this.slug = this.activatedRoute.snapshot.params.slug;
+    this.slug = decodeURI(this.slug);
 
     this.commentService.current_Slug = this.slug;
 
@@ -156,7 +157,7 @@ export class DetailPageComponent implements OnInit {
         label: '',
         icon: 'pi pi-copy',
         command: () => {
-          this.clipboard.copy(window.location.href);
+          this.clipboard.copy(decodeURI(window.location.href));
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
         }
       },
@@ -190,7 +191,7 @@ export class DetailPageComponent implements OnInit {
 
         icon: 'pi pi-facebook',
         command: () => {
-          window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank');
+          window.open(`https://www.facebook.com/sharer/sharer.php?u=${decodeURI(window.location.href)}`, '_blank');
         }
       },
       {
@@ -199,7 +200,7 @@ export class DetailPageComponent implements OnInit {
         },
         icon: 'pi pi-twitter',
         command: () => {
-          window.open(`https://twitter.com/intent/tweet?text=${this.post.title}&url=${window.location.href}`, '_blank');
+          window.open(`https://twitter.com/intent/tweet?text=${this.post.title}&url=${decodeURI(window.location.href)}`, '_blank');
         }
       },
       {
@@ -208,7 +209,7 @@ export class DetailPageComponent implements OnInit {
         },
         icon: 'pi pi-linkedin',
         command: () => {
-          window.open(`sharing/share-offsite/?url=${window.location.href}`, '_blank');
+          window.open(`sharing/share-offsite/?url=${decodeURI(window.location.href)}`, '_blank');
         }
       },
       {
@@ -231,7 +232,7 @@ export class DetailPageComponent implements OnInit {
         },
         icon: 'pi pi-link',
         command: () => {
-          this.clipboard.copy(window.location.href);
+          this.clipboard.copy(decodeURI(window.location.href));
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
         }
       },
@@ -261,7 +262,7 @@ export class DetailPageComponent implements OnInit {
         color: '',
         style: 'p-button-rounded',
         command: () => {
-          window.open('https://www.facebook.com/sharer/sharer.php?u=' + window.location.href, '_blank');
+          window.open('https://www.facebook.com/sharer/sharer.php?u=' + decodeURI(window.location.href), '_blank');
         }
       },
       {
@@ -271,7 +272,7 @@ export class DetailPageComponent implements OnInit {
         color: 'p-button-info',
         style: 'p-button-rounded',
         command: () => {
-          window.open('https://twitter.com/intent/tweet?text=' + this.post.title + '&url=' + window.location.href, '_blank');
+          window.open('https://twitter.com/intent/tweet?text=' + this.post.title + '&url=' + decodeURI(window.location.href), '_blank');
         }
       },
       {
@@ -281,7 +282,7 @@ export class DetailPageComponent implements OnInit {
         color: 'p-button-secondary',
         style: 'p-button-rounded',
         command: () => {
-          window.open('sharing/share-offsite/?url=' + window.location.href, '_blank');
+          window.open('sharing/share-offsite/?url=' + decodeURI(window.location.href), '_blank');
         }
       },
       {
@@ -307,7 +308,7 @@ export class DetailPageComponent implements OnInit {
         style: 'p-button-rounded',
         command: () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
-          this.clipboard.copy(window.location.href);
+          this.clipboard.copy(decodeURI(window.location.href));
         }
       },
       {
@@ -368,9 +369,13 @@ export class DetailPageComponent implements OnInit {
   }
 
   getPostDetail() {
+    if (!this.slug) {
+      this.error = true;
+      return;
+    }
     this.isLoading = true;
     this.isLoadingValue = true;
-    this.postsService.getPostBySlug(this.slug, this.userService.getSessionId()).subscribe(
+    this.postsService.getPostBySlug(this.slug).subscribe(
       (res) => {
         // const convert = (str) => {
         //   str = str.replace(/<img /g, '<p-image [preview]="true" ').replace(/>/g, '></p-image>')
@@ -467,7 +472,7 @@ export class DetailPageComponent implements OnInit {
     if (this.postValuesSubcription) {
       this.postValuesSubcription.unsubscribe();
     }
-    this.postValuesSubcription = this.postsService.getPostValuesBySlug(this.slug, this.userService.getSessionId()).subscribe(
+    this.postValuesSubcription = this.postsService.getPostValuesBySlug(this.slug).subscribe(
       (res) => {
         this.post = { ...this.post, ...res.data.post };
         this.post.mapAction = mapActionWithPost(res.data.post.actions || []);
@@ -487,7 +492,7 @@ export class DetailPageComponent implements OnInit {
       this.actionSubcription.unsubscribe();
     }
     if (sessionId) {
-      this.actionSubcription = this.postsService.sendActionWithPost(this.slug, action, sessionId).subscribe(
+      this.actionSubcription = this.postsService.sendActionWithPost(this.slug, action).subscribe(
         (res) => {
           this.getPostValueWhenAction();
           if (action === 'save' || action === 'unsave') {
@@ -512,7 +517,7 @@ export class DetailPageComponent implements OnInit {
       this.commentSubcription.unsubscribe();
     }
 
-    this.commentSubcription = this.commentService.getCommentByPostSlug(this.slug, this.userService.getSessionId()).subscribe(
+    this.commentSubcription = this.commentService.getCommentByPostSlug(this.slug).subscribe(
       (res) => {
         this.totalSizeComments = res.data.total_size;
         this.listComments = res.data.comments;
@@ -527,7 +532,7 @@ export class DetailPageComponent implements OnInit {
     );
   }
 
-  onClickReport(type: 'post' | 'comment' | 'user' = 'post', comment_id = 0) {
+  onClickReport(type: ReportType = 'post', comment_id = 0) {
     const text = this.translate.instant('report');
     const data = {
       post_id: this.post.id || 1,
@@ -541,7 +546,9 @@ export class DetailPageComponent implements OnInit {
   initLoadComment() {
     this.isLoadingComments = true;
 
-    this.getComments(this.sizeComment);
+    setTimeout(() => {
+      this.getComments(this.sizeComment);
+    }, 2000);
   }
 
   loadMoreComment() {
@@ -564,7 +571,7 @@ export class DetailPageComponent implements OnInit {
       return;
     }
     if (input.content.trim()) {
-      this.isLoading = true;
+      this.isLoadingComments = true;
       if (!this.userService.getSessionId()) {
         this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
         this.appUser.openLoginPopup();
@@ -573,19 +580,20 @@ export class DetailPageComponent implements OnInit {
       if (this.postCommentSubcription) {
         this.postCommentSubcription.unsubscribe();
       }
-      this.postCommentSubcription = this.commentService.postComment(this.slug, input.parent_id, input.content, this.userService.getSessionId()).subscribe(
-        (res) => {
-          this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully' });
-          this.listComments.unshift(res.data.comment);
-          this.totalSizeComments++;
-          this.isLoading = false;
-        },
-        (err) => {
-          this.messageService.add({ severity: 'error', summary: '', detail: err.message });
-          console.log(err);
-          this.isLoading = false;
-        }
-      );
+      this.postCommentSubcription = this.commentService
+        .postComment(this.slug, input.parent_id, input.content).subscribe(
+          (res) => {
+            this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully' });
+            this.listComments.unshift(res.data.comment);
+            this.totalSizeComments++;
+            this.isLoadingComments = false;
+          },
+          (err) => {
+            this.messageService.add({ severity: 'error', summary: '', detail: err.message });
+            console.log(err);
+            this.isLoadingComments = false;
+          }
+        );
     }
   }
 
@@ -593,7 +601,7 @@ export class DetailPageComponent implements OnInit {
     if (this.deleteCommentSubcription) {
       this.deleteCommentSubcription.unsubscribe();
     }
-    this.deleteCommentSubcription = this.commentService.deleteComment(comment.id, this.userService.getSessionId()).subscribe(
+    this.deleteCommentSubcription = this.commentService.deleteComment(comment.id).subscribe(
       (res) => {
         this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully deleted' });
         this.totalSizeComments--;

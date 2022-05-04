@@ -12,55 +12,9 @@
     "view": "View",
     "views": "Views",
     "like": "Like",
-    "likes": "Likes"
-  },
-  "home": {
-    "title": "Home",
-    "description": "Home page",
-    "keywords": "home, page",
-    "viewMore": "View More",
-    "createPost": "Create Post",
-    "viewOption": {
-      "foryou": "For you ",
-      "following": "Following",
-      "trending": "Trending"
-    }
-  },
-  "notification": {
-    "viewRead": "View read"
-  },
-  "dialog": {
-    "confirmation": "Confirmation",
-    "login": "You need to login to continue",
-    "logout": {
-      "header": "Log out?",
-      "title": "Are you sure you want to logout?",
-      "yes": "Log Out",
-      "no": "Cancel"
-    }
-  },
-  "status": {
-    "success": "Success",
-    "error": "Error",
-    "warning": "Warning",
-    "Enabled": "Enabled",
-    "Disabled": "Disabled",
-    "Readonly": "Readonly",
-    "Activated": "Activated",
-    "Deleted": "Deleted",
-    "Blocked": "Blocked",
-    "Created": "Created",
-    "Edited": "Edited",
-    "Sent": "Sent",
-    "Read": "Read",
-
-    "Pending": "Pending",
-    "Approved": "Approved",
-    "Rejected": "Rejected",
-    "Private": "Private",
-    "Ignored": "Ignored",
-    "Handled": "Handled",
-    "Public": "Public"
+    "likes": "Likes",
+    "submit": "Submit",
+    "save": "Save changes"
   },
   "titlePage": {
     "default": "Home - Heovi",
@@ -93,6 +47,96 @@
       "manage-post": "Manage Post",
       "manage-user": "Manage User"
     }
+  },
+  "home": {
+    "title": "Home",
+    "description": "Home page",
+    "keywords": "home, page",
+    "viewMore": "View More",
+    "createPost": "Create Post",
+    "viewOption": {
+      "foryou": "For you ",
+      "following": "Following",
+      "trending": "Trending"
+    }
+  },
+  "notification": {
+    "title": "Notifications",
+    "subTitle": "You have <b>{{count}}</b> unread notifications",
+    "viewRead": "Only show unread",
+    "viewAll": "Mark all as read",
+    "viewOption": {
+      "all": "All",
+      "unread": "Unread"
+    },
+    "noNotification": "No notification to show",
+    "read": "Read",
+    "unread": "Unread",
+    "delete": "Remove this notification",
+    "markRead": "Mark as read",
+    "markReadSuccess": "Mark as read successfully",
+    "markUnread": "Mark as unread",
+    "deleteAll": "Delete all notifications",
+    "deleteAllConfirm": "Are you sure you want to delete all notifications?",
+    "deleteAllSuccess": "All notifications have been deleted",
+    "deleteAllFail": "Failed to delete all notifications",
+    "deleteConfirm": "Are you sure you want to delete this notification?",
+    "deleteSuccess": "Notification has been deleted",
+    "deleteFail": "Failed to delete notification",
+    "type": {
+      "default": "Default notification content",
+      "follow": "<b>{{user}}</b> followed you",
+      "addComment": "<b>{{user}}</b> commented on your post: <b>{{content}}</b>",
+      "replyComment": "<b>{{user}}</b> replied your comment: <b>{{content}}</b>",
+      "likeComment": "<b>{{user}}</b> liked your comment: <b>{{content}}</b>",
+      "mention": "<b>{{user}}</b> mentioned you in a post: <b>{{content}}</b>",
+      "save": "<b>{{user}}</b> saved your post: <b>{{content}}</b>",
+      "share": "<b>{{user}}</b> shared your post: <b>{{content}}</b>",
+      "newPost": "<b>{{user}}</b> added new post: <b>{{content}}</b>",
+      "likePost": "<b>{{user}}</b> liked your post: <b>{{content}}</b>",
+      "deletePost": "<b>{{user}}</b> deleted your post: <b>{{content}}</b>",
+      "approvePost": "<b>{{user}}</b> approved your post: <b>{{content}}</b>",
+      "rejectPost": "<b>{{user}}</b> rejected your post: <b>{{content}}</b>"
+    }
+  },
+  "dialog": {
+    "confirmation": "Confirmation",
+    "login": "You need to login to continue",
+    "logout": {
+      "header": "Log out?",
+      "title": "Are you sure you want to logout?",
+      "yes": "Log Out",
+      "no": "Cancel"
+    },
+    "unsavechange": {
+      "header": "Unsave changes?",
+      "title": "You have unsaved changes. Your changes will be lost if you don't save them. Press Cancel to go back and save these changes.",
+      "yes": "Unsave",
+      "no": "Stay"
+    }
+  },
+  "status": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "Enabled": "Enabled",
+    "Disabled": "Disabled",
+    "Readonly": "Readonly",
+    "Activated": "Activated",
+    "Deleted": "Deleted",
+    "Blocked": "Blocked",
+    "Created": "Created",
+    "Edited": "Edited",
+    "Sent": "Sent",
+    "Read": "Read",
+
+    "Pending": "Pending",
+    "Approved": "Approved",
+    "Rejected": "Rejected",
+    "Private": "Private",
+    "Ignored": "Ignored",
+    "Handled": "Handled",
+    "Public": "Public"
   },
   "topbar": {
     "login": "Login",
@@ -192,15 +236,109 @@
       "firstname": "First Name",
       "lastname": "Last Name",
       "email": "Email",
-      "verified": "Verified",
+      "verified": "Verified on",
       "country": "Country",
       "sex": "Gender",
+      "gender": {
+        "male": "Male",
+        "female": "Female",
+        "other": "Other"
+      },
       "phone": "Phone",
       "joined": "Joined day"
     },
     "result": {
       "following": "You is following <b>{{count}}</b> users",
       "follower": "Have <b>{{count}}</b> Followers"
+    },
+    "editProfile": {
+      "title": "Edit Profile",
+      "first_name": {
+        "label": "First Name",
+        "placeholder": "Enter your first name",
+        "error": {
+          "required": "First name is required"
+        }
+      },
+      "last_name": {
+        "label": "Last Name",
+        "placeholder": "Enter your last name",
+        "error": {
+          "required": "Last name is required"
+        }
+      },
+      "display_name": {
+        "label": "Display Name",
+        "placeholder": "Enter your display name",
+        "error": {
+          "required": "Display name is required"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter your description",
+        "error": {
+          "required": "Description is required",
+          "length": "Description must be less than 100 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email",
+        "error": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Select your country",
+        "error": {
+          "required": "Country is required"
+        }
+      },
+      "sex": {
+        "label": "Gender",
+        "placeholder": "Enter your gender",
+        "options": {
+          "male": "Male",
+          "female": "Female",
+          "other": "Other"
+        },
+        "error": {
+          "required": "Gender is required",
+          "sex": "Gender is invalid"
+        }
+      },
+      "phone": {
+        "label": "Phone number",
+        "placeholder": "Enter your phone number",
+        "error": {
+          "required": "Phone number is required",
+          "phone": "Phone number is invalid, must be 10-11 digits"
+        }
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Enter your city",
+        "error": {
+          "required": "City is required"
+        }
+      },
+      "province": {
+        "label": "Province",
+        "placeholder": "Enter your province",
+        "error": {
+          "required": "Province is required"
+        }
+      },
+      "avatar": {
+        "label": "Avatar",
+        "placeholder": "Enter your avatar",
+        "error": {
+          "required": "Avatar is required"
+        }
+      }
     }
   },
   "admin": {
@@ -398,6 +536,8 @@
     "submitComment": "Submit this comment",
     "showMoreComment": "Show more comments",
     "showMoreReply": "Show more replies",
+    "reply": "Reply",
+    "replyTo": "Reply to {{name}}",
     "commentPlaceholder": "Put your comment here ...",
     "commentError": "Comment is invalid. Please enter your comment, and try again!",
     "edited": "Edited",

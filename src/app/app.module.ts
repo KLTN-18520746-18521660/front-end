@@ -106,6 +106,8 @@ import { CheckIconComponent } from 'components/check-icon/check-icon.component';
 import { NotFoundComponent } from 'components/not-found/not-found.component';
 import { AutoFocusDirective } from 'shared/directives/autofocus.directive';
 import { NAPipe } from 'shared/pipes/n-a.pipe';
+import { CapitalizePipe } from 'shared/pipes/capitalize.pipe';
+import { CanDeactiveGuard } from 'shared/can-deactive.guard';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -167,6 +169,7 @@ export function createTranslateLoader(http: HttpClient) {
     UserManagePostComponent,
     SafePipe,
     NAPipe,
+    CapitalizePipe,
     AutoFocusDirective,
     UserEditInfoComponent,
     RequiredFieldDirective,
@@ -236,6 +239,7 @@ export function createTranslateLoader(http: HttpClient) {
     authInterceptorProviders,
     MessageService,
     CookieService,
+    CanDeactiveGuard,
     ConfirmationService,
     // {
     //   provide: 'SocialAuthServiceConfig',

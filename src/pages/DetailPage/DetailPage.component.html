@@ -39,19 +39,13 @@
               <div class="flex">
                 <div class="flex avatar">
                   <a [routerLink]="['/user', post.owner?.user_name]">
-                    <ng-template [ngIf]="post.owner?.avatar" [ngIfElse]="avatar">
-                      <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
-                    </ng-template>
-                    <ng-template #avatar>
-                      <app-avatar [label]="post.owner?.display_name.substring(0,1) | uppercase">
-                      </app-avatar>
-                    </ng-template>
+                    <app-avatar [user]="post?.owner"></app-avatar>
                   </a>
                 </div>
                 <div class="flex-auto name-info mx-2 py-1">
                   <div class="block mb-2">
                     <a [routerLink]="['/user', post.owner?.user_name]">
-                      <span class="font-semibold capitalize">{{ post.owner?.display_name | lowercase}}</span>
+                      <span class="font-semibold">{{ post.owner?.display_name }}</span>
                     </a>
                   </div>
                   <span>
@@ -74,7 +68,8 @@
                 </div>
               </div>
             </div>
-            <app-status-badge *ngIf="post.status !== 'Approved'" [size]="'base'" [label]="post.status"></app-status-badge>
+            <app-status-badge *ngIf="post.status !== 'Approved'" [size]="'base'" [label]="post.status">
+            </app-status-badge>
             <div class="post-title mb-5">
               <p class="text-6xl font-bold">{{post.title}}</p>
               <app-tag [tag]="tag" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
@@ -104,7 +99,7 @@
                 </p>
               </div>
             </div>
-            <div class="comment-option-right">
+            <div class="comment-option-right z-0">
               <span>{{'postDetail.sort' | translate }}</span>
               <p-dropdown *ngIf="filterComments" [options]="filterComments" [(ngModel)]="currentFilter"
                 optionLabel="label" (onChange)="onFilterComments($event)">
@@ -117,9 +112,10 @@
           </div>
           <div pDefer (onLoad)="initLoadComment()">
             <ng-template>
-              <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingSpinner">
+              <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingComment">
                 <app-comment-card (submit)="onSubmitComment($event)" *ngFor="let comment of listComments"
-                  [comment]="comment"></app-comment-card>
+                  [comment]="comment" (delete)="onDeleteComment($event)">
+                </app-comment-card>
                 <div class="pb-4 pt-2" *ngIf="totalSizeComments > listComments?.length">
                   <span class="text-primary text-lg font-medium cursor-pointer button-link" (click)="loadMoreComment()">
                     {{'postDetail.showMoreComment' | translate}}
@@ -130,7 +126,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="read-next-wrapper mt-4">
+        <div class="read-next-wrapper mt-4 md:mt-8">
           <p class="font-semibold text-2xl">{{'postDetail.readNext' | translate}}</p>
           <app-post-card-vertical *ngFor="let item of listRecommend" [post]="item"></app-post-card-vertical>
         </div>
@@ -144,7 +140,7 @@
         <div class="col-12 mt-4">
           <span class="font-semibold text-2xl">{{'postDetail.suggest' | translate}}</span>
         </div>
-        <div class="col-6 md:col-4 lg:col-12" *ngFor="let item of listRecommend">
+        <div class="col-12 md:col-4 lg:col-12" *ngFor="let item of listRecommend">
           <app-recommend-post-card [post]="item"></app-recommend-post-card>
         </div>
       </div>
@@ -154,8 +150,8 @@
 
 <div class="button-share-post">
   <p-speedDial (onShow)="onShowSpeeDial()" (onHide)="onHideSpeeDial()" [model]="shareItems" [mask]="true"
-    [hideIcon]="'pi pi-times'" [rotateAnimation]="false" [showIcon]="'pi pi-share-alt'" direction="up-right"
-    type="quarter-circle" buttonClassName="p-button-primary">
+    [hideIcon]="'pi pi-times'" [rotateAnimation]="false" [showIcon]="'pi pi-share-alt'" direction="up"
+    buttonClassName="p-button-primary">
   </p-speedDial>
 </div>
 
@@ -165,6 +161,10 @@
 
 <ng-template #loadingSpinner>
   <app-loading-spinner [height]="'loading-post'"></app-loading-spinner>
+</ng-template>
+
+<ng-template #loadingComment>
+  <app-comment-card [loading]="true" *ngFor="let i of [1,2,3]"></app-comment-card>
 </ng-template>
 
 <app-loading [loading]="isLoading"></app-loading>

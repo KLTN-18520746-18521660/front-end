@@ -48,6 +48,11 @@
 }
 
 :host ::ng-deep {
+  .p-fileupload {
+    .p-fileupload-content {
+      display: none !important;
+    }
+  }
 
   .p-inputtextarea.markdown-editor {
     min-height: 300px;

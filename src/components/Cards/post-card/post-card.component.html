@@ -4,14 +4,8 @@
       class="card-header w-full p-2 flex flex-wrap justify-content-between align-items-center">
       <div class="card-hear-left flex align-items-center" [ngClass]="{ 'w-full mb-3': isGrid }">
         <a [routerLink]="['/user', post.owner.user_name]" class="flex align-items-center">
-          <ng-template [ngIf]="post.owner?.avatar" [ngIfElse]="avatar">
-            <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
-          </ng-template>
-          <ng-template #avatar>
-            <app-avatar [label]="post.owner?.display_name.substring(0,1) | uppercase">
-            </app-avatar>
-          </ng-template>
-          <span class="mx-2 font-semibold capitalize">{{ post.owner.display_name | lowercase}}</span>
+          <app-avatar [user]="post?.owner"></app-avatar>
+          <span class="mx-2 font-semibold">{{ post.owner.display_name}}</span>
         </a>
         <p-tag severity="danger" value="New"></p-tag>
       </div>

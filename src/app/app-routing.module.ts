@@ -12,6 +12,7 @@ import { ProfilePageComponent } from 'pages/ProfilePage/ProfilePage.component';
 import { SearchPageComponent } from 'pages/SearchPage/SearchPage.component';
 import { TagsPageComponent } from 'pages/TagsPage/TagsPage.component';
 import { UserInfoPageComponent } from 'pages/UserInfoPage/UserInfoPage.component';
+import { CanDeactiveGuard } from 'shared/can-deactive.guard';
 
 const routes: Routes = [
   {

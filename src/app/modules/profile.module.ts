@@ -12,6 +12,7 @@ import { UserDashboardComponent } from 'components/Profile/user-dashboard/user-d
 import { UserNotificationComponent } from 'components/Profile/user-notification/user-notification.component';
 import { UserManagePostComponent } from 'components/Profile/user-manage-post/user-manage-post.component';
 import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-edit-info.component';
+import { CanDeactiveGuard } from 'shared/can-deactive.guard';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-ed
           {
             path: 'edit-info',
             component: UserEditInfoComponent,
+            canDeactivate: [CanDeactiveGuard],
             data: {
               key: 'edit-info'
             }

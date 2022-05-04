@@ -3,12 +3,7 @@
     <div class="card-container overflow-hidden">
       <div class="flex">
         <div class="flex card-avatar mr-3 align-items-center">
-          <ng-template [ngIf]="post.owner.avatar" [ngIfElse]="avatar">
-            <p-avatar shape="circle" image="{{ post.owner.avatar }}" size="large"></p-avatar>
-          </ng-template>
-          <ng-template #avatar>
-            <app-avatar [label]="post.owner.display_name.substring(0,1) | uppercase"></app-avatar>
-          </ng-template>
+          <app-avatar [user]="post?.owner"></app-avatar>
         </div>
         <div class="flex-auto flex card-content align-items-center">
           <div>
