@@ -17,7 +17,7 @@ import ApiResult, { Session } from 'models/api.model';
 
 const BASE_URL = environment.baseApiUrl;
 
-const httpOptions = {
+const httpHeader = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json-patch+json',
   })
@@ -47,6 +47,24 @@ export class UserService {
   config: PublicConfig;
 
   isAuthenticated: boolean = false;
+
+  httpOptions() {
+    if (this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'session_token': this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN)
+        })
+      };
+    }
+    else {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+      }
+    }
+  }
 
   constructor(
     private http: HttpClient,
@@ -105,17 +123,10 @@ export class UserService {
     );
   }
 
-  getConfigByKey(key: string, sessionId?) {
-    if (sessionId) {
-      return this.http.get(BASE_URL + REST_URL.CONFIG + `/${key}`, { ...httpOptions, headers: { session_id: sessionId } }).pipe(catchError(error => {
-        return throwError(handleError(error));
-      }));
-    }
-    else {
-      return this.http.get(BASE_URL + REST_URL.CONFIG + `/${key}`, httpOptions).pipe(catchError(error => {
-        return throwError(handleError(error));
-      }));
-    }
+  getConfigByKey(key: string) {
+    return this.http.get(BASE_URL + REST_URL.CONFIG + `/${key}`, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
   }
 
   addHistory(url) {
@@ -127,31 +138,37 @@ export class UserService {
   }
 
   getUserInfo(sessionId): Observable<ApiResult> {
-    return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+    return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpHeader, headers: { session_token: sessionId } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getUserInfoByUserName(user_name: string, sessionId?: string): Observable<ApiResult> {
-    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${user_name}`, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+  editUserInfo(user: User): Observable<ApiResult> {
+    return this.http.put<ApiResult>(BASE_URL + REST_URL.USER, user, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  sendActionWithUser(user_name: string, action: ActionType, sessionId: string): Observable<ApiResult> {
-    return this.http.post<ApiResult>(BASE_URL + REST_URL.USER + `/${user_name}`, {}, { ...httpOptions, headers: { session_token: sessionId }, params: { action } }).pipe(catchError(error => {
+  getUserInfoByUserName(user_name: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${user_name}`, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getFollowers(params: ApiParams, sessionId: string): Observable<ApiResult> {
-    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.FOLLOWER}`, { ...httpOptions, headers: { session_token: sessionId }, params: { ...params } }).pipe(catchError(error => {
+  sendActionWithUser(user_name: string, action: ActionType): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.USER + `/${user_name}`, {}, { ...this.httpOptions(), params: { action } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getFollowings(params: ApiParams, sessionId: string): Observable<ApiResult> {
-    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.FOLLOWING}`, { ...httpOptions, headers: { session_token: sessionId }, params: { ...params } }).pipe(catchError(error => {
+  getFollowers(params: ApiParams): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.FOLLOWER}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getFollowings(params: ApiParams): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.FOLLOWING}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
@@ -163,6 +180,7 @@ export class UserService {
     this.alreadyLogin = false;
     this.session = null;
     this.remember = false;
+    localStorage.clear();
     this.authUpdate.next({ session_id: null, user: null, isAuthenticated: false, remember: this.remember, error: false });
   }
 

@@ -26,7 +26,7 @@ export default interface ApiResult {
     notification: Notification;
     configs?: PublicConfig;
     total_size?: number;
-    [key: string]: any;
+    // [key: string]: any;
   }
 }
 

@@ -16,15 +16,7 @@ export default class Post {
   short_content?: string;
   content_search?: string;
   categories?: Category[];
-  owner?: {
-    id?: number;
-    user_name?: string;
-    avatar?: string;
-    display_name?: string;
-    status?: string;
-    first_name?: string;
-    last_name?: string;
-  };
+  owner?: User;
   created_timestamp?: string;
   last_modified_timestamp?: string;
   fromNow?: {

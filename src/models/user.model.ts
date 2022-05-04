@@ -1,5 +1,5 @@
 export default class User {
-  id: string;
+  id?: string;
   description?: string;
   first_name?: string;
   last_name?: string;
@@ -37,7 +37,15 @@ export default class User {
     }
   };
   roles?: string[];
-  settings?: any;
+  settings?: {
+    confirm_email?: {
+      confirm_date?: string;
+      is_sending?: boolean;
+      send_date?: string;
+      send_success?: boolean;
+      state?: string;
+    }
+  };
   created_timestamp?: string;
   last_access_timestamp?: string;
   fromNow?: {

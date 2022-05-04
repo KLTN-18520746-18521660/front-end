@@ -16,9 +16,11 @@ export default class Report {
 }
 
 export class ReportSendModel {
-  user_id?: string;
-  post_id?: number;
+  user_name?: string;
+  post_slug?: string;
   comment_id?: number;
   report_type?: string;
   content?: string;
 }
+
+export type ReportType = 'post' | 'comment' | 'user' | 'feedback';

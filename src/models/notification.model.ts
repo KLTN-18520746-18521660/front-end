@@ -1,16 +1,13 @@
+import User from 'models/user.model';
 export default class Notification {
   id?: string;
   user_id?: string;
-  status?: string;
+  status?: 'Read' | 'Sent' | 'Deleted';
+  read?: boolean;
   content?: {
     action?: NotificationType;
     date_send?: string;
-    post_owner?: {
-      id?: string;
-      avatar?: string;
-      user_name?: string;
-      display_name?: string;
-    },
+    post_owner?: User,
     post_detail?: {
       id?: string;
       slug?: string;

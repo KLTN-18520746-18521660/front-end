@@ -10,53 +10,60 @@ import { catchError } from 'rxjs/operators';
 import { ActionType, REST_URL } from 'utils/apiConstant';
 import { handleError } from 'utils/commonFunction';
 import { environment } from 'environments/environment';
+import { STORAGE_KEY } from 'utils/appConstant';
+import { CookieService } from './cookie.service';
 
 const BASE_URL = environment.baseApiUrl;
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
+  httpOptions() {
+    if (this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'session_token': this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN)
+        })
+      };
+    }
+    else {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+      }
+    }
+  }
 
   current_Slug: string;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService
   ) { }
 
-  getCommentByPostSlug(postSlug: string, sessionId, params = {}): Observable<ApiResult> {
-    if (sessionId) {
-      return this.http.get<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { ...httpOptions, headers: { session_token: sessionId }, params }).pipe(catchError(error => {
-        return throwError(handleError(error));
-      }));
-    }
-    else {
-      return this.http.get<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { ...httpOptions, params }).pipe(catchError(error => {
-        return throwError(handleError(error));
-      }));
-    }
-  }
-
-  postComment(postSlug: string, parenId: number, content: string, sessionId: string): Observable<ApiResult> {
-    return this.http.post<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { parent_id: parenId, content }, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+  getCommentByPostSlug(postSlug: string, params = {}): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { ...this.httpOptions(), params }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  deleteComment(commentId, sessionId): Observable<ApiResult> {
-    return this.http.delete<ApiResult>(BASE_URL + REST_URL.COMMENT + `/${commentId}`, { ...httpOptions, headers: { session_token: sessionId } }).pipe(catchError(error => {
+  postComment(postSlug: string, parenId: number, content: string): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.COMMENT_POST + `/${postSlug}`, { parent_id: parenId, content }, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  sendActionWithComment(commentId: number, action: ActionType, sessionId: string): Observable<ApiResult> {
-    return this.http.post<ApiResult>(BASE_URL + REST_URL.COMMENT + `/${commentId}`, {}, { ...httpOptions, headers: { session_token: sessionId }, params: { action } }).pipe(catchError(error => {
+  deleteComment(commentId: number): Observable<ApiResult> {
+    return this.http.delete<ApiResult>(BASE_URL + REST_URL.COMMENT + `/${commentId}`, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  sendActionWithComment(commentId: number, action: ActionType): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.COMMENT + `/${commentId}`, {}, { ...this.httpOptions(), params: { action } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

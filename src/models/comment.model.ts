@@ -4,15 +4,7 @@ export default class Comment {
   id: number;
   parent_id: string;
   post_id: string;
-  owner: {
-    id?: string;
-    user_name?: string;
-    avatar?: string;
-    display_name?: string;
-    first_name?: string;
-    last_name?: string;
-    status?: string;
-  };
+  owner: User;
   content: string;
   status: string;
   created_timestamp?: string;
