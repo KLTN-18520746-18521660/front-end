@@ -18,7 +18,7 @@ import { mapActionWithUser } from 'utils/commonFunction';
 export class UserInfoComponent implements OnInit {
   user: User;
 
-  subcription: Subscription;
+  subscription: Subscription;
   isLoading: boolean;
 
   constructor(
@@ -32,7 +32,7 @@ export class UserInfoComponent implements OnInit {
 
   getUserInfo() {
     this.isLoading = true;
-    this.subcription = this.userService.getUserInfo(this.userService.getSessionId()).subscribe(
+    this.subscription = this.userService.getUserInfo(this.userService.getSessionId()).subscribe(
       (res) => {
         this.user = res.data.user;
 
@@ -55,6 +55,12 @@ export class UserInfoComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

@@ -3,6 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import Notification from 'models/notification.model';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
+import { APPCONSTANT } from 'utils/appConstant';
+import { TranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
+
+export interface ListNotification {
+  date: string;
+  notifications: Notification[];
+}
+
 @Component({
   selector: 'app-user-notification',
   templateUrl: './user-notification.component.html',
@@ -11,6 +20,8 @@ import { UserService } from 'services/user.service';
 export class UserNotificationComponent implements OnInit {
 
   size: number = 0;
+
+  sizeUnread: number = 0;
 
   totalSize: number;
 
@@ -24,11 +35,13 @@ export class UserNotificationComponent implements OnInit {
 
   subscription: Subscription;
 
-  viewRead: boolean = false;
+  viewOnlyUnRead: boolean = false;
 
   constructor(
     private postService: PostsService,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -41,14 +54,20 @@ export class UserNotificationComponent implements OnInit {
     else
       this.isLoading = true;
 
-    const params = {
+    const params = this.viewOnlyUnRead ? {
       start: this.size,
-      size: this.size + 24
+      size: this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE,
+      status: 'Sent'
+    } : {
+      start: this.size,
+      size: this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
     }
 
-    this.subscription = this.postService.getNotification(params, this.userService.getSessionId()).subscribe(
+    this.subscription = this.postService.getNotification(params).subscribe(
       (res) => {
-        this.listNotifications = res.data.notifications;
+        this.listNotifications = this.listNotifications ? [...this.listNotifications, ...res.data.notifications] : res.data.notifications;
+        this.size = this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
+        this.totalSize = res.data.total_size;
         this.isLoading = false;
         this.isLoadingMore = false;
       },
@@ -57,6 +76,29 @@ export class UserNotificationComponent implements OnInit {
         this.error = true;
         this.isLoading = false;
         this.isLoadingMore = false;
+      }
+    );
+  }
+
+  handleChangeViewRead(event) {
+    this.size = 0;
+    this.listNotifications = [];
+    this.getListNotifications();
+  }
+
+  handleDelete(notification: Notification) {
+    this.postService.deleteNotification(notification.id).subscribe(
+      (res) => {
+        this.messageService.add({
+          key: 'appToast',
+          severity: 'success',
+          summary: '',
+          detail: this.translate.instant('notification.deleteSuccess')
+        });
+        this.listNotifications = this.listNotifications.filter(item => item.id !== notification.id);
+      },
+      (err) => {
+        console.log(err);
       }
     );
   }
@@ -71,10 +113,6 @@ export class UserNotificationComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  handleChangeViewRead(event) {
-
   }
 
 }

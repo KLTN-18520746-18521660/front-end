@@ -1,4 +1,4 @@
-<div class="user-following-wrapper flex flex-wrap" infiniteScroll [infiniteScrollDistance]="1"
+<div class="user-follower-wrapper flex flex-wrap" infiniteScroll [infiniteScrollDistance]="1"
   [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
   <div class="col-12">
     <p class="font-medium text-md" [innerHTML]="'profile.result.follower' | translate: { count: totalSize}"></p>

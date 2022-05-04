@@ -44,7 +44,7 @@ export class UserManagePostComponent implements OnInit {
       size: this.size + 24
     }
 
-    this.subscription = this.postService.getPostOfUser(this.userService.user.user_name, params, this.userService.getSessionId()).subscribe(
+    this.subscription = this.postService.getPostOfUser(this.userService.user.user_name, params).subscribe(
       (res) => {
         this.listPosts = res.data.posts;
         this.totalSize = res.data.total_size;

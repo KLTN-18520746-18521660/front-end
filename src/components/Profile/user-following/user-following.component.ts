@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
 import { Component, OnInit } from '@angular/core';
 import User from 'models/user.model';
+import { APPCONSTANT } from 'utils/appConstant';
 
 @Component({
   selector: 'app-user-following',
@@ -38,16 +39,16 @@ export class UserFollowingComponent implements OnInit {
 
     const params = {
       start: this.size,
-      size: this.size + 24
+      size: this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
     }
 
-    this.subscription = this.userService.getFollowings(params, this.userService.getSessionId()).subscribe(
+    this.subscription = this.userService.getFollowings(params).subscribe(
       (res) => {
         this.listUsers = this.listUsers ? [...this.listUsers, ...res.data.users] : res.data.users;
         this.totalSize = res.data.total_size;
         this.isLoading = false;
         this.isLoadingMore = false;
-        this.size += 24;
+        this.size += APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
       },
       (err) => {
         this.isLoading = false;

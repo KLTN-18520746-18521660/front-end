@@ -30,12 +30,10 @@ export const REST_URL = {
 
   NOTIFICATION: 'notification',
   NOTIFICATION_ID: 'notification/id',
-  NOTIFICATION_ALL: 'notification/id/all',
+  NOTIFICATION_READ: 'notification/read/id',
+  NOTIFICATION_ALL: 'notification/read/all',
 
   REPORT: 'report',
-  REPORT_COMMENT: 'report/comment',
-  REPORT_POST: 'report/post',
-  REPORT_USER: 'report/user',
 
   CATEGORY: 'category',
   TAG: 'tag',

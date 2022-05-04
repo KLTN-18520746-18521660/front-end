@@ -1,5 +1,10 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import _ from 'lodash';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/vi';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import calendar from 'dayjs/plugin/calendar';
 
 export const handleError = (error?: HttpErrorResponse) => {
   let obj = {
@@ -52,6 +57,32 @@ export const handleError = (error?: HttpErrorResponse) => {
   return obj;
 }
 
+export const convertDateTime = (
+  date: string,
+  locale: string,
+  suffix: boolean = true,
+) => {
+  dayjs.locale(locale);
+
+  if (dayjs().diff(date, 'hour') < 12) {
+    dayjs.extend(relativeTime);
+    return dayjs(date).fromNow(suffix);
+  }
+  else if (dayjs().diff(date, 'day') < 1) {
+    dayjs.extend(calendar);
+    return dayjs(date).calendar();
+  }
+  else if (dayjs().diff(date, 'month') < 1) {
+    return dayjs(date).format('MMMM D, HH:mm');
+  }
+  else if (dayjs().diff(date, 'month') < 12) {
+    return dayjs(date).format('MMMM D, HH:mm');
+  }
+  else {
+    return dayjs(date).format('DD/MM/YYYY HH:mm');
+  }
+}
+
 export const addDay = (addDay: number, day: Date = new Date) => {
   const date = new Date(day);
   date.setDate(date.getDate() + addDay);
@@ -80,7 +111,7 @@ export const convertToSlug = (str) => {
     .toLowerCase()
     .replace(/đ/g, "d")
     .replace(/[-,\/]/g, "-")
-    .replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '')	// Remove special characters
+    .replace(/[~`!@#$%^&*'()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '')	// Remove special characters
     .replace(/\s/g, '-') // Replace space to '-'
     .replace(/\-\-+/g, '-')	// Replaces multiple hyphens by one hyphen
 
@@ -118,6 +149,18 @@ export const removeChildrenByLevel = (list, maxLevel = 3, level = 0) => {
     })
     return list;
   }
+}
+
+export const getDifferenceObject = (obj1, obj2) => {
+  const diff = {};
+  for (const key in obj1) {
+    if (obj1.hasOwnProperty(key)) {
+      if (obj1[key] !== obj2[key]) {
+        diff[key] = obj2[key];
+      }
+    }
+  }
+  return diff;
 }
 
 export const localStorageFunctions = {

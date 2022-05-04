@@ -5,7 +5,8 @@
         <p-image class="user-avatar" alt="{{user.display_name}}" [preview]="true" src="{{ user.avatar }}"></p-image>
       </ng-template>
       <ng-template #avatar>
-        <p-avatar class="user-avatar" label="{{user.display_name.substring(0,1) | uppercase}}" shape="circle"></p-avatar>
+        <p-avatar class="user-avatar" label="{{user.display_name.substring(0,1) | uppercase}}" shape="circle">
+        </p-avatar>
       </ng-template>
     </div>
     <div class="user_name flex col-12 justify-content-center">
@@ -83,8 +84,9 @@
         <ion-icon name="mail-outline" color="primary" tooltipPosition="left"
           pTooltip="{{'profile.user.email' | translate}}"></ion-icon>
         <span class="user-info-text-right mx-2" title="{{user.email}}">{{user.email | nA}}</span>
-        <ion-icon name="checkmark-circle" color="success" style="--ion-color-success: #22C55E" tooltipPosition="top"
-          pTooltip="{{'profile.user.verified' | translate}}">
+        <ion-icon *ngIf="user.verified_email" name="checkmark-circle" color="success"
+          style="--ion-color-success: #22C55E" tooltipPosition="top"
+          pTooltip="{{'profile.user.verified' | translate}} {{user.settings.confirm_email.confirm_date}}">
         </ion-icon>
       </div>
       <div class="flex col-10 md:col-6 align-items-center">
@@ -95,7 +97,9 @@
       <div class="flex col-10 md:col-6 align-items-center">
         <ion-icon name="male-female-outline" color="primary" tooltipPosition="left"
           pTooltip="{{'profile.user.sex' | translate}}"></ion-icon>
-        <span class="user-info-text-right mx-2" title="{{user.sex}}">{{user.sex | nA}}</span>
+        <span class="user-info-text-right mx-2" title="{{user.sex}}">
+          {{ user.sex ? ('profile.user.gender.' + user.sex | translate) : (user.sex | nA)}}
+        </span>
       </div>
       <div class="flex col-10 md:col-6 align-items-center">
         <ion-icon name="call-outline" color="primary" tooltipPosition="left"

@@ -10,7 +10,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/777588/top-18-most-common-angularjs-developer-mistakes-41f9ad303a51db70e4a5204e101e7414.png',
     owner: {
-      id: 2,
+      id: '2',
       display_name: 'Jenny Wilson',
       user_name: 'jennyw',
       avatar: 'https://placeimg.com/320/320'
@@ -32,7 +32,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://media.bitdegree.org/storage/media/images/2018/08/what-is-a-web-developer.jpg',
     owner: {
-      id: 3,
+      id: '3',
       display_name: 'Jenny Wilson',
       user_name: 'jennyw',
       avatar: 'https://placeimg.com/320/320'
@@ -54,7 +54,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://d1iv5z3ivlqga1.cloudfront.net/wp-content/uploads/2021/08/11150618/ho-la-nhung-developer-su-dung-ngon-ngu-lap-trinh-php-de-thiet-ke-phan-mem-1024x576.jpg',
     owner: {
-      id: 111,
+      id: '111',
       display_name: 'Jenny Wilson',
       user_name: 'jennyw',
       avatar: 'https://placeimg.com/320/320'
@@ -76,7 +76,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/tester-or-developer-what-suits-you-the-most.jpg',
     owner: {
-      id: 25,
+      id: '25',
       display_name: 'Colin Wilson',
       user_name: 'colinw',
       avatar: ''
@@ -98,7 +98,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuAqaTfcMMb2iIDG6B53q2c1d4F5kUs04Y4cwMs6VAbFmCQ3BWo60CAt8v6jFI11lSHWY&usqp=CAU',
     owner: {
-      id: 4,
+      id: '4',
       display_name: 'Prashan Wilson',
       user_name: 'prashanw',
       avatar: ''
@@ -120,7 +120,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: '',
     owner: {
-      id: 14,
+      id: '14',
       display_name: 'Wilson',
       user_name: 'wilson',
       avatar: 'https://placeimg.com/320/320'
@@ -142,7 +142,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://number8.com/wp-content/uploads/2021/01/2021-software-development-salary-trends.png',
     owner: {
-      id: 75,
+      id: '75',
       display_name: 'Hary Wilson',
       user_name: 'haryw',
       avatar: ''
@@ -164,7 +164,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://hocvienagile.com/wp-content/uploads/2021/04/Senior-Dev.jpg',
     owner: {
-      id: 247,
+      id: '247',
       display_name: 'Messi',
       user_name: 'messi',
       avatar: 'https://placeimg.com/320/320'
@@ -186,7 +186,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://www.elmhurst.edu/wp-content/uploads/2019/11/software-developer-vs-software-engineer-illustration.jpg',
     owner: {
-      id: 2012,
+      id: '2012',
       display_name: 'Thom Wilson',
       user_name: 'thomw',
       avatar: 'https://placeimg.com/320/320'
@@ -208,7 +208,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://backlog.com/wp-blog-app/uploads/2019/08/Backlog-Succeeding-as-software-developer-in-modern-workforce-Blog.png',
     owner: {
-      id: 1411,
+      id: '1411',
       display_name: 'Vinh Ngoc',
       user_name: 'vinhngoc',
       avatar: 'https://placeimg.com/320/320'
@@ -230,7 +230,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://toidicodedao.files.wordpress.com/2019/07/which-programming-langauge-should-i-learn-first-itonlinelearning.jpg?w=672&h=372&crop=1',
     owner: {
-      id: 1411,
+      id: '1411',
       display_name: 'Vinh Ngoc',
       user_name: 'vinhngoc',
       avatar: 'https://placeimg.com/320/320'
@@ -252,7 +252,7 @@ export const postsMockData: Post[] = [
     short_content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
     thumbnail: 'https://www.michaelpage.com.vn/sites/michaelpage.com.vn/files/styles/advice_node_desktop/public/2022-01/Frontend%20Developer.jpg?itok=Gs7_TIJS',
     owner: {
-      id: 1411,
+      id: '1411',
       display_name: 'Vinh Ngoc',
       user_name: 'vinhngoc',
       avatar: 'https://placeimg.com/320/320'

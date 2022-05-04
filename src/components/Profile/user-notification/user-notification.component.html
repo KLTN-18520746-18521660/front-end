@@ -1,21 +1,44 @@
-<div class="grid">
+<div class="user-notification-wrapper flex flex-wrap p-2 md:p-3" infiniteScroll [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
   <div class="col-12">
-    <div class="card">
-      <div class="flex align-items-center justify-content-between mb-4">
-        <h5>Notifications</h5>
-      </div>
-      <div class="flex justify-content-between align-items-center">
-        <div class="flex align-items-center">
-          <p-inputSwitch [inputId]="'viewRead'" (onChange)="handleChangeViewRead($event)" [(ngModel)]="viewRead">
-          </p-inputSwitch>
-          <label [for]="'viewRead'">{{'notification.viewRead' | translate}}</label>
-        </div>
-        <div class="flex">
-          <button pButton type="button" label="Read All" class="p-button-outlined"></button>
-        </div>
-      </div>
-      <span class="block text-600 font-medium mb-3">TODAY</span>
-
+    <h5>{{'notification.title' | translate}}</h5>
+    <p class="text-600" [innerHTML]="'notification.subTitle' | translate: {count: sizeUnread}"></p>
+  </div>
+  <div class="col-12 flex justify-content-between align-items-center">
+    <div class="flex align-items-center">
+      <p-inputSwitch [inputId]="'viewRead'" (onChange)="handleChangeViewRead($event)" [(ngModel)]="viewOnlyUnRead">
+      </p-inputSwitch>
+      <label class="ml-2" [for]="'viewRead'">{{'notification.viewRead' | translate}}</label>
+    </div>
+    <div class="flex">
+      <button pButton type="button" [disabled]="sizeUnread == 0" icon="pi pi-check-circle"
+        label="{{'notification.viewAll' | translate}}" class="p-button-outlined"></button>
     </div>
   </div>
+
+  <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingSpinner">
+    <div class="col-12" *ngFor="let item of listNotifications">
+      <app-notification-card (delete)="handleDelete($event)" [notification]="item"></app-notification-card>
+    </div>
+  </ng-template>
+  <ng-template #loadingSpinner>
+    <div class="col-12" *ngFor="let i of [1,2,3]">
+      <app-notification-card [loading]="true"></app-notification-card>
+    </div>
+  </ng-template>
+
+  <ng-template [ngIf]="isLoadingMore">
+    <div class="col-12" *ngFor="let i of [1]">
+      <app-notification-card [loading]="true"></app-notification-card>
+    </div>
+  </ng-template>
+
+  <ng-template [ngIf]="!isLoading && listNotifications.length == 0">
+    <div class="col-12">
+      <p class="text-center font-semibold text-lg text-700 py-6">{{'notification.noNotification' | translate}}</p>
+    </div>
+  </ng-template>
 </div>
+
+
+<p-toast [key]="'notification'" [preventOpenDuplicates]="true"></p-toast>

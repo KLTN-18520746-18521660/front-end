@@ -1,15 +1,186 @@
-<div class="flex">
+<div class="flex" *ngIf="user">
   <div class="col-12">
     <div class="card p-fluid">
-      <h5>Horizontal</h5>
-      <div class="field grid"><label htmlfor="name3" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-        <div class="col-12 md:col-10"><input pinputtext="" id="name3" type="text"
-            class="p-inputtext p-component p-element"></div>
-      </div>
-      <div class="field grid"><label htmlfor="email3" class="col-12 mb-2 md:col-2 md:mb-0">Email</label>
-        <div class="col-12 md:col-10"><input pinputtext="" id="email3" type="text"
-            class="p-inputtext p-component p-element"></div>
-      </div>
+      <h5>{{'profile.editProfile.title' | translate}}</h5>
+      <p-messages [(value)]="message" [enableService]="false"></p-messages>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="comment-input-wrapper mt-2 mb-4">
+        <div class="field grid mb-4">
+          <label htmlfor="avatar" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.avatar.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10 inline-flex align-items-center">
+            <app-avatar [user]="user" [height]="'5rem'"></app-avatar>
+
+            <p-fileUpload #fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"
+              [chooseIcon]="'pi pi-pencil'" (onSelect)="onSelectAvatar($event)" (onClear)="onClearSelect()"
+              (onError)="onErrorSelectFile($event)" [styleClass]="'ml-3 p-2'" [showUploadButton]="false"
+              accept=".png, .jpg, .jpeg, .svg, .webp" [showCancelButton]="isSelect" accept="image/*"
+              [maxFileSize]="3000000">
+            </p-fileUpload>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="first_name" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.first_name.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10">
+            <input pInputText formControlName="first_name" id="first_name" type="text"
+              class="p-inputtext p-component p-element"
+              placeholder="{{'profile.editProfile.first_name.placeholder' | translate}}"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['first_name'].errors }">
+            <div *ngIf="submitted && f['first_name'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['first_name'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.first_name.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="last_name" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.last_name.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10">
+            <input pInputText formControlName="last_name" id="last_name" type="text"
+              class="p-inputtext p-component p-element"
+              placeholder="{{'profile.editProfile.last_name.placeholder' | translate}}"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['last_name'].errors }">
+            <div *ngIf="submitted && f['last_name'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['last_name'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.last_name.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="display_name" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.display_name.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10 flex align-items-center">
+            <p-radioButton name="display_name" value="{{display_name1}}" inputId="male" formControlName="display_name">
+            </p-radioButton>
+            <label class="ml-2 mr-6" for="male">{{display_name1}}</label>
+            <p-radioButton name="display_name" value="{{display_name2}}" inputId="female"
+              formControlName="display_name">
+            </p-radioButton>
+            <label class="ml-2 mr-6" for="female">{{display_name2}}</label>
+            <br>
+            <div *ngIf="submitted && f['display_name'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['display_name'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.display_name.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="description" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.description.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10">
+            <input pInputText formControlName="description" id="description" type="text"
+              class="p-inputtext p-component p-element"
+              placeholder="{{'profile.editProfile.description.placeholder' | translate}}"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['description'].errors }">
+            <div *ngIf="submitted && f['description'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['description'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.description.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="sex" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.sex.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10 flex align-items-center">
+            <p-radioButton name="sex" value="male" inputId="male" formControlName="sex"></p-radioButton>
+            <label class="ml-2 mr-6" for="male">{{'profile.editProfile.sex.options.male' | translate}}</label>
+            <p-radioButton name="sex" value="female" inputId="female" formControlName="sex"></p-radioButton>
+            <label class="ml-2 mr-6" for="female">{{'profile.editProfile.sex.options.female' | translate}}</label>
+            <p-radioButton name="sex" value="other" inputId="other" formControlName="sex"></p-radioButton>
+            <label class="ml-2 mr-6" for="other">{{'profile.editProfile.sex.options.other' | translate}}</label>
+            <br>
+            <div *ngIf="submitted && f['sex'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['sex'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.sex.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="phone" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.phone.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10">
+            <p-inputNumber formControlName="phone" id="phone" mode="decimal" [maxlength]="15"
+              [placeholder]="'profile.editProfile.phone.placeholder' | translate" [prefix]="'+'"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['phone'].errors }" [min]="0" [useGrouping]="false">
+            </p-inputNumber>
+            <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['phone'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.phone.error.required' | translate}}</small>
+              </div>
+              <div class="flex align-items-end" *ngIf="f['phone'].errors['pattern']">
+                <small class="p-error inline">{{'profile.editProfile.phone.error.phone' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="country" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.country.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10">
+            <p-dropdown [options]="countries" [virtualScroll]="true" [itemSize]="30" formControlName="country"
+              id="country" optionLabel="name" [filter]="true" filterBy="name" (onChange)="onChangeCountry($event)"
+              placeholder="{{'profile.editProfile.country.placeholder' | translate}}">
+              <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value flex align-items-center" *ngIf="selectedCountry">
+                  <img src="assets/styles/flags/flag_placeholder.png"
+                    [class]="'mr-2 flag flag-' + selectedCountry.code.toLowerCase()" />
+                  <div>{{selectedCountry.name}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-country pTemplate="item">
+                <div class="country-item flex align-items-center">
+                  <img src="assets/styles/flags/flag_placeholder.png"
+                    [class]="'mr-2 flag flag-' + country.code.toLowerCase()" />
+                  <div>{{country.name}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <div *ngIf="submitted && f['country'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['country'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.country.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field grid mb-4">
+          <label htmlfor="city" class="col-12 mb-2 md:col-2 md:mb-0 font-semibold">
+            {{'profile.editProfile.city.label' | translate}}
+          </label>
+          <div class="col-12 md:col-10">
+            <input pInputText formControlName="city" id="city" type="text" class="p-inputtext p-component p-element"
+              placeholder="{{'profile.editProfile.city.placeholder' | translate}}"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['city'].errors }">
+            <div *ngIf="submitted && f['city'].errors" class="invalid-feedback mt-2">
+              <div class="flex align-items-end" *ngIf="f['city'].errors['required']">
+                <small class="p-error inline">{{'profile.editProfile.city.error.required' | translate}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex col-12 justify-content-center">
+          <div class="col-12 md:col-6">
+            <p-button type="submit" [disabled]="!editing" label="{{'common.save' | translate}}" class="p-button-rounded"
+              iconPos="right" icon="pi pi-send"></p-button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+<app-loading [loading]="isLoading"></app-loading>
