@@ -1,8 +1,8 @@
 <a class="tag-link inline-flex mr-2 my-1 text-overflow-ellipsis overflow-hidden {{width}}"
-  [routerLink]="['/tag', tag.id]">
+  [routerLink]="['/tag', tag.tag]">
   <span
     class="tag-title {{ color }}-400 hover:{{ color }}-500 py-2 px-2 text-0 text-{{ size }} font-semibold border-round"
-    title="{{ tag?.tag }}" [ngClass]="width ? width : 'max-width'">
-    #{{ tag?.short }}
+    title="{{ tag?.name }}" [ngClass]="width ? width : 'max-width'">
+    #{{ tag?.tag }}
   </span>
 </a>

@@ -1,8 +1,9 @@
-<div class="fixed top-bar-wrapper w-full h-5rem z-5">
+<div class="fixed top-bar-wrapper w-full h-5rem z-5" [ngClass]="{'top-bar-sticky' : isScrolling}">
   <div class="container">
     <div class="flex justify-content-between align-items-center top-bar">
       <div class="flex align-items-center menu-left">
-        <p-button type="text" class="flex p-button-secondary md:hidden" (click)="onOpenSidebar()" icon="pi pi-bars"></p-button>
+        <p-button type="text" class="flex p-button-secondary md:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
+        </p-button>
         <div class="logo">
           <a [routerLink]="['/']">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png" class="h-4rem"
@@ -11,19 +12,21 @@
         </div>
         <div class="flex top-bar-menu">
           <ul class="list-menu list-none align-items-center m-0 hidden md:flex">
-            <li class="inline menu-item text-center">
+            <!-- <li class="inline menu-item text-center">
               <a [routerLink]="['/']" class="menu-item-link flex justify-content-center py-4 w-full"
                 [ngClass]="{'active': activeLink == ''}">{{'topbar.home' | translate }}</a>
-            </li>
+            </li> -->
             <li *ngFor="let item of category.slice(0, 3)" class="inline menu-item text-center">
-              <a [routerLink]="['category', item.slug]" class="menu-item-link flex justify-content-center py-4 w-full"
+              <a [routerLink]="['category', item.slug]"
+                class="menu-item-link flex justify-content-center py-4 w-full font-semibold"
                 [ngClass]="{'active': activeLink == item.slug}">{{item.display_name}}</a>
             </li>
             <li class="inline menu-item text-center menu-dropdown py-4">
-              {{'topbar.more' | translate }}<i class="pi pi-angle-down"></i>
+              <span class="font-semibold">{{'topbar.more' | translate }}</span><i class="pi pi-angle-down"></i>
               <ul class="menu-dropdown-list list-none align-items-center shadow-6 border-round">
                 <li *ngFor="let item of category.slice(4)" class="menu-dropdown-item">
-                  <a [routerLink]="['category', item.slug]" class="menu-dropdown-link pl-4 pr-8 py-4 flex">{{item.display_name}}</a>
+                  <a [routerLink]="['category', item.slug]"
+                    class="menu-dropdown-link pl-4 pr-8 py-4 flex">{{item.display_name}}</a>
                 </li>
               </ul>
             </li>
@@ -31,17 +34,17 @@
         </div>
       </div>
       <div class="flex align-items-center menu-right">
+        <div class="flex">
+          <p-button pButton pRipple [routerLink]="['/create']" class="p-button-text p-button-primary p-0">
+            {{'home.createPost' | translate}}
+          </p-button>
+        </div>
         <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
           <p-menu #menu [popup]="true" [model]="menuUser"></p-menu>
           <div class="user-dropdown flex align-items-center align-content-center cursor-pointer"
             (click)="menu.toggle($event)">
-            <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
-              <p-avatar shape="circle" image="{{ user.avatar }}" size="large"></p-avatar>
-            </ng-template>
-            <ng-template #avatar>
-              <p-avatar label="{{user.last_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
-            </ng-template>
-            <span class="ml-2 font-semibold">{{user.display_name}}</span>
+            <span class="ml-2 font-semibold mx-2">{{user.display_name}}</span>
+            <app-avatar [user]="user"></app-avatar>
           </div>
         </ng-template>
         <ng-template #noLogin>
@@ -53,34 +56,9 @@
       </div>
     </div>
   </div>
-  <!-- <p-menubar [model]="items" class="top-bar">
-    <ng-template pTemplate="start">
-      <a [routerLink]="''">HeoVi</a>
-    </ng-template>
-    <ng-template pTemplate="end">
-      <div class="flex align-items-center">
-        <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
-          <p-menu #menu [popup]="true" [model]="menuUser"></p-menu>
-          <div class="user-dropdown flex align-items-center align-content-center cursor-pointer" (click)="menu.toggle($event)">
-            <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
-              <p-avatar shape="circle" image="{{ user.avatar }}" size="large"></p-avatar>
-            </ng-template>
-            <ng-template #avatar>
-              <p-avatar label="{{user.last_name.substring(0,1)}}" shape="circle" size="large"></p-avatar>
-            </ng-template>
-            <span class="ml-2 font-semibold">{{user.display_name}}</span>
-          </div>
-        </ng-template>
-        <ng-template #noLogin>
-          <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/auth/register']"
-            style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
-          <a class="font-medium no-underline ml-2 text-right cursor-pointer" [routerLink]="['/auth/login']"
-            style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>
-        </ng-template>
-      </div>
-    </ng-template>
-  </p-menubar> -->
 </div>
 <p-sidebar [(visible)]="showSidebar" (onHide)="onHideSidebar()">
-  Content
+  Mobile Menu Here!
 </p-sidebar>
+<p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'" [style]="{width: '60vw'}" [dismissableMask]="true">
+</p-confirmDialog>

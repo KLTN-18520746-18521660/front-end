@@ -1,12 +1,31 @@
 <ng-template [ngIf]="isShow">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="comment-input-wrapper">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="comment-input-wrapper mt-2 mb-4">
     <div class="flex flex-wrap justify-content-end">
       <div class="flex col-12 p-0">
-        <p-avatar icon="pi pi-user" shape="circle" size="large"></p-avatar>
+        <ng-container *ngIf="currentUser">
+          <app-avatar [user]="currentUser"></app-avatar>
+        </ng-container>
+        <p-avatar icon="pi pi-user" *ngIf="!currentUser" shape="circle" size="large"></p-avatar>
         <span class="p-input-icon-right w-full ml-2">
           <i *ngIf="isLoading" class="pi pi-spin pi-spinner"></i>
-          <input formControlName="value" id="value" type="text" class="w-full comment-input px-3" pInputText
-            placeholder="{{'postDetail.commentPlaceholder' | translate}}">
+          <ng-template [ngIf]="!!replyName" [ngIfElse]="replyTextArea">
+            <textarea #textInput formControlName="value" id="value" [rows]="2" pInputTextarea [autoResize]="true" focus
+              placeholder="{{'postDetail.replyTo' | translate: {name: replyName} }}"
+              class="w-full comment-input pl-3 pr-7 shadow-1"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['value'].errors }">
+            </textarea>
+          </ng-template>
+          <ng-template #replyTextArea>
+            <textarea #textInput formControlName="value" id="value" [rows]="2" pInputTextarea [autoResize]="true" focus
+              placeholder="{{'postDetail.commentPlaceholder' | translate}}"
+              class="w-full comment-input pl-3 pr-7 shadow-1"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['value'].errors }">
+            </textarea>
+          </ng-template>
+
+          <!-- <input formControlName="value" id="value" type="text" class="w-full comment-input px-3" pInputText
+            placeholder="{{'postDetail.commentPlaceholder' | translate}}"
+            [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['value'].errors }"> -->
           <div *ngIf="submitted && f['value'].errors" class="invalid-feedback">
             <div class="flex align-items-end" *ngIf="f['value'].errors['required']">
               <small class="p-error inline pl-3">{{'postDetail.commentError' | translate}}</small>
@@ -14,9 +33,9 @@
           </div>
         </span>
       </div>
-      <div class="flex col justify-content-end">
-        <button type="submit" pButton pRipple label="{{'postDetail.comment' | translate}}"
-          icon="pi pi-plus-circle"></button>
+      <div class="flex col justify-content-end absolute" *ngIf="showButton">
+        <button type="submit" pButton pRipple pTooltip="{{'postDetail.submitComment' | translate}}"
+          tooltipPosition="top" class="p-button-rounded p-button-text" icon="pi pi-send"></button>
       </div>
     </div>
   </form>

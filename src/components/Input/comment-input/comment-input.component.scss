@@ -2,7 +2,7 @@
 
 :host ::ng-deep .comment-input-wrapper {
   .comment-input {
-    height: 3.4rem !important;
-    @include borderRadius(25);
+    // height: 3.4rem !important;
+    @include borderRadius(10);
   }
 }

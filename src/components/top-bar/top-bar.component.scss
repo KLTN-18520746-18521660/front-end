@@ -1,8 +1,14 @@
 :host ::ng-deep {
   .top-bar-wrapper {
     // background: linear-gradient(104.01deg, #d0e4ec 9.98%, #EAF2F5 90.02%);
-    backdrop-filter: blur(20px);
-    box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.1), 0px 4px 5px -2px rgba(0, 0, 0, 0.12), 0px 10px 15px -5px rgba(0, 0, 0, 0.2) !important;
+    // background-color: var(--surface-ground);
+    z-index: 100 !important;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08) !important;
+
+    &.top-bar-sticky {
+      backdrop-filter: blur(20px);
+      box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.1), 0px 4px 5px -2px rgba(0, 0, 0, 0.12), 0px 10px 15px -5px rgba(0, 0, 0, 0.2) !important;
+    }
 
     .top-bar-menu {
       height: 5rem;
@@ -99,7 +105,7 @@
     }
 
     .p-avatar {
-      border: 1px solid #030e13;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12);
     }
   }
 
@@ -115,5 +121,9 @@
         }
       }
     }
+  }
+
+  .p-menu.p-menu-overlay {
+    top: 66px !important;
   }
 }

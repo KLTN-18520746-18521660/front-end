@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import User from 'models/user.model';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { filter, Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
@@ -24,16 +24,22 @@ export class TopBarComponent implements OnInit {
 
   menuUser?: MenuItem[] = [
     {
-      id: 'profile',
+      id: 'dashboard',
       label: '',
-      icon: 'pi pi-user',
+      icon: 'pi pi-home',
       routerLink: ['/profile']
     },
     {
-      id: 'edit',
+      id: 'profile',
+      label: '',
+      icon: 'pi pi-user',
+      routerLink: ['/profile/user-info']
+    },
+    {
+      id: 'edit-info',
       label: '',
       icon: 'pi pi-user-edit',
-      routerLink: ['/profile/edit']
+      routerLink: ['/profile/edit-info']
     },
     {
       id: 'setting',
@@ -53,9 +59,7 @@ export class TopBarComponent implements OnInit {
       label: '',
       icon: 'pi pi-power-off',
       command: () => {
-        this.authService.logout(this.userService.getSessionId()).subscribe((res) => {
-          this.userService.logOut();
-        });
+        this.logout();
       }
     }
   ];
@@ -72,11 +76,16 @@ export class TopBarComponent implements OnInit {
 
   showSidebar: boolean = false;
 
+  isScrolling: boolean = false;
+
+  textTranslation: any;
+
   constructor(
     private userService: UserService,
     private router: Router,
     private authService: AuthService,
     private translate: TranslateService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -89,8 +98,8 @@ export class TopBarComponent implements OnInit {
     this.items = TopBarMenuItem;
 
     this.subscription = this.userService.authUpdate$.subscribe(res => {
-      this.user = res.data.user;
-      this.session_id = res.data.session_id;
+      this.user = res.user;
+      this.session_id = res.session_id;
       this.isLoggedin = res.isAuthenticated;
     });
 
@@ -100,6 +109,19 @@ export class TopBarComponent implements OnInit {
         item.label = result[index]
       });
     });
+    this.translate.get('dialog.logout').subscribe((res) => {
+      this.textTranslation = res;
+    });
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll(event) {
+    if (window.pageYOffset > 0) {
+      this.isScrolling = true;
+    }
+    else {
+      this.isScrolling = false;
+    }
   }
 
   getActiveLink(link: any) {
@@ -110,6 +132,24 @@ export class TopBarComponent implements OnInit {
     else {
       return url[2];
     }
+  }
+
+  logout() {
+    this.confirmationService.confirm({
+      key: 'logout',
+      header: this.textTranslation.header,
+      message: this.textTranslation.title,
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.textTranslation.yes,
+      rejectLabel: this.textTranslation.no,
+      rejectButtonStyleClass: 'p-button-danger p-button-outlined',
+      accept: () => {
+        this.authService.logout(this.userService.getSessionId()).subscribe((res) => {
+          this.userService.logOut();
+          this.router.navigate(['/']);
+        });
+      }
+    });
   }
 
   onOpenSidebar() {

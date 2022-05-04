@@ -19,11 +19,11 @@ export class TagComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.tag.short = this.tag.tag?.replace(/\s/g, '');
+    // this.tag.name = this.tag.tag?.replace(/\s/g, '');
   }
 
   onClickTag() {
-    this.router.navigate(['/tag', this.tag.id]);
+    this.router.navigate(['/tag', this.tag.tag]);
   }
 
 }
