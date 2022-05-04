@@ -1,0 +1,60 @@
+@import 'styles/scss/mixins.scss';
+
+:host ::ng-deep {
+  .notification-card-wrapper {
+    border-radius: calc(var(--border-radius) + 2px);
+
+    &.un-read {
+      background-color: var(--surface-200);
+    }
+
+    &.already-ready {
+      b {
+        font-weight: 600 !important;
+      }
+    }
+
+    .notification-menu {
+      display: flex;
+
+      @include breakpoint(min, 768px) {
+        display: none;
+      }
+
+      button {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+      }
+    }
+
+    &:hover {
+      background-color: var(--surface-200);
+
+      .notification-menu {
+        display: flex;
+      }
+    }
+
+    .notification-content {
+      @include maxline(3);
+
+      .notification-content-text {
+        font-weight: 700;
+      }
+    }
+
+    .un-read-icon {
+      .pi {
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  // .notification-card-loading {
+  //   .loading-content {
+  //     .p-skeleton {
+  //       width: 100% !important;
+  //     }
+  //   }
+  // }
+}

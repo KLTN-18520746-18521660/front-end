@@ -24,68 +24,17 @@ export class CommentCardComponent implements OnInit {
 
   sizeComment = 2;
 
+  @Input() loading: boolean = false;
+
   @Input() comment: Comment;
 
   @ViewChild('replyForm') replyForm: CommentInputComponent;
 
   @Output() submit = new EventEmitter<CommentInput>();
 
-  menuitem: MenuItem[] = [
-    {
-      id: 'like',
-      label: '',
-      disabled: false,
-      icon: 'pi pi-thumbs-up',
-      command: (event) => {
-        console.log(event);
-      }
-    },
-    {
-      id: 'unlike',
-      label: '',
-      disabled: false,
-      icon: 'pi pi-thumbs-down',
-      command: (event) => {
-        console.log(event);
-      }
-    },
-    {
-      id: 'reply',
-      label: '',
-      disabled: false,
-      icon: 'pi pi-reply',
-      command: (event) => {
-        console.log(event);
-      }
-    },
-    {
-      id: 'edit',
-      label: '',
-      disabled: false,
-      icon: 'pi pi-pencil',
-      command: (event) => {
-        console.log(event);
-      }
-    },
-    {
-      id: 'delete',
-      label: '',
-      disabled: false,
-      icon: 'pi pi-trash',
-      command: (event) => {
-        console.log(event);
-      }
-    },
-    {
-      id: 'report',
-      label: '',
-      disabled: false,
-      icon: 'pi pi-flag-fill',
-      command: () => {
-        this.onClickReport();
-      }
-    }
-  ]
+  @Output() delete = new EventEmitter<Comment>();
+
+  menuitem: MenuItem[];
 
   isShowReply = false;
 
@@ -94,6 +43,8 @@ export class CommentCardComponent implements OnInit {
   getCommentSubcription: Subscription;
 
   actionSubcription: Subscription;
+
+  deleteCommentSubcription: Subscription;
 
   isLoading: boolean;
   isLoadingComment: boolean = false;
@@ -108,6 +59,65 @@ export class CommentCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.loading) {
+      return;
+    }
+    this.menuitem = [
+      {
+        id: 'like',
+        label: this.translate.instant('postDetail.commentMenu.like'),
+        disabled: false,
+        icon: 'pi pi-thumbs-up',
+        command: (event) => {
+          this.actionWithComment('like');
+        }
+      },
+      {
+        id: 'unlike',
+        label: this.translate.instant('postDetail.commentMenu.unlike'),
+        disabled: false,
+        icon: 'pi pi-thumbs-down',
+        command: (event) => {
+          this.actionWithComment('unlike');
+        }
+      },
+      {
+        id: 'reply',
+        label: this.translate.instant('postDetail.commentMenu.reply'),
+        disabled: false,
+        icon: 'pi pi-reply',
+        command: (event) => {
+          this.onClickReply();
+        }
+      },
+      // {
+      //   id: 'edit',
+      //   label: '',
+      //   disabled: false,
+      //   icon: 'pi pi-pencil',
+      //   command: (event) => {
+      //     console.log(event);
+      //   }
+      // },
+      {
+        id: 'delete',
+        label: this.translate.instant('postDetail.commentMenu.delete'),
+        disabled: false,
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.handleDeleteComment(this.comment);
+        }
+      },
+      {
+        id: 'report',
+        label: this.translate.instant('postDetail.commentMenu.report'),
+        disabled: false,
+        icon: 'pi pi-flag-fill',
+        command: () => {
+          this.onClickReport();
+        }
+      }
+    ];
     this.isLoadingComment = true;
     dayjs.extend(relativeTime);
     dayjs.locale(this.translate.currentLang);
@@ -121,12 +131,12 @@ export class CommentCardComponent implements OnInit {
 
     this.comment.mapAction = mapActionWithComment(this.comment.actions || []);
 
-    this.translate.get('postDetail.commentMenu').subscribe((res) => {
-      let result = Object.values(res) as [];
-      this.menuitem.map((item, index) => {
-        item.label = result[index]
-      })
-    });
+    // this.translate.get('postDetail.commentMenu').subscribe((res) => {
+    //   let result = Object.values(res) as [];
+    //   this.menuitem.map((item, index) => {
+    //     item.label = result[index]
+    //   })
+    // });
     this.isLoadingComment = false;
   }
 
@@ -141,7 +151,7 @@ export class CommentCardComponent implements OnInit {
       size: size
     }
 
-    this.getCommentSubcription = this.commentService.getCommentByPostSlug(this.commentService.current_Slug, this.userService.getSessionId(), params).subscribe(
+    this.getCommentSubcription = this.commentService.getCommentByPostSlug(this.commentService.current_Slug, params).subscribe(
       (res) => {
         this.comment.reply_comments.comments = res.data.comments;
         this.comment.mapAction = mapActionWithComment(res.data?.post?.actions || []);
@@ -173,7 +183,7 @@ export class CommentCardComponent implements OnInit {
       if (this.postCommentSubcription) {
         this.postCommentSubcription.unsubscribe();
       }
-      this.postCommentSubcription = this.commentService.postComment(this.commentService.current_Slug, this.comment.id, value, this.userService.getSessionId()).subscribe(
+      this.postCommentSubcription = this.commentService.postComment(this.commentService.current_Slug, this.comment.id, value).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully' });
           this.comment.reply_comments.comments.unshift(res.data.comment);
@@ -190,13 +200,35 @@ export class CommentCardComponent implements OnInit {
     }
   }
 
+  onDeleteComment(comment: Comment) {
+    if (this.deleteCommentSubcription) {
+      this.deleteCommentSubcription.unsubscribe();
+    }
+    this.deleteCommentSubcription = this.commentService.deleteComment(comment.id).subscribe(
+      (res) => {
+        this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully deleted' });
+        this.comment.replies--;
+        this.comment.reply_comments.total_size--;
+        this.comment.reply_comments.comments = this.comment.reply_comments.comments.filter(item => item.id !== comment.id);
+      },
+      (err) => {
+        this.messageService.add({ severity: 'error', summary: '', detail: err.message });
+        console.log(err);
+      }
+    );
+  }
+
+  handleDeleteComment(comment: Comment) {
+    this.delete.emit(comment);
+  }
+
   actionWithComment(action: ActionType) {
     const sessionId = this.userService.getSessionId();
     if (this.actionSubcription) {
       this.actionSubcription.unsubscribe();
     }
     if (sessionId) {
-      this.actionSubcription = this.commentService.sendActionWithComment(this.comment.id, action, sessionId).subscribe(
+      this.actionSubcription = this.commentService.sendActionWithComment(this.comment.id, action).subscribe(
         (res) => {
           // this.getPostValueWhenAction();
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Success' });

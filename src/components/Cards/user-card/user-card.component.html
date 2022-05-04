@@ -3,14 +3,9 @@
     <div class="flex flex-wrap justify-content-between align-items-center">
       <a [routerLink]="['/user', user.user_name]" class="color-inherit">
         <div class="user-info flex align-items-center">
-          <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
-            <p-avatar shape="circle" image="{{ user?.avatar }}" size="large"></p-avatar>
-          </ng-template>
-          <ng-template #avatar>
-            <app-avatar [label]="user?.display_name.substring(0,1) | uppercase"></app-avatar>
-          </ng-template>
+          <app-avatar [user]="user"></app-avatar>
           <div class="user-name ml-3">
-            <p class="font-semibold hover-underline text-xl mb-1 capitalize">{{ user?.display_name | lowercase}}</p>
+            <p class="font-semibold hover-underline text-xl mb-1">{{ user?.display_name }}</p>
             <span class="text-sm hover-underline text-500">@{{ user?.user_name }}</span>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { convertDateTime } from './../../../utils/commonFunction';
 import Post from 'models/post.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { postsMockData } from 'shared/mockData/postsMockData';
@@ -31,7 +32,7 @@ export class RecommendPostCardComponent implements OnInit {
       this.post = {
         ...this.post,
         fromNow: {
-          created: dayjs(this.post.created_timestamp).fromNow(true),
+          created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, false),
         }
       };
 

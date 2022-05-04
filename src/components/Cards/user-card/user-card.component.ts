@@ -42,11 +42,9 @@ export class UserCardComponent implements OnInit {
     if (this.subscription) {
       return;
     }
-    this.subscription = this.userService.sendActionWithUser(this.user.user_name, action, this.userService.getSessionId()).subscribe(
-      (res) => {
-        this.user.actions = res.data.action;
-        this.user.mapAction = mapActionWithUser(this.user.actions || []);
-        this.subscription.unsubscribe();
+    this.subscription = this.userService.sendActionWithUser(this.user.user_name, action).subscribe(
+      () => {
+        this.user.mapAction.follow = !this.user.mapAction.follow;
       },
       (err) => {
         console.log(err);
