@@ -1,3 +1,4 @@
+import { PublicConfig } from 'models/appconfig.model';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,6 +24,8 @@ import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 export class AppUserComponent implements OnInit {
 
   isLoading: boolean = true;
+
+  isLoadingConfig: boolean = true;
 
   isError: boolean = false;
 
@@ -52,13 +55,15 @@ export class AppUserComponent implements OnInit {
 
   refReport: DynamicDialogRef;
 
-  publicAPIConfig: any;
+  publicAPIConfig: PublicConfig;
 
   timeOutSession: number;
 
   textTranslate: any;
   isWatching: boolean;
   lastExtend: Date;
+
+  public interval: any;
 
   /** Session is save ??? */
   remember: boolean = false;
@@ -76,12 +81,15 @@ export class AppUserComponent implements OnInit {
   ) {
     this.userConfigService.getConfigs();
     this.currentURL = this.router.url;
-    this.publicAPIConfig = userService.config
   }
 
   ngOnInit() {
     if (this.userService.getSessionId()) {
       this.isLoading = true;
+
+      this.interval = setInterval(() => {
+        this.userService.updateUserStatistic();
+      }, APPCONSTANT.RELOAD_STATISTIC_TIMEOUT);
     }
     else {
       this.isLoading = false;
@@ -134,14 +142,17 @@ export class AppUserComponent implements OnInit {
   }
 
   async getPublishConfig() {
+    this.isLoadingConfig = true;
     const { data } = await this.authService.getPublicConfig().toPromise();
+
+    this.isLoadingConfig = false;
 
     this.authService.setConfig(data.configs);
     this.userIdleService.setConfigValues({
-      idle: data.configs.SessionSocialUserConfig.expiry_time * 60 || APPCONSTANT.USER_IDLE.IDLE,
-      timeout: APPCONSTANT.USER_IDLE.TIMEOUT,
-      ping: APPCONSTANT.USER_IDLE.PING
-    })
+      idle: data.configs?.SessionSocialUserConfig?.expiry_time * 60 || data.configs?.SocialUserIdle?.idle || APPCONSTANT.USER_IDLE.IDLE,
+      timeout: data.configs?.SocialUserIdle?.timeout || APPCONSTANT.USER_IDLE.TIMEOUT,
+      ping: data.configs?.SocialUserIdle?.ping || APPCONSTANT.USER_IDLE.PING
+    });
 
     console.log(this.userIdleService.getConfigValue());
 
@@ -233,7 +244,7 @@ export class AppUserComponent implements OnInit {
   }
 
   extendSession() {
-    this.authService.extendSessionUser(this.userService.getSessionId()).subscribe(
+    this.authService.extendSessionUser().subscribe(
       (res) => {
         console.log("Extend Session Success");
         this.lastExtend = new Date();
@@ -251,7 +262,7 @@ export class AppUserComponent implements OnInit {
         severity: type,
         detail: '',
         summary: message,
-      }]
+      }];
     }
     this.ref = this.dialogService.open(LoginPageComponent, {
       header,
@@ -312,6 +323,7 @@ export class AppUserComponent implements OnInit {
       this.refReport.close();
     }
     this.userIdleService.stopWatching();
+    clearInterval(this.interval);
   }
 
 }

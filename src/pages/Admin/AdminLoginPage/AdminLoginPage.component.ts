@@ -1,3 +1,4 @@
+import { ThemeName } from './../../../models/appconfig.model';
 import { ConfigService } from 'services/app.config.service';
 import { Message, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
@@ -7,7 +8,7 @@ import { AdminLoginModel } from 'models/admin.model';
 import { AdminService } from 'services/admin.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import { Subscription } from 'rxjs';
-import { AppConfig } from 'models/appconfig';
+import { AppConfig } from 'models/appconfig.model';
 import { UserConfigService } from 'services/user-config.service';
 
 @Component({
@@ -65,7 +66,7 @@ export class AdminLoginPageComponent implements OnInit {
     }
   }
 
-  changeTheme(theme: string, dark: boolean) {
+  changeTheme(theme: ThemeName, dark: boolean) {
     let themeElement = document.getElementById('theme-css');
     this.userConfig.addConfig('theme', theme);
     themeElement.setAttribute('href', 'assets/themes/' + theme + '/theme.css');

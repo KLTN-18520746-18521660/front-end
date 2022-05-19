@@ -7,7 +7,7 @@ import { Component, AfterViewInit, OnDestroy, Renderer2, OnInit } from '@angular
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppComponent } from '../../../app/app.component';
 import { ConfigService } from '../../../services/app.config.service';
-import { AppConfig } from '../../../models/appconfig';
+import { AppConfig } from '../../../models/appconfig.model';
 import { filter, fromEvent, map, merge, Subscription } from 'rxjs';
 import { UserIdleService } from 'angular-user-idle';
 import { TranslateService } from '@ngx-translate/core';
@@ -157,9 +157,9 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
     this.adminService.setConfig(data.configs);
     this.userIdleService.setConfigValues({
-      idle: data.configs.SessionAdminUserConfig.expiry_time * 60 || APPCONSTANT.USER_IDLE.IDLE,
-      timeout: APPCONSTANT.USER_IDLE.TIMEOUT,
-      ping: APPCONSTANT.USER_IDLE.PING
+      idle: data.configs?.SessionAdminUserConfig?.expiry_time * 60 || data.configs?.AdminUserIdle?.idle || APPCONSTANT.USER_IDLE.IDLE,
+      timeout: data.configs?.AdminUserIdle?.timeout || APPCONSTANT.USER_IDLE.TIMEOUT,
+      ping: data.configs?.AdminUserIdle?.ping || APPCONSTANT.USER_IDLE.PING
     })
 
     console.log(this.userIdleService.getConfigValue());
@@ -254,7 +254,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     this.userIdleService.stopWatching();
     this.isWatching = false;
     this.isLoggedIn = false;
-    this.router.navigate(['/admin/loginn']);
+    this.router.navigate(['/admin/login']);
   }
 
   extendSession() {

@@ -1,6 +1,7 @@
+import { PasswordPolicy } from './../../models/appconfig.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ConfigService } from 'services/app.config.service';
-import { AppConfig } from 'models/appconfig';
+import { AppConfig } from 'models/appconfig.model';
 import { Subscription } from 'rxjs';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
@@ -9,7 +10,8 @@ import { LoginUserModel } from 'models/user.model';
 import { Message, MessageService } from 'primeng/api';
 import { APPCONSTANT } from 'utils/appConstant';
 import { UserService } from 'services/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import Validation from 'utils/validation';
 
 @Component({
   selector: 'app-LoginPage',
@@ -28,11 +30,18 @@ export class LoginPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  isRedirecting: boolean = false;
+
   message: Message[] = [];
 
   config: AppConfig;
 
   subscription: Subscription;
+  authSubscription: Subscription;
+
+  passwordPolicy: PasswordPolicy;
+
+  returnUrl: string;
 
   constructor(
     public configService: ConfigService,
@@ -41,10 +50,17 @@ export class LoginPageComponent implements OnInit {
     // private socialAuthService: SocialAuthService,
     private messageService: MessageService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+
+    this.passwordPolicy = this.authService.getConfig().SocialPasswordPolicy;
+
+    // get returnUrl
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || null;
+
     this.message = this.userService.messages;
     this.config = this.configService.config;
     this.subscription = this.configService.configUpdate$.subscribe(config => {
@@ -68,8 +84,12 @@ export class LoginPageComponent implements OnInit {
       password: [null,
         [
           Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(40)
+          // Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
+          // Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
+          // Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
+          // Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
+          // Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
+          // Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
         ]
       ],
       remember: [false]
@@ -101,10 +121,27 @@ export class LoginPageComponent implements OnInit {
     });
 
     this.authService.login(user).subscribe(
-      (res: any) => {
+      (res) => {
         this.isLoading = false;
         this.userService.alreadyLogin = true;
         this.userService.updateAuth(res?.data?.session_id);
+
+        this.authSubscription = this.userService.authUpdate$.subscribe(res => {
+          if (res.isAuthenticated) {
+            this.isRedirecting = true;
+            if (this.returnUrl) {
+              setTimeout(() => {
+                this.router.navigate([this.returnUrl]);
+              }, APPCONSTANT.LOADING_TIMEOUT);
+            }
+            else {
+              setTimeout(() => {
+                this.router.navigate([this.userService.history[0] || '/']);
+              }, APPCONSTANT.LOADING_TIMEOUT);
+            }
+          }
+        });
+
         this.message = [{
           severity: 'success',
           summary: '',
@@ -113,7 +150,7 @@ export class LoginPageComponent implements OnInit {
         }];
         this.userService.messages = [];
       },
-      (err: any) => {
+      (err) => {
         this.isLoading = false;
         this.message = [{
           severity: 'error',
@@ -128,6 +165,9 @@ export class LoginPageComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
 

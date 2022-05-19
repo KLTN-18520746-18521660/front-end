@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
-import { AppConfig } from 'models/appconfig';
+import { AppConfig, PasswordPolicy } from 'models/appconfig.model';
 import { SignUpUserModel } from 'models/user.model';
 import { ConfigService } from 'services/app.config.service';
 import { Message, MessageService } from 'primeng/api';
@@ -11,6 +11,7 @@ import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
+
 @Component({
   selector: 'app-SignUpPage',
   templateUrl: './SignUpPage.component.html',
@@ -31,6 +32,8 @@ export class SignUpPageComponent implements OnInit {
 
   message: Message[];
 
+  passwordPolicy: PasswordPolicy;
+
   constructor(
     public configService: ConfigService,
     private formBuilder: FormBuilder,
@@ -40,6 +43,9 @@ export class SignUpPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.passwordPolicy = this.authService.getConfig().SocialPasswordPolicy;
+
     this.message = [];
     this.subscription = this.userService.authUpdate$.subscribe(res => {
       console.log(res);
@@ -71,11 +77,19 @@ export class SignUpPageComponent implements OnInit {
           null,
           [
             Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(40)
+            Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
+            Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
+            Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
+            Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
+            Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
+            Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
           ]
         ],
-        confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
+        confirmPassword: [null, [
+          Validators.required,
+          Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
+          Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
+        ]],
         acceptTerms: [false, Validators.requiredTrue]
       },
       {
@@ -103,9 +117,7 @@ export class SignUpPageComponent implements OnInit {
       last_name: lastname,
       password,
       confirm_password: confirmPassword,
-      settings: {
-        test: 'test'
-      }
+      settings: {}
     });
 
     this.authService.register(user).subscribe(
