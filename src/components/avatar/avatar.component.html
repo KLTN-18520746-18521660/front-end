@@ -1,7 +1,7 @@
 <div class="relative">
   <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
     <p-avatar shape="circle" image="{{ user.avatar }}" size="large"
-      [styleClass]="'border-2 border-' + borderColor + ' h-' + height + ' w-' + height">
+      [styleClass]="'border-1 border-' + borderColor + ' h-' + height + ' w-' + height">
     </p-avatar>
   </ng-template>
   <ng-template #avatar>

@@ -15,6 +15,8 @@ export class TagComponent implements OnInit {
   @Input() color = 'bg-indigo'
 
   @Input() width = '';
+
+  @Input() loading: boolean = false;
   
   constructor(private router: Router) { }
 

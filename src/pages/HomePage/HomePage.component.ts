@@ -1,16 +1,17 @@
+import Category from 'models/category.model';
 import { Component, OnInit } from '@angular/core';
 import Post from 'models/post.model';
 import Tag from 'models/tag.model';
 import { UserConfigService } from 'services/user-config.service';
 import { postsMockData } from 'shared/mockData/postsMockData';
 import { tagsMockData } from 'shared/mockData/tagsMockData';
-import { BREAKPOINT, CONTACT_INFO } from 'utils/appConstant';
+import { APPCONSTANT, BREAKPOINT, CONTACT_INFO } from 'utils/appConstant';
 import { randomArray } from 'utils/commonFunction';
 import { PostsService } from 'services/posts.service';
 import _ from 'lodash';
-import { AppConfig } from 'models/appconfig';
+import { AppConfig } from 'models/appconfig.model';
 import { Subscription } from 'rxjs';
-import { ConfigService } from 'pages/Admin/service/app.config.service';
+import { ConfigService } from 'services/app.config.service';
 
 @Component({
   selector: 'app-HomePage',
@@ -41,6 +42,14 @@ export class HomePageComponent implements OnInit {
   config: AppConfig;
 
   subscription: Subscription;
+  postSubscription: Subscription;
+  recommendSubscription: Subscription;
+
+  start: number = 0;
+  totalSizePost: number;
+
+  listCategory: Category[] = [];
+  isLoadingCategory: boolean = false;
 
   constructor(
     private userConfigService: UserConfigService,
@@ -64,12 +73,22 @@ export class HomePageComponent implements OnInit {
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
-    this.isLoadingPosts = true;
-    setTimeout(() => {
-      this.listPosts = postsMockData;
-      this.isLoadingPosts = false;
-    }, 2000);
+
+    this.getListPostsByType('trending', false);
+
     this.tags = randomArray(tagsMockData, 5);
+    this.onLoadRecommend();
+    this.getListCategory();
+  }
+
+  getListCategory() {
+    this.isLoadingCategory = true;
+    this.postSubscription = this.postService.getListCategories().subscribe(
+      (res) => {
+        this.listCategory = res.data.categories;
+        this.isLoadingCategory = false;
+      }
+    );
   }
 
   onChangeLayout(e) {
@@ -86,20 +105,23 @@ export class HomePageComponent implements OnInit {
   onChangeViewOption(e) {
     this.viewOption = e;
     this.listPosts = [];
-    this.isLoadingPosts = true;
-    setTimeout(() => {
-      this.listPosts = randomArray(postsMockData, 12);
-      this.isLoadingPosts = false;
-    }, 1000);
     this.userConfigService.addConfig('viewOption', e);
+    // setTimeout(() => {
+    //   this.listPosts = randomArray(postsMockData, 12);
+    //   this.isLoadingPosts = false;
+    // }, 1000);
+    this.start = 0;
+    this.getListPostsByType('trending', false);
   }
 
   onLoadRecommend() {
     this.isLoadingRecommend = true;
-    setTimeout(() => {
-      this.listRecommend = randomArray(postsMockData, 6);
-      this.isLoadingRecommend = false;
-    }, 2000);
+    this.recommendSubscription = this.postService.getPostsTrending({}).subscribe(
+      (res) => {
+        this.listRecommend = res.data.posts;
+        this.isLoadingRecommend = false;
+      }
+    );
   }
 
   onLoadMorePosts(scroll = false) {
@@ -110,11 +132,37 @@ export class HomePageComponent implements OnInit {
       return;
     }
 
-    this.isLoadingMorePosts = true;
-    setTimeout(() => {
-      this.listPosts = _.concat(this.listPosts, randomArray(postsMockData, 6));
-      this.isLoadingMorePosts = false;
-    }, 1000);
+    if (this.start < this.totalSizePost) {
+      this.getListPostsByType('trending', true);
+    }
+  }
+
+  getListPostsByType(type: 'following' | 'new' | 'trending', loadMore = false) {
+    if (loadMore) {
+      this.isLoadingMorePosts = true;
+    }
+    else {
+      this.isLoadingPosts = true;
+    }
+
+    const params = {
+      start: this.start,
+      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
+    }
+
+    this.postSubscription = this.postService.getPostsByType(type, {}).subscribe(
+      (res) => {
+        this.listPosts = this.listPosts ? [...this.listPosts, ...res.data.posts] : res.data.posts;
+        this.totalSizePost = res.data.total_size;
+        this.isLoadingPosts = false;
+        this.isLoadingMorePosts = false;
+        this.start += APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
+      },
+      () => {
+        this.isLoadingPosts = false;
+        this.isLoadingMorePosts = false;
+      }
+    );
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,6 @@
 <div class="fixed top-bar-wrapper w-full h-5rem z-5" [ngClass]="{'top-bar-sticky' : isScrolling}">
   <div class="container">
-    <div class="flex justify-content-between align-items-center top-bar">
+    <div class="flex justify-content-between align-items-center top-bar h-5rem">
       <div class="flex align-items-center menu-left">
         <p-button type="text" class="flex p-button-secondary md:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
         </p-button>
@@ -10,12 +10,12 @@
               alt="App Logo">
           </a>
         </div>
-        <div class="flex top-bar-menu">
+        <!-- <div class="flex top-bar-menu">
           <ul class="list-menu list-none align-items-center m-0 hidden md:flex">
-            <!-- <li class="inline menu-item text-center">
+            <li class="inline menu-item text-center">
               <a [routerLink]="['/']" class="menu-item-link flex justify-content-center py-4 w-full"
                 [ngClass]="{'active': activeLink == ''}">{{'topbar.home' | translate }}</a>
-            </li> -->
+            </li>
             <li *ngFor="let item of category.slice(0, 3)" class="inline menu-item text-center">
               <a [routerLink]="['category', item.slug]"
                 class="menu-item-link flex justify-content-center py-4 w-full font-semibold"
@@ -31,15 +31,28 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <div class="flex align-items-center menu-right">
-        <div class="flex">
-          <p-button pButton pRipple [routerLink]="['/create']" class="p-button-text p-button-primary p-0">
-            {{'home.createPost' | translate}}
-          </p-button>
+        <div class="flex mr-3">
+          <button pButton pRipple icon="pi pi-search" (click)="onClickSeach()"
+            class="p-button-rounded p-button-text p-button-plain">
+          </button>
         </div>
+        <div class="flex mr-3">
+          <button pButton pRipple [routerLink]="['/create']" class="p-button-outlined p-button-primary">
+            {{'topbar.createPost' | translate}}
+          </button>
+        </div>
+        <app-switch-theme></app-switch-theme>
         <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
+          <div class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
+            [routerLink]="['/profile/notifications']" [routerLinkActive]="'btn-active'">
+            <div>
+              <i class="pi pi-bell p-text-secondary" pBadge [value]="user?.unread_notifications.toString()"
+                style="font-size: 1.2rem"></i>
+            </div>
+          </div>
           <p-menu #menu [popup]="true" [model]="menuUser"></p-menu>
           <div class="user-dropdown flex align-items-center align-content-center cursor-pointer"
             (click)="menu.toggle($event)">
@@ -48,9 +61,9 @@
           </div>
         </ng-template>
         <ng-template #noLogin>
-          <a class="font-medium no-underline ml-2 text-right cursor-pointer px-3" [routerLink]="['/auth/register']"
+          <a class="font-medium ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
             style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
-          <a class="font-medium no-underline ml-2 text-right cursor-pointer px-3" [routerLink]="['/auth/login']"
+          <a class="font-medium ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/login']"
             style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>
         </ng-template>
       </div>
@@ -60,5 +73,6 @@
 <p-sidebar [(visible)]="showSidebar" (onHide)="onHideSidebar()">
   Mobile Menu Here!
 </p-sidebar>
-<p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'" [style]="{width: '60vw'}" [dismissableMask]="true">
+<p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'"
+  [style]="{width: '60vw'}" [dismissableMask]="true">
 </p-confirmDialog>

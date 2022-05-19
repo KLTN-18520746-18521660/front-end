@@ -11,6 +11,7 @@ export const handleError = (error?: HttpErrorResponse) => {
     message: '',
     status: 0,
     error: '',
+    message_code: ''
   };
   console.log(error)
 
@@ -24,18 +25,20 @@ export const handleError = (error?: HttpErrorResponse) => {
     500: "Internal Server Error",
   };
 
-  if (error.error instanceof ErrorEvent) {
+  if (error.error instanceof ErrorEvent as any) {
     obj = {
       error: error.error.message,
       status: error.status,
       message: error.statusText,
+      message_code: error.error.message_code || ''
     };
   }
-  else if (error.error instanceof ProgressEvent) {
+  else if (error.error instanceof ProgressEvent as any) {
     obj = {
       error: '',
       status: error.status,
       message: error.message,
+      message_code: error.error.message_code || ''
     };
   }
   else if (error?.error?.data) {
@@ -44,6 +47,7 @@ export const handleError = (error?: HttpErrorResponse) => {
       error: error.error.message,
       status: error.status,
       message: err.join(', '),
+      message_code: error.error.message_code || ''
     }
   }
   else {
@@ -51,6 +55,7 @@ export const handleError = (error?: HttpErrorResponse) => {
       error: mapStatusCode[error.status],
       status: error.status,
       message: error.error?.message,
+      message_code: error.error.message_code || ''
     };
   }
   console.log(obj);
@@ -61,6 +66,7 @@ export const convertDateTime = (
   date: string,
   locale: string,
   suffix: boolean = true,
+  showTime: boolean = true,
 ) => {
   dayjs.locale(locale);
 
@@ -68,19 +74,23 @@ export const convertDateTime = (
     dayjs.extend(relativeTime);
     return dayjs(date).fromNow(suffix);
   }
-  else if (dayjs().diff(date, 'day') < 1) {
+  else if (dayjs().diff(date, 'day', true) < 1) {
     dayjs.extend(calendar);
     return dayjs(date).calendar();
   }
-  else if (dayjs().diff(date, 'month') < 1) {
-    return dayjs(date).format('MMMM D, HH:mm');
+  else if (dayjs().diff(date, 'month', true) < 1) {
+    return showTime ? dayjs(date).format('MMMM D, HH:mm') : dayjs(date).format('MMMM D');
   }
-  else if (dayjs().diff(date, 'month') < 12) {
-    return dayjs(date).format('MMMM D, HH:mm');
+  else if (dayjs().diff(date, 'month', true) < 12) {
+    return showTime ? dayjs(date).format('MMMM D, HH:mm') : dayjs(date).format('MMMM D');
   }
   else {
-    return dayjs(date).format('DD/MM/YYYY HH:mm');
+    return showTime ? dayjs(date).format('DD/MM/YYYY HH:mm') : dayjs(date).format('DD/MM/YYYY');
   }
+}
+
+export const getDiffDay = (date: string) => {
+  return dayjs().diff(date, 'day', true);
 }
 
 export const addDay = (addDay: number, day: Date = new Date) => {

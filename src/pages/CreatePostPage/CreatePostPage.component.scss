@@ -9,6 +9,14 @@
 :host ::ng-deep .p-tabview {
   .p-tabview-panels {
     min-height: 500px;
+
+    a {
+      color: var(--primary-color) !important;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
   }
 
   .p-tabview-nav li {

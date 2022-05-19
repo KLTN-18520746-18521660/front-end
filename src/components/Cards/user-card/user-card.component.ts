@@ -18,6 +18,8 @@ export class UserCardComponent implements OnInit {
 
   subscription: Subscription;
 
+  isLoading: boolean = false;
+
   constructor(
     private userService: UserService,
     private messageService: MessageService
@@ -40,14 +42,17 @@ export class UserCardComponent implements OnInit {
 
   actionUser(action: ActionType) {
     if (this.subscription) {
-      return;
+      this.subscription.unsubscribe();
     }
+    this.isLoading = true;
     this.subscription = this.userService.sendActionWithUser(this.user.user_name, action).subscribe(
       () => {
         this.user.mapAction.follow = !this.user.mapAction.follow;
+        this.isLoading = false;
+        this.subscription.unsubscribe();
       },
       (err) => {
-        console.log(err);
+        this.isLoading = false;
         this.messageService.add({ severity: 'error', summary: '', detail: err.message })
       }
     );

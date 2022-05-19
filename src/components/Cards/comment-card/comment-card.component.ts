@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CommentInputComponent } from 'components/Input/comment-input/comment-input.component';
-import dayjs from 'dayjs';
-import 'dayjs/locale/en';
-import 'dayjs/locale/vi';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import Comment, { CommentInput } from 'models/comment.model';
 import { ReportSendModel } from 'models/report.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
@@ -13,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { CommentService } from 'services/comment.service';
 import { UserService } from 'services/user.service';
 import { ActionType } from 'utils/apiConstant';
-import { mapActionWithComment } from 'utils/commonFunction';
+import { convertDateTime, mapActionWithComment } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-comment-card',
@@ -62,6 +58,19 @@ export class CommentCardComponent implements OnInit {
     if (this.loading) {
       return;
     }
+
+    this.isLoadingComment = true;
+
+    this.comment = {
+      ...this.comment,
+      fromNow: {
+        created: convertDateTime(this.comment.created_timestamp, this.translate.currentLang, true, true),
+        updated: convertDateTime(this.comment.last_modified_timestamp, this.translate.currentLang, true, true) || null
+      }
+    };
+
+    this.comment.mapAction = mapActionWithComment(this.comment.actions || []);
+
     this.menuitem = [
       {
         id: 'like',
@@ -81,7 +90,7 @@ export class CommentCardComponent implements OnInit {
           this.actionWithComment('unlike');
         }
       },
-      {
+      ...(this.comment.reply_comments ? [{
         id: 'reply',
         label: this.translate.instant('postDetail.commentMenu.reply'),
         disabled: false,
@@ -89,7 +98,7 @@ export class CommentCardComponent implements OnInit {
         command: (event) => {
           this.onClickReply();
         }
-      },
+      }] : []),
       // {
       //   id: 'edit',
       //   label: '',
@@ -99,7 +108,7 @@ export class CommentCardComponent implements OnInit {
       //     console.log(event);
       //   }
       // },
-      {
+      ...(this.comment.owner.user_name === this.userService.user.user_name ? [{
         id: 'delete',
         label: this.translate.instant('postDetail.commentMenu.delete'),
         disabled: false,
@@ -107,8 +116,8 @@ export class CommentCardComponent implements OnInit {
         command: (event) => {
           this.handleDeleteComment(this.comment);
         }
-      },
-      {
+      }] : []),
+      ...(!this.comment.mapAction.report ? [{
         id: 'report',
         label: this.translate.instant('postDetail.commentMenu.report'),
         disabled: false,
@@ -116,27 +125,9 @@ export class CommentCardComponent implements OnInit {
         command: () => {
           this.onClickReport();
         }
-      }
+      }] : [])
     ];
-    this.isLoadingComment = true;
-    dayjs.extend(relativeTime);
-    dayjs.locale(this.translate.currentLang);
-    this.comment = {
-      ...this.comment,
-      fromNow: {
-        created: dayjs(this.comment.created_timestamp).fromNow(true),
-        updated: dayjs(this.comment.last_modified_timestamp)?.fromNow(true) || null
-      }
-    };
 
-    this.comment.mapAction = mapActionWithComment(this.comment.actions || []);
-
-    // this.translate.get('postDetail.commentMenu').subscribe((res) => {
-    //   let result = Object.values(res) as [];
-    //   this.menuitem.map((item, index) => {
-    //     item.label = result[index]
-    //   })
-    // });
     this.isLoadingComment = false;
   }
 
@@ -158,9 +149,8 @@ export class CommentCardComponent implements OnInit {
 
         this.isLoading = false;
       },
-      (err) => {
+      () => {
         this.isLoading = false;
-        console.log(err);
       }
     );
   }
@@ -229,20 +219,27 @@ export class CommentCardComponent implements OnInit {
     }
     if (sessionId) {
       this.actionSubcription = this.commentService.sendActionWithComment(this.comment.id, action).subscribe(
-        (res) => {
-          // this.getPostValueWhenAction();
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Success' });
-          console.log(res);
-          if (action === 'like' || action === 'unlike') {
-            this.comment.mapAction.like = !this.comment.mapAction.like;
+        () => {
+          // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Success' });
+          if (action === 'like') {
+            this.comment.mapAction.like = true;
+            this.comment.likes++;
           }
-          else if (action === 'dislike' || action === 'undislike') {
-            this.comment.mapAction.dislike = !this.comment.mapAction.dislike;
+          else if (action === 'unlike') {
+            this.comment.mapAction.like = false;
+            this.comment.likes--;
+          }
+          else if (action === 'dislike') {
+            this.comment.mapAction.dislike = true;
+            this.comment.dislikes++;
+          }
+          else if (action === 'undislike') {
+            this.comment.mapAction.dislike = false;
+            this.comment.dislikes--;
           }
         },
         (err) => {
           this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
-          console.log(err)
         }
       );
     }
@@ -261,7 +258,7 @@ export class CommentCardComponent implements OnInit {
       comment_id: this.comment.id || 1,
       user_id: this.comment.owner.user_name,
     } as ReportSendModel;
-    this.appUser.openReportPopup(data, text.title, null);
+    this.appUser.openReportPopup(data, text.title, ' ');
   }
 
   onClickLike() {

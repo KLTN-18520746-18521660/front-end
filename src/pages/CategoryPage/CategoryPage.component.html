@@ -1,3 +1,92 @@
-<p>
-  CategoryPage works!
-</p>
+<div class="category-page-wrapper container pt-4" *ngIf="!isLoading">
+  <div class="category-detail card" *ngIf="!isLoadingCategory; else loadingCategory">
+    <div class="flex flex-wrap">
+      <div class="category-detail-image flex col-5 md:col-3">
+        <img imageOnError class="border-round" src="{{category?.thumbnail}}" alt="{{ category.display_name }}">
+      </div>
+      <div class="flex flex-wrap col-7 md:col-9">
+        <div class="category-detail-info p-0 col-12 flex flex-wrap justify-content-between align-items-center">
+          <p class="category-detail-title mb-0 text-4xl font-semibold">
+            {{category.display_name}}
+          </p>
+          <app-button class="hidden md:flex"
+            [label]="(category.mapAction.follow ? 'common.following' : 'common.follow') | translate"
+            [loading]="isLoadingAction" [className]="category.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
+            (onClick)="onClickFollow()">
+          </app-button>
+        </div>
+        <div class="flex flex-wrap">
+          <p #textContent class="mb-1 col-12 p-0 category-detail-description">{{category.describe | nA}}</p>
+          <span class="read-more-link inline cursor-pointer">
+            <a readMore [readMore-length]="120" [readMore-element]="textContent">
+              <span class="less underline font-medium">{{'postDetail.readLess' | translate}}<i class="fa fa-angle-right"
+                  aria-hidden="true"></i></span>
+              <span class="more underline font-medium">{{'postDetail.readMore' | translate}}<i class="fa fa-angle-right"
+                  aria-hidden="true"></i></span>
+            </a>
+          </span>
+        </div>
+      </div>
+      <div class="flex col-12 md:hidden">
+        <app-button class="w-full" [icon]="category.mapAction.follow ? 'pi pi-check-circle' : ''"
+          [tooltip]="(category.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
+          [label]="(category.mapAction.follow ? 'common.following' : 'common.follow') | translate"
+          [loading]="isLoadingAction" [className]="category.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
+          (onClick)="onClickFollow()">
+        </app-button>
+      </div>
+    </div>
+  </div>
+  <div class="main card">
+    <div class="list-post flex flex-wrap" *ngIf="!isLoadingPost; else loadingPost">
+      <div class="col-12 lg:col-6" *ngFor="let item of listPosts">
+        <app-post-card [hasAnimation]="false" [post]="item"></app-post-card>
+      </div>
+    </div>
+    <p-paginator [rows]="10" [totalRecords]="100" (onPageChange)="onPaginate($event)"></p-paginator>
+  </div>
+</div>
+
+<ng-template #loadingCategory>
+  <div class="category-detail card">
+    <div class="flex flex-wrap">
+      <div class="category-detail-image flex col-5 md:col-3">
+        <div class="flex w-full">
+          <p-skeleton height="10rem" class="w-full mr-2"></p-skeleton>
+        </div>
+      </div>
+      <div class="flex flex-wrap col-7 md:col-9">
+        <div class="category-detail-info p-0 col-12 flex flex-wrap justify-content-between align-items-center">
+          <p-skeleton width="12rem" height="3rem"></p-skeleton>
+          <p-skeleton class="hidden md:flex" width="8rem" height="3rem"></p-skeleton>
+        </div>
+        <div class="flex flex-wrap col-12 p-0">
+          <p-skeleton class="w-full" height="1.5rem"></p-skeleton>
+          <p-skeleton class="w-full" height="1.5rem"></p-skeleton>
+        </div>
+      </div>
+      <div class="flex col-12 md:hidden">
+        <p-skeleton class="w-full" height="3rem"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loadingPost>
+  <div class="list-post flex flex-wrap">
+    <div class="col-12 lg:col-6" *ngFor="let item of [1, 2, 3]">
+      <app-post-card [loading]="true"></app-post-card>
+    </div>
+    <div class="col-12 md:col-6 lg:col-4" *ngFor="let item of [1, 2, 3]">
+      <app-post-card [isGrid]="true" [loading]="true"></app-post-card>
+    </div>
+  </div>
+</ng-template>
+
+<p-toast [key]="'categoryToast'" [preventOpenDuplicates]="true"></p-toast>
+
+<app-loading [loading]="isLoading"></app-loading>
+
+<ng-template #errorBlock>
+  <app-NotFoundPage></app-NotFoundPage>
+</ng-template>

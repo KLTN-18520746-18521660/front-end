@@ -60,11 +60,11 @@ export class PostsService {
     private cookieService: CookieService
   ) { }
 
-  getListPosts(): Observable<ApiResult> {
-    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST, this.httpOptions()).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
-  }
+  // getListPosts(): Observable<ApiResult> {
+  //   return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST, this.httpOptions()).pipe(catchError(error => {
+  //     return throwError(handleError(error));
+  //   }));
+  // }
 
   getPostBySlug(slug: string): Observable<ApiResult> {
     return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${slug}`, this.httpOptions()).pipe(catchError(error => {
@@ -153,8 +153,8 @@ export class PostsService {
    * 
    * @Tag 
    */
-  getListTags(search_term = '', start = 0, size = 20): Observable<ApiResult> {
-    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.TAG, { ...this.httpOptions, params: { start, size, search_term } }).pipe(catchError(error => {
+  getListTags(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.TAG, { ...this.httpOptions, params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
@@ -190,18 +190,30 @@ export class PostsService {
     }));
   }
 
+  unReadNotification(notificationId: string): Observable<ApiResult> {
+    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.NOTIFICATION_UNREAD + `/${notificationId}`, {}, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   deleteNotification(notificationId: string): Observable<ApiResult> {
     return this.httpClient.delete<ApiResult>(BASE_URL + REST_URL.NOTIFICATION_ID + `/${notificationId}`, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  readAllNotification(sessionId: string): Observable<ApiResult> {
+  readAllNotification(): Observable<ApiResult> {
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.NOTIFICATION_ALL, {}, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
   //#endregion
+
+  gotoUrl(url: string): Observable<ApiResult> {
+    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.LINK_REDIRECT, { url }, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
 
   //#region Report
   sendReport(type: ReportType, model: ReportSendModel): Observable<ApiResult> {
@@ -216,7 +228,7 @@ export class PostsService {
 
   upLoadImage(path: 'post' | 'user', file: File): Observable<ApiResult> {
     const formData = new FormData();
-    formData.append('formFile', file, file.name);
+    formData.append('formFile', file);
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.UPLOAD + `/${path}`, formData, this.httpOptionsFile()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));

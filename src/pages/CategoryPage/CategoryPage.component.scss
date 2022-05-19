@@ -1,0 +1,11 @@
+.category-page-wrapper {
+  .category-detail {
+    .category-detail-image {
+      img {
+        object-fit: cover;
+        width: 100%;
+        max-height: 120px;
+      }
+    }
+  }
+}

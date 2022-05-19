@@ -1,0 +1,30 @@
+/* loading dots */
+
+.loading.loading-dot:after {
+  content: " .";
+  animation: dots 1.5s steps(5, end) infinite;
+  -webkit-animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+
+  0%,
+  20% {
+    color: var(--surface-900);
+    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  40% {
+    color: var(--surface-700);
+    text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  60% {
+    text-shadow: 0.25em 0 0 var(--surface-700), 0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  80%,
+  100% {
+    text-shadow: 0.25em 0 0 var(--surface-700), 0.5em 0 0 var(--surface-700);
+  }
+}

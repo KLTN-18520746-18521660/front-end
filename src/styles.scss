@@ -40,6 +40,10 @@ img {
   max-width: 100%;
 }
 
+.card {
+  overflow: hidden;
+}
+
 ion-icon {
   font-size: 1.5rem;
 }
@@ -67,6 +71,10 @@ ion-icon:before {
 
 .p-toast-top-right {
   top: 80px !important;
+}
+
+.p-image>img {
+  object-fit: cover;
 }
 
 .spacing-0 {
@@ -134,6 +142,16 @@ ion-icon:before {
   font-size: 1rem;
   font-weight: bold;
   margin-left: 0.1rem;
+}
+
+.list-span {
+  &:before {
+    content: '•';
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin-right: 0.1rem;
+  }
 }
 
 // Container code

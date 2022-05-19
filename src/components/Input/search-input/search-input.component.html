@@ -1,0 +1,28 @@
+<div class="search-input-wrapper pt-3">
+  <div class="flex align-items-center justify-content-center">
+    <div class="col-12 align-items-center justify-content-center" [ngClass]="{'md:col-6' : wFull}">
+      <div class="search-input mx-auto" [ngClass]="{ 'search-input-active' : isFocus}">
+        <div class="p-field p-fluid my-3 relative">
+          <span class="p-input-icon-right">
+            <i class="pi pi-times-circle cursor-pointer" (click)="onClear()" *ngIf="showButton"></i>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <input type="text" formControlName="search" class="shadow-1" pInputText (focus)="onFocus()"
+                (blur)="onBlur()"
+                placeholder="{{params ? ('label.searchWithName' | translate:params) : ('label.search' | translate)}}">
+            </form>
+          </span>
+          <div class="button-submit flex col justify-content-end absolute">
+            <button type="submit" (click)="onSubmit()" pButton pRipple class="p-button-rounded p-button-text"
+              icon="pi pi-search"></button>
+          </div>
+        </div>
+      </div>
+      <div class="my-3 px-2 md:px-5 flex">
+        <span class="m-2 white-space-nowrap">{{'label.popular.tags' | translate}}</span>
+        <div class="tag-recommend py-0 flex flex-wrap">
+          <app-tag [tag]="tag" *ngFor="let tag of tags"></app-tag>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

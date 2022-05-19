@@ -1,70 +1,38 @@
+import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import Category from 'models/category.model';
 import User from 'models/user.model';
 import { ConfirmationService, MenuItem } from 'primeng/api';
+import { DomHandler } from 'primeng/dom';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { filter, Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
-import { TopBarMenuItem } from './menu-item';
 import { categoriesMockData } from 'shared/mockData/categoriesMockData';
-import Category from 'models/category.model';
-import { convertArrayToNested } from 'utils/commonFunction';
-import { ActivatedRoute, NavigationEnd, ResolveEnd, Router } from '@angular/router';
-import { DomHandler } from 'primeng/dom';
+import { SearchInputComponent } from '../Input/search-input/search-input.component';
+import { TopBarMenuItem } from './menu-item';
+
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.scss']
+  styleUrls: ['./top-bar.component.scss'],
+  providers: [DialogService]
 })
 export class TopBarComponent implements OnInit {
 
   category: Category[] = categoriesMockData;
 
   items: MenuItem[];
+  ref: DynamicDialogRef;
+  searchSubscription: Subscription;
 
-  menuUser?: MenuItem[] = [
-    {
-      id: 'dashboard',
-      label: '',
-      icon: 'pi pi-home',
-      routerLink: ['/profile']
-    },
-    {
-      id: 'profile',
-      label: '',
-      icon: 'pi pi-user',
-      routerLink: ['/profile/user-info']
-    },
-    {
-      id: 'edit-info',
-      label: '',
-      icon: 'pi pi-user-edit',
-      routerLink: ['/profile/edit-info']
-    },
-    {
-      id: 'setting',
-      label: '',
-      icon: 'pi pi-cog',
-      routerLink: ['/setting']
-    },
-    {
-      id: 'help',
-      label: '',
-      icon: 'pi pi-question-circle',
-      routerLink: ['/help']
-    },
-    { separator: true },
-    {
-      id: 'logout',
-      label: '',
-      icon: 'pi pi-power-off',
-      command: () => {
-        this.logout();
-      }
-    }
-  ];
+  menuUser?: MenuItem[];
 
   subscription: Subscription;
+
+  userStatisticSubscription: Subscription;
 
   user: User;
 
@@ -85,7 +53,9 @@ export class TopBarComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private translate: TranslateService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    public dialogService: DialogService,
+    private appUser: AppUserComponent
   ) { }
 
   ngOnInit() {
@@ -97,21 +67,67 @@ export class TopBarComponent implements OnInit {
       });
     this.items = TopBarMenuItem;
 
+    this.user = this.userService.user;
+    this.session_id = this.userService.session_id;
+    this.isLoggedin = this.userService.isAuthenticated;
+
     this.subscription = this.userService.authUpdate$.subscribe(res => {
       this.user = res.user;
       this.session_id = res.session_id;
       this.isLoggedin = res.isAuthenticated;
     });
 
-    this.translate.get('topbar.user').subscribe((res) => {
-      let result = Object.values(res) as [];
-      this.menuUser.map((item, index) => {
-        item.label = result[index]
-      });
-    });
+    this.translate.get('topbar.user').subscribe(res => {
+      this.menuUser = [
+        {
+          id: 'dashboard',
+          label: res.dashboard,
+          icon: 'pi pi-home',
+          routerLink: ['/profile']
+        },
+        {
+          id: 'profile',
+          label: res.profile,
+          icon: 'pi pi-user',
+          routerLink: ['/profile/user-info']
+        },
+        {
+          id: 'edit-info',
+          label: res.edit,
+          icon: 'pi pi-user-edit',
+          routerLink: ['/profile/edit-info']
+        },
+        {
+          id: 'setting',
+          label: res.setting,
+          icon: 'pi pi-cog',
+          routerLink: ['/setting']
+        },
+        {
+          id: 'help',
+          label: res.help,
+          icon: 'pi pi-question-circle',
+          routerLink: ['/help']
+        },
+        { separator: true },
+        {
+          id: 'logout',
+          label: res.logout,
+          icon: 'pi pi-power-off',
+          command: () => {
+            this.logout();
+          }
+        }
+      ];
+    })
+
     this.translate.get('dialog.logout').subscribe((res) => {
       this.textTranslation = res;
     });
+
+    this.userStatisticSubscription = this.userService.userStatistic$.subscribe(user => {
+      this.user = { ...user, ...this.user };
+    })
   }
 
   @HostListener('window:scroll', ['$event']) // for window scroll events
@@ -144,12 +160,28 @@ export class TopBarComponent implements OnInit {
       rejectLabel: this.textTranslation.no,
       rejectButtonStyleClass: 'p-button-danger p-button-outlined',
       accept: () => {
-        this.authService.logout(this.userService.getSessionId()).subscribe((res) => {
+        this.authService.logout().subscribe((res) => {
           this.userService.logOut();
+          clearInterval(this.appUser.interval);
           this.router.navigate(['/']);
         });
       }
     });
+  }
+
+  onClickSeach() {
+    this.ref = this.dialogService.open(SearchInputComponent, {
+      header: this.translate.instant('topbar.searchTitle'),
+      footer: ' ',
+      dismissableMask: true,
+      width: '70%',
+    });
+    this.userService.ref.push(this.ref);
+    this.searchSubscription = this.ref.onClose.subscribe(() => {
+      this.ref = null;
+      this.userService.ref.filter(ref => ref !== this.ref);
+    });
+
   }
 
   onOpenSidebar() {
@@ -164,6 +196,9 @@ export class TopBarComponent implements OnInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.userStatisticSubscription) {
+      this.userStatisticSubscription.unsubscribe();
     }
   }
 }

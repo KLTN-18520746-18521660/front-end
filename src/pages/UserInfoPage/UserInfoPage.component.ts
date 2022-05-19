@@ -47,7 +47,7 @@ export class UserInfoPageComponent implements OnInit {
       (res) => {
         this.user = res.data.user;
       },
-      (err: any) => {
+      (err) => {
         this.error = true;
         console.log(err);
       }

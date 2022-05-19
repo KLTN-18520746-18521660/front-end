@@ -23,6 +23,8 @@ export class UserInfoCardComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  showButtonFollow: boolean = false;
+
   constructor(
     private userService: UserService,
     private appUser: AppUserComponent,
@@ -48,24 +50,28 @@ export class UserInfoCardComponent implements OnInit {
         this.user = res.data.user;
 
         this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
+
+        if (this.userService.user.user_name !== this.user_name) {
+          this.showButtonFollow = true;
+        }
         this.isLoading = false;
       },
-      (err) => {
+      () => {
         this.isLoading = false;
-        console.log(err);
       }
     );
   }
 
   actionWithUser(action: ActionType) {
     const sessionId = this.userService.getSessionId();
+    this.isLoading = true;
     if (this.actionUserSubcription) {
       this.actionUserSubcription.unsubscribe();
     }
     if (sessionId) {
       this.actionUserSubcription = this.userService.sendActionWithUser(this.user_name, action).subscribe(
-        (res) => {
-          console.log(res);
+        () => {
+          this.isLoading = false;
           if (action === 'follow') {
             this.user.followers++;
             this.user.mapAction.follow = true;
@@ -75,16 +81,18 @@ export class UserInfoCardComponent implements OnInit {
             this.user.mapAction.follow = false;
           }
         },
-        (err) => {
-          console.log(err)
+        () => {
+          this.isLoading = false;
         }
       );
     }
     else {
       this.appUser.openLoginPopup();
+      this.isLoading = false;
       return;
     }
   }
+
   ngOnDestroy() {
     if (this.subcription) {
       this.subcription.unsubscribe();

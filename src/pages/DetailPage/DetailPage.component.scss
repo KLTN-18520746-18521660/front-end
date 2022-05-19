@@ -7,6 +7,14 @@
       // margin: 0 auto;
       max-height: 400px;
     }
+
+    a {
+      color: var(--primary-color) !important;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
   }
 
   .detail-wrapper {
@@ -20,6 +28,10 @@
   .position-sticky {
     position: sticky;
     top: 70px;
+  }
+
+  .z-index-999 {
+    z-index: 10;
   }
 }
 
@@ -64,5 +76,13 @@
     z-index: 999;
     pointer-events: unset;
     overflow-y: hidden;
+  }
+
+  .p-breadcrumb {
+    .p-menuitem-link {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

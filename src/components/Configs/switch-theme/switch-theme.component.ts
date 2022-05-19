@@ -1,19 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppConfig } from 'models/appconfig';
-import { ConfigService } from 'services/app.config.service';
+import { Component, OnInit } from '@angular/core';
+import { AppConfig, ThemeName } from 'models/appconfig.model';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { ConfigService } from 'services/app.config.service';
 import { UserConfigService } from 'services/user-config.service';
-import { THEMES } from 'utils/themeConstant';
 
 @Component({
-  selector: 'app-app-config',
-  templateUrl: './app-config.component.html',
-  styleUrls: ['./app-config.component.scss']
+  selector: 'app-switch-theme',
+  templateUrl: './switch-theme.component.html',
+  styleUrls: ['./switch-theme.component.scss']
 })
-export class MyAppConfigComponent implements OnInit, OnDestroy {
+export class SwitchThemeComponent implements OnInit {
   config: AppConfig;
   subscription: Subscription;
+
+  dark: boolean;
 
   constructor(
     public configService: ConfigService,
@@ -23,18 +24,37 @@ export class MyAppConfigComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.config = this.configService.config;
+    this.dark = this.config.dark;
     this.changeTheme(this.config.theme, this.config.dark);
 
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
+      this.dark = config.dark;
     });
   }
 
-  changeTheme(theme: string, dark: boolean) {
+  changeTheme(theme: ThemeName, dark: boolean) {
     let themeElement = document.getElementById('theme-css');
     this.userConfig.addConfig('theme', theme);
     themeElement.setAttribute('href', 'assets/themes/' + theme + '/theme.css');
     this.configService.updateConfig({ ...this.config, ...{ theme, dark } });
+  }
+
+  swithTheme() {
+    let theme: ThemeName;
+    if (this.dark) {
+      theme = 'lara-light-blue';
+    }
+    else {
+      theme = 'lara-dark-blue';
+    }
+
+    this.dark = !this.dark;
+
+    let themeElement = document.getElementById('theme-css');
+    this.userConfig.addConfig('theme', theme);
+    themeElement.setAttribute('href', 'assets/themes/' + theme + '/theme.css');
+    this.configService.updateConfig({ ...this.config, ...{ theme, dark: this.dark } });
   }
 
   ngOnDestroy() {
@@ -42,4 +62,6 @@ export class MyAppConfigComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
+
 }

@@ -64,7 +64,6 @@ export class ReportPopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.success = true;
     this.data = this.config.data || {};
     console.log(this.data);
 
@@ -143,6 +142,7 @@ export class ReportPopupComponent implements OnInit {
               .subscribe(
                 (res) => {
                   this.success = true;
+                  this.currentReason = null;
                 },
                 (err) => {
                   console.log(err);

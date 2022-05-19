@@ -1,5 +1,5 @@
 <div class="page-user-profile-wrapper container py-4" [ngClass]="{'layout-profile-menuactive' : !isShowMenu}"
-  *ngIf="!isLoading; else loading">
+  *ngIf="!isLoading">
   <div class="button-show-menu">
     <ng-template [ngIf]="isShowMenu" [ngIfElse]="button_show">
       <button pButton label="" icon="pi pi-angle-double-left" iconPos="left" pTooltip="{{'profile.hide' | translate}}"
@@ -16,8 +16,12 @@
         <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
           <li appp-menu class="layout-menuitem-category" *ngFor="let item of menu; let i = index;">
             <div class="layout-menuitem-root-text" [attr.aria-label]="item.label">{{item.label}}</div>
-            <a [routerLink]="i.routerLink" [ngClass]="{'active': activeLink == i.id}" title="{{i.label}}"
-              *ngFor="let i of item.items" (click)="onClickMenu(i)"><i class="{{i.icon}} mr-2"></i>{{i.label}}</a>
+            <a [routerLink]="i.routerLink" [routerLinkActive]="'active'" title="{{i.label}}"
+              *ngFor="let i of item.items" (click)="onClickMenu(i)">
+              <i class="{{i.icon}} mr-1"></i>
+              <span>{{i.label}}</span>
+              <p-badge class="ml-auto" severity="{{i.badgeStyleClass}}" *ngIf="i.badge" [value]="i.badge"></p-badge>
+            </a>
           </li>
         </ul>
       </div>
@@ -27,13 +31,14 @@
     <div class="flex align-items-center mb-1">
       <p class="font-semibold text-700 text-2xl ml-4">{{labelHeader}}</p>
     </div>
-    <div class="layout-profile-main border-round shadow-1 p-2 md:p-3 min-h-screen"
+    <!-- <div class="layout-profile-main border-round shadow-1 p-2 md:p-3 min-h-screen"
       [ngClass]="config?.dark ? 'bg-black-alpha-20' : 'bg-white-alpha-90'">
+      <router-outlet></router-outlet>
+    </div> -->
+    <div class="layout-profile-main card shadow-1 p-2 md:p-3 min-h-screen">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
 
-<ng-template #loading>
-  <app-loading [loading]="isLoading"></app-loading>
-</ng-template>
+<app-loading [loading]="isLoading"></app-loading>

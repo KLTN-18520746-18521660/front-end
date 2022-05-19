@@ -12,7 +12,7 @@ import { handleError, localStorageFunctions } from 'utils/commonFunction';
 import _ from 'lodash';
 import { STORAGE_KEY, APPCONSTANT } from 'utils/appConstant';
 import { CookieService } from 'services/cookie.service';
-import { PublicConfig } from 'models/appconfig';
+import { PublicConfig } from 'models/appconfig.model';
 import ApiResult, { Session } from 'models/api.model';
 
 const BASE_URL = environment.baseApiUrl;
@@ -68,7 +68,6 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private cookieService: CookieService
   ) {
     console.log("SessionID: ", this.getSessionId());
@@ -83,6 +82,10 @@ export class UserService {
 
   authUpdate$ = this.authUpdate.asObservable();
 
+  userStatistic = new Subject<User>();
+
+  userStatistic$ = this.userStatistic.asObservable();
+
   updateAuth(sessionId) {
     if (!sessionId) {
       this.isAuthenticated = false;
@@ -92,9 +95,6 @@ export class UserService {
     }
     this.getUserInfo(sessionId).subscribe(
       (res) => {
-        setTimeout(() => {
-          this.router.navigate([this.history[0]]);
-        }, APPCONSTANT.LOADING_TIMEOUT);
         this.session_id = sessionId;
         this.user = res.data.user;
         this.isAuthenticated = true;
@@ -109,8 +109,7 @@ export class UserService {
           })
         }
       },
-      (err) => {
-        console.log(err);
+      () => {
         this.isAuthenticated = false;
         this.user = null;
         this.alreadyLogin = false;
@@ -137,10 +136,40 @@ export class UserService {
     localStorageFunctions.addConfig('history', this.history);
   }
 
-  getUserInfo(sessionId): Observable<ApiResult> {
-    return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpHeader, headers: { session_token: sessionId } }).pipe(catchError(error => {
+  getUserInfo(sessionId?: string): Observable<ApiResult> {
+    if (sessionId) {
+      return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, { ...httpHeader, headers: { session_token: sessionId } }).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+    else {
+      return this.http.get(BASE_URL + REST_URL.GET_USER_BY_SESSIONID, this.httpOptions()).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+  }
+
+  getUserStatistic(userName: string): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.USER + `/${userName}/statistic`, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
+  }
+
+  updateUserStatistic() {
+    if (this.user) {
+      this.getUserStatistic(this.user.user_name).subscribe(
+        (res) => {
+          this.user = { ...this.user, ...res.data.user };
+          this.userStatistic.next(res.data.user);
+        },
+        () => {
+          this.userStatistic.next(null);
+        }
+      );
+    }
+    else {
+      this.userStatistic.next(null);
+    }
   }
 
   editUserInfo(user: User): Observable<ApiResult> {

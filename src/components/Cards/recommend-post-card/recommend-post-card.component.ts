@@ -2,8 +2,6 @@ import { convertDateTime } from './../../../utils/commonFunction';
 import Post from 'models/post.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { postsMockData } from 'shared/mockData/postsMockData';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { TranslateService } from '@ngx-translate/core';
 import { mapActionWithPost } from 'utils/commonFunction';
 @Component({
@@ -27,12 +25,11 @@ export class RecommendPostCardComponent implements OnInit {
 
   ngOnInit() {
     if (!this.loading) {
-      dayjs.extend(relativeTime);
-      dayjs.locale(this.translate.currentLang);
       this.post = {
         ...this.post,
         fromNow: {
-          created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, false),
+          created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, false, true),
+          approved: convertDateTime(this.post.approved_timestamp, this.translate.currentLang, false, true),
         }
       };
 

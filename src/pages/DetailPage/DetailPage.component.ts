@@ -7,16 +7,12 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import dayjs from 'dayjs';
-import 'dayjs/locale/en';
-import 'dayjs/locale/vi';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import mermaid from 'mermaid';
 import Post from 'models/post.model';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CommentService } from 'services/comment.service';
 import { postsMockData } from 'shared/mockData/postsMockData';
-import { mapActionWithPost, randomArray } from 'utils/commonFunction';
+import { convertDateTime, mapActionWithPost, randomArray } from 'utils/commonFunction';
 import { PostsService } from 'services/posts.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { DomHandler } from 'primeng/dom';
@@ -32,7 +28,7 @@ export class DetailPageComponent implements OnInit {
   sizeComment: number = 5;
   totalSizeComments: number = 0;
 
-  breadcrumbItems: MenuItem[];
+  breadcrumbItems: MenuItem[] = [];
 
   home: MenuItem;
 
@@ -70,6 +66,7 @@ export class DetailPageComponent implements OnInit {
   isLoading: boolean = false;
 
   isLoadingComments: boolean = false;
+  isLoadingAddComment: boolean = false;
 
   isLoadingMoreComments: boolean = false;
 
@@ -104,16 +101,11 @@ export class DetailPageComponent implements OnInit {
     this.listRecommend = randomArray(postsMockData, 6);
 
     this.slug = this.activatedRoute.snapshot.params.slug;
-    this.slug = decodeURI(this.slug);
+    // this.slug = decodeURI(this.slug);
 
     this.commentService.current_Slug = this.slug;
 
     this.getPostDetail();
-
-    this.breadcrumbItems = [
-      { label: 'Technology', url: 'technology' },
-      { label: 'Angular', url: 'tag/angular' }
-    ];
 
     this.home = { icon: 'pi pi-home', routerLink: '/' };
 
@@ -128,12 +120,12 @@ export class DetailPageComponent implements OnInit {
     const res = this.translate.instant('postDetail');
     this.textTranslate = res;
     let result;
-    result = Object.values(res.action) as [];
+
     // menu action with post
     this.menuitem = [
       {
         id: 'edit',
-        label: '',
+        label: this.translate.instant('postDetail.action.edit'),
         icon: 'pi pi-pencil',
         command: (event) => {
           console.log(event);
@@ -141,7 +133,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'save',
-        label: '',
+        label: this.post.mapAction.saved ? this.translate.instant('postDetail.action.unsave') : this.translate.instant('postDetail.action.save'),
         icon: 'pi pi-bookmark-fill',
         command: () => {
           if (this.post.mapAction.saved) {
@@ -154,16 +146,16 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'copy',
-        label: '',
+        label: this.translate.instant('postDetail.action.copy'),
         icon: 'pi pi-copy',
         command: () => {
-          this.clipboard.copy(decodeURI(window.location.href));
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
         }
       },
       {
         id: 'share',
-        label: '',
+        label: this.translate.instant('postDetail.action.share'),
         icon: 'pi pi-share-alt',
         command: (event) => {
           console.log(event);
@@ -171,22 +163,19 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'report',
-        label: '',
+        label: this.translate.instant('postDetail.action.report'),
         icon: 'pi pi-flag-fill',
         command: (event) => {
           this.onClickReport('post');
         }
       }
-    ]
-    this.menuitem.map((item, index) => {
-      item.label = result[index]
-    });
+    ];
 
     // share menu with post speedial
     this.shareItems = [
       {
         tooltipOptions: {
-          tooltipLabel: ""
+          tooltipLabel: this.translate.instant('postDetail.shareAction.facebook'),
         },
 
         icon: 'pi pi-facebook',
@@ -196,7 +185,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         tooltipOptions: {
-          tooltipLabel: ""
+          tooltipLabel: this.translate.instant('postDetail.shareAction.twitter'),
         },
         icon: 'pi pi-twitter',
         command: () => {
@@ -205,7 +194,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         tooltipOptions: {
-          tooltipLabel: ""
+          tooltipLabel: this.translate.instant('postDetail.shareAction.linkedin'),
         },
         icon: 'pi pi-linkedin',
         command: () => {
@@ -214,7 +203,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         tooltipOptions: {
-          tooltipLabel: ""
+          tooltipLabel: this.post.mapAction.saved ? this.translate.instant('postDetail.shareAction.unsave') : this.translate.instant('postDetail.shareAction.save'),
         },
         icon: 'pi pi-bookmark-fill',
         command: () => {
@@ -228,17 +217,17 @@ export class DetailPageComponent implements OnInit {
       },
       {
         tooltipOptions: {
-          tooltipLabel: ""
+          tooltipLabel: this.translate.instant('postDetail.shareAction.copy'),
         },
         icon: 'pi pi-link',
         command: () => {
-          this.clipboard.copy(decodeURI(window.location.href));
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
+          this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
         }
       },
       {
         tooltipOptions: {
-          tooltipLabel: ""
+          tooltipLabel: this.translate.instant('postDetail.shareAction.report'),
         },
         icon: 'pi pi-flag-fill',
         command: () => {
@@ -246,10 +235,7 @@ export class DetailPageComponent implements OnInit {
         }
       }
     ];
-    result = Object.values(res.shareAction) as [];
-    // this.shareItems.map((item: any, index) => {
-    //   item.tooltipOptions.tooltipLabel = result[index]
-    // })
+
     // reverse this.shareItems
     this.shareItems.reverse();
 
@@ -257,7 +243,7 @@ export class DetailPageComponent implements OnInit {
     this.contacts = [
       {
         id: 'facebook',
-        name: '',
+        name: this.translate.instant('postDetail.shareAction.facebook'),
         icon: 'pi-facebook',
         color: '',
         style: 'p-button-rounded',
@@ -267,7 +253,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'twitter',
-        name: '',
+        name: this.translate.instant('postDetail.shareAction.twitter'),
         icon: 'pi-twitter',
         color: 'p-button-info',
         style: 'p-button-rounded',
@@ -277,7 +263,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'linkedin',
-        name: '',
+        name: this.translate.instant('postDetail.shareAction.linkedin'),
         icon: 'pi-linkedin',
         color: 'p-button-secondary',
         style: 'p-button-rounded',
@@ -287,7 +273,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'save',
-        name: '',
+        name: this.post.mapAction.saved ? this.translate.instant('postDetail.shareAction.unsave') : this.translate.instant('postDetail.shareAction.save'),
         icon: 'pi-bookmark-fill',
         color: 'p-button-success',
         style: 'p-button-rounded',
@@ -302,30 +288,26 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'copy',
-        name: '',
+        name: this.translate.instant('postDetail.shareAction.copy'),
         icon: 'pi-link',
         color: 'p-button-help',
         style: 'p-button-rounded',
         command: () => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
-          this.clipboard.copy(decodeURI(window.location.href));
+          this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
         }
       },
-      {
+      ...(this.post.mapAction.report ? [{
         id: 'report',
-        name: '',
+        name: this.translate.instant('postDetail.shareAction.report'),
         icon: 'pi-flag-fill',
         color: 'p-button-warning',
         style: 'p-button-rounded',
         command: () => {
           this.onClickReport('post');
         }
-      },
+      }] : [])
     ];
-    result = Object.values(res.shareAction) as [];
-    this.contacts.map((item: any, index) => {
-      item.name = result[index]
-    })
 
     // filter comments
     this.filterComments = [
@@ -382,17 +364,42 @@ export class DetailPageComponent implements OnInit {
         //   return str;
         // }
 
+        const categories = res.data.post.categories;
+        if (categories && categories.length > 2) {
+          res.data.categories.slice(0, 2)
+        }
+        categories.map((item) => {
+          this.breadcrumbItems.push({
+            label: item.display_name,
+            url: `/category/${item.slug}`
+          });
+        });
+        this.breadcrumbItems.push({
+          label: res.data.post.title,
+          url: `/post/${res.data.post.slug}`
+        });
+
+        const convertLink = (str: string) => {
+          str = str.replace(/<a[^>]*href=["']([^"']*)["']/g, (item) => {
+            item = item.replace(/(?<=href=[\'\"])([^\'\"]+)/gm, (match) => {
+              return `${window.location.origin}/goto?url=${match}`;
+            })
+            return item;
+          })
+          return str;
+        }
+
         this.post = res.data.post;
+
+        this.post.content = convertLink(this.post.content);
         // this.post.content = res.data.post.content.replace(/<img[^>]+>/g, convert);
         this.post.mapAction = mapActionWithPost(res.data.post.actions || []);
 
         this.titleService.setTitle(this.post.title + ' - ' + this.post.owner.display_name);
-
-        dayjs.extend(relativeTime);
-        dayjs.locale(this.translate.currentLang);
         this.post.fromNow = {
-          created: dayjs(this.post.created_timestamp).fromNow(true),
-          updated: this.post.last_modified_timestamp ? dayjs(this.post.last_modified_timestamp).fromNow(true) : null
+          created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, true, false),
+          approved: convertDateTime(this.post.approved_timestamp, this.translate.currentLang, true, false),
+          updated: this.post.last_modified_timestamp ? convertDateTime(this.post.last_modified_timestamp, this.translate.currentLang, true, false) : null
         }
         this.getTranslate();
         this.getPostValue(res.data.post);
@@ -403,7 +410,6 @@ export class DetailPageComponent implements OnInit {
         this.error = true;
         this.isLoadingValue = false;
         this.isLoading = false;
-        console.log(err);
       }
     );
   }
@@ -412,7 +418,7 @@ export class DetailPageComponent implements OnInit {
     this.postValues = [
       {
         id: 'view',
-        name: '',
+        name: this.translate.instant('postDetail.values.view'),
         value: post.views || 0,
         icon: 'pi pi-eye',
         color: 'p-button-secondary',
@@ -423,8 +429,8 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'like',
-        name: '',
-        value: post.likes | 0,
+        name: this.translate.instant('postDetail.values.like'),
+        value: post.likes || 0,
         icon: 'pi pi-thumbs-up',
         color: 'p-button-secondary',
         style: 'p-button-rounded' + (!post.mapAction.like ? ' p-button-outlined' : ''),
@@ -437,7 +443,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'unlike',
-        name: '',
+        name: this.translate.instant('postDetail.values.unlike'),
         value: post.dislikes || 0,
         icon: 'pi pi-thumbs-down',
         color: 'p-button-secondary',
@@ -451,7 +457,7 @@ export class DetailPageComponent implements OnInit {
       },
       {
         id: 'comment',
-        name: '',
+        name: this.translate.instant('postDetail.values.comment'),
         value: post.comments || 0,
         icon: 'pi pi-comments',
         color: 'p-button-secondary',
@@ -461,10 +467,6 @@ export class DetailPageComponent implements OnInit {
         }
       }
     ]
-    let result = Object.values(this.textTranslate.values) as [];
-    this.postValues.map((item: any, index) => {
-      item.name = result[index]
-    });
   }
 
   getPostValueWhenAction() {
@@ -479,9 +481,8 @@ export class DetailPageComponent implements OnInit {
         this.getPostValue(this.post);
         this.isLoadingValue = false;
       },
-      (err) => {
+      () => {
         this.isLoadingValue = false;
-        console.log(err);
       }
     );
   }
@@ -501,7 +502,6 @@ export class DetailPageComponent implements OnInit {
         },
         (err) => {
           this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
-          console.log(err)
         }
       );
     }
@@ -532,14 +532,14 @@ export class DetailPageComponent implements OnInit {
     );
   }
 
-  onClickReport(type: ReportType = 'post', comment_id = 0) {
+  onClickReport(type: ReportType = 'post', comment_id = null) {
     const text = this.translate.instant('report');
-    const data = {
-      post_id: this.post.id || 1,
-      type,
+    const data: ReportSendModel = {
+      post_slug: this.post.slug,
+      report_type: type,
       comment_id,
-      user_id: 'test',
-    } as ReportSendModel;
+      user_name: null,
+    };
     this.appUser.openReportPopup(data, text.title, null);
   }
 
@@ -571,7 +571,7 @@ export class DetailPageComponent implements OnInit {
       return;
     }
     if (input.content.trim()) {
-      this.isLoadingComments = true;
+      this.isLoadingAddComment = true;
       if (!this.userService.getSessionId()) {
         this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
         this.appUser.openLoginPopup();
@@ -586,12 +586,12 @@ export class DetailPageComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully' });
             this.listComments.unshift(res.data.comment);
             this.totalSizeComments++;
-            this.isLoadingComments = false;
+            this.isLoadingAddComment = false;
           },
           (err) => {
             this.messageService.add({ severity: 'error', summary: '', detail: err.message });
             console.log(err);
-            this.isLoadingComments = false;
+            this.isLoadingAddComment = false;
           }
         );
     }

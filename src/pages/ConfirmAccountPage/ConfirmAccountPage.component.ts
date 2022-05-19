@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -30,6 +31,8 @@ export class ConfirmAccountPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  routerSubcription: Subscription;
+
   textTranslate: any;
 
   constructor(
@@ -45,7 +48,7 @@ export class ConfirmAccountPageComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.activatedRoute.queryParams.subscribe(res => {
+    this.routerSubcription = this.activatedRoute.queryParams.subscribe(res => {
       this.params = res;
       this.authService.confirmUser(this.params).subscribe(
         (res: any) => {
@@ -102,6 +105,12 @@ export class ConfirmAccountPageComponent implements OnInit {
         ];
       }
     );
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubcription) {
+      this.routerSubcription.unsubscribe();
+    }
   }
 
 }

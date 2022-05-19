@@ -24,7 +24,7 @@
               </ng-template>
             </div>
             <div class="comment-card_header_right align-items-center">
-              <button pButton pRipple type="button" icon="pi pi-flag-fill"
+              <button pButton pRipple type="button" icon="pi pi-flag-fill" *ngIf="!comment.mapAction.report"
                 class="p-button-rounded p-button-secondary p-button-text button-menu mr-2 hidden md:block"
                 (click)="onClickReport()"></button>
               <app-btn-menu [menuClass]="'shadow-6'" [items]="menuitem" [icon]="'pi pi-ellipsis-v'">
@@ -61,7 +61,7 @@
               class="p-button-sm p-button-secondary p-2 font-normal mr-4">
             </button>
             <button pButton pRipple *ngIf="!comment.parent_id"
-              label="{{'postDetail.commentAction.reply' | translate:{ count: comment.reply_comments?.total_size | shortNumber } }}"
+              label="{{'postDetail.commentAction.reply' | translate:{ count: comment.replies | shortNumber } }}"
               (click)="onClickReply()" icon="pi pi-reply"
               [ngClass]="comment?.mapAction?.reply ? 'font-bold text-primary p-button-outlined' : 'p-button-text'"
               class="p-button-sm p-button-plain p-2 font-normal">

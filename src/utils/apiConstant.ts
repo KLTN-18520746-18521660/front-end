@@ -7,15 +7,25 @@ export const REST_URL = {
   GET_USER_BY_ID: 'getUserById',
   GET_USER_BY_USERNAME: 'getUserByUsername',
   GET_USER_BY_EMAIL: 'getUserByEmail',
+
+
   SESSION: 'session',
   EXTENSION_SESSION_USER: 'session/extension',
   DELETE_SESSION_USER: 'session',
+  DELETE_ALL_SESSION: 'session/removeall',
+
   CONFIRM_USER: 'user/confirm',
   CONFIG: 'config',
+
+
+  CHANGE_PASSWORD: 'user/changepassword',
+  FORGOT_PASSWORD: 'user/forgotpassword',
 
   USER: 'user',
   FOLLOWER: 'follower',
   FOLLOWING: 'following',
+
+  LINK_REDIRECT: 'link/redirect',
 
   POST: 'post',
   POST_ID: 'post/id',
@@ -31,6 +41,7 @@ export const REST_URL = {
   NOTIFICATION: 'notification',
   NOTIFICATION_ID: 'notification/id',
   NOTIFICATION_READ: 'notification/read/id',
+  NOTIFICATION_UNREAD: 'notification/unread/id',
   NOTIFICATION_ALL: 'notification/read/all',
 
   REPORT: 'report',

@@ -14,7 +14,7 @@
         <button pButton pRipple label="{{(user.mapAction.follow ? 'common.following' : 'common.follow') | translate}}"
           icon="{{user.mapAction.follow ? 'pi pi-check-circle' : 'pi pi-user-plus'}}"
           pTooltip="{{(user.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
-          tooltipPosition="top" class="p-button-rounded p-button-sm"
+          tooltipPosition="top" class="p-button-rounded p-button-sm" [loading]="isLoading"
           [ngClass]="user.mapAction.follow ? 'p-button-outlined' : ''" (click)="onClick()">
         </button>
       </div>

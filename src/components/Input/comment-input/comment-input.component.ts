@@ -56,7 +56,7 @@ export class CommentInputComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.userService.user;
     this.form = this.formBuilder.group({
-      value: [null, [Validators.required]]
+      value: [null, []]
     });
 
     this.form.get('value').valueChanges.subscribe(val => {

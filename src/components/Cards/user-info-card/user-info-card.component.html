@@ -3,7 +3,7 @@
     <div class="flex flex-wrap">
       <div class="col-12 align-items-center">
         <a [routerLink]="['/user', user.user_name]" class="flex align-items-center">
-          <app-avatar [user]="user"></app-avatar>
+          <app-avatar [height]="'4rem'" [user]="user"></app-avatar>
           <span class="mx-2 font-semibold">{{ user.display_name}}</span>
         </a>
       </div>
@@ -46,9 +46,10 @@
           </div>
         </div>
       </div>
-      <div class="col-12 md:col-12">
+      <div class="col-12 md:col-12" *ngIf="showButtonFollow">
         <app-button [label]="(user.mapAction.follow ? 'common.following' : 'common.follow') | translate"
-          [className]="user.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'" (onClick)="onClickFollow()">
+          [loading]="isLoading" [className]="user.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
+          (onClick)="onClickFollow()">
         </app-button>
       </div>
     </div>

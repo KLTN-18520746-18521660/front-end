@@ -46,9 +46,9 @@
                 'common.follower') | translate }}</p>
             </div>
             <div class="col text-center justify-content-center" tooltipPosition="top"
-              pTooltip="{{ user.followings | number:'1.0-2' }}">
-              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followings" [short]="true">
-                {{ user.followings }}
+              pTooltip="{{ user.following | number:'1.0-2' }}">
+              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.following" [short]="true">
+                {{ user.following }}
               </p>
               <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
             </div>
@@ -57,18 +57,17 @@
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.views" [short]="true">
                 {{ user.views }}
               </p>
-              <p class="user-rate-text font-normal text-base">{{ (user.views > 1 ? 'common.views' : 'common.view')
-                |
-                translate }}</p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.views > 1 ? 'common.views' : 'common.view') | translate }}
+              </p>
             </div>
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.likes | number:'1.0-2' }}">
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.likes" [short]="true">
                 {{ user.likes }}
               </p>
-              <p class="user-rate-text font-normal text-base">{{ (user.likes > 1 ? 'common.likes' : 'common.like')
-                |
-                translate }}</p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.likes > 1 ? 'common.likes' : 'common.like') | translate }}</p>
             </div>
           </div>
         </div>

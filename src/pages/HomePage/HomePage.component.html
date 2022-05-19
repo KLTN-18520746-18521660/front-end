@@ -1,4 +1,4 @@
-<app-search-input></app-search-input>
+<app-search-input [wFull]="true"></app-search-input>
 
 <div class="home-layout container py-6">
   <div class="flex flex-wrap justify-content-center">
@@ -12,9 +12,15 @@
         <p class="font-semibold text-lg">{{ 'label.connectus' | translate }}</p>
         <app-btn-fab *ngFor="let item of contacts" [data]="item"></app-btn-fab>
       </div>
+      <div class="category-tags w-full hidden md:block">
+        <p class="font-semibold text-lg mt-4">{{ 'label.popular.category' | translate }}</p>
+        <app-category [category]="category" [size]="'base py-3 px-3'" [width]="'w-full'"
+          *ngFor="let category of listCategory">
+        </app-category>
+      </div>
       <div class="popular-tags w-full hidden md:block">
         <p class="font-semibold text-lg mt-4">{{ 'label.popular.tags' | translate }}</p>
-        <app-tag [tag]="tag" [size]="'base py-3'" [color]="'bg-teal'" [width]="'w-full'" *ngFor="let tag of tags">
+        <app-tag [tag]="tag" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of tags">
         </app-tag>
       </div>
     </div>
@@ -52,7 +58,7 @@
             (scrolled)="onLoadMorePosts(true)">
             <ng-template [ngIf]="!isLoadingPosts" [ngIfElse]="loadingSpinner">
               <ng-template [ngIf]="isGrid" [ngIfElse]="LayoutList">
-                <div class="col-12 sm:col-6 md:col-6 lg:col-6" *ngFor="let item of listPosts; index as indexPost">
+                <div class="col-12 sm:col-6 md:col-6 lg:col-6" *ngFor="let item of listPosts">
                   <app-post-card [post]="item" [isGrid]="isGrid"></app-post-card>
                 </div>
               </ng-template>
@@ -66,7 +72,8 @@
                   <app-loading-spinner></app-loading-spinner>
                 </div>
               </ng-template>
-              <div class="col-12 text-center mt-2 cursor-pointer" (click)="onLoadMorePosts()">
+              <div class="col-12 text-center mt-2 cursor-pointer" *ngIf="start < totalSizePost"
+                (click)="onLoadMorePosts()">
                 <p class="font-semibold mb-2">{{'home.viewMore' | translate}}</p>
                 <i class="pi pi-angle-double-down up-down text-lg"></i>
               </div>
@@ -77,10 +84,15 @@
           <div class="card-wrapper border-round px-3 py-2"
             [ngClass]="config?.dark ? 'bg-black-alpha-20' : 'bg-bluegray-100'">
             <p class="text-xl font-semibold py-1">{{'label.trending' | translate}}</p>
-            <div pDefer (onLoad)="onLoadRecommend()" class="grid">
-              <ng-template [ngIf]="!isLoadingRecommend" [ngIfElse]="loadingSpinner">
-                <div class="col-12 sm:col-6 md:col-6 lg:col-12" *ngFor="let item of listRecommend">
+            <div class="grid">
+              <ng-template [ngIf]="!isLoadingRecommend" [ngIfElse]="loadingRecommned">
+                <div class="col-12 sm:col-6 md:col-6 lg:col-12 p-1" *ngFor="let item of listRecommend">
                   <app-recommend-post-card [post]="item"></app-recommend-post-card>
+                </div>
+              </ng-template>
+              <ng-template #loadingRecommned>
+                <div class="col-12 sm:col-6 md:col-6 lg:col-12 p-1" *ngFor="let item of [1,2,3]">
+                  <app-recommend-post-card [loading]="true"></app-recommend-post-card>
                 </div>
               </ng-template>
             </div>

@@ -1,3 +1,4 @@
+import ApiResult from 'models/api.model';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,7 @@ import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { REST_URL } from 'utils/apiConstant';
 import { handleError } from 'utils/commonFunction';
 import { STORAGE_KEY } from 'utils/appConstant';
-import { PublicConfig } from 'models/appconfig';
+import { PublicConfig } from 'models/appconfig.model';
 import { CookieService } from './cookie.service';
 
 const BASE_URL = environment.baseApiUrl;
@@ -52,7 +53,7 @@ export class AdminService {
     this.config = cf;
   }
 
-  login(admin: AdminLoginModel): Observable<any> {
+  login(admin: AdminLoginModel): Observable<ApiResult> {
     return this.http.post(BASE_URL + REST_URL.ADMIN.LOGIN, admin, httpOptions).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
@@ -64,13 +65,13 @@ export class AdminService {
     }));
   }
 
-  getAdminInfor(sessionId): Observable<any> {
+  getAdminInfor(sessionId): Observable<ApiResult> {
     return this.http.get(BASE_URL + REST_URL.ADMIN.GET_ADMIN_USER_BY_SESSIONID, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  extendSessionAdmin(sessionId: string): Observable<any> {
+  extendSessionAdmin(sessionId: string): Observable<ApiResult> {
     return this.http.post(BASE_URL + REST_URL.ADMIN.EXTEND_SESSION, {}, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
@@ -82,19 +83,19 @@ export class AdminService {
     }));
   }
 
-  getPublicConfig(): Observable<any> {
+  getPublicConfig(): Observable<ApiResult> {
     return this.http.get(BASE_URL + REST_URL.CONFIG, httpOptions).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getAdminConfig(sessionId): Observable<any> {
+  getAdminConfig(sessionId): Observable<ApiResult> {
     return this.http.get(BASE_URL + REST_URL.ADMIN.CONFIG, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  reloadConfig(sessionId): Observable<any> {
+  reloadConfig(sessionId): Observable<ApiResult> {
     console.log(sessionId)
     return this.http.post(BASE_URL + REST_URL.ADMIN.RELOAD_CONFIG, {}, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
       return throwError(handleError(error));

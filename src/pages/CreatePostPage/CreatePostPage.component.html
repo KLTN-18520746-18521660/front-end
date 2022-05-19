@@ -25,7 +25,7 @@
             <small class="p-error inline">{{'createPost.form.thumbnailError' | translate}}</small>
           </div>
         </div>
-        <img imageOnError *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}"
+        <img  *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}"
           class="post-thumbnail-image border-round mt-2 shadow-2" alt="Post Thumbnail">
 
         <p requiredField class="font-medium mb-1 mt-3">{{'createPost.category' | translate}}</p>
@@ -130,6 +130,6 @@
   [dismissableMask]="true">
 </p-confirmDialog>
 
-<p-toast [preventOpenDuplicates]="true"></p-toast>
+<p-toast [key]="'createPostToast'" [preventOpenDuplicates]="true"></p-toast>
 
 <app-loading [loading]="isLoading"></app-loading>

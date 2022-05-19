@@ -3,16 +3,32 @@ export const APPCONSTANT = {
   PLACEHOLDER_IMAGE: 'assets/images/svg/thumbnail-placeholder.svg',
   TOAST_TIMEOUT: 6000,
   LOADING_TIMEOUT: 2000,
+
+  RELOAD_STATISTIC_TIMEOUT: 10000,
+
   FONT_SIZE: 13,
   USER_IDLE: {
-    IDLE: 30,
+    IDLE: 300,
     // should be TIMEOUT == PING 
     TIMEOUT: 10,
     PING: 10
   },
   SESSION_TIMEOUT_DEFAULT: 5,
   // For infinite scroll
-  DEFAULT_SIZE_LOADING_MORE: 2,
+  DEFAULT_SIZE_LOADING_MORE: 5,
+
+  DEFAULT_PAGE_SIZE: 12,
+
+  PASSWORD_POLICY: {
+    MIN_LEN: 5,
+    MAX_LEN: 25,
+    MIN_SPECIAL_CHAR: 0,
+    MIN_NUMBER_CHAR: 0,
+    MIN_UPPER_CHAR: 0,
+    MIN_LOWER_CHAR: 0,
+    EXPIRY_TIME: 30,
+    REQUIRED_PASSWORD_EXPRIED_CHANGE: false
+  }
 }
 
 export const CONTACT_INFO = [

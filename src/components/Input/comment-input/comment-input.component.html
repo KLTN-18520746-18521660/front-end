@@ -6,20 +6,18 @@
           <app-avatar [user]="currentUser"></app-avatar>
         </ng-container>
         <p-avatar icon="pi pi-user" *ngIf="!currentUser" shape="circle" size="large"></p-avatar>
-        <span class="p-input-icon-right w-full ml-2">
+        <span class="w-full ml-2">
           <i *ngIf="isLoading" class="pi pi-spin pi-spinner"></i>
           <ng-template [ngIf]="!!replyName" [ngIfElse]="replyTextArea">
-            <textarea #textInput formControlName="value" id="value" [rows]="2" pInputTextarea [autoResize]="true" focus
+            <textarea #textInput formControlName="value" id="value" [rows]="2" pInputTextarea [autoResize]="true"
               placeholder="{{'postDetail.replyTo' | translate: {name: replyName} }}"
-              class="w-full comment-input pl-3 pr-7 shadow-1"
-              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['value'].errors }">
+              class="w-full comment-input pl-3 pr-7 shadow-1">
             </textarea>
           </ng-template>
           <ng-template #replyTextArea>
-            <textarea #textInput formControlName="value" id="value" [rows]="2" pInputTextarea [autoResize]="true" focus
+            <textarea #textInput formControlName="value" id="value" [rows]="2" pInputTextarea [autoResize]="true"
               placeholder="{{'postDetail.commentPlaceholder' | translate}}"
-              class="w-full comment-input pl-3 pr-7 shadow-1"
-              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['value'].errors }">
+              class="w-full comment-input pl-3 pr-7 shadow-1">
             </textarea>
           </ng-template>
 

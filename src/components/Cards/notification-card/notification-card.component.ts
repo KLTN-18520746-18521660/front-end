@@ -2,8 +2,6 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import 'dayjs/locale/en';
-import 'dayjs/locale/vi';
 import Notification from 'models/notification.model';
 import User from 'models/user.model';
 import { Subscription } from 'rxjs';
@@ -57,24 +55,38 @@ export class NotificationCardComponent implements OnInit {
       this.notification = {
         ...this.notification,
         fromNow: {
-          created: convertDateTime(this.notification.content.date_send, this.translate.currentLang, false)
+          created: convertDateTime(this.notification.created_timestamp, this.translate.currentLang, false)
         }
       };
       // random true/ false
       this.notification.read = this.notification.status === 'Read' || false;
       // this.notification.read = Math.random() > 0.5;
       this.info = this.mapNotification(this.notification);
+    }
+  }
 
+  handleDelete() {
+    this.loading = true;
+    this.delete.emit(this.notification);
+  }
+
+  mapNotification(notification: Notification): NotificationInfo {
+    let result: NotificationInfo = {
+      date: notification.fromNow.created,
+      notification: notification,
+      read: notification.read,
+    };
+
+    if (this.notification.read) {
       this.items = [
         {
-          label: this.notification.read
-            ? this.translate.instant('notification.markRead')
-            : this.translate.instant('notification.markUnread'),
+          label: this.translate.instant('notification.markUnread'),
           icon: 'pi pi-check',
           command: () => {
-            this.postService.readNotification(this.notification.id).subscribe(
-              (res) => {
-                this.notification.read = true;
+            this.postService.unReadNotification(this.notification.id).subscribe(
+              () => {
+                this.notification.read = false;
+                this.info = this.mapNotification(this.notification);
                 this.messageService.add({
                   key: 'appToast',
                   severity: 'success',
@@ -82,7 +94,7 @@ export class NotificationCardComponent implements OnInit {
                   detail: this.translate.instant('notification.markReadSuccess')
                 });
               },
-              (err) => {}
+              (err) => { }
             );
           }
         },
@@ -95,30 +107,57 @@ export class NotificationCardComponent implements OnInit {
         }
       ];
     }
-  }
+    else {
+      this.items = [
+        {
+          label: this.translate.instant('notification.markRead'),
+          icon: 'pi pi-check',
+          command: () => {
+            this.postService.readNotification(this.notification.id).subscribe(
+              (res) => {
+                this.notification.read = true;
+                this.info = this.mapNotification(this.notification);
+                this.messageService.add({
+                  key: 'appToast',
+                  severity: 'success',
+                  summary: '',
+                  detail: this.translate.instant('notification.markReadSuccess')
+                });
+              },
+              (err) => { }
+            );
+          }
+        },
+        {
+          label: this.translate.instant('notification.delete'),
+          icon: 'pi pi-trash',
+          command: () => {
+            this.handleDelete();
+          },
+        }
+      ];
+    }
 
-  handleDelete() {
-    this.delete.emit(this.notification);
-  }
-
-  mapNotification(notification: Notification): NotificationInfo {
-    let result: NotificationInfo = {
-      date: notification.fromNow.created,
-      notification: notification,
-      read: notification.read,
-    };
-    switch (notification.content.action) {
+    if (!this.notification.user_action) {
+      this.notification.user_action = {
+        display_name: "USERNOTFOUND"
+      };
+    }
+    switch (notification.type) {
       case 'like-post': return {
         ...result,
         content: this.translate.instant(
           'notification.type.likePost',
           {
-            user: notification.content.post_owner.display_name,
+            user: notification.user_action.display_name,
             content: notification.content.post_detail.title
           }
         ),
         icon: 'pi pi-thumbs-up',
-        user: notification.content.post_owner,
+        user: new User({
+          ...notification.user_action,
+        }),
+
         command: () => {
           this.router.navigate(['/post', notification.content.post_detail.slug]);
         }
@@ -128,7 +167,7 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.newPost',
           {
-            user: notification.content.post_owner.display_name,
+            user: notification.user_action.display_name,
             content: notification.content.post_detail.title
           }
         ),
@@ -143,12 +182,14 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.approvePost',
           {
-            user: notification.content.post_owner.display_name,
+            user: notification.user_action.display_name,
             content: notification.content.post_detail.title
           }
         ),
         icon: 'pi pi-check',
-        user: notification.content.post_owner,
+        user: new User({
+          ...notification.user_action,
+        }),
         command: () => {
           this.router.navigate(['/post', notification.content.post_detail.slug]);
         }
@@ -158,8 +199,8 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.approvePost',
           {
-            user: notification.content.post_owner.display_name,
-            content: notification.content.post_detail.title
+            user: notification.user_action.display_name,
+            content: notification.content.post_detail.title || ''
           }
         ),
         icon: 'pi pi-ban',
@@ -173,8 +214,8 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.addComment',
           {
-            user: notification.content?.comment_owner.display_name,
-            content: notification.content?.commment_content
+            user: notification.user_action.display_name,
+            content: notification.content?.comment_content
           }
         ),
         icon: 'pi pi-comments',
@@ -188,8 +229,8 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.replyComment',
           {
-            user: notification.content?.comment_owner.display_name,
-            content: notification.content?.commment_content
+            user: notification.user_action.display_name,
+            content: notification.content?.comment_content || ''
           }
         ),
         icon: 'pi pi-comments',
@@ -203,8 +244,8 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.likeComment',
           {
-            user: notification.content?.comment_owner.display_name,
-            content: notification.content?.commment_content
+            user: notification.user_action.display_name,
+            content: notification.content?.comment_content || ''
           }
         ),
         icon: 'pi pi-comments',
@@ -218,14 +259,16 @@ export class NotificationCardComponent implements OnInit {
         content: this.translate.instant(
           'notification.type.follow',
           {
-            user: notification.content.post_owner.display_name,
-            content: notification.content.post_detail.title
+            user: notification.user_action.display_name,
+            content: ''
           }
         ),
         icon: 'pi pi-user-plus',
-        user: notification.content.post_owner,
+        user: new User({
+          ...notification.user_action,
+        }),
         command: () => {
-          this.router.navigate(['/post', notification.content.post_detail.slug]);
+          this.router.navigate(['/user', notification.user_action.user_name]);
         }
       }
       default: return {
@@ -234,7 +277,9 @@ export class NotificationCardComponent implements OnInit {
           'notification.type.default',
         ),
         icon: 'pi pi-bell',
-        user: notification.content?.post_owner,
+        user: new User({
+          ...notification.user_action,
+        }),
         command: () => {
           console.log("Error!")
         }
@@ -244,19 +289,30 @@ export class NotificationCardComponent implements OnInit {
 
   onClickNotification() {
     if (this.subscription) {
-      return;
+      this.subscription.unsubscribe();
     }
-    this.subscription = this.postService.readNotification(this.notification.id).subscribe(
-      (res) => {
-        this.notification.read = true;
-        this.info.command();
-        this.subscription.unsubscribe();
-      },
-      (err) => {
-        console.log(err);
-        this.subscription.unsubscribe();
-      }
-    )
+    if (this.notification.read) {
+      this.info.command();
+    }
+    else {
+      this.subscription = this.postService.readNotification(this.notification.id).subscribe(
+        () => {
+          this.notification.read = true;
+          this.info = this.mapNotification(this.notification);
+          this.info.command();
+          this.subscription.unsubscribe();
+        },
+        () => {
+          this.subscription.unsubscribe();
+        }
+      );
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

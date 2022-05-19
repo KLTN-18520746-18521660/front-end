@@ -2,11 +2,12 @@ import { UserService } from 'services/user.service';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AppConfig } from 'models/appconfig';
+import { AppConfig } from 'models/appconfig.model';
 import { ConfigService } from 'services/app.config.service';
 import { MenuItem } from 'primeng/api';
 import { filter, Subscription } from 'rxjs';
 import { BREAKPOINT } from 'utils/appConstant';
+import User from 'models/user.model';
 
 @Component({
   selector: 'app-ProfilePage',
@@ -18,35 +19,35 @@ export class ProfilePageComponent implements OnInit {
   menu: MenuItem[] = [
     {
       id: 'dashboard',
-      label: '',
+      label: this.translate.instant('profile.menu.dashboard.title'),
       items: [
         {
-          id: '',
-          label: '',
+          id: 'dashboard',
+          label: this.translate.instant('profile.menu.dashboard.items.dashboard'),
           icon: 'pi pi-fw pi-home',
-          routerLink: ['./'],
+          routerLink: ['./dashboard'],
         }
       ]
     },
     {
       id: 'account',
-      label: '',
+      label: this.translate.instant('profile.menu.account.title'),
       items: [
         {
           id: 'user-info',
-          label: '',
+          label: this.translate.instant('profile.menu.account.items.profile'),
           icon: 'pi pi-fw pi-user',
           routerLink: ['./user-info'],
         },
         {
           id: 'edit-info',
-          label: '',
+          label: this.translate.instant('profile.menu.account.items.edit'),
           icon: 'pi pi-fw pi-user-edit',
           routerLink: ['./edit-info'],
         },
         {
           id: 'change-password',
-          label: '',
+          label: this.translate.instant('profile.menu.account.items.changePassword'),
           icon: 'pi pi-fw pi-key',
           routerLink: ['./change-password'],
         },
@@ -54,59 +55,67 @@ export class ProfilePageComponent implements OnInit {
     },
     {
       id: 'post',
-      label: '',
+      label: this.translate.instant('profile.menu.managePost.title'),
       items: [
         {
           id: 'manage-post',
-          label: '',
+          label: this.translate.instant('profile.menu.managePost.items.managePost'),
           icon: 'pi pi-list',
+          badge: null,
+          badgeStyleClass: 'success',
           routerLink: ['./manage-post'],
         },
         {
           id: 'saved-post',
-          label: '',
+          label: this.translate.instant('profile.menu.managePost.items.savedPost'),
           icon: 'pi pi-bookmark',
           routerLink: ['./saved-post'],
         },
         {
           id: 'following',
-          label: '',
+          label: this.translate.instant('profile.menu.managePost.items.following'),
           icon: 'pi pi-user-plus',
+          badge: null,
+          badgeStyleClass: 'warning',
           routerLink: ['./following'],
         },
         {
           id: 'followers',
-          label: '',
+          label: this.translate.instant('profile.menu.managePost.items.followers'),
           icon: 'pi pi-users',
+          badge: null,
+          badgeStyleClass: 'warning',
           routerLink: ['./followers'],
         }
       ]
     },
     {
       id: 'notifications',
-      label: '',
+      label: this.translate.instant('profile.menu.notifications.title'),
       items: [
         {
           id: 'notifications',
-          label: '',
+          label: this.translate.instant('profile.menu.notifications.items.notifications'),
           icon: 'pi pi-bell',
+          badge: null,
+          badgeStyleClass: 'danger',
           routerLink: ['./notifications'],
         }
       ]
     },
     {
       id: 'others',
-      label: '',
+      label: this.translate.instant('profile.menu.others.title'),
       items: [
         {
           id: 'settings',
-          label: '',
+          label: this.translate.instant('profile.menu.others.items.settings'),
           icon: 'pi pi-cog',
           routerLink: ['./settings'],
         },
         {
           id: 'help',
-          label: '',
+          label: this.translate.instant('profile.menu.others.items.help'),
           icon: 'pi pi-question',
           routerLink: ['./help'],
         }
@@ -128,6 +137,10 @@ export class ProfilePageComponent implements OnInit {
 
   subscription: Subscription;
 
+  userStatisticSubscription: Subscription;
+
+  interval: any;
+
   @ViewChild('layoutProfile') layoutProfile: ElementRef;
 
   constructor(
@@ -138,11 +151,12 @@ export class ProfilePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.userService.getSessionId()) {
-      this.router.navigate(['/auth/login']);
-    }
+    // if (!this.userService.getSessionId()) {
+    //   this.router.navigate(['/auth/login']);
+    // }
 
     this.activeLink = window.location.pathname.split('/')[2] || '';
+    this.labelHeader = this.findItemById(this.menu, this.activeLink)?.label || '';
     this.config = this.configService.config;
     this.configSubscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
@@ -155,35 +169,34 @@ export class ProfilePageComponent implements OnInit {
       this.isShowMenu = false;
     }
 
-    this.translate.get('profile.menu').subscribe((res) => {
-      let result = Object.values(res) as any;
-      this.menu.map((item, index) => {
-        item.label = result[index].title;
-        if (result[index].items) {
-          let temp = Object.values(result[index].items) as any[];
-          item?.items.map((subItem, subIndex) => {
-            subItem.label = temp[subIndex];
-          });
-        }
-      });
-
-      this.labelHeader = this.findItemById(this.menu, this.activeLink)?.label || '';
-    });
-
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((e: any) => {
         this.activeLink = e.url.split('/')[2] || '';
         this.labelHeader = this.findItemById(this.menu, this.activeLink)?.label || '';
       });
+
+    this.userService.updateUserStatistic();
+
+    this.userStatisticSubscription = this.userService.userStatistic$.subscribe(user => {
+      this.updateUserStatistic(user);
+    })
+  }
+
+  updateUserStatistic(user: User) {
+    this.menu.find(item => item.id === 'notifications').items[0].badge = `${user.unread_notifications}`;
+    this.menu.find(item => item.id === 'post').items[0].badge = `${user.posts}`;
+    this.menu.find(item => item.id === 'post').items[2].badge = `${user.following}`;
+    this.menu.find(item => item.id === 'post').items[3].badge = `${user.followers}`;
   }
 
   // Find MenuItem (only find child) by Id
   findItemById(arr, id) {
     for (const cm of arr) {
       const result = cm.items.find(o => o.id === id)
-      if (result)
+      if (result) {
         return result
+      }
     }
   }
 
@@ -226,8 +239,14 @@ export class ProfilePageComponent implements OnInit {
       this.subscription.unsubscribe();
     }
 
+    clearInterval(this.interval);
+
     if (this.configSubscription) {
       this.configSubscription.unsubscribe();
+    }
+
+    if (this.userStatisticSubscription) {
+      this.userStatisticSubscription.unsubscribe();
     }
   }
 }

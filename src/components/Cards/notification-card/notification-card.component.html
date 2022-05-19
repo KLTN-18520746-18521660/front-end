@@ -5,13 +5,11 @@
     <div class="flex flex-wrap col-12">
       <div class="flex col-12 align-items-center justify-content-between">
         <div class="flex align-items-center mr-3 cursor-pointer" (click)="onClickNotification()">
-          <div class="flex mr-3">
-            <app-avatar [height]="'4rem'" [badge]="info?.icon" [user]="info?.user"></app-avatar>
-          </div>
-          <div class="flex">
-            <p class="notification-content" [innerHTML]="info.content"
-              [ngClass]="!info.read ? 'font-medium' : 'font-normal'"></p>
-          </div>
+          <app-avatar [height]="'4rem'" [badge]="info?.icon" [user]="info?.user"></app-avatar>
+        </div>
+        <div class="flex w-full h-full align-items-center cursor-pointer" (click)="onClickNotification()">
+          <p class="notification-content" [innerHTML]="info.content"
+            [ngClass]="!info.read ? 'font-medium' : 'font-normal'"></p>
         </div>
         <div class="flex un-read-icon align-items-center">
           <div class="notification-menu">
@@ -24,7 +22,7 @@
         </div>
       </div>
       <div class="flex col-12 justify-content-end">
-        <p class="notification-time font-normal text-600 text-sm" title="{{notification.content.date_send}}">
+        <p class="notification-time font-normal text-600 text-sm" title="{{notification.created_timestamp}}">
           {{info?.date | capital}}</p>
       </div>
     </div>

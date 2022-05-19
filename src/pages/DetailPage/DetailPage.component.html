@@ -1,4 +1,4 @@
-<app-search-input></app-search-input>
+<app-search-input [wFull]="true"></app-search-input>
 
 <div class="detail-post-layout container">
   <div class="grid py-4" *ngIf="!error; else errorBlock">
@@ -22,41 +22,42 @@
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-11 lg:col-8">
+    <div class="col-12 md:col-11 lg:col-8" *ngIf="!isLoading">
       <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
-      <div class="position-sticky mt-1">
+      <div class="position-sticky mt-1 z-index-999">
         <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '3px', 'z-index': '100000'}">
         </p-progressBar>
       </div>
       <div class="detail-wrapper mt-3" *ngIf="!isLoading; else loadingSpinner">
         <div #postContent class="detail-container border-round surface-0 shadow-2" *ngIf="post">
-          <div class="thumnail-post">
-            <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}"
-              class="post-thumbnail-image border-round-top shadow-2" />
+          <div class="thumnail-post border-round-top overflow-hidden">
+            <p-image class="post-thumbnail-image border-round-top shadow-2" src="{{ post.thumbnail }}"
+              alt="{{ post.title }}" [preview]="true">
+            </p-image>
           </div>
           <div class="main-post p-3 md:p-4 mt-3">
             <div class="post-info mb-4">
               <div class="flex">
                 <div class="flex avatar">
                   <a [routerLink]="['/user', post.owner?.user_name]">
-                    <app-avatar [user]="post?.owner"></app-avatar>
+                    <app-avatar [height]="'4rem'" [user]="post?.owner"></app-avatar>
                   </a>
                 </div>
                 <div class="flex-auto name-info mx-2 py-1">
                   <div class="block mb-2">
                     <a [routerLink]="['/user', post.owner?.user_name]">
-                      <span class="font-semibold">{{ post.owner?.display_name }}</span>
+                      <span class="font-semibold text-xl">{{ post.owner?.display_name }}</span>
                     </a>
                   </div>
-                  <span>
-                    <span class="spacing-1 text-600 text-sm" title="{{post.created_timestamp}}">
-                      {{'postDetail.postedOn' | translate}} {{post.fromNow.created}}
+                  <span class="text-base">
+                    <span class="spacing-1 text-600" title="{{post.approved_timestamp}}">
+                      {{'postDetail.postedOn' | translate}} {{post?.fromNow?.approved}}
                     </span>
-                    <span class="spacing-1 text-600 text-sm" *ngIf="post.fromNow.updated"
+                    <span class="spacing-1 text-600" *ngIf="post.fromNow.updated"
                       title="{{post.last_modified_timestamp}}">
                       &#183; {{'postDetail.updatedOn' | translate}} {{post.fromNow.updated}}
                     </span>
-                    <span class="spacing-1 text-600 text-sm">
+                    <span class="spacing-1 text-600">
                       &#183; {{ "card.time_read" | translate: post }}
                     </span>
                   </span>
@@ -113,6 +114,9 @@
           <div pDefer (onLoad)="initLoadComment()">
             <ng-template>
               <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingComment">
+                <ng-template [ngIf]="isLoadingAddComment">
+                  <app-comment-card [loading]="true" *ngFor="let i of [1]"></app-comment-card>
+                </ng-template>
                 <app-comment-card (submit)="onSubmitComment($event)" *ngFor="let comment of listComments"
                   [comment]="comment" (delete)="onDeleteComment($event)">
                 </app-comment-card>

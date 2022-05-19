@@ -14,7 +14,10 @@
     "like": "Like",
     "likes": "Likes",
     "submit": "Submit",
-    "save": "Save changes"
+    "save": "Save changes",
+    "new": "New",
+    "dark": "Switch to dark mode",
+    "light": "Switch to light mode"
   },
   "titlePage": {
     "default": "Home - Heovi",
@@ -39,14 +42,16 @@
     "followers": "Followers",
     "manageUser": "Manage User",
     "logout": "Logout",
-    "search": "Search result for {{query}}",
     "trending": "Trending",
     "admin": {
       "dashboard": "Admin Dashboard",
       "login": "Admin Login",
       "manage-post": "Manage Post",
       "manage-user": "Manage User"
-    }
+    },
+    "goto": "Redirecting ...",
+    "notFound": "Page not found",
+    "noAccess": "You don't have access to this page"
   },
   "home": {
     "title": "Home",
@@ -59,6 +64,9 @@
       "following": "Following",
       "trending": "Trending"
     }
+  },
+  "tooltip": {
+    "copy": "Click to copy link"
   },
   "notification": {
     "title": "Notifications",
@@ -75,6 +83,7 @@
     "delete": "Remove this notification",
     "markRead": "Mark as read",
     "markReadSuccess": "Mark as read successfully",
+    "markAllReadSuccess": "Mark all as read successfully",
     "markUnread": "Mark as unread",
     "deleteAll": "Delete all notifications",
     "deleteAllConfirm": "Are you sure you want to delete all notifications?",
@@ -113,7 +122,49 @@
       "title": "You have unsaved changes. Your changes will be lost if you don't save them. Press Cancel to go back and save these changes.",
       "yes": "Unsave",
       "no": "Stay"
-    }
+    },
+    "changepassword": {}
+  },
+  "message": {
+    "success": "Success",
+    "error": "Error",
+    "nochange": "No changes to save",
+    "update": "Update successfully",
+    "updateFail": "Failed to update",
+    "copied": "Link copied to clipboard",
+    "delete": "Delete successfully",
+    "save": "Save successfully",
+    "create": "Create successfully",
+    "login": "Login successfully",
+    "register": "Register successfully",
+    "confirm": "Confirm successfully",
+    "uploadfail": "Upload failed",
+    "filesize": "File size must be less than 3MB",
+    "forgotpassword": "Reset password successfully",
+    "resetpassword": "Reset password successfully",
+    "changepassword": "Change password successfully",
+    "follow": "Follow successfully",
+    "unfollow": "Unfollow successfully",
+    "like": "Like successfully",
+    "unlike": "Unlike successfully",
+    "savepost": "Save post successfully",
+    "publishpost": "Publish post successfully",
+    "deletepost": "Delete post successfully",
+    "approvepost": "Approve post successfully",
+    "rejectpost": "Reject post successfully",
+    "sharepost": "Share post successfully",
+    "addcomment": "Add comment successfully",
+    "replycomment": "Reply comment successfully",
+    "likecomment": "Like comment successfully",
+    "unlikecomment": "Unlike comment successfully",
+    "deletepostcomment": "Delete post comment successfully",
+    "deletepostreply": "Delete post reply successfully",
+    "deletepostlike": "Delete post like successfully",
+    "deletepostreplylike": "Delete post reply like successfully",
+    "deletepostcommentlike": "Delete post comment like successfully",
+    "deletepostreplycommentlike": "Delete post reply comment like successfully",
+    "deletepostcommentreplylike": "Delete post comment reply like successfully",
+    "deletepostreplycommentreplylike": "Delete post reply comment reply like successfully"
   },
   "status": {
     "success": "Success",
@@ -143,8 +194,11 @@
     "register": "Register",
     "profile": "Profile",
     "search": "Search",
+    "searchTitle": "Search posts, users, tags, etc...",
     "home": "Home",
     "more": "More",
+    "createPost": "Create Post",
+    "notification": "Notification",
     "user": {
       "dashboard": "My Dashboard",
       "profile": "My Profile",
@@ -162,7 +216,7 @@
       "dashboard": {
         "title": "Dashboard",
         "items": {
-          "profile": "Dashboard"
+          "dashboard": "Dashboard"
         }
       },
       "account": {
@@ -170,28 +224,28 @@
         "items": {
           "profile": "Profile",
           "edit": "Edit Profile",
-          "change-password": "Change Password"
+          "changePassword": "Change Password"
         }
       },
-      "manage-post": {
+      "managePost": {
         "title": "Management",
         "items": {
-          "manage-post": "Manage Post",
-          "saved-post": "Save Post",
+          "managePost": "Manage Post",
+          "savedPost": "Save Post",
           "following": "Following",
-          "follower": "Follower"
+          "followers": "Followers"
         }
       },
       "notifications": {
         "title": "Notification",
         "items": {
-          "notification": "Notification"
+          "notifications": "Notification"
         }
       },
       "others": {
         "title": "Other",
         "items": {
-          "setting": "Setting",
+          "settings": "Settings",
           "help": "Help & Support"
         }
       }
@@ -237,6 +291,7 @@
       "lastname": "Last Name",
       "email": "Email",
       "verified": "Verified on",
+      "checkMail": "Check your email to verify your account. Send date: ",
       "country": "Country",
       "sex": "Gender",
       "gender": {
@@ -245,7 +300,8 @@
         "other": "Other"
       },
       "phone": "Phone",
-      "joined": "Joined day"
+      "joined": "Joined day",
+      "password": "Last time change password"
     },
     "result": {
       "following": "You is following <b>{{count}}</b> users",
@@ -253,6 +309,12 @@
     },
     "editProfile": {
       "title": "Edit Profile",
+      "dialog": {
+        "title": "Are you sure?",
+        "description": "Do you want to save info changes?",
+        "cancel": "Cancel",
+        "ok": "Ok"
+      },
       "first_name": {
         "label": "First Name",
         "placeholder": "Enter your first name",
@@ -370,7 +432,12 @@
     "save": "Save"
   },
   "label": {
-    "search": "Hi {{name}}, let's search for something here ...",
+    "redirecting": {
+      "title": "Redirecting",
+      "description": "Please wait a while, You are being redirected."
+    },
+    "searchWithName": "Hi {{name}}, let's search for something here ...",
+    "search": "Let's search for something here ...",
     "recommend": {
       "foryou": "For you: ",
       "tags": "Recommend tags for you: ",
@@ -378,7 +445,9 @@
     },
     "popular": {
       "tags": "Popular tags: ",
-      "posts": "Popular posts: "
+      "posts": "Popular posts: ",
+      "category": "Popular categories: ",
+      "posts_by_tag": "Popular posts by tag: "
     },
     "trending": "Trending",
     "connectus": "Connect us",
@@ -444,28 +513,30 @@
         },
         "fullname": {
           "required": "Please enter your fullname",
-          "minlength": "Your fullname must be at least 3 characters long",
-          "maxlength": "Your fullname cannot be more than 50 characters long"
+          "minlength": "Your fullname must be at least 3 characters",
+          "maxlength": "Your fullname cannot be more than 50 characters"
         },
         "firstname": {
           "required": "Please enter your firstname",
-          "minlength": "Your firstname must be at least 3 characters long",
-          "maxlength": "Your firstname cannot be more than 50 characters long"
+          "minlength": "Your firstname must be at least 3 characters",
+          "maxlength": "Your firstname cannot be more than 50 characters"
         },
         "lastname": {
           "required": "Please enter your lastname",
-          "minlength": "Your lastname must be at least 3 characters long",
-          "maxlength": "Your lastname cannot be more than 50 characters long"
+          "minlength": "Your lastname must be at least 3 characters",
+          "maxlength": "Your lastname cannot be more than 50 characters"
         },
         "password": {
           "required": "Please enter your password",
-          "min": "Password must be at least 6 characters",
-          "max": "Password must be less than 40 characters"
+          "min": "Password must be at least {{min}} characters",
+          "max": "Password must be less than {{max}} characters",
+          "special": "Password must contain at least {{num}} special character",
+          "number": "Password must contain at least {{num}} number",
+          "lower": "Password must contain at least {{num}} lowercase character",
+          "upper": "Password must contain at least {{num}} uppercase character"
         },
         "confirmPassword": {
           "required": "Please enter your password again",
-          "min": "Confirm password must be at least 6 characters",
-          "max": "Confirm password must be less than 40 characters",
           "match": "Confirm password does not match"
         },
         "accept": "Please accept our terms and conditions"
@@ -494,6 +565,75 @@
       },
       "warning": "You only have 3 times to try to confirm your account"
     },
+    "changepassword": {
+      "title": "Change password",
+      "description": "Type old password and new password to change password",
+      "oldPassword": {
+        "label": "Old password",
+        "placeholder": "Enter old password"
+      },
+      "newPassword": {
+        "label": "New password",
+        "placeholder": "Enter new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Enter confirm password"
+      },
+      "submit": "Change password",
+      "dialog": {
+        "title": "Are you sure?",
+        "description": "Do you want to change your password?",
+        "cancel": "Cancel",
+        "ok": "Ok"
+      },
+      "validation": {
+        "oldPassword": {
+          "required": "Please enter your old password",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters"
+        },
+        "newPassword": {
+          "required": "Please enter your new password",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters",
+          "special": "New password must contain at least {{num}} special character",
+          "number": "New password must contain at least {{num}} number",
+          "lower": "New password must contain at least {{num}} lowercase character",
+          "upper": "New password must contain at least {{num}} uppercase character"
+        },
+        "confirmPassword": {
+          "required": "Please enter your password again",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters",
+          "match": "Confirm password does not match"
+        }
+      }
+    },
+    "forgotpassword": {
+      "title": "Forgot password",
+      "description": "Type your email to reset your password",
+      "email": {
+        "label": "User name or email address",
+        "placeholder": "Enter user name or email address"
+      },
+      "validation": {
+        "email": {
+          "required": "Please enter your email",
+          "invalid": "Please enter a valid email"
+        }
+      },
+      "registerHere":"Register here",
+      "loginHere": "Login here",
+      "submit": "Reset password",
+      "login": "Login here",
+      "home": "Go to home page",
+      "success": {
+        "title": "Good job!",
+        "description": "Your password has been reset successfully"
+      },
+      "warning": "You only have 3 times to try to reset your password"
+    },
     "notfound": {
       "title": "OOPS!",
       "description": "Something went wrong or the page you are looking for does not exist, please try again later",
@@ -521,6 +661,7 @@
     "action": {
       "edit": "Edit",
       "save": "Save",
+      "unsave": "Unsave",
       "copy": "Copy link",
       "share": "Share",
       "report": "Report"
@@ -529,7 +670,7 @@
       "view": "Views",
       "like": "Click to like",
       "unlike": "Click to unlike",
-      "save": "Comments"
+      "comment": "Comments"
     },
     "disscussion": "Dissussion ({{count}})",
     "comment": "Comment",
@@ -572,6 +713,7 @@
       "twitter": "Share on Twitter",
       "linkedin": "Share on Linkedin",
       "save": "Save to your list",
+      "unsave": "Unsave from your list",
       "copy": "Copy link",
       "report": "Report"
     }
@@ -687,6 +829,29 @@
         "title": "Other",
         "description": "Other reason (description is required)"
       }
+    }
+  },
+  "search": {
+    "title": {
+      "search": "Search",
+      "result": "Search result for {{query}}"
+    },
+    "menu": {
+      "all": "All",
+      "post": "Post",
+      "user": "User"
+    },
+    "result": "Search results for <b>{{query}}</b>",
+    "noResult": "No results found for <b>{{query}}</b>",
+    "sort": "Sort by ",
+    "filter": {
+      "dateDesc": "Date descending",
+      "dateAsc": "Date ascending",
+      "likesDesc": "Likes descending",
+      "likesAsc": "Likes ascending"
+    },
+    "form": {
+      "placeholder": "Search for posts"
     }
   },
   "language": {

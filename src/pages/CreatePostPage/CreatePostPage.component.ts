@@ -1,25 +1,20 @@
-import { SafeResourceUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
-import { STORAGE_KEY, APPCONSTANT } from 'utils/appConstant';
-import { convertArrayToNested, removeChildrenByLevel, convertToSlug } from 'utils/commonFunction';
-import Category from 'models/category.model';
-import { tagsMockData } from './../../shared/mockData/tagsMockData';
-import { PostsService } from 'services/posts.service';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UserService } from 'services/user.service';
-import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import Tag from 'models/tag.model';
 import _ from 'lodash';
-import { TreeNode } from 'primeng/api';
-import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 import { CreatePostModel } from 'models/post.model';
+import Tag from 'models/tag.model';
+import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 import { MarkdownService } from 'ngx-markdown';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
-import { Message } from 'primeng/api';
+import { ConfirmationService, Message, MessageService, TreeNode } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUpload } from 'primeng/fileupload';
+import { Subscription } from 'rxjs';
+import { PostsService } from 'services/posts.service';
+import { UserService } from 'services/user.service';
+import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
+import { convertArrayToNested, convertToSlug, removeChildrenByLevel } from 'utils/commonFunction';
+import { ApiParams } from './../../models/api.model';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -127,7 +122,12 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   getListTags() {
-    this.postsService.getListTags().subscribe((res: any) => {
+    const params: ApiParams = {
+      search_term: '',
+      start: 0,
+      size: 20
+    }
+    this.postsService.getListTags(params).subscribe((res: any) => {
       this.listTags = res?.data.tags;
       this.listFilterTags = this.listTags;
     });
@@ -152,11 +152,11 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onChangeTitle(event) {
-    if (event.lenght > 200) {
+    if (event && event.length > 200) {
       event = event.slice(0, 200);
     }
     this.draft['title'] = event;
-    this.slug = convertToSlug(event);
+    this.slug = convertToSlug(event || '');
     this.saveDraft();
   }
 
@@ -172,6 +172,7 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   myUploader(event) {
+    console.log(event);
     this.isLoading = true;
     this.uploadSubcription = this.postsService.upLoadImage('post', event.files[0]).subscribe(
       (res) => {
@@ -205,7 +206,6 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onChangeMoreTag(event) {
-    console.log(event);
     const list = this.listTagModel.map(item => {
       return item.tag;
     })
@@ -222,30 +222,30 @@ export class CreatePostPageComponent implements OnInit {
     if (draft) {
       this.draft = JSON.parse(draft);
       this.selectedEditorType = this.draft['type'] || 'HTML';
-      this.thumbnail = this.draft['thumbnail'] || '';
+      this.thumbnail = this.draft['thumbnail'] || null;
       this.thumbnailPreview = this.thumbnail ? this.thumbnail : null;
-      this.title = this.draft['title'] || '';
+      this.title = this.draft['title'] || null;
       this.tags = this.draft['tags'] || [];
-      this.content = this.draft['HTML'] || '';
-      this.contentMd = this.draft['Markdown'] || '';
+      this.content = this.draft['HTML'] || null;
+      this.contentMd = this.draft['Markdown'] || null;
       this.convertToShortContent();
     }
     else {
-      this.content = '';
-      this.contentMd = '';
-      this.thumbnail = '';
+      this.content = null;
+      this.contentMd = null;
+      this.thumbnail = null;
       this.tags = [];
       this.validThumbnail = true;
-      this.title = '';
+      this.title = null;
       this.selectedEditorType = 'HTML';
 
       this.draft = {
-        type: '',
-        title: '',
+        type: null,
+        title: null,
         tags: [],
-        thumbnail: '',
-        HTML: '',
-        Markdown: '',
+        thumbnail: null,
+        HTML: null,
+        Markdown: null,
       }
       this.saveDraft();
     }
@@ -256,7 +256,7 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   convertToShortContent() {
-    let temp;
+    let temp: string;
     try {
       if (this.selectedEditorType === 'Markdown') {
         temp = this.markdownService.compile(this.contentMd.toString(), true)
@@ -264,13 +264,13 @@ export class CreatePostPageComponent implements OnInit {
       else {
         temp = this.content;
       }
-      this.short_content = temp
+      this.short_content = (temp ? temp : '')
         .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
         .replace(/(&#\d+;)+/g, ' ')
         .slice(0, 180);
     } catch (error) {
       console.log(error);
-      this.messageService.add({ severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
+      this.messageService.add({ key: 'createPostToast', severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
     }
 
   }
@@ -284,7 +284,7 @@ export class CreatePostPageComponent implements OnInit {
 
   onClickSaveDraft() {
     this.saveDraft();
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Save draft successfully' });
+    this.messageService.add({ key: 'createPostToast', severity: 'success', summary: 'Success', detail: 'Save draft successfully' });
   }
 
   onFilterTag(event) {
@@ -434,15 +434,17 @@ export class CreatePostPageComponent implements OnInit {
       (res) => {
         this.isLoading = false;
         this.messageService.add({
+          key: 'createPostToast',
           severity: 'success',
-          summary: 'Success',
-          detail: 'Publish post successfully!',
+          summary: '',
+          detail: this.translate.instant('message.publishpost'),
           life: APPCONSTANT.TOAST_TIMEOUT
         });
       },
       (err: any) => {
         this.isLoading = false;
         this.messageService.add({
+          key: 'createPostToast', 
           severity: 'error',
           summary: err.error,
           detail: err.message,

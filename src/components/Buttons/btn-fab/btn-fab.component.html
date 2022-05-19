@@ -1,5 +1,5 @@
 <ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
-  <div class="flex flex-wrap justify-content-center">
+  <div class="inline-flex flex-wrap justify-content-center">
     <div class="flex col-12 p-0 justify-content-center">
       <button pButton pRipple type="button" icon="pi {{data.icon}}" class="{{ data.style }} {{ data.color }}"
         (click)="data.command(data)" pTooltip="{{ data.name }}" tooltipPosition="right"></button>

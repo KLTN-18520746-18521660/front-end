@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AppConfig } from 'models/appconfig';
+import { AppConfig } from 'models/appconfig.model';
 import { THEMES } from 'utils/themeConstant';
 import { UserConfigService } from 'services/user-config.service';
 
@@ -17,6 +17,7 @@ export class ConfigService {
     let temp = localStorage.getItem('CONFIGS') ? JSON.parse(localStorage.getItem('CONFIGS')) : {};
     const themName = temp['theme'] || THEMES[0];
 
+    
     this.config = THEMES.filter((item) => item.theme === themName)[0] || THEMES[0];
   }
 

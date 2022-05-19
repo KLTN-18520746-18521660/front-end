@@ -33,6 +33,8 @@ export class ButtonComponent implements OnInit {
 
   @Input() rounded: boolean = false;
 
+  @Input() tooltip: string = '';
+
   @Output() onClick: EventEmitter<any> = new EventEmitter();
 
   classButton: string = '';
