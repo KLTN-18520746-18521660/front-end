@@ -32,6 +32,10 @@ export class UserFollowingComponent implements OnInit {
   }
 
   getListUserFollowing(loadMore = false) {
+    if (this.isLoading || this.isLoadingMore) {
+      return;
+    }
+
     if (loadMore)
       this.isLoadingMore = true;
     else

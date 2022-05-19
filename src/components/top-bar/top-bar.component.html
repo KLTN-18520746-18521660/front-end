@@ -2,7 +2,7 @@
   <div class="container">
     <div class="flex justify-content-between align-items-center top-bar h-5rem">
       <div class="flex align-items-center menu-left">
-        <p-button type="text" class="flex p-button-secondary md:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
+        <p-button type="text" class="flex p-button-secondary lg:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
         </p-button>
         <div class="logo">
           <a [routerLink]="['/']">
@@ -34,12 +34,12 @@
         </div> -->
       </div>
       <div class="flex align-items-center menu-right">
-        <div class="flex mr-3">
+        <div class="flex md:mr-3">
           <button pButton pRipple icon="pi pi-search" (click)="onClickSeach()"
             class="p-button-rounded p-button-text p-button-plain">
           </button>
         </div>
-        <div class="flex mr-3">
+        <div class="hidden md:flex mr-3">
           <button pButton pRipple [routerLink]="['/create']" class="p-button-outlined p-button-primary">
             {{'topbar.createPost' | translate}}
           </button>
@@ -61,9 +61,9 @@
           </div>
         </ng-template>
         <ng-template #noLogin>
-          <a class="font-medium ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
+          <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
             style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
-          <a class="font-medium ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/login']"
+          <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/login']"
             style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>
         </ng-template>
       </div>
@@ -71,8 +71,11 @@
   </div>
 </div>
 <p-sidebar [(visible)]="showSidebar" (onHide)="onHideSidebar()">
-  Mobile Menu Here!
+  <ng-template [ngIf]="isLoggedin">
+    <app-user-sidebar-menu (clickMenu)="onClickSidebarMenu()"></app-user-sidebar-menu>
+  </ng-template>
 </p-sidebar>
+
 <p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'"
   [style]="{width: '60vw'}" [dismissableMask]="true">
 </p-confirmDialog>

@@ -6,10 +6,14 @@ export default class Tag {
   status?: string;
   created_timestamp?: string;
   last_modified_timestamp?: string;
-  action?: string[];
+  actions?: string[];
   mapAction?: {
     follow: boolean;
     used: boolean;
     visited: boolean;
-  }
+  };
+
+  posts?: number;
+  likes?: number;
+  views?: number;
 }

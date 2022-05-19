@@ -43,7 +43,7 @@ export class NotificationCardComponent implements OnInit {
     private postService: PostsService,
     private userService: UserService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -297,6 +297,10 @@ export class NotificationCardComponent implements OnInit {
     else {
       this.subscription = this.postService.readNotification(this.notification.id).subscribe(
         () => {
+          this.userService.userStatistic.next({
+            ...this.userService.user,
+            unread_notifications: this.userService.user.unread_notifications - 1
+          });
           this.notification.read = true;
           this.info = this.mapNotification(this.notification);
           this.info.command();

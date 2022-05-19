@@ -11,7 +11,7 @@ import { PostsService } from 'services/posts.service';
 import _ from 'lodash';
 import { AppConfig } from 'models/appconfig.model';
 import { Subscription } from 'rxjs';
-import { ConfigService } from 'services/app.config.service';
+import { AppConfigService } from 'services/app.config.service';
 
 @Component({
   selector: 'app-HomePage',
@@ -54,7 +54,7 @@ export class HomePageComponent implements OnInit {
   constructor(
     private userConfigService: UserConfigService,
     private postService: PostsService,
-    private configService: ConfigService
+    private configService: AppConfigService
   ) {
     this.layoutOptions = [
       { icon: 'pi pi-align-justify', value: 'list' },
@@ -92,7 +92,15 @@ export class HomePageComponent implements OnInit {
   }
 
   onChangeLayout(e) {
-    this.isGrid = !this.isGrid;
+    if (e.value === 'grid' && !this.isGrid) {
+      this.isGrid = true;
+    }
+    else if (e.value === 'list' && this.isGrid) {
+      this.isGrid = false;
+    }
+    else {
+      return;
+    }
     this.listPosts = [];
     this.isLoadingPosts = true;
     setTimeout(() => {

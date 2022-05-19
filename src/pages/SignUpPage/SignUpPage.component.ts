@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { AppConfig, PasswordPolicy } from 'models/appconfig.model';
 import { SignUpUserModel } from 'models/user.model';
-import { ConfigService } from 'services/app.config.service';
+import { AppConfigService } from 'services/app.config.service';
 import { Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
@@ -35,7 +35,7 @@ export class SignUpPageComponent implements OnInit {
   passwordPolicy: PasswordPolicy;
 
   constructor(
-    public configService: ConfigService,
+    public configService: AppConfigService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,

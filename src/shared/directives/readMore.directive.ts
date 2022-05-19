@@ -67,7 +67,7 @@ export class ReadMoreDirective {
     }
     this.hideToggle = false;
     if (this.isCollapsed === true) {
-      this.currentText = this.text.substring(0, this.maxLength) + '...';
+      this.currentText = this.text.substring(0, this.maxLength - 10) + '...';
       this.elementChange.innerHTML = this.currentText;
     } else if (this.isCollapsed === false) {
       this.currentText = this.text;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppConfig, ThemeName } from 'models/appconfig.model';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { ConfigService } from 'services/app.config.service';
+import { AppConfigService } from 'services/app.config.service';
 import { UserConfigService } from 'services/user-config.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class SwitchThemeComponent implements OnInit {
   dark: boolean;
 
   constructor(
-    public configService: ConfigService,
+    public configService: AppConfigService,
     public primengConfig: PrimeNGConfig,
     private userConfig: UserConfigService
   ) { }

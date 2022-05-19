@@ -1,5 +1,5 @@
 import { ThemeName } from './../../../models/appconfig.model';
-import { ConfigService } from 'services/app.config.service';
+import { AppConfigService } from 'services/app.config.service';
 import { Message, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -36,7 +36,7 @@ export class AdminLoginPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private adminService: AdminService,
-    private configService: ConfigService,
+    private configService: AppConfigService,
     private userConfig: UserConfigService
   ) { }
 

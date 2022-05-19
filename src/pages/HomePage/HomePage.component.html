@@ -1,4 +1,4 @@
-<app-search-input [wFull]="true"></app-search-input>
+<app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
 
 <div class="home-layout container py-6">
   <div class="flex flex-wrap justify-content-center">
@@ -56,7 +56,7 @@
           </div>
           <div class="grid list-post-home" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="100"
             (scrolled)="onLoadMorePosts(true)">
-            <ng-template [ngIf]="!isLoadingPosts" [ngIfElse]="loadingSpinner">
+            <ng-template [ngIf]="!isLoadingPosts" [ngIfElse]="loadingPosts">
               <ng-template [ngIf]="isGrid" [ngIfElse]="LayoutList">
                 <div class="col-12 sm:col-6 md:col-6 lg:col-6" *ngFor="let item of listPosts">
                   <app-post-card [post]="item" [isGrid]="isGrid"></app-post-card>
@@ -106,5 +106,28 @@
 <ng-template #loadingSpinner>
   <div class="col-12 pt-8">
     <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-template>
+
+<ng-template #loadingPosts>
+  <ng-template [ngIf]="isGrid" [ngIfElse]="LayoutList">
+    <div class="col-12 sm:col-6 md:col-6 lg:col-6" *ngFor="let item of [1,2]">
+      <app-post-card [loading]="true" [isGrid]="isGrid"></app-post-card>
+    </div>
+  </ng-template>
+  <ng-template #LayoutList>
+    <div class="col-12" *ngFor="let item of [1,2]">
+      <app-post-card [loading]="true"></app-post-card>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="isLoadingMorePosts">
+    <div class="col-12">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-template>
+  <div class="col-12 text-center mt-2 cursor-pointer" *ngIf="start < totalSizePost"
+    (click)="onLoadMorePosts()">
+    <p class="font-semibold mb-2">{{'home.viewMore' | translate}}</p>
+    <i class="pi pi-angle-double-down up-down text-lg"></i>
   </div>
 </ng-template>

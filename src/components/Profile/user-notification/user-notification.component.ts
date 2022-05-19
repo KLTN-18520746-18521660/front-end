@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from 'services/posts.service';
 import { Component, OnInit } from '@angular/core';
@@ -47,7 +48,8 @@ export class UserNotificationComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private title: Title
   ) { }
 
   ngOnInit() {
@@ -58,6 +60,12 @@ export class UserNotificationComponent implements OnInit {
     this.userStatisticSubscription = this.userService.userStatistic$.subscribe(
       (user) => {
         this.sizeUnread = user.unread_notifications;
+        if (this.sizeUnread > 0) {
+          this.title.setTitle(`(${this.sizeUnread}) ${this.translate.instant('notification.title')}`);
+        }
+        else {
+          this.title.setTitle(this.translate.instant('notification.title'));
+        }
       }
     );
 
@@ -65,6 +73,10 @@ export class UserNotificationComponent implements OnInit {
   }
 
   getListNotifications(loadMore = false) {
+    if (this.isLoading || this.isLoadingMore) {
+      return;
+    }
+
     if (loadMore) {
       this.isLoadingMore = true;
     }

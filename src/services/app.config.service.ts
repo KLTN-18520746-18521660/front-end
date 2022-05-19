@@ -7,7 +7,7 @@ import { UserConfigService } from 'services/user-config.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
+export class AppConfigService {
 
   config: AppConfig;
 

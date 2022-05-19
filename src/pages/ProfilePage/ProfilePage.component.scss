@@ -10,6 +10,10 @@
     top: 6rem;
 
     @include breakpoint(max, 992px) {
+      display: none;
+    }
+
+    @include breakpoint(max, 992px) {
       height: calc(100vh - 8rem);
 
       box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.06), 0px 7px 9px rgba(0, 0, 0, 0.12), 0px 20px 25px -8px rgba(0, 0, 0, 0.18) !important;

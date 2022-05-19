@@ -35,6 +35,10 @@ export class UserManagePostComponent implements OnInit {
   }
 
   getListPosts(loadMore = false) {
+    if (this.isLoading || this.isLoadingMore) {
+      return;
+    }
+
     if (loadMore)
       this.isLoadingMore = true;
     else

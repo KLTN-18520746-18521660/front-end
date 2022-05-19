@@ -1,7 +1,7 @@
 import { ThemeName } from './../../../models/appconfig.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfig } from 'models/appconfig.model';
-import { ConfigService } from 'services/app.config.service';
+import { AppConfigService } from 'services/app.config.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { UserConfigService } from 'services/user-config.service';
@@ -17,7 +17,7 @@ export class MyAppConfigComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    public configService: ConfigService,
+    public configService: AppConfigService,
     public primengConfig: PrimeNGConfig,
     private userConfig: UserConfigService
   ) { }

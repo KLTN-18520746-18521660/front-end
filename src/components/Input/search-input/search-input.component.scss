@@ -2,7 +2,13 @@
 
 :host ::ng-deep {
   .search-input-wrapper {
-    background: linear-gradient(104.01deg, #d0e4ec 9.98%, #EAF2F5 90.02%);
+    
+    &.layout-light {
+      background: linear-gradient(104.01deg, #d0e4ec 9.98%, #EAF2F5 90.02%);
+    }
+    &.layout-dark {
+      background: linear-gradient(104.01deg, var(--surface-f) 9.98%, var(--surface-a) 90.02%);
+    }
 
     .search-input {
       transition: width 0.8s ease-in-out;
@@ -12,13 +18,19 @@
       -o-transition: width 0.8s ease-in-out;
       width: 85%;
 
+      @include breakpoint(min, 1280px) {
+        width: 90%;
+      }
       @include breakpoint(max, 768px) {
         width: 100%;
       }
 
-      &:hover,
-      &-active {
-        width: 100% !important;
+      &-hover {
+
+        &:hover,
+        &-active {
+          width: 100% !important;
+        }
       }
     }
 

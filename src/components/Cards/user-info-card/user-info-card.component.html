@@ -48,8 +48,9 @@
       </div>
       <div class="col-12 md:col-12" *ngIf="showButtonFollow">
         <app-button [label]="(user.mapAction.follow ? 'common.following' : 'common.follow') | translate"
-          [loading]="isLoading" [className]="user.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
-          (onClick)="onClickFollow()">
+          [icon]="user.mapAction.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
+          [tooltip]="(user.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
+          [className]="user.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'" (onClick)="onClickFollow()">
         </app-button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<app-search-input [wFull]="true"></app-search-input>
+<app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
 
 <div class="detail-post-layout container">
   <div class="grid py-4" *ngIf="!error; else errorBlock">
@@ -131,7 +131,7 @@
           </div>
         </div>
         <div class="read-next-wrapper mt-4 md:mt-8">
-          <p class="font-semibold text-2xl">{{'postDetail.readNext' | translate}}</p>
+          <p class="font-semibold text-2xl">{{'common.readNext' | translate}}</p>
           <app-post-card-vertical *ngFor="let item of listRecommend" [post]="item"></app-post-card-vertical>
         </div>
       </div>

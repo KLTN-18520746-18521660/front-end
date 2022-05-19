@@ -31,7 +31,7 @@ export class CategoryPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  isLoadingPost: boolean = true;
+  isLoadingPost: boolean = false;
 
   isLoadingCategory: boolean = false;
 
@@ -87,7 +87,7 @@ export class CategoryPageComponent implements OnInit {
   }
 
   getPosts(page: number) {
-    this.isLoading = true;
+    this.isLoadingPost = true;
 
     if (this.getPostSubcription) {
       this.getPostSubcription.unsubscribe();
@@ -102,7 +102,7 @@ export class CategoryPageComponent implements OnInit {
     this.getPostSubcription = this.postService.getPostsByType('trending', {}).subscribe(
       (res) => {
         this.listPosts = res.data.posts;
-        this.isLoading = false;
+        this.isLoadingPost = false;
       },
       () => {
         this.isLoading = false;

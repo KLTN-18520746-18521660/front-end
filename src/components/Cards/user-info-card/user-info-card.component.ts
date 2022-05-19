@@ -51,7 +51,7 @@ export class UserInfoCardComponent implements OnInit {
 
         this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
 
-        if (this.userService.user.user_name !== this.user_name) {
+        if (this.userService.user && this.userService.user.user_name !== this.user_name) {
           this.showButtonFollow = true;
         }
         this.isLoading = false;

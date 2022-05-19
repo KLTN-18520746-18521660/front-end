@@ -14,16 +14,18 @@
     }
   }
 
-  &:hover {
-    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08), 0px 4px 30px 2px rgba(0, 0, 0, 0.1), 0px 4px 10px rgba(0, 0, 0, 0.1) !important;
+  &-hover {
+    &:hover {
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08), 0px 4px 30px 2px rgba(0, 0, 0, 0.1), 0px 4px 10px rgba(0, 0, 0, 0.1) !important;
 
-    .card-container {
-      .card-footer {
-        .card-footer-right {
-          .read-more-button {
-            i {
-              transform: translateX(6px);
-              transition: transform .36s cubic-bezier(0, 0, 0.2, 1), opacity .36s cubic-bezier(0, 0, 0.2, 1);
+      .card-container {
+        .card-footer {
+          .card-footer-right {
+            .read-more-button {
+              i {
+                transform: translateX(6px);
+                transition: transform .36s cubic-bezier(0, 0, 0.2, 1), opacity .36s cubic-bezier(0, 0, 0.2, 1);
+              }
             }
           }
         }

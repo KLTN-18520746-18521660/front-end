@@ -126,7 +126,7 @@ export class TopBarComponent implements OnInit {
     });
 
     this.userStatisticSubscription = this.userService.userStatistic$.subscribe(user => {
-      this.user = { ...user, ...this.user };
+      this.user = { ...this.user, ...user };
     })
   }
 
@@ -174,19 +174,23 @@ export class TopBarComponent implements OnInit {
       header: this.translate.instant('topbar.searchTitle'),
       footer: ' ',
       dismissableMask: true,
-      width: '70%',
+      styleClass: 'w-12 md:w-9 lg:w-7 xl:w-6'
     });
     this.userService.ref.push(this.ref);
     this.searchSubscription = this.ref.onClose.subscribe(() => {
       this.ref = null;
       this.userService.ref.filter(ref => ref !== this.ref);
     });
-
   }
 
   onOpenSidebar() {
     this.showSidebar = true;
     DomHandler.addClass(document.body, 'p-overflow-hidden');
+  }
+
+  onClickSidebarMenu() {
+    this.showSidebar = false;
+    DomHandler.removeClass(document.body, 'p-overflow-hidden');
   }
 
   onHideSidebar() {

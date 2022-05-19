@@ -1,6 +1,6 @@
 import { PasswordPolicy } from './../../models/appconfig.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ConfigService } from 'services/app.config.service';
+import { AppConfigService } from 'services/app.config.service';
 import { AppConfig } from 'models/appconfig.model';
 import { Subscription } from 'rxjs';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -44,7 +44,7 @@ export class LoginPageComponent implements OnInit {
   returnUrl: string;
 
   constructor(
-    public configService: ConfigService,
+    public configService: AppConfigService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     // private socialAuthService: SocialAuthService,

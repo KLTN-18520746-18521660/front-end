@@ -17,7 +17,9 @@
     "save": "Save changes",
     "new": "New",
     "dark": "Switch to dark mode",
-    "light": "Switch to light mode"
+    "light": "Switch to light mode",
+    "readMore": "Read more",
+    "readLess": "Read less"
   },
   "titlePage": {
     "default": "Home - Heovi",

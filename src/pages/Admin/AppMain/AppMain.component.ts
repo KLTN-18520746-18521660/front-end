@@ -6,7 +6,7 @@ import { AdminService } from 'services/admin.service';
 import { Component, AfterViewInit, OnDestroy, Renderer2, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppComponent } from '../../../app/app.component';
-import { ConfigService } from '../../../services/app.config.service';
+import { AppConfigService } from '../../../services/app.config.service';
 import { AppConfig } from '../../../models/appconfig.model';
 import { filter, fromEvent, map, merge, Subscription } from 'rxjs';
 import { UserIdleService } from 'angular-user-idle';
@@ -85,7 +85,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   constructor(
     public renderer: Renderer2,
     public app: AppComponent,
-    public configService: ConfigService,
+    public configService: AppConfigService,
     private adminService: AdminService,
     private cookieService: CookieService,
     private router: Router,

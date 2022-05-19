@@ -7,6 +7,7 @@
     "host": "ng serve -o --host 0.0.0.0",
     "production": "ng serve -o --configuration=production",
     "build": "ng build",
+    "build watch": "ng build --configuration=development --watch",
     "build:cross": "ng build --cross-origin=none",
     "build:dev": "ng build --configuration=development --cross-origin=none",
     "analyze": "ng build --stats-json --output-path=dist/analyze && webpack-bundle-analyzer dist/analyze/stats.json",

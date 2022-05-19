@@ -1,3 +1,5 @@
+@import 'styles/scss/mixins.scss';
+
 :host ::ng-deep {
   .top-bar-wrapper {
     // background: linear-gradient(104.01deg, #d0e4ec 9.98%, #EAF2F5 90.02%);
@@ -122,6 +124,14 @@
 
   .p-sidebar-left {
     min-width: 70vw !important;
+
+    @include breakpoint(min, 540px) {
+      min-width: 50vw !important;
+    }
+
+    @include breakpoint(min, 768px) {
+      min-width: 40vw !important;
+    }
 
     .p-sidebar-header {
       justify-content: flex-start !important;

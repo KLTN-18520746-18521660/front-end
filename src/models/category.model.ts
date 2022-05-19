@@ -12,5 +12,9 @@ export default class Category {
   actions?: string[];
   mapAction?: {
     follow: boolean;
-  }
+  };
+
+  posts?: number;
+  likes?: number;
+  views?: number;
 }

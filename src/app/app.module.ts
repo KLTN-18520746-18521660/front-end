@@ -116,6 +116,7 @@ import player from 'lottie-web';
 import { RedirectingComponent } from 'components/Loadings/redirecting/redirecting.component';
 import { NewPasswordPageComponent } from 'pages/NewPasswordPage/NewPasswordPage.component';
 import { GoToComponent } from 'components/go-to/go-to.component';
+import { UserSidebarMenuComponent } from 'components/Profile/user-sidebar-menu/user-sidebar-menu.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -201,6 +202,7 @@ export function playerFactory() {
     RedirectingComponent,
     GoToComponent,
     NewPasswordPageComponent,
+    UserSidebarMenuComponent,
 
     SwitchThemeComponent,
     

@@ -83,6 +83,10 @@
       &:hover {
         text-decoration: underline;
       }
+
+      span {
+        @include maxline(1);
+      }
     }
   }
 }

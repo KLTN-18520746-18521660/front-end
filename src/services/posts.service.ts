@@ -159,8 +159,8 @@ export class PostsService {
     }));
   }
 
-  getTagDetail(tag: string): Observable<Tag[]> {
-    return this.httpClient.get<Tag[]>(BASE_URL + REST_URL.TAG + `/${tag}`, this.httpOptions()).pipe(catchError(error => {
+  getTagDetail(tag: string): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.TAG + `/${tag}`, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

@@ -87,9 +87,9 @@ export class AppUserComponent implements OnInit {
     if (this.userService.getSessionId()) {
       this.isLoading = true;
 
-      this.interval = setInterval(() => {
-        this.userService.updateUserStatistic();
-      }, APPCONSTANT.RELOAD_STATISTIC_TIMEOUT);
+      // this.interval = setInterval(() => {
+      //   this.userService.updateUserStatistic();
+      // }, APPCONSTANT.RELOAD_STATISTIC_TIMEOUT);
     }
     else {
       this.isLoading = false;
@@ -156,7 +156,7 @@ export class AppUserComponent implements OnInit {
 
     console.log(this.userIdleService.getConfigValue());
 
-    if (this.userService.isAuthenticated && !this.isWatching && !this.remember) {
+    if (this.userService.isAuthenticated && !this.isWatching) {
       this.onStartWatching();
     }
 
@@ -164,7 +164,7 @@ export class AppUserComponent implements OnInit {
     this.subscription = this.userService.authUpdate$.subscribe(res => {
       this.isLoading = false;
       if (res.isAuthenticated) {
-        if (!this.isWatching && !this.remember) {
+        if (!this.isWatching) {
           this.onStartWatching();
         }
       }
@@ -204,9 +204,14 @@ export class AppUserComponent implements OnInit {
 
   updateAuthenciated() {
     if (this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
-      console.log("Ping has token");
+      console.log("Ping")
       if (this.userService.isAuthenticated && !this.isVisible) {
-        this.extendSession();
+        if (!this.remember) {
+          console.log("Extend token");
+          this.extendSession();
+        }
+        console.log("Get Statistic");
+        this.userService.updateUserStatistic();
       }
       else if (!this.userService.isAuthenticated) {
         this.userService.updateAuth(this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN));
