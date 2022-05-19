@@ -9,7 +9,7 @@ export default class Category {
   status?: string;
   created_timestamp?: string;
   last_modified_timestamp?: string;
-  action?: string[];
+  actions?: string[];
   mapAction?: {
     follow: boolean;
   }

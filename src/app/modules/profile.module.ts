@@ -12,7 +12,8 @@ import { UserDashboardComponent } from 'components/Profile/user-dashboard/user-d
 import { UserNotificationComponent } from 'components/Profile/user-notification/user-notification.component';
 import { UserManagePostComponent } from 'components/Profile/user-manage-post/user-manage-post.component';
 import { UserEditInfoComponent } from 'components/Profile/user-edit-info/user-edit-info.component';
-import { CanDeactiveGuard } from 'shared/can-deactive.guard';
+import { CanDeactiveGuard } from 'shared/guards/can-deactive.guard';
+import { AuthGuard } from 'shared/guards/auth.guard';
 
 
 @NgModule({
@@ -20,9 +21,16 @@ import { CanDeactiveGuard } from 'shared/can-deactive.guard';
     CommonModule,
     RouterModule.forChild([
       {
-        path: '', component: ProfilePageComponent, children: [
+        path: '',
+        component: ProfilePageComponent,
+        children: [
           {
             path: '',
+            redirectTo: 'dashboard',
+            pathMatch: 'full'
+          },
+          {
+            path: 'dashboard',
             component: UserDashboardComponent,
             data: {
               key: "dashboard"
@@ -50,7 +58,7 @@ import { CanDeactiveGuard } from 'shared/can-deactive.guard';
               key: 'change-password'
             }
           },
-          
+
           {
             path: 'manage-post',
             component: UserManagePostComponent,

@@ -19,8 +19,10 @@ export default class Post {
   owner?: User;
   created_timestamp?: string;
   last_modified_timestamp?: string;
+  approved_timestamp?: string;
   fromNow?: {
     created?: string;
+    approved?: string;
     updated?: string;
   };
   comments?: number;
@@ -36,7 +38,9 @@ export default class Post {
     visited: boolean;
     comment: boolean;
     follow: boolean;
-  }
+    report: boolean;
+  };
+  new?: boolean;
 }
 
 export class CreatePostModel {

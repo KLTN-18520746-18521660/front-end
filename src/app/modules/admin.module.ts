@@ -30,7 +30,7 @@ import { ManagePostsPageComponent } from 'pages/Admin/ManagePostsPage/ManagePost
         ]
       },
       {
-        path: 'loginn',
+        path: 'login',
         component: AdminLoginPageComponent,
         data: { key: 'admin.login' }
       },

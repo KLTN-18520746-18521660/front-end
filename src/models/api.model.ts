@@ -1,10 +1,11 @@
-import { PublicConfig } from "./appconfig";
+import { PublicConfig } from "./appconfig.model";
 import Category from "./category.model";
 import Post from "./post.model";
 import Tag from "./tag.model";
 import User from "./user.model";
 import Comment from "./comment.model";
 import Notification from "./notification.model";
+import { Admin } from "./admin.model";
 
 export default interface ApiResult {
   status?: number;
@@ -26,6 +27,8 @@ export default interface ApiResult {
     notification: Notification;
     configs?: PublicConfig;
     total_size?: number;
+    session_id?: string;
+    user_id?: string;
     // [key: string]: any;
   }
 }
@@ -40,9 +43,12 @@ export interface ApiParams {
   start?: number;
   size?: number;
   search_term?: string;
+  tags?: string;
+  categories?: string;
   /**s
    * 'view','like'
    */
+  sort_by?: string;
   order?: string;
   /**
    * true,fale

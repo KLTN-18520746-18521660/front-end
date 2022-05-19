@@ -1,3 +1,5 @@
+import { SwitchThemeComponent } from './../components/Configs/switch-theme/switch-theme.component';
+import { CategoryComponent } from './../components/Links/category/category.component';
 import { StatusBadgeComponent } from './../components/status-badge/status-badge.component';
 import { NotificationCardComponent } from './../components/Cards/notification-card/notification-card.component';
 import { UserFollowingComponent } from './../components/Profile/user-following/user-following.component';
@@ -41,8 +43,8 @@ import { NotFoundPageComponent } from 'pages/NotFoundPage/NotFoundPage.component
 // Import components
 import { TopBarComponent } from 'components/top-bar/top-bar.component';
 import { FooterComponent } from 'components/footer/footer.component';
-import { TagComponent } from './../components/tag/tag.component';
-import { SearchInputComponent } from './../components/search-input/search-input.component';
+import { TagComponent } from '../components/Links/tag/tag.component';
+import { SearchInputComponent } from '../components/Input/search-input/search-input.component';
 import { AppUserComponent } from './../pages/AppUser/AppUser.component';
 
 import { authInterceptorProviders } from '../shared/helpers/auth.interceptor';
@@ -54,7 +56,7 @@ import { AppMenuitemComponent } from 'components/Admin/menu/menuitem.component';
 import { AdminLoginPageComponent } from 'pages/Admin/AdminLoginPage/AdminLoginPage.component';
 import { TagsPageComponent } from 'pages/TagsPage/TagsPage.component';
 import { MyMissingTranslationHandler } from 'shared/mising-translation';
-import { MyAppConfigComponent } from 'components/app-config/app-config.component';
+import { MyAppConfigComponent } from 'components/Configs/app-config/app-config.component';
 import { BtnFabComponent } from 'components/Buttons/btn-fab/btn-fab.component';
 import { BtnMenuComponent } from 'components/Buttons/btn-menu/btn-menu.component';
 import { PostsPageComponent } from 'pages/PostsPage/PostsPage.component';
@@ -63,7 +65,7 @@ import { CreatePostPageComponent } from 'pages/CreatePostPage/CreatePostPage.com
 import { ProfilePageComponent } from 'pages/ProfilePage/ProfilePage.component';
 import { ImageOnErrorDirective } from 'shared/directives/imageOnError.directive';
 import { BtnScrollToTopComponent } from 'components/Buttons/btn-scroll-to-top/btn-scroll-to-top.component';
-import { LanguageSelectorComponent } from 'components/language-selector/language-selector.component';
+import { LanguageSelectorComponent } from 'components/Configs/language-selector/language-selector.component';
 import { AuthModule } from './modules/auth.module';
 import { AuthPageComponent } from 'pages/AuthPage/AuthPage.component';
 import { ForgotPasswordPageComponent } from 'pages/ForgotPasswordPage/ForgotPasswordPage.component';
@@ -71,11 +73,11 @@ import { UserInfoCardComponent } from 'components/Cards/user-info-card/user-info
 import { ButtonComponent } from 'components/Buttons/button/button.component';
 import { CountUpDirective } from 'shared/directives/countUp.directive';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { LoadingComponent } from 'components/loading/loading.component';
+import { LoadingComponent } from 'components/Loadings/loading/loading.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CommentCardComponent } from 'components/Cards/comment-card/comment-card.component';
 import { ReadMoreDirective } from 'shared/directives/readMore.directive';
-import { LoadingSpinnerComponent } from 'components/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from 'components/Loadings/loading-spinner/loading-spinner.component';
 import { CategoryPageComponent } from 'pages/CategoryPage/CategoryPage.component';
 import { PostCardVerticalComponent } from 'components/Cards/post-card-vertical/post-card-vertical.component';
 import { SearchPageComponent } from 'pages/SearchPage/SearchPage.component';
@@ -107,11 +109,23 @@ import { NotFoundComponent } from 'components/not-found/not-found.component';
 import { AutoFocusDirective } from 'shared/directives/autofocus.directive';
 import { NAPipe } from 'shared/pipes/n-a.pipe';
 import { CapitalizePipe } from 'shared/pipes/capitalize.pipe';
-import { CanDeactiveGuard } from 'shared/can-deactive.guard';
+import { CanDeactiveGuard } from 'shared/guards/can-deactive.guard';
+import { SearchModule } from './modules/search.module';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+import { RedirectingComponent } from 'components/Loadings/redirecting/redirecting.component';
+import { NewPasswordPageComponent } from 'pages/NewPasswordPage/NewPasswordPage.component';
+import { GoToComponent } from 'components/go-to/go-to.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+// Note we need a separate function as it's required
+// by the AOT compiler.
+export function playerFactory() {
+  return player;
 }
 
 
@@ -183,7 +197,13 @@ export function createTranslateLoader(http: HttpClient) {
     UserFollowingComponent,
     NotificationCardComponent,
     StatusBadgeComponent,
+    CategoryComponent,
+    RedirectingComponent,
+    GoToComponent,
+    NewPasswordPageComponent,
 
+    SwitchThemeComponent,
+    
     TopbarAdminComponent,
     MenuComponent,
     AppMenuitemComponent,
@@ -201,6 +221,7 @@ export function createTranslateLoader(http: HttpClient) {
     AuthModule,
     AdminModule,
     ProfileModule,
+    SearchModule,
     ClipboardModule,
     UserIdleModule.forRoot({
       idle: APPCONSTANT.USER_IDLE.IDLE,
@@ -218,6 +239,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     NgxLinkifyjsModule.forRoot(),
     SocialLoginModule,
+    LottieModule.forRoot({ player: playerFactory }),
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
@@ -233,7 +255,8 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   entryComponents: [
     LoginPageComponent,
-    ReportPopupComponent
+    ReportPopupComponent,
+    SearchInputComponent
   ],
   providers: [
     authInterceptorProviders,

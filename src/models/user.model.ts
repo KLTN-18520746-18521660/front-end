@@ -4,7 +4,7 @@ export default class User {
   first_name?: string;
   last_name?: string;
   display_name?: string;
-  user_name: string;
+  user_name?: string;
   password?: string;
   email?: string;
   sex?: string;
@@ -20,7 +20,8 @@ export default class User {
   posts?: number;
   likes?: number;
   followers?: number;
-  followings?: number;
+  following?: number;
+  unread_notifications?: number;
   public?: string[];
   rights?: {
     comment?: {
@@ -44,13 +45,18 @@ export default class User {
       send_date?: string;
       send_success?: boolean;
       state?: string;
-    }
+    };
+    password?: {
+      is_expired?: boolean;
+      last_change_password?: string;
+    };
   };
   created_timestamp?: string;
   last_access_timestamp?: string;
   fromNow?: {
     created?: string;
     updated?: string;
+    password?: string;
   }
   actions?: string[];
   mapAction?: {

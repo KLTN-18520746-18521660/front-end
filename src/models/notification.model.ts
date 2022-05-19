@@ -1,26 +1,27 @@
 import User from 'models/user.model';
+import Post from './post.model';
 export default class Notification {
   id?: string;
   user_id?: string;
   status?: 'Read' | 'Sent' | 'Deleted';
   read?: boolean;
+  type?: NotificationType;
   content?: {
-    action?: NotificationType;
-    date_send?: string;
-    post_owner?: User,
-    post_detail?: {
-      id?: string;
-      slug?: string;
-      title?: string;
-    },
-    comment_owner: {
-      id: string;
-      avartar: string;
-      user_name: string;
-      display_name: string;
-    },
-    commment_content: string;
+    // avatar, display_name, user_name
+    user_des?: User;
+    post_owner?: User;
+    post_detail?: Post;
+    comment_owner?: User;
+    comment_content?: string;
+    error?: string;
   };
+  user_action?: {
+    admin?: boolean;
+    user_name?: string;
+    avatar?: string;
+    display_name?: string;
+    status?: string;
+  }
   created_timestamp?: string;
   last_modified_timestamp?: string;
   fromNow?: {

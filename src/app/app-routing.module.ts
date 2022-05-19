@@ -1,3 +1,4 @@
+import { GoToComponent } from './../components/go-to/go-to.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
@@ -12,7 +13,8 @@ import { ProfilePageComponent } from 'pages/ProfilePage/ProfilePage.component';
 import { SearchPageComponent } from 'pages/SearchPage/SearchPage.component';
 import { TagsPageComponent } from 'pages/TagsPage/TagsPage.component';
 import { UserInfoPageComponent } from 'pages/UserInfoPage/UserInfoPage.component';
-import { CanDeactiveGuard } from 'shared/can-deactive.guard';
+import { AuthGuard } from 'shared/guards/auth.guard';
+import { CanDeactiveGuard } from 'shared/guards/can-deactive.guard';
 
 const routes: Routes = [
   {
@@ -54,11 +56,13 @@ const routes: Routes = [
       },
       {
         path: 'search',
-        component: SearchPageComponent
+        loadChildren: () => import('./modules/search.module').then(m => m.SearchModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('./modules/profile.module').then(m => m.ProfileModule)
+        loadChildren: () => import('./modules/profile.module').then(m => m.ProfileModule),
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard]
       },
       {
         path: 'auth',
@@ -71,16 +75,32 @@ const routes: Routes = [
     loadChildren: () => import('./modules/admin.module').then(m => m.AdminModule)
   },
   {
+    path: 'goto',
+    component: GoToComponent,
+    data: {
+      key: "goto"
+    }
+  },
+  {
     path: 'no-access',
-    component: NoAccessPageComponent
+    component: NoAccessPageComponent,
+    data: {
+      key: "noAccess"
+    }
   },
   {
     path: '404',
-    component: NotFoundPageComponent
+    component: NotFoundPageComponent,
+    data: {
+      key: "notFound"
+    }
   },
   {
     path: '**',
-    component: NotFoundPageComponent
+    component: NotFoundPageComponent,
+    data: {
+      key: "notFound"
+    }
   }
 ];
 

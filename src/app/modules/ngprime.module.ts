@@ -48,6 +48,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { StyleClassModule } from 'primeng/styleclass';
 import { TableModule } from 'primeng/table';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
@@ -107,6 +108,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     StepsModule,
     StyleClassModule,
     TableModule,
+    TabMenuModule,
     TabViewModule,
     TagModule,
     TieredMenuModule,
