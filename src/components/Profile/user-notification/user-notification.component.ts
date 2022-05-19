@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from 'services/posts.service';
 import { Component, OnInit } from '@angular/core';
 import Notification from 'models/notification.model';
@@ -6,6 +7,7 @@ import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import User from 'models/user.model';
 
 export interface ListNotification {
   date: string;
@@ -19,7 +21,7 @@ export interface ListNotification {
 })
 export class UserNotificationComponent implements OnInit {
 
-  size: number = 0;
+  start: number = 0;
 
   sizeUnread: number = 0;
 
@@ -35,44 +37,60 @@ export class UserNotificationComponent implements OnInit {
 
   subscription: Subscription;
 
+  userStatisticSubscription: Subscription;
+
   viewOnlyUnRead: boolean = false;
 
   constructor(
     private postService: PostsService,
-    private userService: UserService,
     private messageService: MessageService,
     private translate: TranslateService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.viewOnlyUnRead = this.activatedRoute.snapshot.queryParams?.view === 'read';
+
+    this.sizeUnread = this.userService.user.unread_notifications;
+
+    this.userStatisticSubscription = this.userService.userStatistic$.subscribe(
+      (user) => {
+        this.sizeUnread = user.unread_notifications;
+      }
+    );
+
     this.getListNotifications();
   }
 
   getListNotifications(loadMore = false) {
-    if (loadMore)
+    if (loadMore) {
       this.isLoadingMore = true;
-    else
+    }
+    else {
       this.isLoading = true;
+    }
 
     const params = this.viewOnlyUnRead ? {
-      start: this.size,
-      size: this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE,
+      start: this.start,
+      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE,
       status: 'Sent'
     } : {
-      start: this.size,
-      size: this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
+      start: this.start,
+      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
     }
 
     this.subscription = this.postService.getNotification(params).subscribe(
       (res) => {
         this.listNotifications = this.listNotifications ? [...this.listNotifications, ...res.data.notifications] : res.data.notifications;
-        this.size = this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
+        this.start += APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
         this.totalSize = res.data.total_size;
         this.isLoading = false;
         this.isLoadingMore = false;
       },
-      (err) => {
-        console.log(err);
+      () => {
+        this.listNotifications = this.listNotifications ? this.listNotifications : [];
         this.error = true;
         this.isLoading = false;
         this.isLoadingMore = false;
@@ -80,17 +98,37 @@ export class UserNotificationComponent implements OnInit {
     );
   }
 
+  onClickMarkAllAsRead() {
+    this.postService.readAllNotification().subscribe(
+      () => {
+        this.messageService.add({
+          key: 'notification',
+          severity: 'success',
+          summary: '',
+          detail: this.translate.instant('notification.markAllReadSuccess')
+        });
+        this.listNotifications = this.listNotifications.filter(item => item.status === 'Sent');
+      }
+    );
+  }
+
   handleChangeViewRead(event) {
-    this.size = 0;
+    if (event.checked) {
+      this.router.navigate([], { queryParams: { view: 'unread' } });
+    }
+    else {
+      this.router.navigate([], { queryParams: null });
+    }
+    this.start = 0;
     this.listNotifications = [];
     this.getListNotifications();
   }
 
   handleDelete(notification: Notification) {
     this.postService.deleteNotification(notification.id).subscribe(
-      (res) => {
+      () => {
         this.messageService.add({
-          key: 'appToast',
+          key: 'notification',
           severity: 'success',
           summary: '',
           detail: this.translate.instant('notification.deleteSuccess')
@@ -112,6 +150,9 @@ export class UserNotificationComponent implements OnInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.userStatisticSubscription) {
+      this.userStatisticSubscription.unsubscribe();
     }
   }
 

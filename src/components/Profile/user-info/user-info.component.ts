@@ -1,11 +1,12 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import User from 'models/user.model';
-import { usersMockData } from 'shared/mockData/usersMockData';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/en'
-import 'dayjs/locale/vi'
+import { Clipboard } from '@angular/cdk/clipboard';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/vi';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import User from 'models/user.model';
+import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
 import { mapActionWithUser } from 'utils/commonFunction';
@@ -24,6 +25,8 @@ export class UserInfoComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private userService: UserService,
+    private messageService: MessageService,
+    private clipboard: Clipboard
   ) { }
 
   ngOnInit() {
@@ -44,17 +47,22 @@ export class UserInfoComponent implements OnInit {
           ...this.user,
           fromNow: {
             created: dayjs(this.user.created_timestamp).fromNow(),
-            updated: dayjs(this.user.last_access_timestamp).fromNow()
+            updated: dayjs(this.user.last_access_timestamp).fromNow(),
+            password: dayjs(this.user.settings.password.last_change_password || this.user.created_timestamp).fromNow(),
           }
         };
 
         this.isLoading = false;
       },
-      (err) => {
+      () => {
         this.isLoading = false;
-        console.log(err);
       }
     );
+  }
+
+  onClickCopy() {
+    this.messageService.add({ key: 'userInfo', severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
+    this.clipboard.copy(decodeURI(window.location.origin + '/user/' + this.user.user_name + `?utm_source=${window.location.hostname}&utm_medium=user`))
   }
 
   ngOnDestroy() {

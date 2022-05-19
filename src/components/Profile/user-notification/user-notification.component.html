@@ -11,7 +11,7 @@
       <label class="ml-2" [for]="'viewRead'">{{'notification.viewRead' | translate}}</label>
     </div>
     <div class="flex">
-      <button pButton type="button" [disabled]="sizeUnread == 0" icon="pi pi-check-circle"
+      <button pButton type="button" [disabled]="sizeUnread == 0" icon="pi pi-check-circle" (click)="onClickMarkAllAsRead()"
         label="{{'notification.viewAll' | translate}}" class="p-button-outlined"></button>
     </div>
   </div>

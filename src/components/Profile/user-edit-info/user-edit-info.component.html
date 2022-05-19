@@ -28,8 +28,9 @@
             <input pInputText formControlName="first_name" id="first_name" type="text"
               class="p-inputtext p-component p-element"
               placeholder="{{'profile.editProfile.first_name.placeholder' | translate}}"
-              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['first_name'].errors }">
-            <div *ngIf="submitted && f['first_name'].errors" class="invalid-feedback mt-2">
+              [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['first_name'].touched ) && f['first_name'].errors }">
+            <div *ngIf="(submitted || f['first_name'].touched ) && f['first_name'].errors"
+              class="invalid-feedback mt-2">
               <div class="flex align-items-end" *ngIf="f['first_name'].errors['required']">
                 <small class="p-error inline">{{'profile.editProfile.first_name.error.required' | translate}}</small>
               </div>
@@ -44,8 +45,8 @@
             <input pInputText formControlName="last_name" id="last_name" type="text"
               class="p-inputtext p-component p-element"
               placeholder="{{'profile.editProfile.last_name.placeholder' | translate}}"
-              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['last_name'].errors }">
-            <div *ngIf="submitted && f['last_name'].errors" class="invalid-feedback mt-2">
+              [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['last_name'].touched ) && f['last_name'].errors }">
+            <div *ngIf="(submitted || f['last_name'].touched ) && f['last_name'].errors" class="invalid-feedback mt-2">
               <div class="flex align-items-end" *ngIf="f['last_name'].errors['required']">
                 <small class="p-error inline">{{'profile.editProfile.last_name.error.required' | translate}}</small>
               </div>
@@ -57,15 +58,13 @@
             {{'profile.editProfile.display_name.label' | translate}}
           </label>
           <div class="col-12 md:col-10 flex align-items-center">
-            <p-radioButton name="display_name" value="{{display_name1}}" inputId="male" formControlName="display_name">
-            </p-radioButton>
-            <label class="ml-2 mr-6" for="male">{{display_name1}}</label>
-            <p-radioButton name="display_name" value="{{display_name2}}" inputId="female"
-              formControlName="display_name">
-            </p-radioButton>
-            <label class="ml-2 mr-6" for="female">{{display_name2}}</label>
+            <input pInputText formControlName="display_name" id="display_name" type="text"
+              class="p-inputtext p-component p-element"
+              placeholder="{{'profile.editProfile.display_name.placeholder' | translate}}"
+              [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['display_name'].touched ) && f['display_name'].errors }">
             <br>
-            <div *ngIf="submitted && f['display_name'].errors" class="invalid-feedback mt-2">
+            <div *ngIf="(submitted || f['display_name'].touched ) && f['display_name'].errors"
+              class="invalid-feedback mt-2">
               <div class="flex align-items-end" *ngIf="f['display_name'].errors['required']">
                 <small class="p-error inline">{{'profile.editProfile.display_name.error.required' | translate}}</small>
               </div>
@@ -80,8 +79,9 @@
             <input pInputText formControlName="description" id="description" type="text"
               class="p-inputtext p-component p-element"
               placeholder="{{'profile.editProfile.description.placeholder' | translate}}"
-              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['description'].errors }">
-            <div *ngIf="submitted && f['description'].errors" class="invalid-feedback mt-2">
+              [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['description'].touched ) && f['description'].errors }">
+            <div *ngIf="(submitted || f['description'].touched )  && f['description'].errors"
+              class="invalid-feedback mt-2">
               <div class="flex align-items-end" *ngIf="f['description'].errors['required']">
                 <small class="p-error inline">{{'profile.editProfile.description.error.required' | translate}}</small>
               </div>
@@ -100,7 +100,7 @@
             <p-radioButton name="sex" value="other" inputId="other" formControlName="sex"></p-radioButton>
             <label class="ml-2 mr-6" for="other">{{'profile.editProfile.sex.options.other' | translate}}</label>
             <br>
-            <div *ngIf="submitted && f['sex'].errors" class="invalid-feedback mt-2">
+            <div *ngIf="(submitted || f['sex'].touched )  && f['sex'].errors" class="invalid-feedback mt-2">
               <div class="flex align-items-end" *ngIf="f['sex'].errors['required']">
                 <small class="p-error inline">{{'profile.editProfile.sex.error.required' | translate}}</small>
               </div>
@@ -114,9 +114,10 @@
           <div class="col-12 md:col-10">
             <p-inputNumber formControlName="phone" id="phone" mode="decimal" [maxlength]="15"
               [placeholder]="'profile.editProfile.phone.placeholder' | translate" [prefix]="'+'"
-              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['phone'].errors }" [min]="0" [useGrouping]="false">
+              [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['phone'].touched )  && f['phone'].errors }" [min]="0"
+              [useGrouping]="false">
             </p-inputNumber>
-            <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback mt-2">
+            <div *ngIf="(submitted || f['phone'].touched ) && f['phone'].errors" class="invalid-feedback mt-2">
               <div class="flex align-items-end" *ngIf="f['phone'].errors['required']">
                 <small class="p-error inline">{{'profile.editProfile.phone.error.required' | translate}}</small>
               </div>
@@ -175,7 +176,7 @@
         <div class="flex col-12 justify-content-center">
           <div class="col-12 md:col-6">
             <p-button type="submit" [disabled]="!editing" label="{{'common.save' | translate}}" class="p-button-rounded"
-              iconPos="right" icon="pi pi-send"></p-button>
+              iconPos="left" icon="pi pi-check-circle"></p-button>
           </div>
         </div>
       </form>
@@ -184,3 +185,7 @@
 </div>
 
 <app-loading [loading]="isLoading"></app-loading>
+
+<p-confirmDialog key="editUserInfo" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+  [dismissableMask]="true">
+</p-confirmDialog>

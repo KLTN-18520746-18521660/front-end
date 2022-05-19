@@ -3,6 +3,7 @@ import { PostsService } from 'services/posts.service';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'services/user.service';
 import Post from 'models/post.model';
+import { APPCONSTANT } from 'utils/appConstant';
 
 @Component({
   selector: 'app-user-manage-post',
@@ -10,7 +11,7 @@ import Post from 'models/post.model';
   styleUrls: ['./user-manage-post.component.scss']
 })
 export class UserManagePostComponent implements OnInit {
-  size: number = 0;
+  start: number = 0;
 
   totalSize: number;
 
@@ -40,19 +41,19 @@ export class UserManagePostComponent implements OnInit {
       this.isLoading = true;
 
     const params = {
-      start: this.size,
-      size: this.size + 24
+      start: this.start,
+      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
     }
 
     this.subscription = this.postService.getPostOfUser(this.userService.user.user_name, params).subscribe(
       (res) => {
-        this.listPosts = res.data.posts;
+        this.listPosts = this.listPosts ? [...this.listPosts, ...res.data.posts] : res.data.posts;
+        this.start += APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
         this.totalSize = res.data.total_size;
         this.isLoading = false;
         this.isLoadingMore = false;
       },
-      (err) => {
-        console.log(err);
+      () => {
         this.error = true;
         this.isLoading = false;
         this.isLoadingMore = false;

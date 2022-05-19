@@ -9,8 +9,11 @@
         </p-avatar>
       </ng-template>
     </div>
-    <div class="user_name flex col-12 justify-content-center">
+    <div class="user_name block text-center col-12 justify-content-center">
       <p class="mt-2 font-bold text-2xl">{{user.display_name}}</p>
+      <a [routerLink]="['/user', user.user_name]" class="text-sm hover-underline text-500">@{{ user?.user_name }}</a>
+      <i class="ml-2 pi pi-copy cursor-pointer" (click)="onClickCopy()" [tooltipPosition]="'top'"
+        pTooltip="{{'tooltip.copy' | translate}}"></i>
     </div>
     <div class="user_description flex col-12 justify-content-center">
       <div class="col-12 md:col-7 text-center">
@@ -44,9 +47,9 @@
             {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}</p>
         </div>
         <div class="col text-center justify-content-center" tooltipPosition="top"
-          pTooltip="{{ user.followings | number:'1.0-2' }}">
-          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followings" [short]="true">
-            {{ user.followings }}
+          pTooltip="{{ user.following | number:'1.0-2' }}">
+          <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.following" [short]="true">
+            {{ user.following }}
           </p>
           <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
         </div>
@@ -88,6 +91,9 @@
           style="--ion-color-success: #22C55E" tooltipPosition="top"
           pTooltip="{{'profile.user.verified' | translate}} {{user.settings.confirm_email.confirm_date}}">
         </ion-icon>
+        <ion-icon *ngIf="!user.verified_email" name="alert-circle-outline" color="warning" tooltipPosition="top"
+          pTooltip="{{'profile.user.checkMail' | translate}} {{user.settings.confirm_email.send_date}}">
+        </ion-icon>
       </div>
       <div class="flex col-10 md:col-6 align-items-center">
         <ion-icon name="location-outline" color="primary" tooltipPosition="left"
@@ -111,6 +117,14 @@
           pTooltip="{{'profile.user.joined' | translate}}"></ion-icon>
         <span class="user-info-text-right mx-2" title="{{user.created_timestamp}}">{{user.fromNow.created | nA}}</span>
       </div>
+      <div class="flex col-10 md:col-6 align-items-center">
+        <ion-icon name="finger-print-outline" color="primary" tooltipPosition="left"
+          pTooltip="{{'profile.user.password' | translate}}"></ion-icon>
+        <span class="user-info-text-right mx-2"
+          title="{{user.settings.password.last_change_password}}">{{user.fromNow.password | nA}}</span>
+      </div>
     </div>
   </div>
 </div>
+
+<p-toast [key]="'userInfo'" [preventOpenDuplicates]="true"></p-toast>

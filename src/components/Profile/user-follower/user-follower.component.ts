@@ -15,7 +15,7 @@ export class UserFollowerComponent implements OnInit {
 
   listUsers: User[];
 
-  size = 0;
+  start = 0;
 
   isLoading: boolean;
 
@@ -38,8 +38,8 @@ export class UserFollowerComponent implements OnInit {
       this.isLoading = true;
 
     const params = {
-      start: this.size,
-      size: this.size + APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
+      start: this.start,
+      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
     }
 
     this.subscription = this.userService.getFollowers(params).subscribe(
@@ -48,7 +48,7 @@ export class UserFollowerComponent implements OnInit {
         this.totalSize = res.data.total_size;
         this.isLoading = false;
         this.isLoadingMore = false;
-        this.size += APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
+        this.start += APPCONSTANT.DEFAULT_SIZE_LOADING_MORE;
       },
       (err) => {
         this.isLoading = false;
