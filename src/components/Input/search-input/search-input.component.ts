@@ -70,17 +70,21 @@ export class SearchInputComponent implements OnInit {
       }
     });
 
+    if (this.userService.isAuthenticated) {
+      this.userName = this.userService.user?.display_name
+    }
+
     this.authSubscription = this.userService.authUpdate$.subscribe(res => {
-      if (res) {
+      if (res.isAuthenticated) {
         this.userName = res.user.display_name;
+      }
+      else {
+        this.userName = null;
       }
     })
   }
 
   onSubmit() {
-    if (this.userService.user) {
-      this.userName = this.userService.user?.display_name
-    }
     if (this.form.value.search.trim()) {
       this.router.navigate(
         ['/search'],

@@ -108,7 +108,8 @@
               <markdown class="preview-content content-HTML" [data]="content"></markdown>
             </ng-template>
             <ng-template #markdown>
-              <markdown class="preview-content" [data]="contentMd"></markdown>
+              <markdown class="preview-content" [data]="contentMdComplied"></markdown>
+              <!-- <div class="preview-content" [innerHTML]="contentMdComplied"></div> -->
             </ng-template>
           </div>
         </p-tabPanel>

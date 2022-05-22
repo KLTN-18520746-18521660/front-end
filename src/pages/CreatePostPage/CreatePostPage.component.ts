@@ -16,6 +16,9 @@ import { UserService } from 'services/user.service';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { convertArrayToNested, convertToSlug, removeChildrenByLevel } from 'utils/commonFunction';
 import { ApiParams } from './../../models/api.model';
+import md from 'markdown-it';
+import mdAnchor from 'markdown-it-anchor';
+import mdTableContent from 'markdown-it-table-of-contents';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -29,7 +32,9 @@ export class CreatePostPageComponent implements OnInit {
 
   content: string = '';
 
+  markdownIt: any;
   contentMd: string = '';
+  contentMdComplied: string = '';
 
   short_content: string = '';
 
@@ -93,14 +98,13 @@ export class CreatePostPageComponent implements OnInit {
     private postsService: PostsService,
     public linkifyService: NgxLinkifyjsService,
     private markdownService: MarkdownService,
-    private appUser: AppUserComponent
+    private appUser: AppUserComponent,
   ) { }
 
   ngOnInit() {
+    this.markdownIt = md();
+
     this.loadDraft();
-    this.translate.get('createPost.textTranslate').subscribe(res => {
-      this.textTranslate = res;
-    });
 
     this.getCategory();
     this.onChangeTitle(this.title);
@@ -135,17 +139,16 @@ export class CreatePostPageComponent implements OnInit {
 
   // onChange content function
   onTextChange(event) {
-    console.log(event);
     this.short_content = event?.textValue;
   }
 
   onChangeContent(event) {
-    console.log(event);
     this.draft[this.selectedEditorType] = event;
     this.saveDraft();
   }
 
   onChangeContentMd(event) {
+    this.contentMdComplied = this.markdownIt.render(event || '');
     this.convertToShortContent();
     this.draft[this.selectedEditorType] = event;
     this.saveDraft();
@@ -243,6 +246,7 @@ export class CreatePostPageComponent implements OnInit {
       this.tags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || null;
       this.contentMd = this.draft['Markdown'] || null;
+      this.contentMdComplied = this.markdownIt.render(this.contentMd || '');
       this.time_read = this.draft['time_read'] || 5;
       this.slug = convertToSlug(this.title || '');
       this.convertToShortContent();
@@ -278,7 +282,7 @@ export class CreatePostPageComponent implements OnInit {
     let temp: string;
     try {
       if (this.selectedEditorType === 'Markdown') {
-        temp = this.markdownService.compile(this.contentMd.toString() || '', true)
+        temp = this.contentMdComplied
       }
       else {
         temp = this.content;
@@ -286,7 +290,9 @@ export class CreatePostPageComponent implements OnInit {
       this.short_content = (temp ? temp : '')
         .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
         .replace(/(&#\d+;)+/g, ' ')
-        .slice(0, 180);
+        .replace(/\n+/g,'.')
+        .slice(0, 190);
+
     } catch (error) {
       console.log(error);
       this.messageService.add({ key: 'createPostToast', severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
