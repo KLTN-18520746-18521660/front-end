@@ -22,7 +22,8 @@
   },
   "action": {},
   "label": {
-    "search": "Chào {{name}}, bắt đầu tìm kiếm tại đây ...",
+    "searchWithName": "Chào {{name}}, tìm kiếm tại đây ...",
+    "search": "Bắt đầu tìm kiếm tại đây ...",
     "recommend": {
       "foryou": "For you: ",
       "tags": "Recommend tags for you: ",

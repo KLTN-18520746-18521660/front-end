@@ -24,7 +24,8 @@
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
-    "profile": "Profile"
+    "profile": "Profile",
+    "language": "Language"
   },
   "titlePage": {
     "default": "Home - Heovi",
@@ -920,23 +921,6 @@
     },
     "form": {
       "placeholder": "Search for posts"
-    }
-  },
-  "language": {
-    "en": {
-      "name": "English",
-      "lang": "en",
-      "code": "us"
-    },
-    "vi": {
-      "name": "Vietnamese",
-      "lang": "vi",
-      "code": "vn"
-    },
-    "jp": {
-      "name": "Japanese",
-      "lang": "jp",
-      "code": "jp"
     }
   },
   "primeng": {

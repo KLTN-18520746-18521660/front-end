@@ -113,16 +113,19 @@
         </div>
         <div class="col-12 text-center px-0">
           <button pButton pRipple type="button" label="{{'common.register' | translate}}"
-            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/profile']">
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/auth/register']">
           </button>
           <button pButton pRipple type="button" label="{{'common.login' | translate}}"
-            class="p-button-rounded px-4 mx-1 p-button-primary" (click)="onClickLogout()">
+            class="p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/auth/login']">
           </button>
         </div>
       </div>
     </ng-template>
   </div>
-  <div class="flex col-12 justify-content-between">
+  <div class="flex col-12">
+    <app-language-selector class="w-full" [type]="'listbox'"></app-language-selector>
+  </div>
+  <div class="flex col-12">
     <app-switch-theme class="w-full" [type]="'switch'"></app-switch-theme>
   </div>
   <app-footer></app-footer>
