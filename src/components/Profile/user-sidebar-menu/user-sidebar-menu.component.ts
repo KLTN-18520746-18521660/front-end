@@ -94,7 +94,7 @@ export class UserSidebarMenuComponent implements OnInit {
           label: this.translate.instant('profile.menu.notifications.items.notifications'),
           icon: 'pi pi-bell',
           badge: null,
-          badgeStyleClass: 'danger',
+          badgeStyleClass: 'primary',
           routerLink: ['/profile/notifications'],
         }
       ]

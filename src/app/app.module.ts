@@ -1,3 +1,5 @@
+import { DockComponent } from './../components/dock/dock.component';
+import { EditPostPageComponent } from './../pages/EditPostPage/EditPostPage.component';
 import { SwitchThemeComponent } from './../components/Configs/switch-theme/switch-theme.component';
 import { CategoryComponent } from './../components/Links/category/category.component';
 import { StatusBadgeComponent } from './../components/status-badge/status-badge.component';
@@ -203,6 +205,8 @@ export function playerFactory() {
     GoToComponent,
     NewPasswordPageComponent,
     UserSidebarMenuComponent,
+    EditPostPageComponent,
+    DockComponent,
 
     SwitchThemeComponent,
     

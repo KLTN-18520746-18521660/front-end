@@ -1,3 +1,4 @@
+import { EditPostPageComponent } from './../pages/EditPostPage/EditPostPage.component';
 import { GoToComponent } from './../components/go-to/go-to.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -36,6 +37,15 @@ const routes: Routes = [
         component: CreatePostPageComponent,
         data: {
           key: "createPost"
+        }
+      },
+      {
+        path: 'edit/:id',
+        component: EditPostPageComponent,
+        canActivate: [AuthGuard],
+        canDeactivate: [CanDeactiveGuard],
+        data: {
+          key: "editPost"
         }
       },
       {

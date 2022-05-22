@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import ApiResult from 'models/api.model';
 import Category from 'models/category.model';
-import Post, { CreatePostModel } from 'models/post.model';
+import Post, { PostModel } from 'models/post.model';
 import Tag from 'models/tag.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -72,19 +72,25 @@ export class PostsService {
     }));
   }
 
+  getPostById(postId: number): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST_ID + `/${postId}`, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   getPostValuesBySlug(slug: string): Observable<ApiResult> {
     return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${slug}/` + REST_URL.POST_VALUES, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  modifyPostByPostId(postId: string, post: CreatePostModel): Observable<Post> {
+  modifyPostByPostId(postId: number, post: PostModel): Observable<Post> {
     return this.httpClient.put<Post>(BASE_URL + REST_URL.POST_ID + `/${postId}`, post, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  deletePostByPostId(postId: string): Observable<ApiResult> {
+  deletePostByPostId(postId: number): Observable<ApiResult> {
     return this.httpClient.delete<ApiResult>(BASE_URL + REST_URL.POST_ID + `/${postId}`, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
@@ -115,7 +121,7 @@ export class PostsService {
     }));
   }
 
-  publishPost(post: CreatePostModel): Observable<ApiResult> {
+  publishPost(post: PostModel): Observable<ApiResult> {
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.POST, post, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
@@ -228,7 +234,7 @@ export class PostsService {
 
   upLoadImage(path: 'post' | 'user', file: File): Observable<ApiResult> {
     const formData = new FormData();
-    formData.append('formFile', file);
+    formData.append('__FormFile', file);
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.UPLOAD + `/${path}`, formData, this.httpOptionsFile()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));

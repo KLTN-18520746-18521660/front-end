@@ -1,24 +1,54 @@
 @import 'styles/scss/mixins.scss';
 
 .comment-card-wrapper {
-  .comment-card-main {
-    .comment-card-right {
-      .comment-card_header {
-        .comment-card_header_right {
-          display: none;
+  &.parent-comment {
+    .comment-card-main {
+      .comment-card-right {
+        .comment-card_header {
+          .comment-card_header_right {
+            display: none;
 
-          @include breakpoint(max, 768px) {
-            display: flex !important;
+            @include breakpoint(max, 768px) {
+              display: flex !important;
+            }
+          }
+        }
+
+        &:hover {
+
+          .comment-card_header {
+            .comment-card_header_right {
+              display: flex;
+            }
           }
         }
       }
+    }
 
-      &:hover {
+    &.has-children {
+      .comment-card_left {
+        &::after {
+          content: '';
+          // display: block;
+          // height: 100%;
+          // width: 2px;
+          // background-color: #e6e6e6;
+          // margin-top: -2px;
+          // margin-left: 50%;
+        }
+      }
+    }
 
-        .comment-card_header {
-          .comment-card_header_right {
-            display: flex;
-          }
+    &.no-children {
+      .comment-card_left {
+        &::before {
+          // position: absolute;
+          content: '';
+          // display: block;
+          // width: 100%;
+          // height: 2px;
+          // background-color: #e6e6e6;
+          // margin-top: 50%;
         }
       }
     }

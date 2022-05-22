@@ -24,17 +24,16 @@
       object-fit: cover;
     }
   }
-
-  .position-sticky {
-    position: sticky;
-    top: 70px;
-  }
-
-  .z-index-999 {
-    z-index: 10;
-  }
 }
 
+.position-sticky {
+  position: sticky;
+  top: 65px;
+}
+
+.z-10 {
+  z-index: 10;
+}
 
 :host ::ng-deep .button-share-post {
   display: flex;
@@ -87,6 +86,9 @@
       span {
         @include maxline(1);
       }
+    }
+    .p-menuitem-text {
+      line-height: 1.5 !important;
     }
   }
 }

@@ -53,10 +53,6 @@ img {
   max-width: 100%;
 }
 
-.card {
-  overflow: hidden;
-}
-
 ion-icon {
   font-size: 1.5rem;
 }
@@ -70,6 +66,11 @@ ion-icon:before {
 
 .p-button:focus {
   box-shadow: none !important;
+}
+
+.p-image-preview {
+  max-width: 80vw !important;
+  max-height: 80vh !important;
 }
 
 // For ripples effect

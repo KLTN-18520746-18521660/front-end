@@ -55,7 +55,7 @@ export class MenuComponent implements OnInit {
           {
             label: 'List Posts',
             icon: 'pi pi-fw pi-list',
-            routerLink: ['./posts']
+            routerLink: ['./manage-post']
           },
           {
             label: 'Create post',

@@ -1,3 +1,8 @@
+<div class="position-sticky z-10">
+  <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '4px'}">
+  </p-progressBar>
+</div>
+
 <app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
 
 <div class="detail-post-layout container">
@@ -24,13 +29,13 @@
     </div>
     <div class="col-12 md:col-11 lg:col-8" *ngIf="!isLoading">
       <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
-      <div class="position-sticky mt-1 z-index-999">
+      <!-- <div class="position-sticky mt-1 z-index-999">
         <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '3px', 'z-index': '100000'}">
         </p-progressBar>
-      </div>
+      </div> -->
       <div class="detail-wrapper mt-3" *ngIf="!isLoading; else loadingSpinner">
         <div #postContent class="detail-container border-round surface-0 shadow-2" *ngIf="post">
-          <div class="thumnail-post border-round-top overflow-hidden">
+          <div class="thumnail-post border-round-top overflow-hidden" *ngIf="post.thumbnail">
             <p-image class="post-thumbnail-image border-round-top shadow-2" src="{{ post.thumbnail }}"
               alt="{{ post.title }}" [preview]="true">
             </p-image>
@@ -168,7 +173,7 @@
 </ng-template>
 
 <ng-template #loadingComment>
-  <app-comment-card [loading]="true" *ngFor="let i of [1,2,3]"></app-comment-card>
+  <app-comment-card [loading]="true" *ngFor="let i of [1]"></app-comment-card>
 </ng-template>
 
 <app-loading [loading]="isLoading"></app-loading>

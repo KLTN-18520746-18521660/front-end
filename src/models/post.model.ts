@@ -43,7 +43,7 @@ export default class Post {
   new?: boolean;
 }
 
-export class CreatePostModel {
+export class PostModel {
   title?: string;
   thumbnail?: string;
   content?: string;

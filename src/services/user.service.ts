@@ -1,5 +1,5 @@
 import { ApiParams } from './../models/api.model';
-import User from 'models/user.model';
+import User, { AuthUpdateUser } from 'models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -71,6 +71,7 @@ export class UserService {
     private cookieService: CookieService
   ) {
     console.log("SessionID: ", this.getSessionId());
+    console.log("AdminID: ", 's8gswk2lv5y7alz8e2tu1nca7c5p0j');
     if (this.getSessionId()) {
       this.session_id = this.getSessionId();
       this.updateAuth(this.session_id);
@@ -78,7 +79,7 @@ export class UserService {
     this.history = localStorageFunctions.getConfigByKey('history') || [];
   }
 
-  authUpdate = new Subject<any>();
+  authUpdate = new Subject<AuthUpdateUser>();
 
   authUpdate$ = this.authUpdate.asObservable();
 

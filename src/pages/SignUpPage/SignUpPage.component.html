@@ -111,7 +111,14 @@
         <small class="p-error inline list-span">{{'label.signup.validation.confirmPassword.required' | translate}}</small>
       </div>
       <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['minlength']">
-        <small class="p-error inline list-span">{{'label.signup.validation.confirmPassword.min' | translate}}</small>
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.min' | translate : { min: passwordPolicy.min_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['maxlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.max' | translate : { max: passwordPolicy.max_len} }}
+        </small>
       </div>
       <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['matching']">
         <small class="p-error inline list-span">{{'label.signup.validation.confirmPassword.match' | translate}}</small>
@@ -122,7 +129,7 @@
       <p-checkbox formControlName="acceptTerms" inputId="acceptTerms" [binary]="true" styleClass="mr-2"
         [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['acceptTerms'].touched) && f['acceptTerms'].errors }">
       </p-checkbox>
-      <label class="text-base" for="acceptTerms">{{'label.signup.accept' | translate }}</label>
+      <label class="text-base" [innerHTML]="'label.signup.accept' | translate" for="acceptTerms"></label>
     </div>
     <div *ngIf="(submitted || f['acceptTerms'].touched) && f['acceptTerms'].errors" class="invalid-feedback">
       <small class="p-error inline">{{'label.signup.validation.accept' | translate}}</small>

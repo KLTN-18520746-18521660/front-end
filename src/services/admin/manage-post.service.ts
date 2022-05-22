@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import Category from 'models/category.model';
-import Post, { CreatePostModel } from 'models/post.model';
+import Post, { PostModel } from 'models/post.model';
 import Tag from 'models/tag.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';

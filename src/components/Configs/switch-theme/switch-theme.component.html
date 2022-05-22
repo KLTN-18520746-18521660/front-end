@@ -1,4 +1,12 @@
-<p-button tooltipPosition="bottom" pTooltip="{{(!dark ? 'common.dark' : 'common.light') | translate}}" type="button"
-  icon="pi {{dark ? 'pi-moon' : 'pi-sun'}}" (click)="swithTheme()"
-  styleClass="p-button-rounded {{dark ? 'p-button-secondary' : 'p-button-warning p-button-text'}}">
-</p-button>
+<ng-template [ngIf]="type === 'button'" [ngIfElse]="switchType">
+  <p-button tooltipPosition="bottom" pTooltip="{{(!dark ? 'common.dark' : 'common.light') | translate}}" type="button"
+    icon="pi {{dark ? 'pi-moon' : 'pi-sun'}}" (click)="switchTheme()"
+    styleClass="p-button-rounded {{dark ? 'p-button-secondary' : 'p-button-warning p-button-text'}}">
+  </p-button>
+</ng-template>
+<ng-template #switchType>
+  <div class="flex col-12 justify-content-between">
+    <label for="switch" class="p-switch-label">{{'common.darkMode' | translate}}</label>
+    <p-inputSwitch id="switch" [(ngModel)]="switchModel" (ngModelChange)="onChangeSwitchModel()"></p-inputSwitch>
+  </div>
+</ng-template>

@@ -177,7 +177,7 @@ export class AppUserComponent implements OnInit {
     this.idleChangeSubscription = this.userIdleService.onIdleStatusChanged().subscribe((res) => {
       // isvisible == false when focus page
       this.isVisible = res;
-      console.log("Visible: ", res)
+      console.log("Visible: ", !res)
     })
 
     // Start watching when user idle is starting.
@@ -189,6 +189,7 @@ export class AppUserComponent implements OnInit {
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
       console.log("Time out")!
       this.updateAuthenciated();
+      window.location.reload();
     });
   }
 
@@ -269,9 +270,18 @@ export class AppUserComponent implements OnInit {
         summary: message,
       }];
     }
+    else {
+      this.userService.messages = [{
+        severity: 'warn',
+        detail: '',
+        summary: this.translate.instant('message.needlogin'),
+      }];
+    }
     this.ref = this.dialogService.open(LoginPageComponent, {
       header,
       footer,
+      dismissableMask: true,
+      styleClass: 'w-12 md:w-6 lg:w-5 xl:w-4'
     });
     this.userService.ref.push(this.ref);
     this.popupSubscription = this.ref.onClose.subscribe(() => {
@@ -288,6 +298,7 @@ export class AppUserComponent implements OnInit {
       dismissableMask: false,
       closeOnEscape: false,
       closable: false,
+      styleClass: 'w-12 md:w-6 lg:w-5 xl:w-4'
     });
     this.userService.ref.push(this.refReport);
     this.popupReportSubscription = this.refReport.onClose.subscribe(() => {

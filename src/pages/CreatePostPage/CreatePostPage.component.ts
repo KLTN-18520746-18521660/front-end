@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
-import { CreatePostModel } from 'models/post.model';
+import { PostModel } from 'models/post.model';
 import Tag from 'models/tag.model';
 import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 import { MarkdownService } from 'ngx-markdown';
@@ -9,6 +9,7 @@ import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { ConfirmationService, Message, MessageService, TreeNode } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUpload } from 'primeng/fileupload';
+
 import { Subscription } from 'rxjs';
 import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
@@ -59,6 +60,7 @@ export class CreatePostPageComponent implements OnInit {
     tags: [],
     HTML: '',
     Markdown: '',
+    time_read: 5,
   }
 
   ref: DynamicDialogRef;
@@ -72,12 +74,15 @@ export class CreatePostPageComponent implements OnInit {
     valid?: any;
   };
 
-  subscription: Subscription;
+  getTagSubscription: Subscription;
 
   uploadSubcription: Subscription;
   isSelectThumbnail: boolean;
   thumbnailPreview: any;
+
   @ViewChild('fileUpload') fileUpload: FileUpload;
+
+  message: Message[] = [];
 
   constructor(
     private userService: UserService,
@@ -106,31 +111,26 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   getCategory() {
-    this.postsService.getListCategories().subscribe((res: any) => {
-      const list = res?.data.categories.map(item => {
-        return {
-          ...item,
-          label: item.display_name,
-          data: item,
-          expandedIcon: '',
-          collapsedIcon: '',
-        }
-      })
-      let result = convertArrayToNested(list);
-      this.listCategory = removeChildrenByLevel(result, 2);
-    });
-  }
-
-  getListTags() {
-    const params: ApiParams = {
-      search_term: '',
-      start: 0,
-      size: 20
-    }
-    this.postsService.getListTags(params).subscribe((res: any) => {
-      this.listTags = res?.data.tags;
-      this.listFilterTags = this.listTags;
-    });
+    this.isLoading = true;
+    this.postsService.getListCategories().subscribe(
+      (res: any) => {
+        this.isLoading = false;
+        const list = res?.data.categories.map(item => {
+          return {
+            ...item,
+            label: item.display_name,
+            data: item,
+            expandedIcon: '',
+            collapsedIcon: '',
+          }
+        })
+        let result = convertArrayToNested(list);
+        this.listCategory = removeChildrenByLevel(result, 2);
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
 
   // onChange content function
@@ -171,6 +171,11 @@ export class CreatePostPageComponent implements OnInit {
     this.saveDraft();
   }
 
+  onChangeTimeRead(event) {
+    this.draft['time_read'] = event;
+    this.saveDraft();
+  }
+
   myUploader(event) {
     console.log(event);
     this.isLoading = true;
@@ -205,14 +210,24 @@ export class CreatePostPageComponent implements OnInit {
     this.thumbnailPreview = null;
   }
 
-  onChangeMoreTag(event) {
+  onAddMoreTag(event) {
     const list = this.listTagModel.map(item => {
       return item.tag;
+    });
+    list.push(event.value.toLowerCase().trim().replace(/\s/g, '-'));
+    this.tags = list;
+    this.draft['tags'] = this.tags;
+    this.saveDraft();
+  }
+
+  onRemoveMoreTag(event) {
+    const list = this.listTagModel.map(item => {
+      return item.tag;
+    });
+    list.filter(item => {
+      return item !== event.value.toLowerCase().trim().replace(/\s/g, '-');
     })
-    this.tags = this.tags.map(item => {
-      return item.toLowerCase().trim().replace(/\s/g, '');
-    })
-    this.tags = _.difference(this.tags, list);
+    this.tags = list;
     this.draft['tags'] = this.tags;
     this.saveDraft();
   }
@@ -228,6 +243,8 @@ export class CreatePostPageComponent implements OnInit {
       this.tags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || null;
       this.contentMd = this.draft['Markdown'] || null;
+      this.time_read = this.draft['time_read'] || 5;
+      this.slug = convertToSlug(this.title || '');
       this.convertToShortContent();
     }
     else {
@@ -238,6 +255,7 @@ export class CreatePostPageComponent implements OnInit {
       this.validThumbnail = true;
       this.title = null;
       this.selectedEditorType = 'HTML';
+      this.time_read = 5;
 
       this.draft = {
         type: null,
@@ -246,6 +264,7 @@ export class CreatePostPageComponent implements OnInit {
         thumbnail: null,
         HTML: null,
         Markdown: null,
+        time_read: 5,
       }
       this.saveDraft();
     }
@@ -259,7 +278,7 @@ export class CreatePostPageComponent implements OnInit {
     let temp: string;
     try {
       if (this.selectedEditorType === 'Markdown') {
-        temp = this.markdownService.compile(this.contentMd.toString(), true)
+        temp = this.markdownService.compile(this.contentMd.toString() || '', true)
       }
       else {
         temp = this.content;
@@ -288,15 +307,18 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onFilterTag(event) {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.getTagSubscription) {
+      this.getTagSubscription.unsubscribe();
     }
-    let filtered: any[] = [];
-    let query = event.query;
 
-    this.subscription = this.postsService.getListTags(query).subscribe((res: any) => {
-      filtered = res?.data.tags;
-      this.listFilterTags = filtered;
+    const params: ApiParams = {
+      search_term: event.query,
+      start: 0,
+      size: 20
+    }
+
+    this.getTagSubscription = this.postsService.getListTags(params).subscribe((res: any) => {
+      this.listFilterTags = res?.data.tags;
     });
   }
 
@@ -306,34 +328,33 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onSelectCategory() {
-    console.log(this.selectedCategory);
+    // console.log(this.selectedCategory);
   }
 
   checkValidPost() {
     let result = true;
-    let message: Message[] = [];
     if (this.selectedEditorType === 'HTML' && this.content.toString().length == 0) {
-      message.push({
+      this.message = [...this.message, {
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.content
-      })
+      }];
       result = false;
     }
     else if (this.selectedEditorType === 'Markdown' && this.contentMd.toString().length == 0) {
-      message.push({
+      this.message = [...this.message, {
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.content
-      })
+      }]
       result = false;
     }
     if (this.title.length == 0) {
-      message.push({
+      this.message = [...this.message, {
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.title
-      })
+      }];
       result = false;
     }
     // if (this.validThumbnail) {
@@ -345,11 +366,11 @@ export class CreatePostPageComponent implements OnInit {
     //   result = false;
     // }
     if (this.selectedCategory.length == 0) {
-      message.push({
+      this.message = [...this.message, {
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.category
-      })
+      }];
       result = false;
     }
     // if (this.listTagModel.length == 0) {
@@ -363,11 +384,12 @@ export class CreatePostPageComponent implements OnInit {
 
     return {
       isvalid: result,
-      message: message
+      message: this.message
     };
   }
 
   onClickPublish() {
+    this.message = [];
     if (!this.userService.isAuthenticated) {
       console.log(this.textTranslate.popup)
       this.appUser.openLoginPopup(
@@ -378,7 +400,7 @@ export class CreatePostPageComponent implements OnInit {
       );
     }
     else if (!this.checkValidPost().isvalid) {
-      this.messageService.addAll(this.checkValidPost().message);
+      // this.messageService.addAll(this.checkValidPost().message);
     }
     else {
       this.confirmationService.confirm({
@@ -415,11 +437,11 @@ export class CreatePostPageComponent implements OnInit {
 
   publishPost() {
     this.isLoading = true;
-    const post = new CreatePostModel({
+    let post = new PostModel({
       title: this.title,
       thumbnail: this.thumbnail,
       content: this.selectedEditorType === 'HTML' ? this.content : this.contentMd,
-      short_content: this.short_content,
+      short_content: this.short_content.slice(0, 180),
       content_type: this.selectedEditorType.toUpperCase(),
       time_read: this.time_read,
       categories: this.selectedCategory.map((item: any) => {
@@ -430,9 +452,16 @@ export class CreatePostPageComponent implements OnInit {
       }), this.tags),
     });
 
+    post = _.omitBy(post, _.isNull)
+
     this.postsService.publishPost(post).subscribe(
       (res) => {
         this.isLoading = false;
+
+        // discard draft
+        localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
+        this.loadDraft();
+
         this.messageService.add({
           key: 'createPostToast',
           severity: 'success',
@@ -441,10 +470,10 @@ export class CreatePostPageComponent implements OnInit {
           life: APPCONSTANT.TOAST_TIMEOUT
         });
       },
-      (err: any) => {
+      (err) => {
         this.isLoading = false;
         this.messageService.add({
-          key: 'createPostToast', 
+          key: 'createPostToast',
           severity: 'error',
           summary: err.error,
           detail: err.message,
@@ -455,8 +484,8 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.getTagSubscription) {
+      this.getTagSubscription.unsubscribe();
     }
     if (this.uploadSubcription) {
       this.uploadSubcription.unsubscribe();

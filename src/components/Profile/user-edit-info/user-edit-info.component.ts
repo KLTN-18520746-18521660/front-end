@@ -133,12 +133,6 @@ export class UserEditInfoComponent implements OnInit {
     );
   }
 
-  noWhitespaceValidator(control: FormControl) {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
-  }
-
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
@@ -147,7 +141,7 @@ export class UserEditInfoComponent implements OnInit {
     if (this.uploadSubcription) {
       this.uploadSubcription.unsubscribe();
     }
-    this.uploadSubcription = this.postService.upLoadImage('post', event.files[0]).subscribe(
+    this.uploadSubcription = this.postService.upLoadImage('user', event.files[0]).subscribe(
       (res) => {
         console.log(res.data.url);
         this.form.get('avatar').setValue(res.data.url);
@@ -196,7 +190,6 @@ export class UserEditInfoComponent implements OnInit {
 
   onSubmit() {
     this.message = [];
-    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
@@ -212,9 +205,7 @@ export class UserEditInfoComponent implements OnInit {
         if (this.selectedCountry) {
           this.form.get('country').setValue(this.selectedCountry.name);
         }
-        let data = getDifferenceObject(this.initData, this.form.value) as any;
-    
-        data = getDifferenceObject(this.initData, this.form.value) as any;
+        const data = getDifferenceObject(this.initData, this.form.value) as any;
         // this.submitted = true;
     
         console.log(data);

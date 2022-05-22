@@ -1,5 +1,6 @@
 <ng-template [ngIf]="!loading" [ngIfElse]="loadingCard">
-  <div class="comment-card-wrapper">
+  <div class="comment-card-wrapper parent-comment"
+    [ngClass]="comment?.reply_comments?.comments.length > 0 ? 'has-children' : 'no-children'">
     <div class="comment-card-main flex">
       <div class="comment-card_left mr-2">
         <a [routerLink]="['/user', comment?.owner?.user_name]">
@@ -38,10 +39,10 @@
             </p>
             <span class="read-more-link cursor-pointer">
               <a readMore [readMore-length]="300" [readMore-element]="textContent">
-                <span class="less underline font-medium">{{'common.readLess' | translate}}<i
-                    class="fa fa-angle-right" aria-hidden="true"></i></span>
-                <span class="more underline font-medium">{{'common.readMore' | translate}}<i
-                    class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <span class="less underline font-medium">{{'common.readLess' | translate}}<i class="fa fa-angle-right"
+                    aria-hidden="true"></i></span>
+                <span class="more underline font-medium">{{'common.readMore' | translate}}<i class="fa fa-angle-right"
+                    aria-hidden="true"></i></span>
               </a>
             </span>
           </div>

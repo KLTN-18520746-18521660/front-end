@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AppConfig, ThemeName } from 'models/appconfig.model';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -11,8 +11,14 @@ import { UserConfigService } from 'services/user-config.service';
   styleUrls: ['./switch-theme.component.scss']
 })
 export class SwitchThemeComponent implements OnInit {
+
+  @Input() type: 'button' | 'switch' = 'button';
+
   config: AppConfig;
+
   subscription: Subscription;
+
+  switchModel: boolean;
 
   dark: boolean;
 
@@ -25,11 +31,13 @@ export class SwitchThemeComponent implements OnInit {
   ngOnInit() {
     this.config = this.configService.config;
     this.dark = this.config.dark;
+    this.switchModel = this.config.dark;
     this.changeTheme(this.config.theme, this.config.dark);
 
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
       this.dark = config.dark;
+      this.switchModel = config.dark;
     });
   }
 
@@ -40,7 +48,7 @@ export class SwitchThemeComponent implements OnInit {
     this.configService.updateConfig({ ...this.config, ...{ theme, dark } });
   }
 
-  swithTheme() {
+  switchTheme() {
     let theme: ThemeName;
     if (this.dark) {
       theme = 'lara-light-blue';
@@ -57,11 +65,14 @@ export class SwitchThemeComponent implements OnInit {
     this.configService.updateConfig({ ...this.config, ...{ theme, dark: this.dark } });
   }
 
+  onChangeSwitchModel() {
+    this.switchTheme();
+  }
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-
 
 }

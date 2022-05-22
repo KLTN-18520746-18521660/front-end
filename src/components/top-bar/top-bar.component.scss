@@ -123,7 +123,7 @@
   }
 
   .p-sidebar-left {
-    min-width: 70vw !important;
+    min-width: 80vw !important;
 
     @include breakpoint(min, 540px) {
       min-width: 50vw !important;
@@ -131,6 +131,16 @@
 
     @include breakpoint(min, 768px) {
       min-width: 40vw !important;
+    }
+
+    .p-sidebar-content {
+      .sidebar-main-content {
+        min-height: 70vh;
+
+        .p-button-rounded {
+          min-width: 10rem !important;
+        }
+      }
     }
 
     .p-sidebar-header {

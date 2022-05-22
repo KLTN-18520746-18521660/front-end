@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ConfirmAccountPageComponent implements OnInit {
 
-  success: boolean = true;
+  success: boolean = false;
 
   error: boolean = false;
 

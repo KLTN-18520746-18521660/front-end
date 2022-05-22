@@ -123,14 +123,16 @@ export class DetailPageComponent implements OnInit {
 
     // menu action with post
     this.menuitem = [
-      {
+      ...(this.userService.isAuthenticated && this.userService.user.user_name === this.post.owner.user_name ? [{
         id: 'edit',
         label: this.translate.instant('postDetail.action.edit'),
         icon: 'pi pi-pencil',
-        command: (event) => {
-          console.log(event);
+        command: () => {
+          if (this.post.id) {
+            this.router.navigate(['/edit', this.post.id]);
+          }
         }
-      },
+      }] : []),
       {
         id: 'save',
         label: this.post.mapAction.saved ? this.translate.instant('postDetail.action.unsave') : this.translate.instant('postDetail.action.save'),
@@ -497,6 +499,8 @@ export class DetailPageComponent implements OnInit {
         (res) => {
           this.getPostValueWhenAction();
           if (action === 'save' || action === 'unsave') {
+            this.post.mapAction.saved = !this.post.mapAction.saved;
+            this.getTranslate();
             this.messageService.add({ severity: 'success', summary: action.toUpperCase(), detail: this.translate.instant('status.success').toString() });
           }
         },
@@ -533,6 +537,11 @@ export class DetailPageComponent implements OnInit {
   }
 
   onClickReport(type: ReportType = 'post', comment_id = null) {
+    if (!this.userService.getSessionId()) {
+      this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+      this.appUser.openLoginPopup();
+      return;
+    }
     const text = this.translate.instant('report');
     const data: ReportSendModel = {
       post_slug: this.post.slug,
@@ -571,12 +580,12 @@ export class DetailPageComponent implements OnInit {
       return;
     }
     if (input.content.trim()) {
-      this.isLoadingAddComment = true;
       if (!this.userService.getSessionId()) {
         this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
         this.appUser.openLoginPopup();
         return;
       }
+      this.isLoadingAddComment = true;
       if (this.postCommentSubcription) {
         this.postCommentSubcription.unsubscribe();
       }

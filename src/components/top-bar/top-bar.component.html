@@ -44,9 +44,10 @@
             {{'topbar.createPost' | translate}}
           </button>
         </div>
-        <app-switch-theme></app-switch-theme>
+        <app-switch-theme class="hidden md:flex"></app-switch-theme>
         <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
-          <div class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
+          <div
+            class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
             [routerLink]="['/profile/notifications']" [routerLinkActive]="'btn-active'">
             <div>
               <i class="pi pi-bell p-text-secondary" pBadge [value]="user?.unread_notifications.toString()"
@@ -70,10 +71,61 @@
     </div>
   </div>
 </div>
+
 <p-sidebar [(visible)]="showSidebar" (onHide)="onHideSidebar()">
-  <ng-template [ngIf]="isLoggedin">
-    <app-user-sidebar-menu (clickMenu)="onClickSidebarMenu()"></app-user-sidebar-menu>
-  </ng-template>
+  <div class="sidebar-main-content">
+    <ng-template [ngIf]="isLoggedin" [ngIfElse]="sideBarWithoutLogin">
+      <div class="flex flex-wrap mb-2 justify-content-center align-items-center">
+        <div class="flex col-12 justify-content-center">
+          <a [routerLink]="['/user', user.user_name]" class="text-color">
+            <app-avatar [height]="'5rem'" [user]="user"></app-avatar>
+          </a>
+        </div>
+        <div class="col-12 text-center p-0">
+          <p class="ml-2 text-2xl font-semibold">{{user.display_name}}</p>
+        </div>
+        <div class="col-12 text-center">
+          <a [routerLink]="['/user', user.user_name]" class="text-sm hover-underline text-500">
+            @{{ user?.user_name }}
+          </a>
+          <i class="ml-2 pi pi-copy cursor-pointer" (click)="onClickCopy()" [tooltipPosition]="'top'"
+            pTooltip="{{'tooltip.copy' | translate}}">
+          </i>
+        </div>
+        <div class="col-12 text-center px-0 py-3">
+          <button pButton pRipple type="button" label="{{'common.profile' | translate}}" icon="pi pi-user"
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/profile']">
+          </button>
+          <button pButton pRipple type="button" label="{{'common.logout' | translate}}" icon="pi pi-sign-out"
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-danger" (click)="onClickLogout()">
+          </button>
+        </div>
+      </div>
+      <app-user-sidebar-menu (clickMenu)="onClickSidebarMenu()"></app-user-sidebar-menu>
+    </ng-template>
+    <ng-template #sideBarWithoutLogin>
+      <div class="flex flex-wrap mb-2 justify-content-center align-items-center">
+        <div class="col-12 text-center">
+          <p class="text-4xl text-600 font-semibold">{{'topbar.wellcome' | translate}}</p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png" class="h-4rem"
+            alt="App Logo">
+          <p class="text-600 text-sm">{{'topbar.description' | translate}}</p>
+        </div>
+        <div class="col-12 text-center px-0">
+          <button pButton pRipple type="button" label="{{'common.register' | translate}}"
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/profile']">
+          </button>
+          <button pButton pRipple type="button" label="{{'common.login' | translate}}"
+            class="p-button-rounded px-4 mx-1 p-button-primary" (click)="onClickLogout()">
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="flex col-12 justify-content-between">
+    <app-switch-theme class="w-full" [type]="'switch'"></app-switch-theme>
+  </div>
+  <app-footer></app-footer>
 </p-sidebar>
 
 <p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'"

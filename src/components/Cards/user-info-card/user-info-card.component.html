@@ -26,7 +26,9 @@
               tooltipPosition="bottom" pTooltip="{{ user.followers | number:'1.0-2' }}">
               {{ user.followers }}
             </p>
-            <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
+            <p class="user-rate-text font-normal text-base">
+              {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}
+            </p>
           </div>
           <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center block lg:hidden xl:block">
             <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.views" [short]="true"

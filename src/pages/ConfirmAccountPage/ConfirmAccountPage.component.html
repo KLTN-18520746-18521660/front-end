@@ -22,12 +22,14 @@
         translate
         }}
       </label>
-      <p-password formControlName="password" id="password"
-        placeholder="{{'label.confirm.password.placeholder' | translate }}" [feedback]="false" [toggleMask]="true"
-        styleClass="w-full mb-1 input-password"
-        [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }">
-      </p-password>
-      <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+      <div class="relative">
+        <input #password formControlName="password" id="password" type="password" pPassword [feedback]="false"
+          [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['password'].touched) && f['password'].errors }"
+          placeholder="{{'label.signup.passwordPlaceholder' | translate }}" class="password-input w-full mb-1">
+        <i class="pi password-icon absolute" [ngClass]="password.type === 'password' ? 'pi-eye' : 'pi-eye-slash'"
+          (click)="password.type = password.type === 'password' ? 'text' : 'password'"></i>
+      </div>
+      <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="invalid-feedback">
         <div class="flex align-items-end" *ngIf="f['password'].errors['required']">
           <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
           <small class="p-error inline">{{'label.confirm.password.required' | translate}}</small>

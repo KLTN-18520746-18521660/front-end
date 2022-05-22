@@ -1,54 +1,51 @@
 <ng-template [ngIf]="!loading" [ngIfElse]="loadingCard">
   <div class="card p-3 recommend-post-card mb-1">
     <div class="card-container flex flex-wrap">
-      <div class="flex flex-wrap">
-        <div class="col-12" *ngIf="showStatus">
-          <app-status-badge [label]="post.status"></app-status-badge>
-        </div>
-        <div class="col-12">
-          <a [routerLink]="['/post', post.slug]">
-            <h3 class="card-heading text-800 text-lg font-semibold" title="{{ post.title }}">
-              {{ post.title }}
-            </h3>
-            <p class="card-description text-gray-600">
-              {{ post.short_content }}
-            </p>
-          </a>
-        </div>
-        <div class="col-12 flex justify-content-between align-items-center pb-0">
-          <div class="flex">
-            <div
-              class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
-              pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom"
-              [ngClass]="{'bg-gray-100 text-primary': post.mapAction.like}">
-              <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
-              <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
-            </div>
-            <div
-              class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
-              pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom"
-              [ngClass]="{'bg-gray-100 text-primary': post.mapAction.comment}">
-              <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
-              <i style="font-size: 1.2rem" class="pi pi-comment"></i>
-            </div>
-            <div
-              class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
-              pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom"
-              [ngClass]="{'bg-gray-100 text-primary': post.mapAction.visited}">
-              <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
-              <i style="font-size: 1.25rem" class="pi pi-eye"></i>
-            </div>
+      <div class="col-12" *ngIf="showStatus">
+        <app-status-badge [label]="post.status"></app-status-badge>
+      </div>
+      <div class="col-12">
+        <a [routerLink]="['/post', post.slug]">
+          <h3 class="card-heading text-800 text-lg font-semibold" title="{{ post.title }}">
+            {{ post.title }}
+          </h3>
+          <p class="card-description text-gray-600" [innerHTML]="post.short_content">
+          </p>
+        </a>
+      </div>
+      <div class="col-12 flex justify-content-between align-items-center pb-0">
+        <div class="flex">
+          <div
+            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
+            pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom"
+            [ngClass]="{'surface-200 text-primary': post.mapAction.like}">
+            <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
+            <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
           </div>
-          <div class="flex">
-            <div class="post-time flex" *ngIf="!isSmall">
-              <span class="text-sm text-600 mr-2" title=" {{ post.approved_timestamp }}">
-                {{ post.fromNow.approved }}
-              </span>
-              <!-- &#183;
-              <span class="text-sm text-600 mx-2">
-                {{ "card.time_read" | translate: post }}
-              </span> -->
-            </div>
+          <div
+            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
+            pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom"
+            [ngClass]="{'surface-200 text-primary': post.mapAction.comment}">
+            <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
+            <i style="font-size: 1.2rem" class="pi pi-comment"></i>
+          </div>
+          <div
+            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
+            pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom"
+            [ngClass]="{'surface-200 text-primary': post.mapAction.visited}">
+            <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
+            <i style="font-size: 1.25rem" class="pi pi-eye"></i>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="post-time flex" *ngIf="!isSmall">
+            <span class="text-sm text-600 mr-2" title=" {{ post.approved_timestamp }}">
+              {{ post.fromNow.approved }}
+            </span>
+            <!-- &#183;
+            <span class="text-sm text-600 mx-2">
+              {{ "card.time_read" | translate: post }}
+            </span> -->
           </div>
         </div>
       </div>

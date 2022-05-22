@@ -25,7 +25,7 @@
             <small class="p-error inline">{{'createPost.form.thumbnailError' | translate}}</small>
           </div>
         </div>
-        <img  *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}"
+        <img *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}"
           class="post-thumbnail-image border-round mt-2 shadow-2" alt="Post Thumbnail">
 
         <p requiredField class="font-medium mb-1 mt-3">{{'createPost.category' | translate}}</p>
@@ -45,7 +45,7 @@
           [metaKeySelection]="false" [placeholder]="'createPost.form.categoryPlaceHolder' | translate">
         </p-treeSelect>
 
-        <p requiredField class="font-medium mb-1 mt-3">{{'createPost.tag' | translate}}</p>
+        <p class="font-medium mb-1 mt-3">{{'createPost.tag' | translate}}</p>
         <p-autoComplete [(ngModel)]="listTagModel" field="tag" [suggestions]="listFilterTags" [required]="true"
           (completeMethod)="onFilterTag($event)" [showEmptyMessage]="true" [unique]="true" [virtualScroll]="true"
           [multiple]="true" [dropdown]="true" [autoHighlight]="true" [delay]="500"
@@ -61,8 +61,8 @@
         </p-autoComplete>
 
         <p class="font-medium mb-1 mt-3">{{'createPost.moreTag' | translate}}</p>
-        <p-chips [(ngModel)]="tags" (ngModelChange)="onChangeMoreTag($event)" class="w-full" [addOnTab]="true"
-          [placeholder]="'createPost.form.moreTagPlaceholder' | translate" [allowDuplicate]="false">
+        <p-chips [(ngModel)]="tags" (onAdd)="onAddMoreTag($event)" (onRemove)="onRemoveMoreTag($event)" class="w-full"
+          [addOnTab]="true" [placeholder]="'createPost.form.moreTagPlaceholder' | translate" [allowDuplicate]="false">
           <ng-template let-item pTemplate="item">
             <i class="pi pi-tag mr-2"></i>{{item}}
           </ng-template>
@@ -70,8 +70,8 @@
         <small id="more-chip-help" class="block">{{'createPost.form.chipHelp' | translate}}</small>
 
         <p requiredField class="font-medium mb-1 mt-3">{{'createPost.timeRead' | translate}}</p>
-        <p-inputNumber [(ngModel)]="time_read" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="2"
-          [max]="50">
+        <p-inputNumber [(ngModel)]="time_read" (ngModelChange)="onChangeTimeRead($event)" mode="decimal"
+          [showButtons]="true" inputId="minmax-buttons" [min]="2" [max]="50">
         </p-inputNumber>
       </div>
     </div>
@@ -113,6 +113,9 @@
           </div>
         </p-tabPanel>
       </p-tabView>
+
+      <p-messages [(value)]="message" [enableService]="false"></p-messages>
+
       <div class="flex justify-content-end mt-4">
         <button pButton pRipple type="button" label="{{'createPost.discard' | translate}}" (click)="onClickDiscard()"
           class="p-button-outlined p-button-danger ml-2"></button>

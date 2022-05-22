@@ -16,10 +16,15 @@
     "submit": "Submit",
     "save": "Save changes",
     "new": "New",
+    "darkMode": "Dark Mode",
     "dark": "Switch to dark mode",
     "light": "Switch to light mode",
     "readMore": "Read more",
-    "readLess": "Read less"
+    "readLess": "Read less",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "profile": "Profile"
   },
   "titlePage": {
     "default": "Home - Heovi",
@@ -27,6 +32,7 @@
     "post": "Post",
     "postdetail": "Post Detail",
     "createPost": "Create Post",
+    "editPost": "Edit Post",
     "profile": "Profile",
     "login": "Login",
     "register": "Register",
@@ -141,6 +147,7 @@
     "register": "Register successfully",
     "confirm": "Confirm successfully",
     "uploadfail": "Upload failed",
+    "needlogin": "You need to login to continue",
     "filesize": "File size must be less than 3MB",
     "forgotpassword": "Reset password successfully",
     "resetpassword": "Reset password successfully",
@@ -201,6 +208,8 @@
     "more": "More",
     "createPost": "Create Post",
     "notification": "Notification",
+    "wellcome": "Wellcome to",
+    "description": "Login or register to start your journey and share your posts with the world, discuss with your friends, and more.",
     "user": {
       "dashboard": "My Dashboard",
       "profile": "My Profile",
@@ -210,6 +219,9 @@
       "separator": "|",
       "logout": "Logout"
     }
+  },
+  "footer": {
+    "copyright": "Copyright &copy; 2022. All rights reserved."
   },
   "profile": {
     "show": "Show Menu",
@@ -539,6 +551,8 @@
         },
         "confirmPassword": {
           "required": "Please enter your password again",
+          "min": "Password must be at least {{num}} characters",
+          "max": "Password must be less than {{num}} characters",
           "match": "Confirm password does not match"
         },
         "accept": "Please accept our terms and conditions"
@@ -637,6 +651,7 @@
       "warning": "You only have 3 times to try to reset your password"
     },
     "notfound": {
+      "pageTitle": "Something went wrong or page not found",
       "title": "OOPS!",
       "description": "Something went wrong or the page you are looking for does not exist, please try again later",
       "home": "Go to home page",
@@ -761,6 +776,57 @@
         "category": "You must select at less a category",
         "timeRead": "Time to read is between 2 and 50 minutes",
         "content": "Content is empty"
+      }
+    }
+  },
+  "editPost": {
+    "pageTitle": "Edit: {{title}}",
+    "viewPost": "Click here to view current post",
+    "edit": "Edit",
+    "preview": "Preview",
+    "saveDraft": "Save as draft",
+    "publish": "Save change",
+    "cancel": "Cancel",
+    "discard": "Discard",
+    "title": "Title",
+    "shortContent": "Short content",
+    "thumnail": "Thumnail",
+    "tag": "Tags",
+    "slug": "URL: ",
+    "timeRead": "Time to read (2-50 mins)",
+    "moreTag": "More tags",
+    "category": "Category",
+    "form": {
+      "titlePlaceholder": "Enter title of post here",
+      "shortContentPlaceholder": "Enter short content here",
+      "shortContentLength": "Short content must be between 20 and 200 characters",
+      "thumbnailPlaceholder": "Enter URL image for thumnail",
+      "thumbnailError": "Please enter a valid URL image for thumnail",
+      "tagPlaceHolder": "Enter tag",
+      "moreTagPlaceholder": "Enter more tag",
+      "categoryPlaceHolder": "Enter category",
+      "titleHere": "{{ Title here ... }}",
+      "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
+    },
+    "dialog": {
+      "title": "Confirmation",
+      "discard": "Do you want to discard this changes?",
+      "publish": "Do you want to appy changes for this post? This change will be pending for approval. Please wait for approval. The old post will be visible until the new one is approved.",
+      "ok": "Yes, apply changes",
+      "cancel": "No, continue editing",
+      "popup": {
+        "message": "You must be logged in to create a post",
+        "header": " ",
+        "footer": " "
+      },
+      "valid": {
+        "title": "Title must be lenght between 20 and 200 characters",
+        "thumbnail": "Thumbnail cannot be empty",
+        "tag": "Tag cannot be empty",
+        "category": "You must select at less a category",
+        "timeRead": "Time to read is between 2 and 50 minutes",
+        "content": "Content cannot be empty",
+        "shortContent": "Short content must be between 20 and 200 characters"
       }
     }
   },

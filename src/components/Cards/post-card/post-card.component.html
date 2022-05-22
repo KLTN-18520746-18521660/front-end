@@ -45,8 +45,8 @@
                   [ngClass]="isGrid ? 'card-heading-grid' : 'card-heading'">
                   {{ post.title }}
                 </h3>
-                <p class="text-gray-600" [ngClass]=" isGrid ? 'card-description-grid' : 'card-description'">
-                  {{ post.short_content }}
+                <p class="text-gray-600" [ngClass]=" isGrid ? 'card-description-grid' : 'card-description'"
+                  [innerHTML]="post.short_content">
                 </p>
               </div>
             </div>
@@ -57,23 +57,23 @@
       <div class="card-footer flex-order-2 w-full p-2 flex justify-content-between align-items-center">
         <div class="card-footer-left inline-flex">
           <div
-            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
+            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'bg-gray-100 text-primary': post.mapAction.like}">
+            [ngClass]="{'surface-200 text-primary': post.mapAction.like}">
             <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
             <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
           </div>
           <div
-            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
+            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'bg-gray-100 text-primary': post.mapAction.comment}">
+            [ngClass]="{'surface-200 text-primary': post.mapAction.comment}">
             <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
             <i style="font-size: 1.2rem" class="pi pi-comment"></i>
           </div>
           <div
-            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:bg-gray-100 p-1 border-round cursor-default"
+            class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'bg-gray-100 text-primary': post.mapAction.visited}">
+            [ngClass]="{'surface-200 text-primary': post.mapAction.visited}">
             <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
             <i style="font-size: 1.25rem" class="pi pi-eye"></i>
           </div>
@@ -112,7 +112,8 @@
         </div>
       </div>
 
-      <div class="card-content w-full" [ngClass]="{ 'flex-order-0': isGrid }" [ngClass]="{ 'flex flex-wrap-reverse': isGrid }">
+      <div class="card-content w-full" [ngClass]="{ 'flex-order-0': isGrid }"
+        [ngClass]="{ 'flex flex-wrap-reverse': isGrid }">
         <!-- <div class="card-content-top p-2 inline">
           <div class="inline-flex">
             <p-skeleton width="4rem" height="2rem" styleClass="mr-2"></p-skeleton>

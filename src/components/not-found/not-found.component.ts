@@ -1,3 +1,5 @@
+import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private title: Title,
+    private translate: TranslateService
+  ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.translate.instant('label.notfound.pageTitle'));
   }
 
 }

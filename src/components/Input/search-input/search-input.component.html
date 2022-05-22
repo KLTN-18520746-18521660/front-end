@@ -9,7 +9,7 @@
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
               <input type="text" formControlName="search" class="shadow-1" pInputText (focus)="onFocus()"
                 (blur)="onBlur()"
-                placeholder="{{params ? ('label.searchWithName' | translate:params) : ('label.search' | translate)}}">
+                placeholder="{{userName ? ('label.searchWithName' | translate: { name: userName } ) : ('label.search' | translate)}}">
             </form>
           </span>
           <div class="button-submit flex col justify-content-end absolute">

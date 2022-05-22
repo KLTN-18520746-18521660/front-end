@@ -14,6 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DeferModule } from 'primeng/defer';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { DockModule } from 'primeng/dock';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { EditorModule } from 'primeng/editor';
@@ -75,6 +76,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     DeferModule,
     DialogModule,
     DividerModule,
+    DockModule,
     DropdownModule,
     DynamicDialogModule,
     EditorModule,

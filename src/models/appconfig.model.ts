@@ -17,7 +17,7 @@ export interface PublicConfig {
     extension_time?: number;
   };
   UploadFileConfig?: {
-    max_len_of_single_file?: number;
+    max_length_of_single_file?: number;
   };
   SocialUserIdle?: {
     idle?: number;

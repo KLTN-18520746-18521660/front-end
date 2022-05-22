@@ -13,6 +13,7 @@ import { UserService } from 'services/user.service';
 import { categoriesMockData } from 'shared/mockData/categoriesMockData';
 import { SearchInputComponent } from '../Input/search-input/search-input.component';
 import { TopBarMenuItem } from './menu-item';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-top-bar',
@@ -55,7 +56,8 @@ export class TopBarComponent implements OnInit {
     private translate: TranslateService,
     private confirmationService: ConfirmationService,
     public dialogService: DialogService,
-    private appUser: AppUserComponent
+    private appUser: AppUserComponent,
+    private clipboard: Clipboard
   ) { }
 
   ngOnInit() {
@@ -63,6 +65,7 @@ export class TopBarComponent implements OnInit {
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((e: any) => {
+        this.showSidebar = false;
         this.activeLink = this.getActiveLink(e.url);
       });
     this.items = TopBarMenuItem;
@@ -115,7 +118,7 @@ export class TopBarComponent implements OnInit {
           label: res.logout,
           icon: 'pi pi-power-off',
           command: () => {
-            this.logout();
+            this.onClickLogout();
           }
         }
       ];
@@ -150,7 +153,7 @@ export class TopBarComponent implements OnInit {
     }
   }
 
-  logout() {
+  onClickLogout() {
     this.confirmationService.confirm({
       key: 'logout',
       header: this.textTranslation.header,
@@ -167,6 +170,10 @@ export class TopBarComponent implements OnInit {
         });
       }
     });
+  }
+
+  onClickCopy() {
+    this.clipboard.copy(decodeURI(window.location.origin + '/user/' + this.user.user_name + `?utm_source=${window.location.hostname}&utm_medium=user`))
   }
 
   onClickSeach() {

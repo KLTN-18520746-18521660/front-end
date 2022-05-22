@@ -84,6 +84,14 @@ export default class User {
   }
 }
 
+export interface AuthUpdateUser {
+  session_id?: string; 
+  user?: User;
+  isAuthenticated?: boolean; 
+  remember?: boolean; 
+  error?: boolean;
+}
+
 export class AdminUser {
   id: string;
   user_name: string;

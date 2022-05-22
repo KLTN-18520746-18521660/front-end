@@ -29,7 +29,7 @@ export class SearchInputComponent implements OnInit {
 
   tags: Tag[] = randomArray(tagsMockData, 5);
 
-  params: any;
+  userName: string;
 
   showButton: boolean = false;
 
@@ -38,6 +38,8 @@ export class SearchInputComponent implements OnInit {
   config: AppConfig;
 
   configSubscription: Subscription;
+
+  authSubscription: Subscription;
 
   subscription: Subscription;
 
@@ -67,13 +69,17 @@ export class SearchInputComponent implements OnInit {
         this.showButton = false;
       }
     });
+
+    this.authSubscription = this.userService.authUpdate$.subscribe(res => {
+      if (res) {
+        this.userName = res.user.display_name;
+      }
+    })
   }
 
   onSubmit() {
     if (this.userService.user) {
-      this.params = {
-        name: this.userService.user?.display_name
-      }
+      this.userName = this.userService.user?.display_name
     }
     if (this.form.value.search.trim()) {
       this.router.navigate(
@@ -105,6 +111,9 @@ export class SearchInputComponent implements OnInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
 }

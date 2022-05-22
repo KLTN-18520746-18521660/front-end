@@ -77,7 +77,7 @@ export class CommentCardComponent implements OnInit {
         label: this.translate.instant('postDetail.commentMenu.like'),
         disabled: false,
         icon: 'pi pi-thumbs-up',
-        command: (event) => {
+        command: () => {
           this.actionWithComment('like');
         }
       },
@@ -86,7 +86,7 @@ export class CommentCardComponent implements OnInit {
         label: this.translate.instant('postDetail.commentMenu.unlike'),
         disabled: false,
         icon: 'pi pi-thumbs-down',
-        command: (event) => {
+        command: () => {
           this.actionWithComment('unlike');
         }
       },
@@ -95,7 +95,7 @@ export class CommentCardComponent implements OnInit {
         label: this.translate.instant('postDetail.commentMenu.reply'),
         disabled: false,
         icon: 'pi pi-reply',
-        command: (event) => {
+        command: () => {
           this.onClickReply();
         }
       }] : []),
@@ -113,7 +113,7 @@ export class CommentCardComponent implements OnInit {
         label: this.translate.instant('postDetail.commentMenu.delete'),
         disabled: false,
         icon: 'pi pi-trash',
-        command: (event) => {
+        command: () => {
           this.handleDeleteComment(this.comment);
         }
       }] : []),
