@@ -45,7 +45,8 @@
     "manage-post": "Manage Post",
     "user-info": "User Info",
     "edit-info": "Edit Info",
-    "change-password": "Change Password",
+    "security": "Security your account",
+    "change-password": "Change password",
     "saved-post": "Save Post",
     "following": "Following",
     "followers": "Followers",
@@ -234,11 +235,17 @@
           "dashboard": "Dashboard"
         }
       },
+      "profile": {
+        "title": "Profile",
+        "items": {
+          "profile": "Profile",
+          "edit": "Edit Profile"
+        }
+      },
       "account": {
         "title": "Account",
         "items": {
-          "profile": "Profile",
-          "edit": "Edit Profile",
+          "security": "Security",
           "changePassword": "Change Password"
         }
       },
@@ -415,6 +422,29 @@
         "error": {
           "required": "Avatar is required"
         }
+      }
+    },
+    "security": {
+      "title": "All devices you already login with",
+      "session": {
+        "title": "Session",
+        "location": "Location",
+        "created": "Created",
+        "lastAccess": "Last access",
+        "logout": "Logout",
+        "delete": "Delete",
+        "data": "Data",
+        "thisDevice": "This device",
+        "savePassword": "Save password"
+      },
+      "device": {
+        "title": "Device",
+        "type": "Type",
+        "ip": "IP",
+        "browser": "Browser",
+        "os": "OS",
+        "device": "Device",
+        "last_login": "Last login"
       }
     }
   },

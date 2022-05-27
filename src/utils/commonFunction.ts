@@ -68,10 +68,15 @@ export const convertDateTime = (
   locale: string,
   suffix: boolean = true,
   showTime: boolean = true,
+  fromNow: boolean = false,
 ) => {
   dayjs.locale(locale);
 
-  if (dayjs().diff(date, 'hour') < 12) {
+  if (fromNow) {
+    dayjs.extend(relativeTime);
+    return dayjs(date).fromNow(suffix);
+  }
+  else if (dayjs().diff(date, 'hour') < 12) {
     dayjs.extend(relativeTime);
     return dayjs(date).fromNow(suffix);
   }

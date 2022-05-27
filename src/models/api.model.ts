@@ -21,6 +21,7 @@ export interface ApiResult {
     users?: User[];
     user?: User;
     session?: Session;
+    sessions?: Session[];
     comments?: Comment[];
     comment?: Comment;
     notifications: Notification[];
@@ -62,4 +63,11 @@ export interface Session {
   last_interaction_time: string;
   saved: boolean;
   session_token: string;
+
+  iscurrent?: boolean;
+
+  fromNow?: {
+    created?: string;
+    updated?: string;
+  }
 }

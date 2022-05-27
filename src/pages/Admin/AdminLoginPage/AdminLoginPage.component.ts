@@ -116,9 +116,8 @@ export class AdminLoginPageComponent implements OnInit {
 
         this.isRedirecting = true;
         if (this.returnUrl) {
-          this.returnUrl = decodeURIComponent(this.returnUrl);
           setTimeout(() => {
-            this.router.navigate([this.returnUrl]);
+            this.router.navigateByUrl(decodeURIComponent(this.returnUrl));
           }, APPCONSTANT.LOADING_TIMEOUT);
         }
         else {

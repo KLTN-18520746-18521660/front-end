@@ -1,0 +1,37 @@
+<ng-template [ngIf]="!loading" [ngIfElse]="loadingCard">
+  <div class="card overflow-hidden text-overflow-ellipsis">
+    <div class="flex justify-content-between">
+      <div>
+        <app-status-badge *ngIf="session.saved" [label]="'profile.security.session.savePassword' | translate"
+          [translation]="false"></app-status-badge>
+        <app-status-badge *ngIf="session.iscurrent" [label]="'profile.security.session.thisDevice' | translate"
+          [translation]="false"></app-status-badge>
+        <p class="font-medium mt-3">{{session.session_token.substring(1, 10)}}...</p>
+        <ul class="text-sm pl-4">
+          <li class="my-2">
+            <span>{{'profile.security.session.created' | translate}} {{session.fromNow.created}} -
+              {{session.created_timestamp | date: 'dd/mm/yyyy hh:mm'}}</span>
+          </li>
+          <li class="my-2">
+            <span>{{'profile.security.session.lastAccess' | translate}} {{session.fromNow.updated}} -
+              {{session.last_interaction_time | date: 'dd/mm/yyyy hh:mm'}}</span>
+          </li>
+          <li class="my-2">
+            <span>{{'profile.security.session.data' | translate}}:</span>
+            <app-simple-grid-view [data]="session.data"></app-simple-grid-view>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <button pButton type="button" icon="pi pi-ellipsis-v"
+          class="p-button-sm p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
+        <p-menu #menu [popup]="true" [model]="menuitems"></p-menu>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #loadingCard>
+
+</ng-template>
+
+<p-toast key="sessionCard" [preventOpenDuplicates]="true"></p-toast>

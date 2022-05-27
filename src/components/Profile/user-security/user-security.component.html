@@ -1,0 +1,16 @@
+<div class="grid col-12">
+  <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingSpinner">
+    <div class="col-12 md:col-6 lg:col-6 xl:col-4" *ngFor="let item of listSession">
+      <app-session-card [session]="item"></app-session-card>
+    </div>
+  </ng-template>
+  <ng-template #loadingSpinner>
+    <div class="col-12 md:col-6 lg:col-6 xl:col-4" *ngFor="let item of [1,2]">
+      <app-session-card [loading]="true"></app-session-card>
+    </div>
+  </ng-template>
+</div>
+
+<p-confirmDialog key="security" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'"
+  [style]="{width: '60vw'}" [dismissableMask]="true">
+</p-confirmDialog>

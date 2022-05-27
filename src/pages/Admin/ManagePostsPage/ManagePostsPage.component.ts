@@ -46,7 +46,6 @@ export class ManagePostsPageComponent implements OnInit {
 
   getUserSubscription: Subscription;
 
-  RESULT_PAGE_SIZE = 3;
   totalRecords: number = 0;
 
   first: number;
@@ -67,7 +66,8 @@ export class ManagePostsPageComponent implements OnInit {
 
   currentData: TableData;
 
-  rowsPerPageOptions = [3, 5, 10, 20, 50];
+  rowsPerPageOptions = [10, 20, 30, 50];
+  RESULT_PAGE_SIZE = this.rowsPerPageOptions[0];
   selectedRow: number;
 
   statuses = [

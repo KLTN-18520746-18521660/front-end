@@ -108,6 +108,7 @@ export class CreatePostPageComponent implements OnInit {
 
     this.getCategory();
     this.onChangeTitle(this.title);
+    this.textTranslate = this.translate.instant('createPost.textTranslate')
   }
 
   handleChangeTabView(event) {

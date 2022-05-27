@@ -100,6 +100,12 @@ export class AuthService {
     }));
   }
 
+  getAllSessionUser(): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.SESSION, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   extendSessionUser(): Observable<ApiResult> {
     return this.http.post<ApiResult>(BASE_URL + REST_URL.EXTENSION_SESSION_USER, {}, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
@@ -108,6 +114,12 @@ export class AuthService {
 
   deleteSessionUser(sessionId?: string): Observable<ApiResult> {
     return this.http.delete(BASE_URL + REST_URL.SESSION + `/${sessionId}`, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  deleteAllSessionUser(): Observable<ApiResult> {
+    return this.http.post(BASE_URL + REST_URL.DELETE_ALL_SESSION, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
@@ -138,4 +150,8 @@ export class AuthService {
   }
 
   //#endregion
+
+  public getSessionId() {
+    return this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN) || null;
+  }
 }

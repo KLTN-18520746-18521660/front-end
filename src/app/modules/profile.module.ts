@@ -1,3 +1,4 @@
+import { UserSecurityComponent } from './../../components/Profile/user-security/user-security.component';
 import { UserFollowerComponent } from 'components/Profile/user-follower/user-follower.component';
 import { UserFollowingComponent } from 'components/Profile/user-following/user-following.component';
 import { UserPostSavedComponent } from 'components/Profile/user-post-saved/user-post-saved.component';
@@ -49,6 +50,13 @@ import { AuthGuard } from 'shared/guards/auth.guard';
             canDeactivate: [CanDeactiveGuard],
             data: {
               key: 'edit-info'
+            }
+          },
+          {
+            path: 'security',
+            component: UserSecurityComponent,
+            data: {
+              key: 'security'
             }
           },
           {

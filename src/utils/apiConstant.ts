@@ -11,7 +11,6 @@ export const REST_URL = {
 
   SESSION: 'session',
   EXTENSION_SESSION_USER: 'session/extension',
-  DELETE_SESSION_USER: 'session',
   DELETE_ALL_SESSION: 'session/removeall',
 
   CONFIRM_USER: 'user/confirm',

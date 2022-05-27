@@ -67,12 +67,6 @@ export class LoginPageComponent implements OnInit {
       this.config = config;
     });
 
-    // this.subscription = this.userService.authUpdate$.subscribe(res => {
-    //   if (res.isAuthenticated) {
-    //     this.router.navigate(['/']);
-    //   }
-    // });
-
     this.form = new FormGroup({
       email: new FormControl(''),
       password: new FormControl(''),
@@ -131,12 +125,12 @@ export class LoginPageComponent implements OnInit {
             this.isRedirecting = true;
             if (this.returnUrl) {
               setTimeout(() => {
-                this.router.navigate([decodeURIComponent(this.returnUrl)]);
+                this.router.navigateByUrl(decodeURIComponent(this.returnUrl));
               }, APPCONSTANT.LOADING_TIMEOUT);
             }
             else {
               setTimeout(() => {
-                this.router.navigate([this.userService.history[0] || '/']);
+                this.router.navigateByUrl(decodeURIComponent(this.userService.history[0] || '/'));
               }, APPCONSTANT.LOADING_TIMEOUT);
             }
           }

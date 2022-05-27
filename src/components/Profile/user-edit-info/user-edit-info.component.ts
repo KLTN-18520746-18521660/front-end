@@ -111,7 +111,7 @@ export class UserEditInfoComponent implements OnInit {
           description: [this.user.description],
           sex: [this.user.sex, Validators.required],
           phone: [this.user.phone, [Validators.pattern('[0-9 ]{11}')]],
-          country: [this.selectedCountry ? this.selectedCountry : null, Validators.required],
+          country: [this.selectedCountry ? this.selectedCountry : null],
           city: [this.user.city],
           province: [this.user.province],
           avatar: [this.user.avatar],
@@ -143,7 +143,6 @@ export class UserEditInfoComponent implements OnInit {
     }
     this.uploadSubcription = this.postService.upLoadImage('user', event.files[0]).subscribe(
       (res) => {
-        console.log(res.data.url);
         this.form.get('avatar').setValue(res.data.url);
         this.user.avatar = res.data.url;
         this.updateUserInfo(getDifferenceObject(this.initData, this.form.value) as any);
@@ -249,7 +248,7 @@ export class UserEditInfoComponent implements OnInit {
         this.isSelect = false;
         this.editing = false;
       },
-      (err) => {
+      () => {
         this.editing = false;
         this.isLoading = false;
         this.message = [{ severity: 'error', summary: 'Error', detail: this.translate.instant('message.updateFail') }];

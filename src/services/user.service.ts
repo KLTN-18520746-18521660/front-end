@@ -10,7 +10,7 @@ import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { ActionType, REST_URL } from 'utils/apiConstant';
 import { handleError, localStorageFunctions } from 'utils/commonFunction';
 import _ from 'lodash';
-import { STORAGE_KEY, APPCONSTANT } from 'utils/appConstant';
+import { STORAGE_KEY } from 'utils/appConstant';
 import { CookieService } from 'services/cookie.service';
 import { PublicConfig } from 'models/appconfig.model';
 import { ApiResult, Session } from 'models/api.model';

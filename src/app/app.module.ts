@@ -1,3 +1,5 @@
+import { SessionCardComponent } from 'components/Cards/session-card/session-card.component';
+import { UserSecurityComponent } from 'components/Profile/user-security/user-security.component';
 import { SimpleGridViewComponent } from 'components/simple-grid-view/simple-grid-view.component';
 import { ViewDetailPostComponent } from 'components/view-detail-post/view-detail-post.component';
 import { DockComponent } from 'components/dock/dock.component';
@@ -48,10 +50,10 @@ import { NotFoundPageComponent } from 'pages/NotFoundPage/NotFoundPage.component
 import { TopBarComponent } from 'components/top-bar/top-bar.component';
 import { FooterComponent } from 'components/footer/footer.component';
 import { TagComponent } from 'components/Links/tag/tag.component';
-import { SearchInputComponent } from '../components/Input/search-input/search-input.component';
+import { SearchInputComponent } from 'components/Input/search-input/search-input.component';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 
-import { authInterceptorProviders } from '../shared/helpers/auth.interceptor';
+import { authInterceptorProviders } from 'shared/helpers/auth.interceptor';
 import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';
 import { SignUpPageComponent } from 'pages/SignUpPage/SignUpPage.component';
 import { TopbarAdminComponent } from 'components/Admin/topbar-admin/topbar-admin.component';
@@ -211,9 +213,11 @@ export function playerFactory() {
     DockComponent,
     OpenNewWindowDirective,
     SimpleGridViewComponent,
+    UserSecurityComponent,
+    SessionCardComponent,
 
     SwitchThemeComponent,
-    
+
     ManagePostsPageComponent,
     TopbarAdminComponent,
     MenuComponent,

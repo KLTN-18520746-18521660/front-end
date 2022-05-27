@@ -26,27 +26,39 @@ export class UserSidebarMenuComponent implements OnInit {
       ]
     },
     {
-      id: 'account',
-      label: this.translate.instant('profile.menu.account.title'),
+      id: 'profile',
+      label: this.translate.instant('profile.menu.profile.title'),
       items: [
         {
           id: 'user-info',
-          label: this.translate.instant('profile.menu.account.items.profile'),
+          label: this.translate.instant('profile.menu.profile.items.profile'),
           icon: 'pi pi-fw pi-user',
           routerLink: ['/profile/user-info'],
         },
         {
           id: 'edit-info',
-          label: this.translate.instant('profile.menu.account.items.edit'),
+          label: this.translate.instant('profile.menu.profile.items.edit'),
           icon: 'pi pi-fw pi-user-edit',
           routerLink: ['/profile/edit-info'],
+        },
+      ]
+    },
+    {
+      id: 'account',
+      label: this.translate.instant('profile.menu.account.title'),
+      items: [
+        {
+          id: 'security',
+          label: this.translate.instant('profile.menu.account.items.security'),
+          icon: 'pi pi-fw pi-shield',
+          routerLink: ['/profile/security'],
         },
         {
           id: 'change-password',
           label: this.translate.instant('profile.menu.account.items.changePassword'),
           icon: 'pi pi-fw pi-key',
           routerLink: ['/profile/change-password'],
-        },
+        }
       ]
     },
     {
