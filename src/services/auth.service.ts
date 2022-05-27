@@ -7,7 +7,7 @@ import { REST_URL } from 'utils/apiConstant';
 import { LoginUserModel, SignUpUserModel } from 'models/user.model';
 import { handleError } from 'utils/commonFunction';
 import { PublicConfig } from 'models/appconfig.model';
-import ApiResult from 'models/api.model';
+import { ApiResult } from 'models/api.model';
 import { CookieService } from './cookie.service';
 import { STORAGE_KEY } from 'utils/appConstant';
 

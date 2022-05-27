@@ -3,7 +3,7 @@ import { ApiParams } from './../models/api.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import ApiResult from 'models/api.model';
+import { ApiResult } from 'models/api.model';
 import Category from 'models/category.model';
 import Post, { PostModel } from 'models/post.model';
 import Tag from 'models/tag.model';

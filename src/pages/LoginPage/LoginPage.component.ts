@@ -131,7 +131,7 @@ export class LoginPageComponent implements OnInit {
             this.isRedirecting = true;
             if (this.returnUrl) {
               setTimeout(() => {
-                this.router.navigate([this.returnUrl]);
+                this.router.navigate([decodeURIComponent(this.returnUrl)]);
               }, APPCONSTANT.LOADING_TIMEOUT);
             }
             else {

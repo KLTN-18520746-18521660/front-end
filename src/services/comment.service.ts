@@ -1,4 +1,4 @@
-import ApiResult from 'models/api.model';
+import { ApiResult } from 'models/api.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Comment from 'models/comment.model';

@@ -77,7 +77,7 @@ export class CategoryPageComponent implements OnInit {
 
         this.title.setTitle(this.category.display_name);
 
-        this.category.mapAction = mapActionWithCategory(this.category.actions);
+        this.category.mapAction = mapActionWithCategory(this.category.actions || []);
       },
       () => {
         this.isLoadingCategory = false;

@@ -10,6 +10,10 @@ export class StatusBadgeComponent implements OnInit {
 
   @Input() label: string;
 
+  @Input() tooltip: string;
+
+  @Input() translation: boolean = true;
+
   @Input() size: 'xs' | 'sm' | 'base' | 'md' | 'lg' | 'xl' = 'sm';
 
   status: {
@@ -31,6 +35,7 @@ export class StatusBadgeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     const text = this.translate.instant('status');
     this.mapStatus = {
       Pending: {
@@ -97,8 +102,12 @@ export class StatusBadgeComponent implements OnInit {
 
     this.status = this.mapStatus[this.label] || {
       text: this.label,
-      color: 'gray-600',
-      backgroundColor: 'bg-gray-100'
+      color: 'blue-600',
+      backgroundColor: 'bg-blue-100'
+    };
+
+    if (!this.translation) {
+      this.status.text = this.label.toUpperCase();
     }
   }
 

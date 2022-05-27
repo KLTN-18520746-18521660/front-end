@@ -1,3 +1,4 @@
+import { AdminGuard } from './../../shared/guards/admin.guard';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,11 @@ import { ManagePostsPageComponent } from 'pages/Admin/ManagePostsPage/ManagePost
   imports: [
     RouterModule.forChild([
       {
-        path: '', component: AppMainComponent, children: [
+        path: '',
+        component: AppMainComponent,
+        canActivate: [AdminGuard],
+        canActivateChild: [AdminGuard],
+        children: [
           {
             path: '',
             component: DashboardPageComponent,

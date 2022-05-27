@@ -1,55 +1,64 @@
 <div class="flex justify-content-center align-items-center h-full">
   <div class="col-12 md:col-6 lg:col-5 align-items-center">
     <div class="card h-full w-full m-0 py-7 px-4">
-      <div class="text-center mb-5">
-        <div class="text-900 text-3xl font-medium mb-3">{{ 'admin.login.title' | translate }}</div>
-        <span class="text-600 font-medium">{{ 'admin.login.description' | translate }}</span>
-      </div>
+      <ng-template [ngIf]="!isRedirecting" [ngIfElse]="redirecting">
+        <div class="text-center mb-5">
+          <div class="text-900 text-3xl font-medium mb-3">{{ 'admin.login.title' | translate }}</div>
+          <span class="text-600 font-medium">{{ 'admin.login.description' | translate }}</span>
+        </div>
 
-      <div class="w-full mx-auto">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <label for="Admin_email" class="block text-900 text-lg font-medium mb-2">{{'admin.login.email' | translate }}
-          </label>
-          <input formControlName="Admin_email" id="Admin_email" type="text" autofocus autocomplete="false"
-            placeholder="{{'admin.login.emailPlaceholder' | translate}}" pInputText class="w-full mb-1"
-            style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['Admin_email'].errors }">
-          <div *ngIf="submitted && f['Admin_email'].errors" class="invalid-feedback">
-            <div class="flex align-items-end" *ngIf="f['Admin_email'].errors['required']">
-              <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-              <small class="p-error inline">{{'admin.login.validation.email.required' | translate}}</small>
+        <div class="w-full mx-auto">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <label for="Admin_email" class="block text-900 text-lg font-medium mb-2">{{'admin.login.email' | translate
+              }}
+            </label>
+            <input formControlName="Admin_email" id="Admin_email" type="text" autofocus autocomplete="false"
+              placeholder="{{'admin.login.emailPlaceholder' | translate}}" pInputText class="w-full mb-1"
+              style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['Admin_email'].errors }">
+            <div *ngIf="submitted && f['Admin_email'].errors" class="invalid-feedback">
+              <div class="flex align-items-end" *ngIf="f['Admin_email'].errors['required']">
+                <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+                <small class="p-error inline">{{'admin.login.validation.email.required' | translate}}</small>
+              </div>
             </div>
-          </div>
 
-          <label for="Admin_password" class="block text-900 font-medium text-lg mt-3 mb-2">{{'admin.login.password' |
-            translate
-            }}
-          </label>
-          <p-password formControlName="Admin_password" id="Admin_password" autocomplete="false"
-            placeholder="{{'admin.login.passwordPlaceholder' | translate }}" [feedback]="false" [toggleMask]="true"
-            styleClass="w-full mb-1 input-password" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['Admin_password'].errors }">
-          </p-password>
-          <div *ngIf="submitted && f['Admin_password'].errors" class="invalid-feedback">
-            <div class="flex align-items-end" *ngIf="f['Admin_password'].errors['required']">
-              <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-              <small class="p-error inline">{{'admin.login.validation.password.required' | translate}}</small>
+            <label for="Admin_password" class="block text-900 font-medium text-lg mt-3 mb-2">{{'admin.login.password' |
+              translate
+              }}
+            </label>
+            <p-password formControlName="Admin_password" id="Admin_password" autocomplete="false"
+              placeholder="{{'admin.login.passwordPlaceholder' | translate }}" [feedback]="false" [toggleMask]="true"
+              styleClass="w-full mb-1 input-password"
+              [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['Admin_password'].errors }">
+            </p-password>
+            <div *ngIf="submitted && f['Admin_password'].errors" class="invalid-feedback">
+              <div class="flex align-items-end" *ngIf="f['Admin_password'].errors['required']">
+                <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+                <small class="p-error inline">{{'admin.login.validation.password.required' | translate}}</small>
+              </div>
             </div>
-          </div>
 
-          <div class="flex align-items-center justify-content-between mt-3 mb-3">
-            <div class="flex align-items-center">
-              <p-checkbox formControlName="Admin_remember" inputId="Admin_rememberme" [binary]="true" styleClass="mr-2">
-              </p-checkbox>
-              <label for="Admin_rememberme">{{'admin.login.remember' | translate }}</label>
+            <div class="flex align-items-center justify-content-between mt-3 mb-3">
+              <div class="flex align-items-center">
+                <p-checkbox formControlName="Admin_remember" inputId="Admin_rememberme" [binary]="true"
+                  styleClass="mr-2">
+                </p-checkbox>
+                <label for="Admin_rememberme">{{'admin.login.remember' | translate }}</label>
+              </div>
             </div>
-          </div>
-          <p-messages [(value)]="message" [enableService]="false"></p-messages>
-          <button type="submit" pButton pRipple label="{{'admin.login.submit' | translate}}" icon="pi pi-sign-in"
-            iconPos="right" class="w-full p-3 text-xl"></button>
+            <p-messages [(value)]="message" [enableService]="false"></p-messages>
+            <button type="submit" pButton pRipple label="{{'admin.login.submit' | translate}}" icon="pi pi-sign-in"
+              iconPos="right" class="w-full p-3 text-xl"></button>
 
-        </form>
-      </div>
+          </form>
+        </div>
+      </ng-template>
     </div>
   </div>
-
-  <app-loading [loading]="isLoading"></app-loading>
 </div>
+
+<ng-template #redirecting>
+  <app-redirecting></app-redirecting>
+</ng-template>
+
+<app-loading [loading]="isLoading"></app-loading>

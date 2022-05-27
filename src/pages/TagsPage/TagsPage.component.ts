@@ -78,7 +78,7 @@ export class TagsPageComponent implements OnInit {
 
         this.title.setTitle('#' + this.tag.name);
 
-        this.tag.mapAction = mapActionWithTag(this.tag.actions);
+        this.tag.mapAction = mapActionWithTag(this.tag.actions || []);
       },
       () => {
         this.isLoadingTag = false;

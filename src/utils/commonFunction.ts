@@ -5,6 +5,7 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import calendar from 'dayjs/plugin/calendar';
+import { SortMeta } from "models/table.model";
 
 export const handleError = (error?: HttpErrorResponse) => {
   let obj = {
@@ -186,6 +187,37 @@ export const localStorageFunctions = {
     localStorage.setItem('CONFIGS', JSON.stringify({ ...configs, [key]: value }));
   }
 }
+
+//#region function for p-table 
+
+export const convertToMultiSortMeta = (sort: string, order: string): SortMeta[] => {
+  const sortBy = sort ? sort.split(',') : null;
+  const orderBy = order ? order.split(',') : null;
+  if (!sortBy && !orderBy) {
+    return null;
+  }
+  return sortBy.map((item, index) => {
+    return {
+      field: item,
+      order: (orderBy[index] ? orderBy[index] : 'desc') === 'desc' ? 1 : -1
+    }
+  });
+}
+
+export const convertToFilterMeta = (filter: string) => {
+  const filterBy = filter ? filter.split(',') : null;
+  if (!filterBy) {
+    return null;
+  }
+  return filterBy.map((item, index) => {
+    return {
+      field: item,
+      filter: 'contains',
+      filterMatchMode: 'contains'
+    }
+  });
+}
+//#endregion
 
 //Map Action 
 export const mapActionWithPost = (action: string[]) => {

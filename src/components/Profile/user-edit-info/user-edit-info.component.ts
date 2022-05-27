@@ -253,7 +253,6 @@ export class UserEditInfoComponent implements OnInit {
         this.editing = false;
         this.isLoading = false;
         this.message = [{ severity: 'error', summary: 'Error', detail: this.translate.instant('message.updateFail') }];
-        console.log(err);
       }
     );
   }

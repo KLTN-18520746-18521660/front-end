@@ -133,7 +133,6 @@ export class SignUpPageComponent implements OnInit {
       },
       (err: any) => {
         this.isLoading = false;
-        console.log(err);
         this.message = [{
           severity: 'error',
           summary: '',

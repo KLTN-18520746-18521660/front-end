@@ -7,7 +7,7 @@ import { Component, AfterViewInit, OnDestroy, Renderer2, OnInit } from '@angular
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppComponent } from '../../../app/app.component';
 import { AppConfigService } from '../../../services/app.config.service';
-import { AppConfig } from '../../../models/appconfig.model';
+import { AppConfig, ThemeName } from '../../../models/appconfig.model';
 import { filter, fromEvent, map, merge, Subscription } from 'rxjs';
 import { UserIdleService } from 'angular-user-idle';
 import { TranslateService } from '@ngx-translate/core';
@@ -38,7 +38,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
   public overlayMenuActive: boolean;
 
-  public staticMenuInactive: boolean = false;
+  public staticMenuInactive: boolean = true;
 
   public profileActive: boolean;
 
@@ -76,11 +76,17 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
   isLoggedIn = false;
 
+  isLoading: boolean = false;
+
   isVisible: boolean;
   textTranslate: any;
   previousURL: string;
   currentURL: string;
   isWatching: boolean;
+
+  /** Session is save ??? */
+  remember: boolean = false;
+  isError: boolean = false;
 
   constructor(
     public renderer: Renderer2,
@@ -96,13 +102,17 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     this.currentURL = this.router.url;
     const sessionId = this.adminService.getSessionId();
     if (sessionId) {
+      console.log("AdminID: ", sessionId);
+      this.isLoading = true;
       this.adminService.getAdminInfor(sessionId).subscribe(
         (res) => {
-          this.adminService.changeAuth(sessionId, res.data.user, true);
+          this.isLoading = false;
+          this.remember = res.data?.session?.saved || false;
+          this.adminService.changeAuth(sessionId, res.data.user, true, this.remember,);
           this.isLoggedIn = true;
         },
         (err) => {
-          this.adminService.changeAuth(sessionId, null, false);
+          this.adminService.changeAuth(sessionId, null, false, false, false);
           // this.adminService.logOut();
           this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
         }
@@ -111,6 +121,8 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    this.changeTheme("lara-light-blue", false);
+    // this.changeTheme("tailwind-light", false);
     this.userIdleService.setCustomActivityEvents(
       merge(
         fromEvent(window, 'mousemove'),
@@ -152,6 +164,11 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     });
   }
 
+  changeTheme(theme: ThemeName, dark: boolean) {
+    let themeElement = document.getElementById('theme-css');
+    themeElement.setAttribute('href', 'assets/themes/' + theme + '/theme.css');
+  }
+
   async getPublishConfig() {
     const { data } = await this.adminService.getPublicConfig().toPromise();
 
@@ -164,20 +181,20 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
     console.log(this.userIdleService.getConfigValue());
 
-    if (this.adminService.isAuthenticated && !this.isWatching) {
+    if (this.adminService.isAuthenticated && !this.isWatching && !this.remember) {
       this.onStartWatching();
     }
 
     // User Idle
     this.subscription = this.adminService.authAdminUpdate$.subscribe(res => {
+      this.isError = res.error || false;
+      this.remember = res.remember || false;
       if (res.isAuthenticated) {
-        if (!this.isWatching)
+        if (!this.isWatching && !this.remember)
           this.onStartWatching();
       }
       else {
-        this.adminService.updateAdminAuth(null);
-        if (!this.isWatching)
-          this.onStartWatching();
+        this.onStopWatching();
         this.adminService.messages = [{
           severity: 'error',
           summary: 'You have been logged out!',
@@ -189,7 +206,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     this.idleChangeSubscription = this.userIdleService.onIdleStatusChanged().subscribe((res) => {
       // isvisible == false when focus page
       this.isVisible = res;
-      console.log("", res)
+      console.log("Visible: ", !res)
     })
 
     // Start watching when user idle is starting.
@@ -199,7 +216,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     });
 
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
-      console.log("Time out")!
+      console.log("Time out");
       this.updateAuthenciated();
     });
   }
@@ -208,7 +225,9 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     if (this.cookieService.check(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)) {
       console.log("Ping has token");
       if (this.adminService.isAuthenticated && !this.isVisible) {
-        this.extendSession();
+        if (!this.remember) {
+          this.extendSession();
+        }
       }
       else if (!this.adminService.isAuthenticated) {
         this.adminService.updateAdminAuth(this.cookieService.get(STORAGE_KEY.ADMIN_SESSIONS_TOKEN));
@@ -263,7 +282,6 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
         console.log("Extend Session Success");
       },
       (err) => {
-        console.log("Error ", err);
         this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
       }
     )

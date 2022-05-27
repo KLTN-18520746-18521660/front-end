@@ -29,16 +29,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body::-webkit-scrollbar {
+body::-webkit-scrollbar,
+div::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
   background-image: linear-gradient(-45deg, #acacac, #cccccc);
   border-radius: 50px;
 }
 
-body::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track {
   background-color: #eff3f8;
 }
 
@@ -73,6 +77,10 @@ ion-icon:before {
   max-height: 80vh !important;
 }
 
+.p-overlaypanel {
+  box-shadow: 0 2px 25px 5px rgb(0 0 0 / 10%), 0 10px 10px -5px rgb(0 0 0 / 4%) !important;
+}
+
 // For ripples effect
 .p-ink {
   background: rgba(75, 175, 80, 0.1) !important;
@@ -91,6 +99,14 @@ ion-icon:before {
   object-fit: cover;
 }
 
+.p-overlaypanel {
+  max-width: 90vw !important;
+
+  @include breakpoint(min, 768px) {
+    max-width: 60vw !important;
+  }
+}
+
 .spacing-0 {
   letter-spacing: -0.02em !important;
 }
@@ -107,12 +123,28 @@ ion-icon:before {
   cursor: default !important;
 }
 
+.break-word {
+  word-break: break-word !important;
+}
+
 .button-link {
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
   }
+}
+
+.max-1-line{
+  @include maxline(1);
+}
+
+.max-w5-screen {
+  max-width: 50vw !important;
+}
+
+.max-h5-screen {
+  max-height: 50vh !important;
 }
 
 .bg-transparent {

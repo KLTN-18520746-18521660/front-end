@@ -20,17 +20,18 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
-import { InputMaskModule } from 'primeng/inputmask';
-import { InputSwitchModule } from 'primeng/inputswitch';
 import { ImageModule } from 'primeng/image';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { NgModule } from '@angular/core';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelModule } from 'primeng/panel';
 import { PasswordModule } from 'primeng/password';
@@ -84,14 +85,15 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     FileUploadModule,
     ImageModule,
     InputMaskModule,
+    InputNumberModule,
     InputSwitchModule,
     InputTextareaModule,
     InputTextModule,
-    InputNumberModule,
     MenubarModule,
     MenuModule,
     MessageModule,
     MessagesModule,
+    OverlayPanelModule,
     PaginatorModule,
     PanelModule,
     PasswordModule,

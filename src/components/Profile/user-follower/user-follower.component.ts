@@ -57,7 +57,6 @@ export class UserFollowerComponent implements OnInit {
       (err) => {
         this.isLoading = false;
         this.isLoadingMore = false;
-        console.log(err);
       }
     );
   }

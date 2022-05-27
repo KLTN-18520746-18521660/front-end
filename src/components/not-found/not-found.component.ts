@@ -1,13 +1,16 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',
-  styleUrls: ['./not-found.component.scss']
+  styleUrls: ['./not-found.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotFoundComponent implements OnInit {
+
+  @Input() visible: boolean = true;
 
   constructor(
     private title: Title,
@@ -15,6 +18,9 @@ export class NotFoundComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!this.visible) {
+      return;
+    }
     this.title.setTitle(this.translate.instant('label.notfound.pageTitle'));
   }
 

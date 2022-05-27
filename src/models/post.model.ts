@@ -20,6 +20,7 @@ export default class Post {
   created_timestamp?: string;
   last_modified_timestamp?: string;
   approved_timestamp?: string;
+  have_pending_content?: boolean;
   fromNow?: {
     created?: string;
     approved?: string;

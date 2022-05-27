@@ -1,3 +1,178 @@
-<p>
-  ManagePostsPage works!
-</p>
+<div class="card manage-post-wrapper" *ngIf="!isLoading && !error">
+  <p-table #dt [value]="listPosts" dataKey="id" responsiveLayout="scroll" [paginator]="true" [rowHover]="true"
+    [loading]="isLoadingTable" [totalRecords]="totalRecords" [(selection)]="selectedPosts"
+    (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll" (selectAllChange)="onSelectAllChange($event)"
+    [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [lazy]="true" (onLazyLoad)="loadPosts($event)" sortMode="multiple" [multiSortMeta]="multiSortMeta" [(first)]="first"
+    [(rows)]="rows" [globalFilterFields]="['title','owner.user_name','owner.display_name','status']">
+    <ng-template pTemplate="caption">
+      <div class="table-header flex justify-content-between align-items-center">
+        <div class="header-left inline-flex align-items-center col-12 md:col-6">
+          <h2 class="m-0">Manage Posts</h2>
+          <p-dropdown class="ml-2" [options]="rowsPerPageOptions" (onChange)="onChangeRows($event)"
+            [(ngModel)]="selectedRow"></p-dropdown>
+          <p-button label="Clear Filter" (click)="dt.reset()" icon="pi pi-times"
+            styleClass="p-button-sm p-button-secondary ml-2"></p-button>
+        </div>
+        <span class="p-input-icon-left col-12 md:col-6">
+          <i class="pi pi-search"></i>
+          <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
+            placeholder="Global Search" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns="columns">
+      <tr>
+        <th>
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th>Owner</th>
+        <th pSortableColumn="title">Title<p-sortIcon field="title"></p-sortIcon>
+        </th>
+        <th pSortableColumn="created_timestamp">Created Date <p-sortIcon field="created_timestamp"></p-sortIcon>
+        </th>
+        <th pSortableColumn="last_modified_timestamp">Last Modify <p-sortIcon field="last_modified_timestamp">
+          </p-sortIcon>
+        </th>
+        <!-- <th>Category</th> -->
+        <th>
+          Status
+          <p-columnFilter field="status" matchMode="equals" display="menu" class="ml-auto">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
+                <ng-template let-option pTemplate="item">
+                  <app-status-badge [label]="option.label"></app-status-badge>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th pSortableColumn="views">View <p-sortIcon field="views"></p-sortIcon>
+        <th pSortableColumn="likes">Like <p-sortIcon field="likes"></p-sortIcon>
+        </th>
+        <th pSortableColumn="dislikes">Dislike <p-sortIcon field="dislikes"></p-sortIcon>
+        </th>
+        <th pSortableColumn="comments">Comment <p-sortIcon field="comments"></p-sortIcon>
+        </th>
+        <th>Note</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-post let-index="rowIndex" let-columns="columns">
+      <tr>
+        <td pTooltip="ID: {{post.id}}">
+          <p-tableCheckbox [value]="post"></p-tableCheckbox>
+        </td>
+        <td>
+          <div class="cursor-pointer inline-flex align-items-center"
+            (click)="overlayUser.toggle($event); getUserInfo(post.owner.user_name)">
+            <p-overlayPanel #overlayUser [dismissable]="true">
+              <ng-template pTemplate>
+                <ng-template [ngIf]="!isLoadingUser && !!currentUser" [ngIfElse]="loadingBlock">
+                  <app-simple-grid-view [data]="currentUser"></app-simple-grid-view>
+                </ng-template>
+              </ng-template>
+            </p-overlayPanel>
+            <app-avatar [user]="post.owner"></app-avatar>
+            <span class="image-text ml-2">{{post.owner.display_name}}</span>
+            <i class="pi pi-angle-down"></i>
+          </div>
+        </td>
+        <td>
+          <a internalLink [routerLink]="['/post', post.slug]" target="_blank" class="max3line" pTooltip="{{post.title}}"
+            tooltipPosition="top">{{post.title}}</a>
+        </td>
+        <td>
+          <p pTooltip="{{post.created_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}" tooltipPosition="top">
+            {{post?.fromNow?.created}}</p>
+        </td>
+        <td>
+          <p pTooltip="{{post.last_modified_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}" tooltipPosition="top">
+            {{post?.fromNow?.updated}}</p>
+        </td>
+        <!-- <td>
+          <a *ngFor="let cate of post.categories" class="mx-2" target="_blank"
+            [routerLink]="['/category', cate.slug]">{{cate.display_name}}</a>
+        </td> -->
+        <td>
+          <div class="cursor-pointer inline-flex align-items-center" (click)="overlayDate.toggle($event)"
+            (mouseenter)="overlayDate.toggle($event)" (mouseleave)="overlayDate.hide()">
+            <p-overlayPanel #overlayDate [dismissable]="true">
+              <ng-template pTemplate>
+                <p><strong>Created:</strong> {{post.created_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}</p>
+                <p><strong>Approved:</strong> {{post.approved_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}</p>
+                <p><strong>Last Modified:</strong> {{post.last_modified_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}</p>
+              </ng-template>
+            </p-overlayPanel>
+            <app-status-badge [translation]="false" [size]="'xs'" [label]="post.status">
+            </app-status-badge>
+            <i class="pi pi-angle-down"></i>
+          </div>
+        </td>
+        <td title="{{post.views}}">{{post.views | shortNumber}}</td>
+        <td title="{{post.likes}}">{{post.likes | shortNumber}}</td>
+        <td title="{{post.dislikes}}">{{post.dislikes | shortNumber}}</td>
+        <td title="{{post.comments}}">{{post.comments | shortNumber}}</td>
+        <td>
+          <button *ngIf="post.have_pending_content" pButton type="button" class="p-button-sm p-button-warning"
+            label="Pending content"></button>
+        </td>
+        <td>
+          <button pButton type="button" (click)="onClickViewDetail(post.id)" class="p-button-sm p-button-secondary"
+            icon="pi pi-eye"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns="columns">
+      <tr>
+        <td [attr.colspan]="10">
+          <p class="text-center">No records found</p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" [modal]="true" [style]="{width: '60vw'}"
+  [maximizable]="true" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <p class="font-semibold text-2xl max-1-line" title="{{currentPost.title}}" *ngIf="currentPost">{{currentPost.title}}
+    </p>
+  </ng-template>
+
+  <ng-template [ngIf]="!isLoadingDialog" [ngIfElse]="loadingBlock">
+    <ng-template [ngIf]="viewDialog === 'detail' && !!currentPost">
+      <app-view-detail-post [post]="currentPost"></app-view-detail-post>
+      <div class="flex justify-content-end">
+        <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple type="button"
+          (click)="onClickReject(currentPost.id, true)" label="Reject Pending Content"
+          class="p-button-outlined p-button-danger mr-2" icon="pi pi-ti"></button>
+        <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
+          (click)="onClickReject(currentPost.id)" label="Reject"
+          class="p-button-outlined p-button-danger mr-2" icon="pi pi-ti"></button>
+        <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
+          (click)="onClickApprove(currentPost.id)" label="Approve" class="p-button-raised p-button-success"
+          icon="pi pi-check"></button>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+  </ng-template>
+</p-dialog>
+
+<ng-template #loadingBlock>
+  <div class="flex justify-content-center">
+    <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+  </div>
+</ng-template>
+
+<app-loading [loading]="isLoading"></app-loading>
+
+<app-NotFoundPage [visible]="error"></app-NotFoundPage>
+
+<p-toast [key]="'manage-post'" [preventOpenDuplicates]="true"></p-toast>
+
+<p-confirmDialog key="manage-post" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+  [dismissableMask]="true">
+</p-confirmDialog>

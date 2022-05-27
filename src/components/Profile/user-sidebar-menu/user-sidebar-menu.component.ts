@@ -143,7 +143,6 @@ export class UserSidebarMenuComponent implements OnInit {
   }
 
   onClickMenu(item) {
-    console.log(item);
     this.clickMenu.emit(item);
   }
 

@@ -37,7 +37,6 @@ export class UserInfoPageComponent implements OnInit {
         this.isLoading = false;
       },
       (err) => {
-        console.log(err);
         this.error = true;
         this.isLoading = false;
       }
@@ -49,7 +48,6 @@ export class UserInfoPageComponent implements OnInit {
       },
       (err) => {
         this.error = true;
-        console.log(err);
       }
     );
   }

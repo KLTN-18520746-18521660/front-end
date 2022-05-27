@@ -531,7 +531,6 @@ export class DetailPageComponent implements OnInit {
       (err) => {
         this.isLoadingMoreComments = false;
         this.isLoadingComments = false;
-        console.log(err);
       }
     );
   }
@@ -599,7 +598,6 @@ export class DetailPageComponent implements OnInit {
           },
           (err) => {
             this.messageService.add({ severity: 'error', summary: '', detail: err.message });
-            console.log(err);
             this.isLoadingAddComment = false;
           }
         );
@@ -618,7 +616,6 @@ export class DetailPageComponent implements OnInit {
       },
       (err) => {
         this.messageService.add({ severity: 'error', summary: '', detail: err.message });
-        console.log(err);
       }
     );
   }

@@ -13,7 +13,7 @@ import _ from 'lodash';
 import { STORAGE_KEY, APPCONSTANT } from 'utils/appConstant';
 import { CookieService } from 'services/cookie.service';
 import { PublicConfig } from 'models/appconfig.model';
-import ApiResult, { Session } from 'models/api.model';
+import { ApiResult, Session } from 'models/api.model';
 
 const BASE_URL = environment.baseApiUrl;
 
@@ -71,7 +71,6 @@ export class UserService {
     private cookieService: CookieService
   ) {
     console.log("SessionID: ", this.getSessionId());
-    console.log("AdminID: ", 's8gswk2lv5y7alz8e2tu1nca7c5p0j');
     if (this.getSessionId()) {
       this.session_id = this.getSessionId();
       this.updateAuth(this.session_id);

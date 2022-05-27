@@ -11,8 +11,8 @@
   <div class="layout-sidebar">
     <app-menu></app-menu>
   </div>
-  <div class="layout-main-container">
-    <div class="layout-main">
+  <div class="layout-main-container" *ngIf="!isError; else error">
+    <div class="layout-main" *ngIf="!isLoading">
       <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>
@@ -33,4 +33,10 @@
   </div>
 </ng-template>
 
-<app-switch-theme class="hidden"></app-switch-theme>
+<app-loading [loading]="isLoading"></app-loading>
+
+<!-- <app-switch-theme class="hidden"></app-switch-theme> -->
+
+<ng-template #error>
+  <app-NotFoundPage></app-NotFoundPage>
+</ng-template>

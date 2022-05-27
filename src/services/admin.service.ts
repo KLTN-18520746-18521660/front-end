@@ -1,4 +1,4 @@
-import ApiResult from 'models/api.model';
+import { ApiResult } from 'models/api.model';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,6 +11,7 @@ import { handleError } from 'utils/commonFunction';
 import { STORAGE_KEY } from 'utils/appConstant';
 import { PublicConfig } from 'models/appconfig.model';
 import { CookieService } from './cookie.service';
+import { AuthUpdateUser } from 'models/user.model';
 
 const BASE_URL = environment.baseApiUrl;
 
@@ -102,7 +103,7 @@ export class AdminService {
     }));
   }
 
-  authAdminUpdate = new Subject<any>();
+  authAdminUpdate = new Subject<AuthUpdateUser>();
 
   authAdminUpdate$ = this.authAdminUpdate.asObservable();
 
@@ -117,7 +118,8 @@ export class AdminService {
         this.admin = res.data.user;
         this.session_id = sessionId;
         this.isAuthenticated = true;
-        this.authAdminUpdate.next({ session_id: sessionId, user: res.data.user, isAuthenticated: true });
+        this.remember = res.data?.session?.saved || false;
+        this.authAdminUpdate.next({ session_id: sessionId, user: res.data.user, isAuthenticated: true, remember: this.remember, error: false });
 
         // close all ref
         // this.ref.forEach(item => {
@@ -126,18 +128,18 @@ export class AdminService {
       },
       (err) => {
         this.isAuthenticated = false;
-        this.authAdminUpdate.next({ session_id: null, user: null, isAuthenticated: false });
+        this.authAdminUpdate.next({ session_id: null, user: null, isAuthenticated: false, remember: false, error: true });
         // this.logOut();
         this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
       }
     );
   }
 
-  changeAuth(sessionId: string, user: any, isAuthenticated: boolean) {
+  changeAuth(sessionId: string, user: any, isAuthenticated: boolean, remember: boolean, error: boolean = false) {
     this.admin = user;
     this.session_id = sessionId;
     this.isAuthenticated = true;
-    this.authAdminUpdate.next({ session_id: sessionId, user: user, isAuthenticated: isAuthenticated });
+    this.authAdminUpdate.next({ session_id: sessionId, user: user, isAuthenticated: isAuthenticated, remember: remember, error: false });
   }
 
   public getSessionId() {

@@ -7,7 +7,7 @@ import Comment from "./comment.model";
 import Notification from "./notification.model";
 import { Admin } from "./admin.model";
 
-export default interface ApiResult {
+export interface ApiResult {
   status?: number;
   message?: string;
   data?: {
@@ -44,6 +44,7 @@ export interface ApiParams {
   size?: number;
   search_term?: string;
   tags?: string;
+  status?: string;
   categories?: string;
   /**s
    * 'view','like'

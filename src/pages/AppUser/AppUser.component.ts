@@ -94,11 +94,6 @@ export class AppUserComponent implements OnInit {
     else {
       this.isLoading = false;
     }
-    this.authSubscription = this.userService.authUpdate$.subscribe(res => {
-      this.isLoading = false;
-      this.isError = res.error || false;
-      this.remember = res.remember || false;
-    })
 
     this.userIdleService.setCustomActivityEvents(
       merge(
@@ -163,6 +158,9 @@ export class AppUserComponent implements OnInit {
     // User Idle
     this.subscription = this.userService.authUpdate$.subscribe(res => {
       this.isLoading = false;
+      this.isError = res.error || false;
+      this.remember = res.remember || false;
+
       if (res.isAuthenticated) {
         if (!this.isWatching) {
           this.onStartWatching();
@@ -189,7 +187,7 @@ export class AppUserComponent implements OnInit {
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
       console.log("Time out")!
       this.updateAuthenciated();
-      window.location.reload();
+      // window.location.reload();
     });
   }
 
@@ -256,7 +254,6 @@ export class AppUserComponent implements OnInit {
         this.lastExtend = new Date();
       },
       (err) => {
-        console.log("Error ", err);
         this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
       }
     )

@@ -61,7 +61,10 @@ export const REST_URL = {
     CONFIG: 'admin/config',
     RELOAD_CONFIG: 'admin/config/reload',
 
+    USER: 'user',
+
     POST: 'admin/post',
+    POSTS: 'admin/posts',
     APPROVE_POST: 'admin/post/approve',
     REJECT_POST: 'admin/post/reject',
   },

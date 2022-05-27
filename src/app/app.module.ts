@@ -1,3 +1,5 @@
+import { SimpleGridViewComponent } from './../components/simple-grid-view/simple-grid-view.component';
+import { ViewDetailPostComponent } from '../components/view-detail-post/view-detail-post.component';
 import { DockComponent } from './../components/dock/dock.component';
 import { EditPostPageComponent } from './../pages/EditPostPage/EditPostPage.component';
 import { SwitchThemeComponent } from './../components/Configs/switch-theme/switch-theme.component';
@@ -119,6 +121,7 @@ import { RedirectingComponent } from 'components/Loadings/redirecting/redirectin
 import { NewPasswordPageComponent } from 'pages/NewPasswordPage/NewPasswordPage.component';
 import { GoToComponent } from 'components/go-to/go-to.component';
 import { UserSidebarMenuComponent } from 'components/Profile/user-sidebar-menu/user-sidebar-menu.component';
+import { OpenNewWindowDirective } from 'shared/directives/openNewWindow.directive';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -191,7 +194,6 @@ export function playerFactory() {
     UserEditInfoComponent,
     RequiredFieldDirective,
     AvatarComponent,
-    ManagePostsPageComponent,
     ReportPopupComponent,
     CheckIconComponent,
     NotFoundComponent,
@@ -207,13 +209,18 @@ export function playerFactory() {
     UserSidebarMenuComponent,
     EditPostPageComponent,
     DockComponent,
+    OpenNewWindowDirective,
+    SimpleGridViewComponent,
 
     SwitchThemeComponent,
     
+    ManagePostsPageComponent,
     TopbarAdminComponent,
     MenuComponent,
     AppMenuitemComponent,
     AdminLoginPageComponent,
+    ViewDetailPostComponent,
+
   ],
   imports: [
     BrowserModule,

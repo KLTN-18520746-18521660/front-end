@@ -404,7 +404,7 @@ export class EditPostPageComponent implements OnInit {
 
     console.log(diffData);
 
-    this.modifyPostSubscription = this.postService.modifyPostByPostId(this.id, body).subscribe(
+    this.modifyPostSubscription = this.postService.modifyPostByPostId(this.id, diffData).subscribe(
       (res) => {
         this.isLoading = false;
         this.editing = false;

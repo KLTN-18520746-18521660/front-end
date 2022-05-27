@@ -27,6 +27,7 @@
     "@angular/router": "~13.2.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "@types/chart.js": "^2.9.37",
     "angular-user-idle": "^2.2.7",
     "angularx-social-login": "^4.1.0",
     "chart.js": "^3.7.0",

@@ -183,7 +183,6 @@ export class CommentCardComponent implements OnInit {
         },
         (err) => {
           this.messageService.add({ severity: 'error', summary: '', detail: err.message });
-          console.log(err);
           this.isLoading = false;
         }
       );
@@ -203,7 +202,6 @@ export class CommentCardComponent implements OnInit {
       },
       (err) => {
         this.messageService.add({ severity: 'error', summary: '', detail: err.message });
-        console.log(err);
       }
     );
   }

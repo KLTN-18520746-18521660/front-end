@@ -3,7 +3,7 @@ import { AppConfigService } from 'services/app.config.service';
 import { Message, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AdminLoginModel } from 'models/admin.model';
 import { AdminService } from 'services/admin.service';
 import { APPCONSTANT } from 'utils/appConstant';
@@ -32,17 +32,26 @@ export class AdminLoginPageComponent implements OnInit {
 
   isAuthenticated: boolean = false;
 
+  returnUrl: string;
+
+  isRedirecting: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private adminService: AdminService,
     private configService: AppConfigService,
-    private userConfig: UserConfigService
+    private userConfig: UserConfigService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+
+    // get returnUrl
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || null;
+
     this.message = this.adminService.messages;
-    this.changeTheme('lara-light-blue', false);
+    this.changeTheme('tailwind-light', false);
 
     this.form = new FormGroup({
       Admin_email: this.formBuilder.control(''),
@@ -85,6 +94,7 @@ export class AdminLoginPageComponent implements OnInit {
       this.isLoading = false;
       return;
     }
+
     const { Admin_email, Admin_password, Admin_remember } = this.form.value;
 
     const user = new AdminLoginModel({
@@ -104,9 +114,18 @@ export class AdminLoginPageComponent implements OnInit {
           detail: 'You have successfully logged in.',
         }]
 
-        setTimeout(() => {
-          this.router.navigate(['/admin']);
-        }, APPCONSTANT.LOADING_TIMEOUT);
+        this.isRedirecting = true;
+        if (this.returnUrl) {
+          this.returnUrl = decodeURIComponent(this.returnUrl);
+          setTimeout(() => {
+            this.router.navigate([this.returnUrl]);
+          }, APPCONSTANT.LOADING_TIMEOUT);
+        }
+        else {
+          setTimeout(() => {
+            this.router.navigate(['/admin']);
+          }, APPCONSTANT.LOADING_TIMEOUT);
+        }
       },
       (err: any) => {
         this.isLoading = false;

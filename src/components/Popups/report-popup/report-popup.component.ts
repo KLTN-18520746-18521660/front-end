@@ -144,8 +144,7 @@ export class ReportPopupComponent implements OnInit {
                   this.success = true;
                   this.currentReason = null;
                 },
-                (err) => {
-                  console.log(err);
+                () => {
                 }
               );
           }

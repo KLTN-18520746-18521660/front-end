@@ -2,7 +2,7 @@ import { AdminService } from 'services/admin.service';
 import { Subscription } from 'rxjs';
 import { AppMainComponent } from 'pages/Admin/AppMain/AppMain.component';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, ConfirmationService } from 'primeng/api';
 import { Admin } from 'models/admin.model';
 
 @Component({
@@ -24,7 +24,8 @@ export class TopbarAdminComponent implements OnInit {
 
   constructor(
     public appMain: AppMainComponent,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -64,17 +65,21 @@ export class TopbarAdminComponent implements OnInit {
   }
 
   onClickLogout() {
-    this.adminService.logout(this.session_id).subscribe(res => {
-      this.adminService.admin = null;
-      this.adminService.session_id = null;
-      this.adminService.isAuthenticated = false;
-      this.adminService.authAdminUpdate.next({
-        user: null,
-        session_id: null,
-        isAuthenticated: false
-      });
-      this.adminService.logOut();
-    })
+    this.confirmationService.confirm({
+      key: 'logout',
+      header: "Log out?",
+      message: "Do you sure to log out?",
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: "Yes, log out",
+      rejectLabel: "No, cancel",
+      rejectButtonStyleClass: 'p-button-danger p-button-outlined',
+      accept: () => {
+        this.adminService.logout(this.session_id).subscribe(res => {
+          this.adminService.logOut();
+        })
+      }
+    });
+
   }
 
   ngOnDestroy() {

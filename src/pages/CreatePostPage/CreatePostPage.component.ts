@@ -191,7 +191,6 @@ export class CreatePostPageComponent implements OnInit {
       },
       (err) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
-        console.log(err);
         this.isLoading = false;
       }
     );
@@ -294,7 +293,6 @@ export class CreatePostPageComponent implements OnInit {
         .slice(0, 190);
 
     } catch (error) {
-      console.log(error);
       this.messageService.add({ key: 'createPostToast', severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
     }
 
