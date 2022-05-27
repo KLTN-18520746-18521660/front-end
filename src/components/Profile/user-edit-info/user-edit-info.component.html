@@ -1,4 +1,4 @@
-<div class="flex" *ngIf="user">
+<div class="flex" *ngIf="!isLoading && user">
   <div class="col-12">
     <div class="card p-fluid">
       <h5>{{'profile.editProfile.title' | translate}}</h5>
