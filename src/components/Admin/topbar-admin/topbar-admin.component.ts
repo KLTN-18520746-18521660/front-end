@@ -76,6 +76,7 @@ export class TopbarAdminComponent implements OnInit {
       accept: () => {
         this.adminService.logout(this.session_id).subscribe(res => {
           this.adminService.logOut();
+          this.adminService.messages = [];
         })
       }
     });

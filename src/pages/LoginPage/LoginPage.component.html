@@ -25,7 +25,7 @@
       </label>
       <div class="relative">
         <input #password formControlName="password" id="password" type="password" pPassword [feedback]="false"
-          [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['email'].touched) && f['password'].errors }"
+          [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['password'].touched) && f['password'].errors }"
           placeholder="{{'label.login.passwordPlaceholder' | translate }}" class="password-input w-full mb-1">
         <i class="pi password-icon absolute" [ngClass]="password.type === 'password' ? 'pi-eye' : 'pi-eye-slash'"
           (click)="password.type = password.type === 'password' ? 'text' : 'password'"></i>
