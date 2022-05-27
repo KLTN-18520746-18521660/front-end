@@ -5,20 +5,38 @@
 'layout-overlay-sidebar-active': overlayMenuActive,
 'layout-static-sidebar-inactive': staticMenuInactive,
 'layout-mobile-sidebar-active':menuActiveMobile,
-'p-ripple-disabled': !config.ripple, 'p-input-filled': config.inputStyle === 'filled'}">
+'p-ripple-disabled': !config.ripple, 'p-input-filled': config.inputStyle === 'filled'}"
+  *ngIf="isLoggedIn; else gotoLogin">
   <app-topbar-admin></app-topbar-admin>
   <div class="layout-sidebar">
     <app-menu></app-menu>
   </div>
-  
-  <ng-scrollbar class="my-custom-scrollbar">
-    <div class="layout-main-container">
-      <div class="layout-main">
-        <router-outlet></router-outlet>
-      </div>
-      <app-footer></app-footer>
+  <div class="layout-main-container" *ngIf="!isError; else error">
+    <div class="layout-main" *ngIf="!isLoading">
+      <router-outlet></router-outlet>
     </div>
-    <app-config></app-config>
-    <div *ngIf="menuActiveMobile" class="layout-mask p-component-overlay"></div>
-  </ng-scrollbar>
+    <app-footer></app-footer>
+  </div>
+  <div *ngIf="menuActiveMobile" class="layout-mask p-component-overlay"></div>
 </div>
+
+<p-confirmDialog [breakpoints]="{'960px': '70vw', '640px': '96vw'}" [style]="{width: '50vw'}" [dismissableMask]="true">
+</p-confirmDialog>
+<p-toast [preventOpenDuplicates]="true"></p-toast>
+
+<ng-template #gotoLogin>
+  <div class="h-screen w-screen">
+    <div class="flex h-full justify-content-center align-items-center">
+      <button [routerLink]="['./login']" pButton pRipple type="button" label="Go to Login Page"
+        class="p-button-raised p-button-danger"></button>
+    </div>
+  </div>
+</ng-template>
+
+<app-loading [loading]="isLoading"></app-loading>
+
+<!-- <app-switch-theme class="hidden"></app-switch-theme> -->
+
+<ng-template #error>
+  <app-NotFoundPage></app-NotFoundPage>
+</ng-template>

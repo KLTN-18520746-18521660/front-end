@@ -1,9 +1,21 @@
-<app-top-bar></app-top-bar>
-<ng-scrollbar class="my-custom-scrollbar">
-  <div class="main mt-8">
-    <div class="wrapper">
-      <router-outlet></router-outlet>
-    </div>
-    <app-footer></app-footer>
+<app-top-bar *ngIf="!isLoading"></app-top-bar>
+
+<div class="main pt-8" *ngIf="!isLoading && !isLoadingConfig">
+  <div class="wrapper">
+    <router-outlet *ngIf="!isError; else error"></router-outlet>
+    <app-btn-scroll-to-top></app-btn-scroll-to-top>
   </div>
-</ng-scrollbar>
+  <!-- <app-language-selector></app-language-selector> -->
+  <app-footer></app-footer>
+</div>
+
+<p-confirmDialog key="appDialog" [styleClass]="'dynamic-popup'" [dismissableMask]="true">
+</p-confirmDialog>
+
+<p-toast [preventOpenDuplicates]="true"></p-toast>
+
+<app-loading [loading]="isLoading || isLoadingConfig"></app-loading>
+
+<ng-template #error>
+  <app-NotFoundPage></app-NotFoundPage>
+</ng-template>

@@ -1,0 +1,43 @@
+<div class="report-wrapper flex flex-wrap" *ngIf="!success; else successBlock">
+  <p class="text-500">{{'report.description' | translate}}</p>
+  <div class="col-12 text-md">
+    <div *ngFor="let item of listReasons" class="field-checkbox">
+      <p-radioButton [inputId]="item.key" name="item" [value]="item" [(ngModel)]="currentReason"
+        (onClick)="onClickReason()"></p-radioButton>
+      <label class="w-full py-2 cursor-pointer" [for]="item.key">
+        {{item.title}}
+        <i class="pi pi-info-circle ml-2" pTooltip="{{item.description}}" tooltipPosition="top"></i>
+      </label>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="currentReason">
+    <p class="text-md text-600"><i class="pi pi-angle-double-right mr-2"></i>{{currentReason.description}}</p>
+    <p class="font-semibold text-xl">{{'report.reason' | translate}}</p>
+    <textarea #textInput [(ngModel)]="content" [rows]="4" pInputTextarea
+      placeholder="{{'report.reasonPlaceholder' | translate}}" class="w-full comment-input pl-3 pr-7 shadow-1">
+    </textarea>
+  </div>
+  <div class="col-12 md:col-6 mx-auto flex justify-content-center">
+    <button pButton pRipple type="button" label="{{'report.cancel' | translate}}" (click)="onClickCancel()"
+      class="p-button-danger w-full mr-2"></button>
+    <button pButton pRipple type="button" icon="pi pi-flag" label="{{'report.submit' | translate}}"
+      (click)="onClickSubmit()" class="w-full ml-2"></button>
+  </div>
+</div>
+
+<ng-template #successBlock>
+  <div class="w-full md:w-10 mx-auto">
+    <div class="text-center mb-5">
+      <app-check-icon></app-check-icon>
+      <div class="text-900 text-3xl font-medium mt-6 mb-3">{{ 'report.success.title' | translate }}</div>
+      <p class="text-600 font-medium">{{ 'report.success.description' | translate }}</p>
+
+      <button pButton pRipple type="button" label="{{'report.ok' | translate}}" (click)="onClickCancel()"
+        class="p-button-danger w-full mr-2"></button>
+    </div>
+  </div>
+</ng-template>
+
+<p-confirmDialog key="reportConfirm" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+  [dismissableMask]="true">
+</p-confirmDialog>

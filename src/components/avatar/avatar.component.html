@@ -1,0 +1,17 @@
+<div class="relative">
+  <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
+    <p-avatar shape="circle" image="{{ user.avatar }}" size="large"
+      [styleClass]="'border-1 border-' + borderColor + ' h-' + height + ' w-' + height">
+    </p-avatar>
+  </ng-template>
+  <ng-template #avatar>
+    <p-avatar label="{{user.display_name.substring(0,1) | uppercase}}"
+      [styleClass]="className + ' h-' + height + ' w-' + height" shape="circle" size="large">
+    </p-avatar>
+  </ng-template>
+  <div *ngIf="badge" class="absolute right-0 bottom-0">
+    <span class="p-2 bg-primary border-circle">
+      <i class="pi {{badge}}"></i>
+    </span>
+  </div>
+</div>

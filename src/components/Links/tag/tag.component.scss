@@ -1,0 +1,11 @@
+.tag-link {
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.max-width {
+      max-width: 100px;
+    }
+  }
+}

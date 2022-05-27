@@ -1,0 +1,21 @@
+<div class="user-following-wrapper flex flex-wrap" infiniteScroll [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
+  <div class="col-12">
+    <p class="font-medium text-md" [innerHTML]="'profile.result.following' | translate: { count: totalSize}"></p>
+  </div>
+  <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingSpinner">
+    <div class="col-12 sm:col-6" *ngFor="let user of listUsers">
+      <app-user-card [user]="user"></app-user-card>
+    </div>
+  </ng-template>
+  <ng-template #loadingSpinner>
+    <div class="col-12 sm:col-6" *ngFor="let i of [1,2,3,4,5,6]">
+      <app-user-card [loading]="true"></app-user-card>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="isLoadingMore">
+    <div class="col-12">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-template>
+</div>

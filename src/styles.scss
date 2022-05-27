@@ -1,22 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@import "styles/scss/mixins.scss";
 @import "primeng/resources/primeng.min.css";
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
 
-@import "../node_modules/primeng/resources/primeng.min.css";
-@import "../node_modules/primeflex/primeflex.scss";
-@import "../node_modules/primeicons/primeicons.css";
-@import "assets/demo/flags/flags.css";
-@import "assets/demo/documentation.scss";
+@import "assets/styles/flags/flags.css";
+// @import "assets/styles/documentation.scss";
 @import "assets/sass/layout/_variables";
 @import "assets/sass/layout/_layout";
 @import "assets/sass/overrides/_overrides";
 
+// Syntax highlight
+// @import 'prismjs/themes/prism-twilight.min.css';
+@import 'prismjs/themes/prism-okaidia.css';
+// @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+// @import 'prismjs/plugins/line-highlight/prism-line-highlight.css';
+
 html,
 body {
   box-sizing: border-box;
-  scroll-behavior: smooth;
-  overflow: hidden;
+  // scroll-behavior: smooth;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -26,91 +29,642 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body::-webkit-scrollbar,
+div::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(-45deg, #acacac, #cccccc);
+  border-radius: 50px;
+}
+
+body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track {
+  background-color: #eff3f8;
+}
+
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+ion-icon {
+  font-size: 1.5rem;
+}
+
+ion-icon:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.p-button:focus {
+  box-shadow: none !important;
+}
+
+.p-image-preview {
+  max-width: 80vw !important;
+  max-height: 80vh !important;
+}
+
+.p-overlaypanel {
+  box-shadow: 0 2px 25px 5px rgb(0 0 0 / 10%), 0 10px 10px -5px rgb(0 0 0 / 4%) !important;
+}
+
+// For ripples effect
 .p-ink {
   background: rgba(75, 175, 80, 0.1) !important;
 }
 
-.my-custom-scrollbar {
-  --scrollbar-border-radius: 7px !important;
-  --scrollbar-padding: 0px;
-  --scrollbar-viewport-margin: 0 !important;
-  --scrollbar-track-color: transparent !important;
-  --scrollbar-wrapper-color: transparent !important;
-  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2) !important;
-  --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color) !important;
-  --scrollbar-size: 8px !important;
-  --scrollbar-hover-size: var(--scrollbar-size) !important;
-  --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms !important;
-  --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms !important;
+.p-tooltip-text {
+  font-size: 0.8rem !important;
+  padding: 0.5rem !important;
 }
 
-// For scrolbar thumb
-.scrollbar-control {
-  margin-top: 5rem;
+.p-toast-top-right {
+  top: 80px !important;
 }
 
+.p-image>img {
+  object-fit: cover;
+}
+
+.p-overlaypanel {
+  max-width: 90vw !important;
+
+  @include breakpoint(min, 768px) {
+    max-width: 60vw !important;
+  }
+}
+
+.spacing-0 {
+  letter-spacing: -0.02em !important;
+}
+
+.spacing-1 {
+  letter-spacing: -0.03em !important;
+}
+
+.word-break-all {
+  word-break: break-all !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.break-word {
+  word-break: break-word !important;
+}
+
+.button-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.max-1-line{
+  @include maxline(1);
+}
+
+.max-w5-screen {
+  max-width: 50vw !important;
+}
+
+.max-h5-screen {
+  max-height: 50vh !important;
+}
+
+.bg-transparent {
+  background: transparent !important;
+}
+
+.color-inherit {
+  color: inherit !important;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
+// Fab button menu
+.button-menu {
+  height: 2.4rem !important;
+  width: 2.4rem !important;
+  border-radius: 1.2rem !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  span {
+    font-size: 0.9rem !important;
+  }
+}
+
+.text-md {
+  font-size: 1.0625rem !important;
+}
+
+.p-dialog-footer {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  padding-top: 2rem !important;
+}
+
+.p-button {
+  &:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.p-image-preview-container:hover>.p-image-preview-indicator {
+  opacity: 0.6 !important;
+}
+
+.required-field-label::after {
+  content: ' *';
+  color: #EF4444;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 0.1rem;
+}
+
+.list-span {
+  &:before {
+    content: '•';
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin-right: 0.1rem;
+  }
+}
 
 // Container code
-.container,
-.container-fluid,
-.container-xxl,
-.container-xl,
-.container-lg,
-.container-md,
-.container-sm {
+.container {
   width: 100%;
   padding-right: var(--bs-gutter-x, 0.75rem);
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
-}
 
-@media (min-width: 576px) {
-
-  .container-sm,
-  .container {
-    max-width: 540px;
+  @media (min-width: 576px) {
+    max-width: 600px;
   }
-}
 
-@media (min-width: 768px) {
-
-  .container-md,
-  .container-sm,
-  .container {
-    max-width: 720px;
+  @media (min-width: 640px) {
+    max-width: 700px;
   }
-}
 
-@media (min-width: 992px) {
-
-  .container-lg,
-  .container-md,
-  .container-sm,
-  .container {
-    max-width: 960px;
+  @media (min-width: 768px) {
+    max-width: 850px;
   }
-}
 
-@media (min-width: 1200px) {
+  @media (min-width: 992px) {
+    max-width: 1000px;
+  }
 
-  .container-xl,
-  .container-lg,
-  .container-md,
-  .container-sm,
-  .container {
+  @media (min-width: 1200px) {
     max-width: 1140px;
   }
-}
 
-@media (min-width: 1400px) {
-
-  .container-xxl,
-  .container-xl,
-  .container-lg,
-  .container-md,
-  .container-sm,
-  .container {
+  @media (min-width: 1400px) {
     max-width: 1320px;
   }
+}
+
+
+.container-fluid {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: 576px) {
+    max-width: 520px;
+  }
+
+  @media (min-width: 640px) {
+    max-width: 580px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 700px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 920px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1080px;
+  }
+
+  @media (min-width: 1400px) {
+    max-width: 1080px;
+  }
+}
+
+
+// Animation Keyframes
+.slide-down {
+  animation: slide-down 0.3s linear both;
+}
+
+.slide-up {
+  animation: slide-up 0.3s linear both;
+}
+
+@keyframes slide-down {
+  0% {
+    visibility: hidden;
+    height: 0;
+  }
+
+  95% {
+    visibility: visible;
+    height: 100%;
+  }
+
+  /* Set height to 'auto' after animation for spacing showing form-invalid feedback message */
+  100% {
+    visibility: visible;
+    height: auto;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    visibility: visible;
+    height: 100%;
+  }
+
+  to {
+    visibility: hidden;
+    height: 0;
+  }
+}
+
+// Other
+.up-down {
+  animation: updown 1.5s linear infinite;
+  -webkit-animation: updown 1.5s linear infinite;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+  }
+
+  20% {
+    transform: translateY(-1px);
+    -webkit-transform: translateY(-1px);
+    -moz-transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    -o-transform: translateY(-1px);
+  }
+
+  40% {
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+  }
+
+  60% {
+    transform: translateY(-1px);
+    -webkit-transform: translateY(-1px);
+    -moz-transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    -o-transform: translateY(-1px);
+  }
+
+  100% {
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+  }
+}
+
+@keyframes p-fadein {
+  0% {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1
+  }
+
+  to {
+    opacity: 0
+  }
+}
+
+@keyframes scalein {
+  0% {
+    opacity: 0;
+    transform: scaleY(.8);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1)
+  }
+}
+
+@keyframes slidedown {
+  0% {
+    max-height: 0
+  }
+
+  to {
+    max-height: auto
+  }
+}
+
+@keyframes slideup {
+  0% {
+    max-height: 1000px
+  }
+
+  to {
+    max-height: 0
+  }
+}
+
+@keyframes fadeinleft {
+  0% {
+    opacity: 0;
+    transform: translate(-10px);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0)
+  }
+}
+
+@keyframes fadeoutleft {
+  0% {
+    opacity: 1;
+    transform: translate(0);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-100%)
+  }
+}
+
+@keyframes fadeinright {
+  0% {
+    opacity: 0;
+    transform: translate(100%);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0)
+  }
+}
+
+@keyframes fadeoutright {
+  0% {
+    opacity: 1;
+    transform: translate(0);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(100%)
+  }
+}
+
+@keyframes fadeinup {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes fadeoutup {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-100%)
+  }
+}
+
+@keyframes fadeindown {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes fadeoutdown {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform .12s cubic-bezier(0, 0, .2, 1), opacity .12s cubic-bezier(0, 0, .2, 1)
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(100%)
+  }
+}
+
+@keyframes animate-width {
+  0% {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+.fadein {
+  animation: fadein .15s linear;
+  -webkit-animation: fadein .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeout {
+  animation: fadeout .15s linear;
+  -webkit-animation: fadeout .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.slidedown {
+  animation: slidedown .45s ease-in-out;
+  -webkit-animation: slidedown .45s ease-in-out;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.slideup {
+  animation: slideup .45s cubic-bezier(0, 1, 0, 1);
+  -webkit-animation: slideup .45s cubic-bezier(0, 1, 0, 1);
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.scalein {
+  animation: scalein .15s linear;
+  -webkit-animation: scalein .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeinleft {
+  animation: fadeinleft .15s linear;
+  -webkit-animation: fadeinleft .15s linear;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeoutleft {
+  animation: fadeoutleft .15s linear;
+  -webkit-animation: fadeoutleft .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeinright {
+  animation: fadeinright .15s linear;
+  -webkit-animation: fadeinright .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeoutright {
+  animation: fadeoutright .15s linear;
+  -webkit-animation: fadeoutright .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeinup {
+  animation: fadeinup .15s linear;
+  -webkit-animation: fadeinup .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeoutup {
+  animation: fadeoutup .15s linear;
+  -webkit-animation: fadeoutup .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeindown {
+  animation: fadeindown .15s linear;
+  -webkit-animation: fadeindown .15s linear;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.fadeoutdown {
+  animation: fadeoutdown .15s linear;
+  -webkit-animation: fadeoutdown .15s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.animate-width {
+  animation: animate-width 1s linear;
+  -webkit-animation: animate-width 1s linear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.animation-ease-in {
+  animation-timing-function: cubic-bezier(.4, 0, 1, 1) !important
+}
+
+.animation-ease-out {
+  animation-timing-function: cubic-bezier(0, 0, .2, 1) !important
+}
+
+.animation-ease-in-out {
+  animation-timing-function: cubic-bezier(.4, 0, .2, 1) !important
+}
+
+.animation-fill-none {
+  animation-fill-mode: none !important
+}
+
+.animation-fill-forwards {
+  animation-fill-mode: forwards !important
+}
+
+.animation-fill-backwards {
+  animation-fill-mode: backwards !important
+}
+
+.tranform {
+  transition: transform 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
 }

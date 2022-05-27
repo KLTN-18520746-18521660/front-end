@@ -1,0 +1,39 @@
+<app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
+
+<div class="post-page-layout container">
+  <div class="grid">
+    <div class="col-12 md:col-2">
+      <div class="popular-tags w-full hidden md:block">
+        <p class="font-semibold text-lg mt-4">{{ 'label.popular.tags' | translate }}</p>
+        <app-tag [tag]="tag" [size]="'base py-3'" [color]="'bg-teal'" [width]="'w-full'" *ngFor="let tag of tags">
+        </app-tag>
+      </div>
+    </div>
+    <div class="col-12 md:col-10">
+      <div class="flex col-12 justify-content-between align-items-center">
+        <p-button></p-button>
+      </div>
+      <div class="post-list col-12">
+        <div class="grid post-list-grid" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="100"
+          (scrolled)="onScroll()">
+          <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingSpinner">
+            <div class="col-12 sm:col-6 md:col-6 lg:col-4" *ngFor="let item of listPosts">
+              <app-post-card [post]="item" [isGrid]="true"></app-post-card>
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="isLoadingMore">
+            <div class="col-12">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingSpinner>
+  <div class="col-12">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-template>

@@ -1,0 +1,22 @@
+@import 'styles/scss/mixins.scss';
+
+.manage-post-wrapper {
+
+  .max1line {
+    @include maxline(1);
+  }
+
+  .max2line {
+    @include maxline(2);
+  }
+
+  .max3line {
+    @include maxline(3);
+  }
+}
+
+:host ::ng-deep {
+  .p-dialog-footer {
+    padding: 4px !important;
+  }
+}

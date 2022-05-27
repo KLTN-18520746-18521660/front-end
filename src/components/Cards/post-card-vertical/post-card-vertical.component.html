@@ -1,0 +1,37 @@
+<a class="post-card-vertical" [routerLink]="['/post', post.slug]">
+  <div class="card p-3">
+    <div class="card-container overflow-hidden">
+      <div class="flex">
+        <div class="flex card-avatar mr-3 align-items-center">
+          <app-avatar [user]="post?.owner"></app-avatar>
+        </div>
+        <div class="flex-auto flex card-content align-items-center">
+          <div>
+            <p class="card-title text-lg font-semibold mb-2" pTooltip="{{ post.title }}" tooltipPosition="bottom">
+              {{ post.title }}
+            </p>
+            <span class="card-text" pTooltip="{{post.approved_timestamp}}" tooltipPosition="bottom">{{
+              post.fromNow.approved }}</span>
+          </div>
+        </div>
+        <div class="flex card-value">
+          <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
+            pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom" [ngClass]="{'surface-200 text-primary text-primary': post.mapAction.like}">
+            <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
+            <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
+          </div>
+          <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
+            pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom" [ngClass]="{'surface-200 text-primary': post.mapAction.comment}">
+            <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
+            <i style="font-size: 1.2rem" class="pi pi-comment"></i>
+          </div>
+          <div class="card-block-action inline-flex justify-content-between align-items-center p-1"
+            pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom" [ngClass]="{'surface-200 text-primary': post.mapAction.visited}">
+            <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
+            <i style="font-size: 1.25rem" class="pi pi-eye"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

@@ -1,7 +1,21 @@
-@import "./variables.scss";
-
-@mixin breakpoint($type: min, $width){
+@mixin breakpoint($type: min, $width) {
   @media only screen and (#{$type}-width: $width) {
     @content;
   }
+}
+
+@mixin maxline($number: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $number;
+  -webkit-box-orient: vertical;
+}
+
+@mixin borderRadius($radius: 10) {
+  border-radius: #{$radius}px !important;
+  -webkit-border-radius: #{$radius}px !important;
+  -moz-border-radius: #{$radius}px !important;
+  -ms-border-radius: #{$radius}px !important;
+  -o-border-radius: #{$radius}px !important;
 }

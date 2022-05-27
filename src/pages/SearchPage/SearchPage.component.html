@@ -1,0 +1,12 @@
+<!-- <app-search-input [query]="keyword" [wFull]="true"></app-search-input> -->
+
+<div class="search-page-layout mt-4 container">
+  <div class="card">
+    <p class="text-xl" [innerHTML]="'search.result' | translate: { query: keyword}"></p>
+    <p-tabMenu styleClass="mb-5" [model]="routeItems"></p-tabMenu>
+
+    <div class="min-h-screen">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

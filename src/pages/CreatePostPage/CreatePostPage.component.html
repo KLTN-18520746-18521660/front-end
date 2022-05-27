@@ -1,0 +1,139 @@
+<div class="create-post-wrapper container pt-4">
+  <div class="grid justify-content-center">
+    <div class="create-header col-12">
+      <p-dropdown [options]="types" [(ngModel)]="selectedEditorType" (onChange)="onChangeType($event)" placeholder="">
+      </p-dropdown>
+    </div>
+    <div class="col-12 lg:col-4 lg:flex-order-3">
+      <div class="mb-0">
+        <p requiredField class="font-medium mb-1 mt-3">{{'createPost.title' | translate}}</p>
+        <textarea [(ngModel)]="title" [placeholder]="'createPost.form.titlePlaceholder' | translate"
+          (ngModelChange)="onChangeTitle($event)" class="w-full" rows="4" pInputTextarea></textarea>
+        <span id="more-chip-help" class="block">{{'createPost.slug' | translate}}
+          <span class="underline text-primary word-break-all">{{slug}}</span>
+        </span>
+
+        <p requiredField class="font-medium mb-1 mt-3">{{'createPost.thumnail' | translate}}</p>
+        <p-fileUpload #fileUpload name="myfile[]" [customUpload]="true" [showUploadButton]="false"
+          (uploadHandler)="myUploader($event)" accept=".png, .jpg, .jpeg, .svg, .webp"
+          (onSelect)="onSelectThumbnail($event)" (onClear)="onClearSelect()" [maxFileSize]="3000000"></p-fileUpload>
+        <!-- <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate"
+          pInputText [(ngModel)]="thumbnail" (ngModelChange)="onChangeThumbnail($event)"> -->
+        <div *ngIf="!validThumbnail" class="invalid-feedback mt-1">
+          <div class="flex align-items-end">
+            <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+            <small class="p-error inline">{{'createPost.form.thumbnailError' | translate}}</small>
+          </div>
+        </div>
+        <img *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}"
+          class="post-thumbnail-image border-round mt-2 shadow-2" alt="Post Thumbnail">
+
+        <p requiredField class="font-medium mb-1 mt-3">{{'createPost.category' | translate}}</p>
+        <!-- <p-cascadeSelect [(ngModel)]="selectedCategory" (onChange)="onChangeSelectCategory($event)"
+          [options]="listCategory" optionLabel="display_name" optionGroupLabel="display_name"
+          [placeholder]="'createPost.form.categoryPlaceHolder' | translate"
+          [optionGroupChildren]="['children', 'children']" [style]="{'minWidth': '100%'}">
+          <ng-template pTemplate="option" let-option>
+            <div class="country-item">
+              <i class="pi pi-folder mr-2" *ngIf="option.children"></i>
+              <span>{{option.display_name}}</span>
+            </div>
+          </ng-template>
+        </p-cascadeSelect> -->
+        <p-treeSelect [(ngModel)]="selectedCategory" (onNodeSelect)="onSelectCategory()"
+          (onNodeUnselect)="onSelectCategory()" [options]="listCategory" selectionMode="checkbox" display="chip"
+          [metaKeySelection]="false" [placeholder]="'createPost.form.categoryPlaceHolder' | translate">
+        </p-treeSelect>
+
+        <p class="font-medium mb-1 mt-3">{{'createPost.tag' | translate}}</p>
+        <p-autoComplete [(ngModel)]="listTagModel" field="tag" [suggestions]="listFilterTags" [required]="true"
+          (completeMethod)="onFilterTag($event)" [showEmptyMessage]="true" [unique]="true" [virtualScroll]="true"
+          [multiple]="true" [dropdown]="true" [autoHighlight]="true" [delay]="500"
+          [placeholder]="'createPost.form.tagPlaceHolder' | translate">
+          <ng-template let-item pTemplate="item">
+            <div pTooltip="{{ item.name}}" tooltipPosition="top">
+              <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="selectedItem">
+            <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+          </ng-template>
+        </p-autoComplete>
+
+        <p class="font-medium mb-1 mt-3">{{'createPost.moreTag' | translate}}</p>
+        <p-chips [(ngModel)]="tags" (onAdd)="onAddMoreTag($event)" (onRemove)="onRemoveMoreTag($event)" class="w-full"
+          [addOnTab]="true" [placeholder]="'createPost.form.moreTagPlaceholder' | translate" [allowDuplicate]="false">
+          <ng-template let-item pTemplate="item">
+            <i class="pi pi-tag mr-2"></i>{{item}}
+          </ng-template>
+        </p-chips>
+        <small id="more-chip-help" class="block">{{'createPost.form.chipHelp' | translate}}</small>
+
+        <p requiredField class="font-medium mb-1 mt-3">{{'createPost.timeRead' | translate}}</p>
+        <p-inputNumber [(ngModel)]="time_read" (ngModelChange)="onChangeTimeRead($event)" mode="decimal"
+          [showButtons]="true" inputId="minmax-buttons" [min]="2" [max]="50">
+        </p-inputNumber>
+      </div>
+    </div>
+    <div class="editor-post col-12 lg:col-8 justify-content-center">
+      <p-tabView styleClass="tabview-custom" (onChange)="handleChangeTabView($event)">
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <span>{{'createPost.edit' | translate}}</span>
+            <i class="ml-2 pi pi-pencil"></i>
+          </ng-template>
+          <ng-template [ngIf]="selectedEditorType == 'HTML'" [ngIfElse]="markdownEditor">
+            <p-editor [(ngModel)]="content" (ngModelChange)="onChangeContent($event)"
+              (onTextChange)="onTextChange($event)" [placeholder]="'Write something here ...'"
+              [style]="{'min-height':'420px'}"></p-editor>
+          </ng-template>
+          <ng-template #markdownEditor>
+            <textarea [(ngModel)]="contentMd" class="w-full" (onChange)="onTextChange($event)" classs="markdown-editor"
+              (ngModelChange)="onChangeContentMd($event)" pInputTextarea [autoResize]="true" rows="25"
+              placeholder="{{'createPost.placeholder' | translate}}">
+            </textarea>
+          </ng-template>
+        </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <span>{{'createPost.preview' | translate}}</span>
+            <i class="ml-2 pi pi-eye"></i>
+          </ng-template>
+          <div id="post-content" class="post-content ">
+            <img imageOnError *ngIf="validThumbnail && thumbnail" src="{{ thumbnail }}" alt=""
+              class="post-thumbnail-image border-round-top shadow-4" />
+            <p class="text-5xl font-bold mt-2" style="word-break: break-word;">{{title || ('createPost.form.titleHere' |
+              translate)}}</p>
+            <ng-template [ngIf]="selectedEditorType === 'HTML'" [ngIfElse]="markdown">
+              <markdown class="preview-content content-HTML" [data]="content"></markdown>
+            </ng-template>
+            <ng-template #markdown>
+              <markdown class="preview-content" [data]="contentMdComplied"></markdown>
+              <!-- <div class="preview-content" [innerHTML]="contentMdComplied"></div> -->
+            </ng-template>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+
+      <p-messages [(value)]="message" [enableService]="false"></p-messages>
+
+      <div class="flex justify-content-end mt-4">
+        <button pButton pRipple type="button" label="{{'createPost.discard' | translate}}" (click)="onClickDiscard()"
+          class="p-button-outlined p-button-danger ml-2"></button>
+        <button pButton pRipple type="button" label="{{'createPost.saveDraft' | translate}}"
+          (click)="onClickSaveDraft()" class="p-button-outlined ml-2"></button>
+        <button pButton pRipple type="button" label="{{'createPost.publish' | translate}}" (click)="onClickPublish()"
+          class="p-button-raised ml-2"></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p-confirmDialog key="createPostDialog" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+  [dismissableMask]="true">
+</p-confirmDialog>
+
+<p-toast [key]="'createPostToast'" [preventOpenDuplicates]="true"></p-toast>
+
+<app-loading [loading]="isLoading"></app-loading>

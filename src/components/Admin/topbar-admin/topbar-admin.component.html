@@ -3,8 +3,7 @@
     <i class="pi pi-bars"></i>
   </a>
 
-  <a class="layout-topbar-logo" routerLink="">
-    <img src="assets/layout/images/logo-white.svg" alt="logo">
+  <a class="layout-topbar-logo" [routerLink]="['/admin']">
     <span>HEOVI</span>
   </a>
 
@@ -13,22 +12,32 @@
   </a>
 
   <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
-    <a href="#" class="p-link layout-topbar-button">
-      <i class="pi pi-bell"></i>
-      <span>Notification</span>
-    </a>
-    <a href="#" class="p-link layout-topbar-button">
-      <i class="pi pi-cog"></i>
-      <span>Settings</span>
-    </a>
-    <button href="#" class="p-link layout-topbar-button" (click)="menu.toggle($event)">
-      <i class="pi pi-user"></i>
-      <span>Profile</span>
-    </button>
-    <button pButton pRipple type="button" class="p-button-raised p-button-danger p-button-text layout-topbar-button">
-      <i class="pi pi-sign-out"></i>
-      <span>Log out</span>
-    </button>
-    <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
+      <p-avatar label="{{admin.display_name.substring(0,1) | uppercase}}" class="cursor-pointer" shape="circle" size="large" (click)="menu.toggle($event)">
+      </p-avatar>
+
+      <p-menu #menu [popup]="true" [model]="items"></p-menu>
+
+      <button pButton pRipple type="button" (click)="onClickLogout()"
+        class="p-button-danger p-button-text layout-topbar-button">
+        <i class="pi pi-sign-out"></i>
+        <span>Log out</span>
+      </button>
+    </ng-template>
+    <ng-template #noLogin>
+      <a href="#" class="p-link layout-topbar-button">
+        <i class="pi pi-bell"></i>
+        <span>Notification</span>
+      </a>
+      <a href="#" class="p-link layout-topbar-button">
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+      </a>
+
+    </ng-template>
   </div>
 </div>
+
+<p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'"
+  [style]="{width: '60vw'}" [dismissableMask]="true">
+</p-confirmDialog>

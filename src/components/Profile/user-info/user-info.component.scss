@@ -1,0 +1,28 @@
+@import 'styles/scss/mixins.scss';
+
+:host ::ng-deep .user-info-wrapper {
+
+  .user-avatar {
+
+    .p-avatar,
+    .p-image>img,
+    .p-image-preview-indicator {
+      font-size: 4rem;
+      border-radius: 50% !important;
+      width: 8rem !important;
+      height: 8rem !important;
+    }
+  }
+
+  .user_name {
+    p {
+      @include maxline(1);
+    }
+  }
+
+  .user-info {
+    .user-info-text-right {
+      @include maxline(1);
+    }
+  }
+}

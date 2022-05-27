@@ -1,0 +1,94 @@
+@import 'styles/scss/mixins.scss';
+
+:host ::ng-deep .detail-post-layout {
+  .post-content {
+    img {
+      display: block;
+      margin: 0 auto;
+      max-height: 400px;
+    }
+
+    a {
+      color: var(--primary-color) !important;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  .detail-wrapper {
+    .post-thumbnail-image {
+      max-height: 300px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.position-sticky {
+  position: sticky;
+  top: 65px;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+:host ::ng-deep .button-share-post {
+  display: flex;
+
+  @include breakpoint(min, 768px) {
+    display: none;
+  }
+
+  .p-speeddial {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 2rem !important;
+    left: 2rem !important;
+    z-index: 1000;
+
+    @include breakpoint(max, 992px) {
+      left: 20px !important;
+      bottom: 20px !important;
+    }
+
+    .p-speeddial-action {
+      background-color: var(--surface-700);
+
+      &:hover {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+
+:host ::ng-deep {
+  .loading-post {
+    height: calc(100vh - 300px);
+  }
+
+  .p-speeddial-mask-visible {
+    height: 10000000000000000000000000000% !important;
+    z-index: 999;
+    pointer-events: unset;
+    overflow-y: hidden;
+  }
+
+  .p-breadcrumb {
+    .p-menuitem-link {
+      &:hover {
+        text-decoration: underline;
+      }
+
+      span {
+        @include maxline(1);
+      }
+    }
+    .p-menuitem-text {
+      line-height: 1.5 !important;
+    }
+  }
+}

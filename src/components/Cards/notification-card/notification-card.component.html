@@ -1,0 +1,55 @@
+<ng-template [ngIf]="!loading" [ngIfElse]="loadingCard">
+  <div
+    class="notification-card-wrapper flex align-items-center fadeinleft px-2 md:px-3 py-2 border-bottom-1 surface-border"
+    [ngClass]="!info.read ? 'un-read' : 'already-ready opacity-90'">
+    <div class="flex flex-wrap col-12">
+      <div class="flex col-12 align-items-center justify-content-between">
+        <div class="flex align-items-center mr-3 cursor-pointer" (click)="onClickNotification()">
+          <app-avatar [height]="'4rem'" [badge]="info?.icon" [user]="info?.user"></app-avatar>
+        </div>
+        <div class="flex w-full h-full align-items-center cursor-pointer" (click)="onClickNotification()">
+          <p class="notification-content" [innerHTML]="info.content"
+            [ngClass]="!info.read ? 'font-medium' : 'font-normal'"></p>
+        </div>
+        <div class="flex un-read-icon align-items-center">
+          <div class="notification-menu">
+            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+            <p-button icon="pi pi-ellipsis-h" (click)="menu.toggle($event)"
+              styleClass="p-button-rounded p-button-outlined p-button-sm p-button-plain">
+            </p-button>
+          </div>
+          <i class="pi pi-circle-fill ml-2" *ngIf="!info.read"></i>
+        </div>
+      </div>
+      <div class="flex col-12 justify-content-end">
+        <p class="notification-time font-normal text-600 text-sm" title="{{notification.created_timestamp}}">
+          {{info?.date | capital}}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loadingCard>
+  <div class="notification-card-loading flex align-items-center px-2 md:px-3 py-2 border-bottom-1 surface-border">
+    <div class="flex flex-wrap col-12">
+      <div class="flex col-12 align-items-center justify-content-between">
+        <div class="flex align-items-center mr-3">
+          <div class="flex mr-3">
+            <p-skeleton shape="circle" size="4rem"></p-skeleton>
+          </div>
+          <div class="flex">
+            <p-skeleton class="loading-content" width="20rem" height="2.5rem"></p-skeleton>
+          </div>
+        </div>
+        <div class="flex un-read-icon">
+          <p-skeleton shape="circle" size="1rem"></p-skeleton>
+        </div>
+      </div>
+      <div class="flex col-12 justify-content-end">
+        <p-skeleton width="10rem" height="1rem"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<p-toast [key]="'notification'" [preventOpenDuplicates]="true"></p-toast>

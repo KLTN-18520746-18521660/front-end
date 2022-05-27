@@ -1,0 +1,28 @@
+.category-link {
+  p {
+    background-color: transparent;
+    color: var(--primary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline;
+
+    .link-icon {
+      display: none;
+      float: right;
+    }
+
+    &:hover {
+      background-color: var(--surface-c);
+
+      .link-icon {
+        color: var(--primary-color);
+        display: inline;
+      }
+    }
+
+    &.max-width {
+      max-width: 100px;
+    }
+  }
+}

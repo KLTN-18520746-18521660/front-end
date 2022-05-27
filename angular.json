@@ -20,7 +20,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/heovi",
+            "allowedCommonJsDependencies": [
+              "dayjs/locale",
+              "lodash"
+            ],
+            "outputPath": "dist/app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -33,21 +37,13 @@
             "styles": [
               "src/styles.scss",
               "node_modules/quill/dist/quill.core.css",
-              "node_modules/quill/dist/quill.snow.css",
-              {
-                "input": "src/assets/themes/theme-tailwind-light.scss",
-                "bundleName": "tailwind-light",
-                "inject": false
-              },
-              {
-                "input": "src/assets/themes/theme-arya-blue.scss",
-                "bundleName": "arya-blue",
-                "inject": false
-              }
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.js",
-              "node_modules/quill/dist/quill.js"
+              "node_modules/chart.js/dist/chart.js",
+              "node_modules/quill/dist/quill.js",
+              "node_modules/marked/marked.min.js",
+              "node_modules/prismjs/prism.js"
             ]
           },
           "configurations": {
@@ -56,7 +52,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -117,7 +113,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/chart.js"
+              "node_modules/chart.js/dist/Chart.js"
             ]
           }
         }

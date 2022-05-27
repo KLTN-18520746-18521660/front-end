@@ -1,3 +1,157 @@
-<p>
-  SignUpPage works!
-</p>
+<div class="text-center mb-5">
+  <div class="text-900 text-3xl font-medium mb-3">{{ 'label.signup.title' | translate }}</div>
+  <span class="text-600 font-medium">{{ 'label.signup.description' | translate }}</span>
+</div>
+
+<div class="w-full md:w-10 mx-auto">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label requiredField for="emailSignUp" class="block text-900 text-lg font-medium mb-2">{{'label.signup.email' | translate }}
+    </label>
+    <input formControlName="email" id="emailSignUp" type="text" autofocus
+      placeholder="{{'label.signup.emailPlaceholder' | translate}}" pInputText class="w-full mb-1" style="padding:1rem;"
+      [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['email'].touched) && f['email'].errors }">
+    <div *ngIf="(submitted || f['email'].touched) && f['email'].errors" class="invalid-feedback">
+      <div class="flex align-items-end" *ngIf="f['email'].errors['required']">
+        <small class="p-error inline">{{'label.signup.validation.email.required' | translate}}</small>
+      </div>
+      <div class="flex align-items-end" *ngIf="f['email'].errors['email']">
+        <small class="p-error inline">{{'label.signup.validation.email.invalid' | translate}}</small>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="col mr-1 p-0">
+        <label requiredField for="firstname" class="block text-900 text-lg font-medium mb-2 mt-3">
+          {{'label.signup.firstname' | translate}}
+        </label>
+        <input formControlName="firstname" id="firstname" type="text"
+          [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['firstname'].touched) && f['firstname'].errors }"
+          placeholder="{{'label.signup.firstnamePlaceholder' | translate}}" pInputText class="w-full mb-1"
+          style="padding:1rem;">
+        <div *ngIf="(submitted || f['firstname'].touched) && f['firstname'].errors" class="invalid-feedback">
+          <div class="flex align-items-end" *ngIf="f['firstname'].errors['required']">
+            <small class="p-error inline">{{'label.signup.validation.firstname.required' | translate}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="col ml-1 p-0">
+        <label requiredField for="lastname" class="block text-900 text-lg font-medium mb-2 mt-3">
+          {{'label.signup.lastname' | translate}}
+        </label>
+        <input formControlName="lastname" id="lastname" type="text" autofocus
+          [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['lastname'].touched) && f['lastname'].errors }"
+          placeholder="{{'label.signup.lastnamePlaceholder' | translate}}" pInputText class="w-full mb-1"
+          style="padding:1rem;">
+        <div *ngIf="(submitted || f['lastname'].touched) && f['lastname'].errors" class="invalid-feedback">
+          <div class="flex align-items-end" *ngIf="f['lastname'].errors['required']">
+            <small class="p-error inline">{{'label.signup.validation.lastname.required' | translate}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <label requiredField for="password" class="block text-900 font-medium text-lg mb-2 mt-3">
+      {{'label.signup.password' | translate}}
+    </label>
+    <div class="relative">
+      <input #password formControlName="password" id="password" type="password" pPassword [feedback]="false"
+        [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['password'].touched) && f['password'].errors }"
+        placeholder="{{'label.signup.passwordPlaceholder' | translate }}" class="password-input w-full mb-1">
+      <i class="pi password-icon absolute" [ngClass]="password.type === 'password' ? 'pi-eye' : 'pi-eye-slash'"
+        (click)="password.type = password.type === 'password' ? 'text' : 'password'"></i>
+    </div>
+    <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="invalid-feedback">
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['required']">
+        <small class="p-error inline list-span">{{'label.signup.validation.password.required' | translate}}</small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.min' | translate : { min: passwordPolicy.min_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['maxlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.max' | translate : { max: passwordPolicy.max_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minspecial']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.special' | translate : { num: passwordPolicy.min_special_char} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minnumber']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.number' | translate : { num: passwordPolicy.min_number_char} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minupper']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.upper' | translate : { num: passwordPolicy.min_upper_char} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlower']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.lower' | translate : { num: passwordPolicy.min_lower_char} }}
+        </small>
+      </div>
+    </div>
+
+    <label requiredField for="confirmPassword" class="block text-900 font-medium text-lg mb-2 mt-3">
+      {{'label.signup.confirmPassword' | translate }}
+    </label>
+    <div class="relative">
+      <input #confirmPassword formControlName="confirmPassword" id="confirmPassword" type="password" pPassword [feedback]="false"
+        [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['confirmPassword'].touched) && f['confirmPassword'].errors }"
+        placeholder="{{'label.signup.confirmPasswordPlaceholder' | translate }}" class="password-input w-full mb-1">
+      <i class="pi password-icon absolute" [ngClass]="confirmPassword.type === 'password' ? 'pi-eye' : 'pi-eye-slash'"
+        (click)="confirmPassword.type = confirmPassword.type === 'password' ? 'text' : 'password'"></i>
+    </div>
+    <div *ngIf="(submitted || f['confirmPassword'].touched) && f['confirmPassword'].errors" class="invalid-feedback">
+      <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['required']">
+        <small class="p-error inline list-span">{{'label.signup.validation.confirmPassword.required' | translate}}</small>
+      </div>
+      <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['minlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.min' | translate : { min: passwordPolicy.min_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['maxlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.max' | translate : { max: passwordPolicy.max_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end" *ngIf="f['confirmPassword'].errors['matching']">
+        <small class="p-error inline list-span">{{'label.signup.validation.confirmPassword.match' | translate}}</small>
+      </div>
+    </div>
+
+    <div class="flex align-items-center mb-1 mt-3">
+      <p-checkbox formControlName="acceptTerms" inputId="acceptTerms" [binary]="true" styleClass="mr-2"
+        [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['acceptTerms'].touched) && f['acceptTerms'].errors }">
+      </p-checkbox>
+      <label class="text-base" [innerHTML]="'label.signup.accept' | translate" for="acceptTerms"></label>
+    </div>
+    <div *ngIf="(submitted || f['acceptTerms'].touched) && f['acceptTerms'].errors" class="invalid-feedback">
+      <small class="p-error inline">{{'label.signup.validation.accept' | translate}}</small>
+    </div>
+    <p-messages [(value)]="message" [enableService]="false"></p-messages>
+
+    <button pButton pRipple label="{{'label.signup.submit' | translate}}" icon="pi pi-sign-in" iconPos="right"
+      class="w-full mt-4 p-3 text-lg"></button>
+  </form>
+
+  <p-divider align="center">
+    <div class="inline-flex align-items-center">
+      <!-- <b class="text-500">{{'label.signup.or' | translate}}</b> -->
+      <i class="pi pi-star"></i>
+    </div>
+  </p-divider>
+
+  <div class="flex align-items-center justify-content-center mt-5">
+    <label>{{'label.signup.alreadyHaveAccount' | translate}}</label>
+    <a class="font-medium ml-2 text-right cursor-pointer button-link" [routerLink]="['/auth/login']"
+      style="color: var(--primary-color)">{{'label.signup.loginHere' | translate }}</a>
+  </div>
+</div>
+
+<app-loading [loading]="isLoading"></app-loading>

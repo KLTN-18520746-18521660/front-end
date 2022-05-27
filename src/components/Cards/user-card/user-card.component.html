@@ -1,0 +1,40 @@
+<ng-template [ngIf]="!loading" [ngIfElse]="loadingCard">
+  <div class="card user-card-wrapper mb-0 p-3 md:p-4">
+    <div class="flex flex-wrap justify-content-between align-items-center">
+      <a [routerLink]="['/user', user.user_name]" class="color-inherit">
+        <div class="user-info flex align-items-center">
+          <app-avatar [user]="user"></app-avatar>
+          <div class="user-name ml-3">
+            <p class="font-semibold hover-underline text-xl mb-1">{{ user?.display_name }}</p>
+            <span class="text-sm hover-underline text-500">@{{ user?.user_name }}</span>
+          </div>
+        </div>
+      </a>
+      <div class="action">
+        <button pButton pRipple label="{{(user.mapAction.follow ? 'common.following' : 'common.follow') | translate}}"
+          icon="{{user.mapAction.follow ? 'pi pi-check-circle' : 'pi pi-user-plus'}}"
+          pTooltip="{{(user.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
+          tooltipPosition="top" class="p-button-rounded p-button-sm" [loading]="isLoading"
+          [ngClass]="user.mapAction.follow ? 'p-button-outlined' : ''" (click)="onClick()">
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loadingCard>
+  <div class="card user-card-wrapper mb-0 p-3 md:p-4">
+    <div class="flex flex-wrap justify-content-between align-items-center">
+      <div class="user-info flex align-items-center">
+        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+        <div>
+          <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+          <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+        </div>
+      </div>
+      <div class="action">
+        <p-skeleton width="4rem" height="2rem"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-template>

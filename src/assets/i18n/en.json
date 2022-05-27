@@ -1,20 +1,1007 @@
 {
+  "common": {
+    "post": "Post",
+    "posts": "Posts",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "clickFollow": "Click to follow",
+    "clickUnfollow": "Click to unfollow",
+    "following": "Following",
+    "follower": "Follower",
+    "followers": "Followers",
+    "view": "View",
+    "views": "Views",
+    "like": "Like",
+    "likes": "Likes",
+    "submit": "Submit",
+    "save": "Save changes",
+    "new": "New",
+    "darkMode": "Dark Mode",
+    "dark": "Switch to dark mode",
+    "light": "Switch to light mode",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "profile": "Profile",
+    "language": "Language"
+  },
+  "titlePage": {
+    "default": "Home - Heovi",
+    "home": "Home",
+    "post": "Post",
+    "postdetail": "Post Detail",
+    "createPost": "Create Post",
+    "editPost": "Edit Post",
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register",
+    "forgotpassword": "Forgot Password",
+    "confirm-account": "Confirm Account",
+    "dashboard": "Dashboard",
+    "notifications": "Notifications",
+    "setting": "Setting",
+    "manage-post": "Manage Post",
+    "user-info": "User Info",
+    "edit-info": "Edit Info",
+    "change-password": "Change Password",
+    "saved-post": "Save Post",
+    "following": "Following",
+    "followers": "Followers",
+    "manageUser": "Manage User",
+    "logout": "Logout",
+    "trending": "Trending",
+    "admin": {
+      "dashboard": "Admin Dashboard",
+      "login": "Admin Login",
+      "manage-post": "Manage Post",
+      "manage-user": "Manage User"
+    },
+    "goto": "Redirecting ...",
+    "notFound": "Page not found",
+    "noAccess": "You don't have access to this page"
+  },
   "home": {
     "title": "Home",
     "description": "Home page",
-    "keywords": "home, page"
+    "keywords": "home, page",
+    "viewMore": "View More",
+    "createPost": "Create Post",
+    "viewOption": {
+      "foryou": "For you ",
+      "following": "Following",
+      "trending": "Trending"
+    }
   },
-  "action": {},
+  "tooltip": {
+    "copy": "Click to copy link"
+  },
+  "notification": {
+    "title": "Notifications",
+    "subTitle": "You have <b>{{count}}</b> unread notifications",
+    "viewRead": "Only show unread",
+    "viewAll": "Mark all as read",
+    "viewOption": {
+      "all": "All",
+      "unread": "Unread"
+    },
+    "noNotification": "No notification to show",
+    "read": "Read",
+    "unread": "Unread",
+    "delete": "Remove this notification",
+    "markRead": "Mark as read",
+    "markReadSuccess": "Mark as read successfully",
+    "markAllReadSuccess": "Mark all as read successfully",
+    "markUnread": "Mark as unread",
+    "deleteAll": "Delete all notifications",
+    "deleteAllConfirm": "Are you sure you want to delete all notifications?",
+    "deleteAllSuccess": "All notifications have been deleted",
+    "deleteAllFail": "Failed to delete all notifications",
+    "deleteConfirm": "Are you sure you want to delete this notification?",
+    "deleteSuccess": "Notification has been deleted",
+    "deleteFail": "Failed to delete notification",
+    "type": {
+      "default": "Default notification content",
+      "follow": "<b>{{user}}</b> followed you",
+      "addComment": "<b>{{user}}</b> commented on your post: <b>{{content}}</b>",
+      "replyComment": "<b>{{user}}</b> replied your comment: <b>{{content}}</b>",
+      "likeComment": "<b>{{user}}</b> liked your comment: <b>{{content}}</b>",
+      "mention": "<b>{{user}}</b> mentioned you in a post: <b>{{content}}</b>",
+      "save": "<b>{{user}}</b> saved your post: <b>{{content}}</b>",
+      "share": "<b>{{user}}</b> shared your post: <b>{{content}}</b>",
+      "newPost": "<b>{{user}}</b> added new post: <b>{{content}}</b>",
+      "likePost": "<b>{{user}}</b> liked your post: <b>{{content}}</b>",
+      "deletePost": "<b>{{user}}</b> deleted your post: <b>{{content}}</b>",
+      "approvePost": "<b>{{user}}</b> approved your post: <b>{{content}}</b>",
+      "rejectPost": "<b>{{user}}</b> rejected your post: <b>{{content}}</b>"
+    }
+  },
+  "dialog": {
+    "confirmation": "Confirmation",
+    "login": "You need to login to continue",
+    "logout": {
+      "header": "Log out?",
+      "title": "Are you sure you want to logout?",
+      "yes": "Log Out",
+      "no": "Cancel"
+    },
+    "unsavechange": {
+      "header": "Unsave changes?",
+      "title": "You have unsaved changes. Your changes will be lost if you don't save them. Press Cancel to go back and save these changes.",
+      "yes": "Unsave",
+      "no": "Stay"
+    },
+    "changepassword": {}
+  },
+  "message": {
+    "success": "Success",
+    "error": "Error",
+    "nochange": "No changes to save",
+    "update": "Update successfully",
+    "updateFail": "Failed to update",
+    "copied": "Link copied to clipboard",
+    "delete": "Delete successfully",
+    "save": "Save successfully",
+    "create": "Create successfully",
+    "login": "Login successfully",
+    "register": "Register successfully",
+    "confirm": "Confirm successfully",
+    "uploadfail": "Upload failed",
+    "needlogin": "You need to login to continue",
+    "filesize": "File size must be less than 3MB",
+    "forgotpassword": "Reset password successfully",
+    "resetpassword": "Reset password successfully",
+    "changepassword": "Change password successfully",
+    "follow": "Follow successfully",
+    "unfollow": "Unfollow successfully",
+    "like": "Like successfully",
+    "unlike": "Unlike successfully",
+    "savepost": "Save post successfully",
+    "publishpost": "Publish post successfully",
+    "deletepost": "Delete post successfully",
+    "approvepost": "Approve post successfully",
+    "rejectpost": "Reject post successfully",
+    "sharepost": "Share post successfully",
+    "addcomment": "Add comment successfully",
+    "replycomment": "Reply comment successfully",
+    "likecomment": "Like comment successfully",
+    "unlikecomment": "Unlike comment successfully",
+    "deletepostcomment": "Delete post comment successfully",
+    "deletepostreply": "Delete post reply successfully",
+    "deletepostlike": "Delete post like successfully",
+    "deletepostreplylike": "Delete post reply like successfully",
+    "deletepostcommentlike": "Delete post comment like successfully",
+    "deletepostreplycommentlike": "Delete post reply comment like successfully",
+    "deletepostcommentreplylike": "Delete post comment reply like successfully",
+    "deletepostreplycommentreplylike": "Delete post reply comment reply like successfully"
+  },
+  "status": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "Enabled": "Enabled",
+    "Disabled": "Disabled",
+    "Readonly": "Readonly",
+    "Activated": "Activated",
+    "Deleted": "Deleted",
+    "Blocked": "Blocked",
+    "Created": "Created",
+    "Edited": "Edited",
+    "Sent": "Sent",
+    "Read": "Read",
+
+    "Pending": "Pending",
+    "Approved": "Approved",
+    "Rejected": "Rejected",
+    "Private": "Private",
+    "Ignored": "Ignored",
+    "Handled": "Handled",
+    "Public": "Public"
+  },
+  "topbar": {
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "search": "Search",
+    "searchTitle": "Search posts, users, tags, etc...",
+    "home": "Home",
+    "more": "More",
+    "createPost": "Create Post",
+    "notification": "Notification",
+    "wellcome": "Wellcome to",
+    "description": "Login or register to start your journey and share your posts with the world, discuss with your friends, and more.",
+    "user": {
+      "dashboard": "My Dashboard",
+      "profile": "My Profile",
+      "edit": "Edit Profile",
+      "setting": "Setting",
+      "help": "Help & Support",
+      "separator": "|",
+      "logout": "Logout"
+    }
+  },
+  "footer": {
+    "copyright": "Copyright &copy; 2022. All rights reserved."
+  },
+  "profile": {
+    "show": "Show Menu",
+    "hide": "Hide Menu",
+    "menu": {
+      "dashboard": {
+        "title": "Dashboard",
+        "items": {
+          "dashboard": "Dashboard"
+        }
+      },
+      "account": {
+        "title": "Account",
+        "items": {
+          "profile": "Profile",
+          "edit": "Edit Profile",
+          "changePassword": "Change Password"
+        }
+      },
+      "managePost": {
+        "title": "Management",
+        "items": {
+          "managePost": "Manage Post",
+          "savedPost": "Save Post",
+          "following": "Following",
+          "followers": "Followers"
+        }
+      },
+      "notifications": {
+        "title": "Notification",
+        "items": {
+          "notifications": "Notification"
+        }
+      },
+      "others": {
+        "title": "Other",
+        "items": {
+          "settings": "Settings",
+          "help": "Help & Support"
+        }
+      }
+    },
+    "dashboard": {
+      "card": {
+        "post": {
+          "title": "Posts",
+          "desc": "since last week"
+        },
+        "follow": {
+          "title": "Followers",
+          "desc": "since last week"
+        },
+        "view": {
+          "title": "Views",
+          "desc": "since last week"
+        },
+        "like": {
+          "title": "Likes",
+          "desc": "since last week"
+        },
+        "read": {
+          "title": "Reading posts",
+          "desc": "since last week"
+        },
+        "save": {
+          "title": "Saved posts",
+          "desc": "since last week"
+        },
+        "likes": {
+          "title": "Likes posts",
+          "desc": "since last week"
+        },
+        "comment": {
+          "title": "Comments posts",
+          "desc": "since last week"
+        }
+      }
+    },
+    "user": {
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "email": "Email",
+      "verified": "Verified on",
+      "checkMail": "Check your email to verify your account. Send date: ",
+      "country": "Country",
+      "sex": "Gender",
+      "gender": {
+        "male": "Male",
+        "female": "Female",
+        "other": "Other"
+      },
+      "phone": "Phone",
+      "joined": "Joined day",
+      "password": "Last time change password"
+    },
+    "result": {
+      "following": "You is following <b>{{count}}</b> users",
+      "follower": "Have <b>{{count}}</b> Followers"
+    },
+    "editProfile": {
+      "title": "Edit Profile",
+      "dialog": {
+        "title": "Are you sure?",
+        "description": "Do you want to save info changes?",
+        "cancel": "Cancel",
+        "ok": "Ok"
+      },
+      "first_name": {
+        "label": "First Name",
+        "placeholder": "Enter your first name",
+        "error": {
+          "required": "First name is required"
+        }
+      },
+      "last_name": {
+        "label": "Last Name",
+        "placeholder": "Enter your last name",
+        "error": {
+          "required": "Last name is required"
+        }
+      },
+      "display_name": {
+        "label": "Display Name",
+        "placeholder": "Enter your display name",
+        "error": {
+          "required": "Display name is required"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter your description",
+        "error": {
+          "required": "Description is required",
+          "length": "Description must be less than 100 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email",
+        "error": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Select your country",
+        "error": {
+          "required": "Country is required"
+        }
+      },
+      "sex": {
+        "label": "Gender",
+        "placeholder": "Enter your gender",
+        "options": {
+          "male": "Male",
+          "female": "Female",
+          "other": "Other"
+        },
+        "error": {
+          "required": "Gender is required",
+          "sex": "Gender is invalid"
+        }
+      },
+      "phone": {
+        "label": "Phone number",
+        "placeholder": "Enter your phone number",
+        "error": {
+          "required": "Phone number is required",
+          "phone": "Phone number is invalid, must be 10-11 digits"
+        }
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Enter your city",
+        "error": {
+          "required": "City is required"
+        }
+      },
+      "province": {
+        "label": "Province",
+        "placeholder": "Enter your province",
+        "error": {
+          "required": "Province is required"
+        }
+      },
+      "avatar": {
+        "label": "Avatar",
+        "placeholder": "Enter your avatar",
+        "error": {
+          "required": "Avatar is required"
+        }
+      }
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "description": "Login by admin account to access app",
+      "email": "Email or username",
+      "emailPlaceholder": "Enter email or username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "remember": "Remember me",
+      "submit": "Login",
+      "validation": {
+        "email": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        },
+        "password": {
+          "required": "Password is required",
+          "min": "Password must be at least 6 characters"
+        }
+      }
+    }
+  },
+  "action": {
+    "view": "View",
+    "like": "Like",
+    "unlike": "Unlike",
+    "save": "Save"
+  },
   "label": {
-    "search": "Hi {{name}}, let's search for something here ...",
+    "redirecting": {
+      "title": "Redirecting",
+      "description": "Please wait a while, You are being redirected."
+    },
+    "searchWithName": "Hi {{name}}, let's search for something here ...",
+    "search": "Let's search for something here ...",
     "recommend": {
       "foryou": "For you: ",
       "tags": "Recommend tags for you: ",
-      "posts": "Recommend posts for you:"
+      "posts": "Recommend:"
     },
     "popular": {
-      "tag": "Popular tags: ",
-      "post": "Popular posts: "
+      "tags": "Popular tags: ",
+      "posts": "Popular posts: ",
+      "category": "Popular categories: ",
+      "posts_by_tag": "Popular posts by tag: "
+    },
+    "trending": "Trending",
+    "connectus": "Connect us",
+    "session": {
+      "expired": {
+        "title": "Session expired",
+        "message": "Your session has expired, please login again"
+      },
+      "logout": "You have been logged out"
+    },
+    "login": {
+      "title": "Login",
+      "description": "Login to your account to continue",
+      "email": "Email or username",
+      "emailPlaceholder": "Enter email or username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "remember": "Remember me",
+      "forgot": "Forgot password",
+      "submit": "Login",
+      "register": "Register",
+      "or": "Or",
+      "facebook": "Login with Facebook",
+      "google": "Login with Google",
+      "dontHaveAccount": "Don't have an account?",
+      "registerHere": "Register here",
+      "validation": {
+        "email": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        },
+        "password": {
+          "required": "Password is required",
+          "min": "Password must be at least 6 characters"
+        }
+      }
+    },
+    "signup": {
+      "title": "Signup",
+      "description": "Signup to your account",
+      "fullname": "Full Name",
+      "fullnamePlaceholder": "Enter full name",
+      "firstname": "First Name",
+      "firstnamePlaceholder": "Enter first name",
+      "lastname": "Last Name",
+      "lastnamePlaceholder": "Enter last name",
+      "email": "Email",
+      "emailPlaceholder": "Enter email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Enter password again",
+      "name": "Name",
+      "namePlaceholder": "Enter name",
+      "accept": "I already read and accept all the terms and conditions.",
+      "submit": "Sign Up",
+      "alreadyHaveAccount": "Already have an account?",
+      "loginHere": "Login here",
+      "validation": {
+        "email": {
+          "required": "Please enter your email",
+          "invalid": "Please enter a valid email"
+        },
+        "fullname": {
+          "required": "Please enter your fullname",
+          "minlength": "Your fullname must be at least 3 characters",
+          "maxlength": "Your fullname cannot be more than 50 characters"
+        },
+        "firstname": {
+          "required": "Please enter your firstname",
+          "minlength": "Your firstname must be at least 3 characters",
+          "maxlength": "Your firstname cannot be more than 50 characters"
+        },
+        "lastname": {
+          "required": "Please enter your lastname",
+          "minlength": "Your lastname must be at least 3 characters",
+          "maxlength": "Your lastname cannot be more than 50 characters"
+        },
+        "password": {
+          "required": "Please enter your password",
+          "min": "Password must be at least {{min}} characters",
+          "max": "Password must be less than {{max}} characters",
+          "special": "Password must contain at least {{num}} special character",
+          "number": "Password must contain at least {{num}} number",
+          "lower": "Password must contain at least {{num}} lowercase character",
+          "upper": "Password must contain at least {{num}} uppercase character"
+        },
+        "confirmPassword": {
+          "required": "Please enter your password again",
+          "min": "Password must be at least {{num}} characters",
+          "max": "Password must be less than {{num}} characters",
+          "match": "Confirm password does not match"
+        },
+        "accept": "Please accept our terms and conditions"
+      }
+    },
+    "confirm": {
+      "title": "Confirm your email",
+      "description": "Type password again to verify your email",
+      "email": {
+        "label": "Email address",
+        "placeholder": "Email address",
+        "required": "Email is required"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter password",
+        "required": "Password is required!",
+        "min": "Confirm password must be at least 6 characters"
+      },
+      "submit": "Confirm",
+      "login": "Login here",
+      "home": "Go to home page",
+      "success": {
+        "title": "Good job!",
+        "description": "Your email has been confirmed successfully"
+      },
+      "warning": "You only have 3 times to try to confirm your account"
+    },
+    "changepassword": {
+      "title": "Change password",
+      "description": "Type old password and new password to change password",
+      "oldPassword": {
+        "label": "Old password",
+        "placeholder": "Enter old password"
+      },
+      "newPassword": {
+        "label": "New password",
+        "placeholder": "Enter new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Enter confirm password"
+      },
+      "submit": "Change password",
+      "dialog": {
+        "title": "Are you sure?",
+        "description": "Do you want to change your password?",
+        "cancel": "Cancel",
+        "ok": "Ok"
+      },
+      "validation": {
+        "oldPassword": {
+          "required": "Please enter your old password",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters"
+        },
+        "newPassword": {
+          "required": "Please enter your new password",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters",
+          "special": "New password must contain at least {{num}} special character",
+          "number": "New password must contain at least {{num}} number",
+          "lower": "New password must contain at least {{num}} lowercase character",
+          "upper": "New password must contain at least {{num}} uppercase character"
+        },
+        "confirmPassword": {
+          "required": "Please enter your password again",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters",
+          "match": "Confirm password does not match"
+        }
+      }
+    },
+    "forgotpassword": {
+      "title": "Forgot password",
+      "description": "Type your email to reset your password",
+      "email": {
+        "label": "User name or email address",
+        "placeholder": "Enter user name or email address"
+      },
+      "validation": {
+        "email": {
+          "required": "Please enter your email",
+          "invalid": "Please enter a valid email"
+        }
+      },
+      "registerHere":"Register here",
+      "loginHere": "Login here",
+      "submit": "Reset password",
+      "login": "Login here",
+      "home": "Go to home page",
+      "success": {
+        "title": "Good job!",
+        "description": "Your password has been reset successfully"
+      },
+      "warning": "You only have 3 times to try to reset your password"
+    },
+    "notfound": {
+      "pageTitle": "Something went wrong or page not found",
+      "title": "OOPS!",
+      "description": "Something went wrong or the page you are looking for does not exist, please try again later",
+      "home": "Go to home page",
+      "back": "Go back"
     }
+  },
+  "card": {
+    "time_read": "{{time_read}} mins read",
+    "like": "Like",
+    "comment": "Comment",
+    "view": "View",
+    "read_more": "Read more",
+    "action": {
+      "save": "Save",
+      "copy": "Copy link",
+      "share": "Share",
+      "report": "Report"
+    }
+  },
+  "postDetail": {
+    "postedOn": "Posted on ",
+    "updatedOn": "Updated on ",
+    "share": "Share",
+    "action": {
+      "edit": "Edit",
+      "save": "Save",
+      "unsave": "Unsave",
+      "copy": "Copy link",
+      "share": "Share",
+      "report": "Report"
+    },
+    "values": {
+      "view": "Views",
+      "like": "Click to like",
+      "unlike": "Click to unlike",
+      "comment": "Comments"
+    },
+    "disscussion": "Dissussion ({{count}})",
+    "comment": "Comment",
+    "submitComment": "Submit this comment",
+    "showMoreComment": "Show more comments",
+    "showMoreReply": "Show more replies",
+    "reply": "Reply",
+    "replyTo": "Reply to {{name}}",
+    "commentPlaceholder": "Put your comment here ...",
+    "commentError": "Comment is invalid. Please enter your comment, and try again!",
+    "edited": "Edited",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "commentAction": {
+      "like": "({{count}})",
+      "unlike": "({{count}})",
+      "report": "Report",
+      "reply": "({{count}}) Reply"
+    },
+    "moreComment": "View more comments",
+    "readNext": "Read next",
+    "commentMenu": {
+      "like": "Like",
+      "unlike": "Dislike",
+      "reply": "Reply",
+      "edit": "Edit",
+      "delete": "Delete",
+      "report": "Report"
+    },
+    "sort": "Sort by ",
+    "commentFilter": {
+      "dateDesc": "Date descending",
+      "dateAsc": "Date ascending",
+      "likesDesc": "Likes descending",
+      "likesAsc": "Likes ascending"
+    },
+    "suggest": "Suggest for you",
+    "shareAction": {
+      "facebook": "Share on Facebook",
+      "twitter": "Share on Twitter",
+      "linkedin": "Share on Linkedin",
+      "save": "Save to your list",
+      "unsave": "Unsave from your list",
+      "copy": "Copy link",
+      "report": "Report"
+    }
+  },
+  "createPost": {
+    "edit": "Edit",
+    "preview": "Preview",
+    "placeholder": "Write something here ...",
+    "saveDraft": "Save as draft",
+    "publish": "Publish",
+    "cancel": "Cancel",
+    "discard": "Discard",
+    "title": "Title",
+    "thumnail": "Thumnail",
+    "tag": "Tags",
+    "slug": "URL: ",
+    "timeRead": "Time to read (2-50 mins)",
+    "moreTag": "More tags",
+    "category": "Category",
+    "form": {
+      "titlePlaceholder": "Enter title of post here",
+      "thumbnailPlaceholder": "Enter URL image for thumnail",
+      "thumbnailError": "Please enter a valid URL image for thumnail",
+      "tagPlaceHolder": "Enter tag",
+      "moreTagPlaceholder": "Enter more tag",
+      "categoryPlaceHolder": "Enter category",
+      "titleHere": "{{ Title here ... }}",
+      "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
+    },
+    "textTranslate": {
+      "confirmation": "Confirmation",
+      "discard": "Do you want to discard this changes?",
+      "publish": "Do you want to publish this post?",
+      "popup": {
+        "message": "You must be logged in to create a post",
+        "header": " ",
+        "footer": " "
+      },
+      "valid": {
+        "title": "Title must be lenght between 20 and 200 characters",
+        "thumbnail": "Thumbnail is required",
+        "tag": "Tag is required",
+        "category": "You must select at less a category",
+        "timeRead": "Time to read is between 2 and 50 minutes",
+        "content": "Content is empty"
+      }
+    }
+  },
+  "editPost": {
+    "pageTitle": "Edit: {{title}}",
+    "viewPost": "Click here to view current post",
+    "edit": "Edit",
+    "preview": "Preview",
+    "saveDraft": "Save as draft",
+    "publish": "Save change",
+    "cancel": "Cancel",
+    "discard": "Discard",
+    "title": "Title",
+    "shortContent": "Short content",
+    "thumnail": "Thumnail",
+    "tag": "Tags",
+    "slug": "URL: ",
+    "timeRead": "Time to read (2-50 mins)",
+    "moreTag": "More tags",
+    "category": "Category",
+    "form": {
+      "titlePlaceholder": "Enter title of post here",
+      "shortContentPlaceholder": "Enter short content here",
+      "shortContentLength": "Short content must be between 20 and 200 characters",
+      "thumbnailPlaceholder": "Enter URL image for thumnail",
+      "thumbnailError": "Please enter a valid URL image for thumnail",
+      "tagPlaceHolder": "Enter tag",
+      "moreTagPlaceholder": "Enter more tag",
+      "categoryPlaceHolder": "Enter category",
+      "titleHere": "{{ Title here ... }}",
+      "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
+    },
+    "dialog": {
+      "title": "Confirmation",
+      "discard": "Do you want to discard this changes?",
+      "publish": "Do you want to appy changes for this post? This change will be pending for approval. Please wait for approval. The old post will be visible until the new one is approved.",
+      "ok": "Yes, apply changes",
+      "cancel": "No, continue editing",
+      "popup": {
+        "message": "You must be logged in to create a post",
+        "header": " ",
+        "footer": " "
+      },
+      "valid": {
+        "title": "Title must be lenght between 20 and 200 characters",
+        "thumbnail": "Thumbnail cannot be empty",
+        "tag": "Tag cannot be empty",
+        "category": "You must select at less a category",
+        "timeRead": "Time to read is between 2 and 50 minutes",
+        "content": "Content cannot be empty",
+        "shortContent": "Short content must be between 20 and 200 characters"
+      }
+    }
+  },
+  "report": {
+    "title": "Report to admins",
+    "description": "Let the admins know what's wrong, select reason to report this post. Once you submit, admins will review your report and take action. Only admins can see your report.",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "reason": "Description",
+    "reasonPlaceholder": "Type more description here ...",
+    "dialog": {
+      "cancel": {
+        "title": "Cancel report",
+        "description": "Do you want to cancel this report?",
+        "confirm": "Yes, cancel",
+        "cancel": "No, keep it"
+      },
+      "submit": {
+        "title": "Submit report",
+        "description": "Do you want to submit this report?",
+        "confirm": "Yes, Submit this report",
+        "cancel": "No, keep editing"
+      }
+    },
+    "success": {
+      "title": "Report has been sent",
+      "description": "Your report has been sent successfully. Thank you for your feedback."
+    },
+    "reasons": {
+      "inappropriate": {
+        "title": "Inappropriate",
+        "description": "This post is inappropriate"
+      },
+      "spam": {
+        "title": "Spam",
+        "description": "Content that is massively posted or otherwise misleading in nature."
+      },
+      "rules": {
+        "title": "Violate rules",
+        "description": "This post violate the rules of the website."
+      },
+      "hate": {
+        "title": "Hate speech",
+        "description": "Hate speech is a form of verbal abuse that aims to damage another's feelings through the use of language, such as cursing, threats of violence, or personal attacks."
+      },
+      "violence": {
+        "title": "Violence",
+        "description": "Content that is violent, graphic, or posted to shock viewers."
+      },
+      "false": {
+        "title": "False information",
+        "description": "Content that is false, misleading, or posted to mislead."
+      },
+      "irrelevant": {
+        "title": "Irrelevant",
+        "description": "Content that is irrelevant to the topic of the website."
+      },
+      "sexual": {
+        "title": "Sexual content",
+        "description": "Content that includes graphic sexual activity, nudity, or other types of sexual content."
+      },
+      "copyright": {
+        "title": "Copyright violation",
+        "description": "Copyright, privacy, trademark, or other intellectual property violation."
+      },
+      "other": {
+        "title": "Other",
+        "description": "Other reason (description is required)"
+      }
+    }
+  },
+  "search": {
+    "title": {
+      "search": "Search",
+      "result": "Search result for {{query}}"
+    },
+    "menu": {
+      "all": "All",
+      "post": "Post",
+      "user": "User"
+    },
+    "result": "Search results for <b>{{query}}</b>",
+    "noResult": "No results found for <b>{{query}}</b>",
+    "sort": "Sort by ",
+    "filter": {
+      "dateDesc": "Date descending",
+      "dateAsc": "Date ascending",
+      "likesDesc": "Likes descending",
+      "likesAsc": "Likes ascending"
+    },
+    "form": {
+      "placeholder": "Search for posts"
+    }
+  },
+  "primeng": {
+    "startsWith": "Starts with",
+    "contains": "Contains",
+    "notContains": "Not contains",
+    "endsWith": "Ends with",
+    "equals": "Equals",
+    "notEquals": "Not equals",
+    "noFilter": "No Filter",
+    "lt": "Less than",
+    "lte": "Less than or equal to",
+    "gt": "Greater than",
+    "gte": "Greater than or equal to",
+    "is": "Is",
+    "isNot": "Is not",
+    "before": "Before",
+    "after": "After",
+    "dateIs": "Date is",
+    "dateIsNot": "Date is not",
+    "dateBefore": "Date is before",
+    "dateAfter": "Date is after",
+    "clear": "Clear",
+    "apply": "Apply",
+    "matchAll": "Match All",
+    "matchAny": "Match Any",
+    "addRule": "Add Rule",
+    "removeRule": "Remove Rule",
+    "accept": "Yes",
+    "reject": "No",
+    "choose": "Choose",
+    "upload": "Upload",
+    "cancel": "Cancel",
+    "dayNames": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    "monthNames": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "monthNamesShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "dateFormat": "mm/dd/yy",
+    "firstDayOfWeek": 0,
+    "today": "Today",
+    "weekHeader": "Wk",
+    "weak": "Weak",
+    "medium": "Medium",
+    "strong": "Strong",
+    "passwordPrompt": "Enter a password",
+    "emptyMessage": "No results found",
+    "emptyFilterMessage": "No results found"
   }
 }

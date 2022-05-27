@@ -1,0 +1,11 @@
+:host ::ng-deep {
+  .language-listbox {
+    .p-button {
+      padding: 0.5rem !important;
+    }
+
+    .flag-listbox {
+      width: 20px !important;
+    }
+  }
+}

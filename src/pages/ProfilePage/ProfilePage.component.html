@@ -1,0 +1,30 @@
+<div class="page-user-profile-wrapper container py-4" [ngClass]="{'layout-profile-menuactive' : !isShowMenu}"
+  *ngIf="!isLoading">
+  <div class="button-show-menu">
+    <!-- <ng-template [ngIf]="isShowMenu" [ngIfElse]="button_show">
+      <button pButton label="" icon="pi pi-angle-double-left" iconPos="left" pTooltip="{{'profile.hide' | translate}}"
+        tooltipPosition="top" (click)="onClickShowMenu()"></button>
+    </ng-template>
+    <ng-template #button_show>
+      <button pButton label="" icon="pi pi-angle-double-right" iconPos="right" pTooltip="{{'profile.show' | translate}}"
+        tooltipPosition="top" (click)="onClickShowMenu()"></button>
+    </ng-template> -->
+  </div>
+  <div class="layout-profile-sidebar card mt-0 lg:mt-6">
+    <app-user-sidebar-menu></app-user-sidebar-menu>
+  </div>
+  <div #layoutProfile class="layout-profile-container">
+    <div class="flex align-items-center mb-1">
+      <p class="font-semibold text-700 text-2xl ml-4">{{labelHeader}}</p>
+    </div>
+    <!-- <div class="layout-profile-main border-round shadow-1 p-2 md:p-3 min-h-screen"
+      [ngClass]="config?.dark ? 'bg-black-alpha-20' : 'bg-white-alpha-90'">
+      <router-outlet></router-outlet>
+    </div> -->
+    <div class="layout-profile-main card shadow-1 p-2 md:p-3 min-h-screen">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<app-loading [loading]="isLoading"></app-loading>

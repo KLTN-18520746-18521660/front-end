@@ -1,0 +1,20 @@
+<div class="flex align-items-center justify-content-center overflow-hidden" *ngIf="visible">
+  <div class="grid justify-content-center p-2 lg:p-0">
+    <div class="col-12 xl:mt-0 text-center px-6">
+      <object type="image/svg+xml" data="assets/images/svg/404-svg-animation.svg" alt="404 image" img=""
+        width="100%"></object>
+    </div>
+    <div class="col-12 xl:col-8">
+      <div class="flex flex-wrap justify-content-center align-items-center">
+        <h1 class="font-bold text-7xl text-center col-12 mb-4">
+          {{'label.notfound.title' | translate}}</h1>
+        <p class="text-600 text-center">{{'label.notfound.description' | translate}}</p>
+
+        <div class="col-12 mt-5 text-center">
+          <a [routerLink]="['/']" class="text-blue-500"><i class="pi pi-fw pi-arrow-left text-blue-500 mr-2"
+              style="vertical-align:center;"></i> {{'label.notfound.home' | translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

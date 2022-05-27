@@ -1,0 +1,29 @@
+<ng-template [ngIf]="type === 'dropdown'" [ngIfElse]="listBox">
+  <p-dropdown *ngIf="selectedLanguage" [options]="listLanguages" [(ngModel)]="selectedLanguage.lang" optionLabel="name"
+    optionValue="lang" (onChange)="onChangeLanguage($event)">
+    <ng-template pTemplate="selectedItem">
+      <div class="country-item country-item-value flex align-items-center" *ngIf="selectedLanguage">
+        <img src="assets/styles/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + selectedLanguage.flag" />
+        <div>{{selectedLanguage.name}}</div>
+      </div>
+    </ng-template>
+    <ng-template let-language pTemplate="item">
+      <div class="country-item flex align-items-center">
+        <img src="assets/styles/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + language.code" />
+        <div>{{language.name}}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+</ng-template>
+<ng-template #listBox>
+  <div class="flex col-12 align-items-center justify-content-between language-listbox">
+    <label class="">{{'common.language' | translate}}</label>
+    <p-selectButton [options]="listLanguages" (onChange)="onChangeLanguageListBox($event)"
+    [(ngModel)]="selectedLanguageListBox">
+    <ng-template let-item>
+      <img src="assets/styles/flags/flag_placeholder.png" [class]="'mr-2 flag-listbox flag flag-' + item.flag" />
+      {{item.lang | uppercase}}
+    </ng-template>
+  </p-selectButton>
+  </div>
+</ng-template>

@@ -1,13 +1,136 @@
-<div class="fixed w-full z-5">
-  <p-menubar [model]="items" class="top-bar">
-    <ng-template pTemplate="start">
-      <h4>HeoVi</h4>
-    </ng-template>
-    <ng-template pTemplate="end">
-      <span class="p-input-icon-right">
-        <input type="text" pInputText placeholder="Search">
-        <i class="pi pi-search"></i>
-      </span>
-    </ng-template>
-  </p-menubar>
+<div class="fixed top-bar-wrapper w-full h-5rem z-5" [ngClass]="{'top-bar-sticky' : isScrolling}">
+  <div class="container">
+    <div class="flex justify-content-between align-items-center top-bar h-5rem">
+      <div class="flex align-items-center menu-left">
+        <p-button type="text" class="flex p-button-secondary lg:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
+        </p-button>
+        <div class="logo">
+          <a [routerLink]="['/']">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png" class="h-4rem"
+              alt="App Logo">
+          </a>
+        </div>
+        <!-- <div class="flex top-bar-menu">
+          <ul class="list-menu list-none align-items-center m-0 hidden md:flex">
+            <li class="inline menu-item text-center">
+              <a [routerLink]="['/']" class="menu-item-link flex justify-content-center py-4 w-full"
+                [ngClass]="{'active': activeLink == ''}">{{'topbar.home' | translate }}</a>
+            </li>
+            <li *ngFor="let item of category.slice(0, 3)" class="inline menu-item text-center">
+              <a [routerLink]="['category', item.slug]"
+                class="menu-item-link flex justify-content-center py-4 w-full font-semibold"
+                [ngClass]="{'active': activeLink == item.slug}">{{item.display_name}}</a>
+            </li>
+            <li class="inline menu-item text-center menu-dropdown py-4">
+              <span class="font-semibold">{{'topbar.more' | translate }}</span><i class="pi pi-angle-down"></i>
+              <ul class="menu-dropdown-list list-none align-items-center shadow-6 border-round">
+                <li *ngFor="let item of category.slice(4)" class="menu-dropdown-item">
+                  <a [routerLink]="['category', item.slug]"
+                    class="menu-dropdown-link pl-4 pr-8 py-4 flex">{{item.display_name}}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div> -->
+      </div>
+      <div class="flex align-items-center menu-right">
+        <div class="flex md:mr-3">
+          <button pButton pRipple icon="pi pi-search" (click)="onClickSeach()"
+            class="p-button-rounded p-button-text p-button-plain">
+          </button>
+        </div>
+        <div class="hidden md:flex mr-3">
+          <button pButton pRipple [routerLink]="['/create']" class="p-button-outlined p-button-primary">
+            {{'topbar.createPost' | translate}}
+          </button>
+        </div>
+        <app-switch-theme class="hidden md:flex"></app-switch-theme>
+        <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
+          <div
+            class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
+            [routerLink]="['/profile/notifications']" [routerLinkActive]="'btn-active'">
+            <div>
+              <i class="pi pi-bell p-text-secondary" pBadge [value]="user?.unread_notifications.toString()"
+                style="font-size: 1.2rem"></i>
+            </div>
+          </div>
+          <p-menu #menu [popup]="true" [model]="menuUser"></p-menu>
+          <div class="user-dropdown flex align-items-center align-content-center cursor-pointer"
+            (click)="menu.toggle($event)">
+            <span class="ml-2 font-semibold mx-2">{{user.display_name}}</span>
+            <app-avatar [user]="user"></app-avatar>
+          </div>
+        </ng-template>
+        <ng-template #noLogin>
+          <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
+            style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
+          <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/login']"
+            style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>
+
+<p-sidebar [(visible)]="showSidebar" (onHide)="onHideSidebar()">
+  <div class="sidebar-main-content">
+    <ng-template [ngIf]="isLoggedin" [ngIfElse]="sideBarWithoutLogin">
+      <div class="flex flex-wrap mb-2 justify-content-center align-items-center">
+        <div class="flex col-12 justify-content-center">
+          <a [routerLink]="['/user', user.user_name]" class="text-color">
+            <app-avatar [height]="'5rem'" [user]="user"></app-avatar>
+          </a>
+        </div>
+        <div class="col-12 text-center p-0">
+          <p class="ml-2 text-2xl font-semibold">{{user.display_name}}</p>
+        </div>
+        <div class="col-12 text-center">
+          <a [routerLink]="['/user', user.user_name]" class="text-sm hover-underline text-500">
+            @{{ user?.user_name }}
+          </a>
+          <i class="ml-2 pi pi-copy cursor-pointer" (click)="onClickCopy()" [tooltipPosition]="'top'"
+            pTooltip="{{'tooltip.copy' | translate}}">
+          </i>
+        </div>
+        <div class="col-12 text-center px-0 py-3">
+          <button pButton pRipple type="button" label="{{'common.profile' | translate}}" icon="pi pi-user"
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/profile']">
+          </button>
+          <button pButton pRipple type="button" label="{{'common.logout' | translate}}" icon="pi pi-sign-out"
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-danger" (click)="onClickLogout()">
+          </button>
+        </div>
+      </div>
+      <app-user-sidebar-menu (clickMenu)="onClickSidebarMenu()"></app-user-sidebar-menu>
+    </ng-template>
+    <ng-template #sideBarWithoutLogin>
+      <div class="flex flex-wrap mb-2 justify-content-center align-items-center">
+        <div class="col-12 text-center">
+          <p class="text-4xl text-600 font-semibold">{{'topbar.wellcome' | translate}}</p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Dribbble_logo.png" class="h-4rem"
+            alt="App Logo">
+          <p class="text-600 text-sm">{{'topbar.description' | translate}}</p>
+        </div>
+        <div class="col-12 text-center px-0">
+          <button pButton pRipple type="button" label="{{'common.register' | translate}}"
+            class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/auth/register']">
+          </button>
+          <button pButton pRipple type="button" label="{{'common.login' | translate}}"
+            class="p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/auth/login']">
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="flex col-12">
+    <app-language-selector class="w-full" [type]="'listbox'"></app-language-selector>
+  </div>
+  <div class="flex col-12">
+    <app-switch-theme class="w-full" [type]="'switch'"></app-switch-theme>
+  </div>
+  <app-footer></app-footer>
+</p-sidebar>
+
+<p-confirmDialog key="logout" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [position]="'top'"
+  [style]="{width: '60vw'}" [dismissableMask]="true">
+</p-confirmDialog>

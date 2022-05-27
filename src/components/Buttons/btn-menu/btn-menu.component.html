@@ -1,0 +1,6 @@
+<div #container [ngClass]="'app-btn-menu p-component'">
+  <button pButton pRipple type="button" icon="{{ icon }}"
+    class="{{ btnClass}} btn-menu" (click)="onClickMenu($event)"></button>
+
+  <p-menu #menu [popup]="true" styleClass="{{menuClass}}" [model]="items" [appendTo]="appendTo"></p-menu>
+</div>

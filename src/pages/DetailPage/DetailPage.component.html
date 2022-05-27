@@ -1,3 +1,125 @@
-<p>
-  DetailPage works!
-</p>
+<div class="position-sticky z-10">
+  <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '4px'}">
+  </p-progressBar>
+</div>
+
+<app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
+
+<div class="detail-post-layout container" *ngIf="!isLoading">
+  <div class="grid py-4" *ngIf="!error; else errorBlock">
+    <div class="col-0 md:col-1 lg:col-1">
+      <div class="position-sticky hidden md:flex flex-wrap justify-content-center">
+        <ng-template [ngIf]="!isLoadingValue" [ngIfElse]="loadingValue">
+          <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
+            <app-btn-fab [data]="item"></app-btn-fab>
+          </div>
+        </ng-template>
+        <ng-template #loadingValue>
+          <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
+            <app-btn-fab [isLoading]="true" [showValue]="true"></app-btn-fab>
+          </div>
+        </ng-template>
+        <div class="col-12 p-1 flex justify-content-center mt-4">
+          <span class="font-semibold text-xl">{{'postDetail.share' | translate}}</span>
+        </div>
+        <div class="col-12 p-1 flex justify-content-center" *ngFor="let item of contacts">
+          <app-btn-fab [data]="item"></app-btn-fab>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 md:col-11 lg:col-8">
+      <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
+      <!-- <div class="position-sticky mt-1 z-index-999">
+        <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '3px', 'z-index': '100000'}">
+        </p-progressBar>
+      </div> -->
+      <div class="detail-wrapper mt-3" *ngIf="!isLoading; else loadingSpinner">
+        <div #postContent class="detail-container border-round surface-0 shadow-2" *ngIf="post">
+          <app-view-detail-post [post]="post" [menu]="menuitem"></app-view-detail-post>
+        </div>
+        <div class="lg:hidden mt-4">
+          <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
+        </div>
+        <div class="post-comment pt-6" id="comments">
+          <div class="flex justify-content-between align-items-center comment-option my-3">
+            <div class="comment-option-left">
+              <div class="post-comment-header my-4">
+                <p class="text-2xl font-semibold">
+                  {{'postDetail.disscussion' | translate:{ count: totalSizeComments} }}
+                </p>
+              </div>
+            </div>
+            <div class="comment-option-right z-0">
+              <span>{{'postDetail.sort' | translate }}</span>
+              <p-dropdown *ngIf="filterComments" [options]="filterComments" [(ngModel)]="currentFilter"
+                optionLabel="label" (onChange)="onFilterComments($event)">
+              </p-dropdown>
+            </div>
+          </div>
+          <div class="post-comment-input">
+            <app-comment-input [autoFocus]="false" [parent_id]="null" (submit)="onSubmitComment($event)">
+            </app-comment-input>
+          </div>
+          <div pDefer (onLoad)="initLoadComment()">
+            <ng-template>
+              <ng-template [ngIf]="!isLoadingComments" [ngIfElse]="loadingComment">
+                <ng-template [ngIf]="isLoadingAddComment">
+                  <app-comment-card [loading]="true" *ngFor="let i of [1]"></app-comment-card>
+                </ng-template>
+                <app-comment-card (submit)="onSubmitComment($event)" *ngFor="let comment of listComments"
+                  [comment]="comment" (delete)="onDeleteComment($event)">
+                </app-comment-card>
+                <div class="pb-4 pt-2" *ngIf="totalSizeComments > listComments?.length">
+                  <span class="text-primary text-lg font-medium cursor-pointer button-link" (click)="loadMoreComment()">
+                    {{'postDetail.showMoreComment' | translate}}
+                    <i *ngIf="isLoadingMoreComments" class="pi pi-spin pi-spinner" style="font-size: 1.2rem"></i>
+                  </span>
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+        <div class="read-next-wrapper mt-4 md:mt-8">
+          <p class="font-semibold text-2xl">{{'common.readNext' | translate}}</p>
+          <app-post-card-vertical *ngFor="let item of listRecommend" [post]="item"></app-post-card-vertical>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 lg:col-3">
+      <div class="grid position-sticky">
+        <div class="col-12 md:col-12 lg:col-12 hidden lg:flex">
+          <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
+        </div>
+        <div class="col-12 mt-4">
+          <span class="font-semibold text-2xl">{{'postDetail.suggest' | translate}}</span>
+        </div>
+        <div class="col-12 md:col-4 lg:col-12" *ngFor="let item of listRecommend">
+          <app-recommend-post-card [post]="item"></app-recommend-post-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="button-share-post">
+  <p-speedDial (onShow)="onShowSpeeDial()" (onHide)="onHideSpeeDial()" [model]="shareItems" [mask]="true"
+    [hideIcon]="'pi pi-times'" [rotateAnimation]="false" [showIcon]="'pi pi-share-alt'" direction="up"
+    buttonClassName="p-button-primary">
+  </p-speedDial>
+</div>
+
+<ng-template #errorBlock>
+  <app-NotFoundPage></app-NotFoundPage>
+</ng-template>
+
+<ng-template #loadingSpinner>
+  <app-loading-spinner [height]="'loading-post'"></app-loading-spinner>
+</ng-template>
+
+<ng-template #loadingComment>
+  <app-comment-card [loading]="true" *ngFor="let i of [1]"></app-comment-card>
+</ng-template>
+
+<app-loading [loading]="isLoading"></app-loading>
+
+<p-toast [preventOpenDuplicates]="true"></p-toast>

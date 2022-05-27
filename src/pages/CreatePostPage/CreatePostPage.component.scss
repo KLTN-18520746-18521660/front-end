@@ -1,0 +1,103 @@
+.create-post-wrapper {
+  .post-thumbnail-image {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+:host ::ng-deep .p-tabview {
+  .p-tabview-panels {
+    min-height: 500px;
+
+    a {
+      color: var(--primary-color) !important;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  .p-tabview-nav li {
+    width: 50% !important;
+
+    .p-tabview-nav-link {
+      justify-content: center !important;
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .p-tabview-nav-content {
+    border-top-right-radius: 6px !important;
+    border-top-left-radius: 6px !important;
+  }
+
+  .ql-container {
+    font-family: inherit !important;
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .ql-editor {
+    img {
+      display: flex;
+      margin: 0 auto;
+      max-height: 400px !important;
+    }
+  }
+
+  .p-dialog .p-dialog-footer {
+    text-align: right !important;
+  }
+}
+
+:host ::ng-deep {
+  .p-fileupload {
+    .p-fileupload-content {
+      display: none !important;
+    }
+  }
+
+  .p-inputtextarea.markdown-editor {
+    min-height: 300px;
+  }
+
+  .p-chips,
+  .p-chips-multiple-container {
+    width: 100% !important;
+
+    .p-chips-token {
+      margin-bottom: 0.25rem !important;
+    }
+  }
+
+  .p-autocomplete,
+  .p-autocomplete-multiple-container {
+    width: 100% !important;
+
+    .p-autocomplete-token {
+      margin-bottom: 0.25rem !important;
+    }
+  }
+
+  .p-cascadeselect .p-cascadeselect-panel {
+    left: 0 !important;
+  }
+
+  .p-treeselect {
+    width: 100% !important;
+
+    .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {
+      box-shadow: none !important;
+    }
+  }
+
+  p-inputnumber,
+  .p-inputnumber {
+    width: 100% !important;
+  }
+}

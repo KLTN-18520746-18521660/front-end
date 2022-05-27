@@ -1,0 +1,8 @@
+@import 'styles/scss/mixins.scss';
+
+:host ::ng-deep .comment-input-wrapper {
+  .comment-input {
+    // height: 3.4rem !important;
+    @include borderRadius(10);
+  }
+}

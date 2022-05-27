@@ -1,0 +1,20 @@
+@import 'styles/scss/mixins.scss';
+
+.report-wrapper {
+  width: 40vw;
+
+  @include breakpoint(max, 1200px) {
+    width: 50vw;
+  }
+  @include breakpoint(max, 960px) {
+    width: 70vw;
+  }
+
+  @include breakpoint(max, 768px) {
+    width: 80vw;
+  }
+
+  @include breakpoint(max, 576px) {
+    width: 90vw;
+  }
+}
