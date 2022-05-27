@@ -38,7 +38,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
   public overlayMenuActive: boolean;
 
-  public staticMenuInactive: boolean = true;
+  public staticMenuInactive: boolean = false;
 
   public profileActive: boolean;
 
