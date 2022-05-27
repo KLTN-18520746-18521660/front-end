@@ -109,7 +109,7 @@ export class UserEditInfoComponent implements OnInit {
           // email: ['', Validators.required],
           // user_name: ['', Validators.required],
           description: [this.user.description],
-          sex: [this.user.sex, Validators.required],
+          sex: [this.user.sex],
           phone: [this.user.phone, [Validators.pattern('[0-9 ]{11}')]],
           country: [this.selectedCountry ? this.selectedCountry : null],
           city: [this.user.city],
@@ -189,6 +189,7 @@ export class UserEditInfoComponent implements OnInit {
 
   onSubmit() {
     this.message = [];
+    console.log(this.form)
     if (this.form.invalid) {
       return;
     }

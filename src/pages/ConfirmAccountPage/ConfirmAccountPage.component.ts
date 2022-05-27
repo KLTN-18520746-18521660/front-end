@@ -48,25 +48,23 @@ export class ConfirmAccountPageComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.routerSubcription = this.activatedRoute.queryParams.subscribe(res => {
-      this.params = res;
-      this.authService.confirmUser(this.params).subscribe(
-        (res: any) => {
-          if (res?.data) {
-            this.user = res?.data?.user;
-            this.form.get('email').setValue(this.user?.email);
-          }
-          this.isLoading = false;
-        },
-        (err) => {
-          this.isLoading = false;
-          this.error = true;
-          this.message = [{ severity: 'error', summary: '', detail: err.message }];
+    this.params = this.activatedRoute.snapshot.queryParams;
+    this.authService.confirmUser(this.params).subscribe(
+      (res) => {
+        if (res?.data) {
+          this.user = res?.data?.user;
+          this.form.get('email').setValue(this.user?.email);
         }
-      );
-      this.translate.get('label.confirm').subscribe(res => {
-        this.textTranslate = res;
-      })
+        this.isLoading = false;
+      },
+      (err) => {
+        this.isLoading = false;
+        this.error = true;
+        this.message = [{ severity: 'error', summary: '', detail: err.message }];
+      }
+    );
+    this.translate.get('label.confirm').subscribe(res => {
+      this.textTranslate = res;
     });
     this.form = this.formbuilder.group({
       email: [{ value: '', disabled: true }, [Validators.required]],
