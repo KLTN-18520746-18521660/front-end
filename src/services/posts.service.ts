@@ -1,5 +1,5 @@
 import { ReportSendModel, ReportType } from 'models/report.model';
-import { ApiParams } from './../models/api.model';
+import { ApiParams } from 'models/api.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';

@@ -1,9 +1,8 @@
-import { convertDateTime } from './../../../utils/commonFunction';
 import Post from 'models/post.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { postsMockData } from 'shared/mockData/postsMockData';
 import { TranslateService } from '@ngx-translate/core';
-import { mapActionWithPost } from 'utils/commonFunction';
+import { mapActionWithPost, convertDateTime } from 'utils/commonFunction';
 @Component({
   selector: 'app-recommend-post-card',
   templateUrl: './recommend-post-card.component.html',

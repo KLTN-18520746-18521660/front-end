@@ -1,4 +1,4 @@
-import { ApiParams } from './../models/api.model';
+import { ApiParams } from 'models/api.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';

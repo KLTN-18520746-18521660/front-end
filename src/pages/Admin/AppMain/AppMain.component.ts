@@ -1,13 +1,13 @@
 import { MessageService } from 'primeng/api';
-import { APPCONSTANT, STORAGE_KEY } from './../../../utils/appConstant';
+import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { CookieService } from 'services/cookie.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { AdminService } from 'services/admin.service';
 import { Component, AfterViewInit, OnDestroy, Renderer2, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AppComponent } from '../../../app/app.component';
-import { AppConfigService } from '../../../services/app.config.service';
-import { AppConfig, ThemeName } from '../../../models/appconfig.model';
+import { AppComponent } from 'app/app.component';
+import { AppConfigService } from 'services/app.config.service';
+import { AppConfig, ThemeName } from 'models/appconfig.model';
 import { filter, fromEvent, map, merge, Subscription } from 'rxjs';
 import { UserIdleService } from 'angular-user-idle';
 import { TranslateService } from '@ngx-translate/core';

@@ -1,8 +1,8 @@
 import { APPCONSTANT } from 'utils/appConstant';
-import { ApiParams } from './../../models/api.model';
+import { ApiParams } from 'models/api.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { UserService } from 'services/user.service';
-import { mapActionWithCategory } from './../../utils/commonFunction';
+import { mapActionWithCategory } from 'utils/commonFunction';
 import { PostsService } from 'services/posts.service';
 import { Subscription } from 'rxjs';
 import Post from 'models/post.model';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CookieService } from 'services/cookie.service';
-import { STORAGE_KEY } from '../../utils/appConstant';
+import { STORAGE_KEY } from 'utils/appConstant';
 
 @Injectable({
   providedIn: 'root'

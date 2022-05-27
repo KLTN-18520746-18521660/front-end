@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { AppUserComponent } from './../../../pages/AppUser/AppUser.component';
+import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import Post from 'models/post.model';

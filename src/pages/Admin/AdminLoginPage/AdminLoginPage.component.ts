@@ -1,4 +1,4 @@
-import { ThemeName } from './../../../models/appconfig.model';
+import { ThemeName } from 'models/appconfig.model';
 import { AppConfigService } from 'services/app.config.service';
 import { Message, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';

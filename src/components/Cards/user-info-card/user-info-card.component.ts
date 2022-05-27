@@ -1,4 +1,4 @@
-import { mapActionWithUser } from './../../../utils/commonFunction';
+import { mapActionWithUser } from 'utils/commonFunction';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { Component, Input, OnInit } from '@angular/core';
 import User from 'models/user.model';

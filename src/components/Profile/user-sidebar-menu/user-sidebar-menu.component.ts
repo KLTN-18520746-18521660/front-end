@@ -1,4 +1,4 @@
-import { UserService } from './../../../services/user.service';
+import { UserService } from 'services/user.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';

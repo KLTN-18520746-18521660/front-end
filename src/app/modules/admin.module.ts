@@ -1,4 +1,4 @@
-import { AdminGuard } from './../../shared/guards/admin.guard';
+import { AdminGuard } from 'shared/guards/admin.guard';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

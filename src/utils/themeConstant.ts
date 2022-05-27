@@ -1,4 +1,4 @@
-import { ThemeName } from './../models/appconfig.model';
+import { ThemeName } from 'models/appconfig.model';
 
 export const THEMES = [
   {

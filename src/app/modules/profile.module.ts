@@ -1,7 +1,7 @@
-import { UserFollowerComponent } from './../../components/Profile/user-follower/user-follower.component';
-import { UserFollowingComponent } from './../../components/Profile/user-following/user-following.component';
-import { UserPostSavedComponent } from './../../components/Profile/user-post-saved/user-post-saved.component';
-import { UserInfoComponent } from './../../components/Profile/user-info/user-info.component';
+import { UserFollowerComponent } from 'components/Profile/user-follower/user-follower.component';
+import { UserFollowingComponent } from 'components/Profile/user-following/user-following.component';
+import { UserPostSavedComponent } from 'components/Profile/user-post-saved/user-post-saved.component';
+import { UserInfoComponent } from 'components/Profile/user-info/user-info.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangePasswordComponent } from 'components/Profile/change-password/change-password.component';

@@ -1,6 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { ActionType } from './../../../utils/apiConstant';
+import { ActionType } from 'utils/apiConstant';
 import { UserService } from 'services/user.service';
 import User from 'models/user.model';
 import { Component, Input, OnInit } from '@angular/core';

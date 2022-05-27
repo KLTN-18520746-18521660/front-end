@@ -14,7 +14,7 @@ import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import { convertArrayToNested, convertToSlug, getDifferenceObject, removeChildrenByLevel } from 'utils/commonFunction';
-import { PostModel } from './../../models/post.model';
+import { PostModel } from 'models/post.model';
 
 @Component({
   selector: 'app-EditPostPage',

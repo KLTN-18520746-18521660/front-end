@@ -15,7 +15,7 @@ import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { convertArrayToNested, convertToSlug, removeChildrenByLevel } from 'utils/commonFunction';
-import { ApiParams } from './../../models/api.model';
+import { ApiParams } from 'models/api.model';
 import md from 'markdown-it';
 import mdAnchor from 'markdown-it-anchor';
 import mdTableContent from 'markdown-it-table-of-contents';

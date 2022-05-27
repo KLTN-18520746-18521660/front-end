@@ -1,4 +1,4 @@
-import { PasswordPolicy } from './../../models/appconfig.model';
+import { PasswordPolicy } from 'models/appconfig.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppConfigService } from 'services/app.config.service';
 import { AppConfig } from 'models/appconfig.model';

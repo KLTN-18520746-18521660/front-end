@@ -1,4 +1,4 @@
-import { ThemeName } from './../../../models/appconfig.model';
+import { ThemeName } from 'models/appconfig.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfig } from 'models/appconfig.model';
 import { AppConfigService } from 'services/app.config.service';

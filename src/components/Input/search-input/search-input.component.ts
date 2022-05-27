@@ -1,4 +1,4 @@
-import { AppConfig } from './../../../models/appconfig.model';
+import { AppConfig } from 'models/appconfig.model';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';

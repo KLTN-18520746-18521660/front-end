@@ -1,19 +1,19 @@
-import { SimpleGridViewComponent } from './../components/simple-grid-view/simple-grid-view.component';
-import { ViewDetailPostComponent } from '../components/view-detail-post/view-detail-post.component';
-import { DockComponent } from './../components/dock/dock.component';
-import { EditPostPageComponent } from './../pages/EditPostPage/EditPostPage.component';
-import { SwitchThemeComponent } from './../components/Configs/switch-theme/switch-theme.component';
-import { CategoryComponent } from './../components/Links/category/category.component';
-import { StatusBadgeComponent } from './../components/status-badge/status-badge.component';
-import { NotificationCardComponent } from './../components/Cards/notification-card/notification-card.component';
-import { UserFollowingComponent } from './../components/Profile/user-following/user-following.component';
-import { UserFollowerComponent } from './../components/Profile/user-follower/user-follower.component';
-import { UserCardComponent } from './../components/Cards/user-card/user-card.component';
-import { CommentInputComponent } from './../components/Input/comment-input/comment-input.component';
-import { RecommendPostCardComponent } from './../components/Cards/recommend-post-card/recommend-post-card.component';
-import { UserInfoPageComponent } from './../pages/UserInfoPage/UserInfoPage.component';
-import { PostCardComponent } from './../components/Cards/post-card/post-card.component';
-import { ReadMoreComponent } from './../components/read-more/read-more.component';
+import { SimpleGridViewComponent } from 'components/simple-grid-view/simple-grid-view.component';
+import { ViewDetailPostComponent } from 'components/view-detail-post/view-detail-post.component';
+import { DockComponent } from 'components/dock/dock.component';
+import { EditPostPageComponent } from 'pages/EditPostPage/EditPostPage.component';
+import { SwitchThemeComponent } from 'components/Configs/switch-theme/switch-theme.component';
+import { CategoryComponent } from 'components/Links/category/category.component';
+import { StatusBadgeComponent } from 'components/status-badge/status-badge.component';
+import { NotificationCardComponent } from 'components/Cards/notification-card/notification-card.component';
+import { UserFollowingComponent } from 'components/Profile/user-following/user-following.component';
+import { UserFollowerComponent } from 'components/Profile/user-follower/user-follower.component';
+import { UserCardComponent } from 'components/Cards/user-card/user-card.component';
+import { CommentInputComponent } from 'components/Input/comment-input/comment-input.component';
+import { RecommendPostCardComponent } from 'components/Cards/recommend-post-card/recommend-post-card.component';
+import { UserInfoPageComponent } from 'pages/UserInfoPage/UserInfoPage.component';
+import { PostCardComponent } from 'components/Cards/post-card/post-card.component';
+import { ReadMoreComponent } from 'components/read-more/read-more.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, SecurityContext } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
@@ -47,9 +47,9 @@ import { NotFoundPageComponent } from 'pages/NotFoundPage/NotFoundPage.component
 // Import components
 import { TopBarComponent } from 'components/top-bar/top-bar.component';
 import { FooterComponent } from 'components/footer/footer.component';
-import { TagComponent } from '../components/Links/tag/tag.component';
+import { TagComponent } from 'components/Links/tag/tag.component';
 import { SearchInputComponent } from '../components/Input/search-input/search-input.component';
-import { AppUserComponent } from './../pages/AppUser/AppUser.component';
+import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 
 import { authInterceptorProviders } from '../shared/helpers/auth.interceptor';
 import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';

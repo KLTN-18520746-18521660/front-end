@@ -1,4 +1,4 @@
-import { ApiParams } from './../models/api.model';
+import { ApiParams } from 'models/api.model';
 import User, { AuthUpdateUser } from 'models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';

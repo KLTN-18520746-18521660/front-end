@@ -1,5 +1,5 @@
-import { EditPostPageComponent } from './../pages/EditPostPage/EditPostPage.component';
-import { GoToComponent } from './../components/go-to/go-to.component';
+import { EditPostPageComponent } from 'pages/EditPostPage/EditPostPage.component';
+import { GoToComponent } from 'components/go-to/go-to.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';

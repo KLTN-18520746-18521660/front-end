@@ -1,15 +1,15 @@
-import { ManageUserService } from './../../../services/admin/manage-user.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription, filter, map } from 'rxjs';
-import { ManagePostService } from './../../../services/admin/manage-post.service';
-import Post from 'models/post.model';
 import { Component, OnInit } from '@angular/core';
-import { ApiParams } from 'models/api.model';
-import { convertDateTime, convertToMultiSortMeta, getDifferenceObject } from 'utils/commonFunction';
-import { MessageService, SortMeta, ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'lodash';
+import { ApiParams } from 'models/api.model';
+import Post from 'models/post.model';
+import { QueryParams, TableData } from 'models/table.model';
 import User from 'models/user.model';
-import { TableData, QueryParams } from 'models/table.model';
+import { ConfirmationService, MessageService, SortMeta } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { convertDateTime, convertToMultiSortMeta } from 'utils/commonFunction';
+import { ManagePostService } from 'services/admin/manage-post.service';
+import { ManageUserService } from 'services/admin/manage-user.service';
 
 @Component({
   selector: 'app-ManagePostsPage',
