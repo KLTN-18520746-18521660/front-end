@@ -84,6 +84,8 @@ export class DetailPageComponent implements OnInit {
 
   @ViewChild('postContent') postContent: ElementRef;
 
+  @ViewChild('comments') commentBlock: ElementRef;
+
   constructor(
     private translate: TranslateService,
     private titleService: Title,
@@ -465,7 +467,7 @@ export class DetailPageComponent implements OnInit {
         color: 'p-button-secondary',
         style: 'p-button-rounded' + (!post.mapAction.comment ? ' p-button-outlined' : ''),
         command: () => {
-          this.router.navigate([], { fragment: "comments" });
+          this.commentBlock.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     ]

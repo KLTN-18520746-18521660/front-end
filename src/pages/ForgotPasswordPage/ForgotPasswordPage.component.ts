@@ -52,7 +52,7 @@ export class ForgotPasswordPageComponent implements OnInit {
       user_name: this.form.value.email,
     }
 
-    this.authService.sendRequestForgotPassword(body).subscribe(
+    this.authService.sendForgotPassword(body).subscribe(
       () => {
         this.isLoading = false;
         this.success = true;

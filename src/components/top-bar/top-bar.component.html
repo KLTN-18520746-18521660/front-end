@@ -44,7 +44,7 @@
             {{'topbar.createPost' | translate}}
           </button>
         </div>
-        <app-switch-theme class="hidden md:flex"></app-switch-theme>
+        <app-switch-theme></app-switch-theme>
         <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
           <div
             class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
@@ -62,7 +62,7 @@
           </div>
         </ng-template>
         <ng-template #noLogin>
-          <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
+          <a class="hidden md:flex font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
             style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
           <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/login']"
             style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>

@@ -131,13 +131,13 @@ export class AuthService {
     }));
   }
 
-  sendRequestForgotPassword(body: any): Observable<ApiResult> {
+  sendForgotPassword(body: any): Observable<ApiResult> {
     return this.http.post<ApiResult>(BASE_URL + REST_URL.FORGOT_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getRequestForgotPassword(params: any): Observable<ApiResult> {
+  getForgotPassword(params: any): Observable<ApiResult> {
     return this.http.get<ApiResult>(BASE_URL + REST_URL.FORGOT_PASSWORD, { ...this.httpOptions(), params: params }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));

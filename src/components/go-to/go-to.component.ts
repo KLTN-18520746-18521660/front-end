@@ -18,7 +18,7 @@ export class GoToComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.url = this.activatedRoute.snapshot.params.url || null;
+    this.url = this.activatedRoute.snapshot.queryParams.url || null;
     // this.postService.gotoUrl(res.url).subscribe(
     //   () => {
         setTimeout(() => {

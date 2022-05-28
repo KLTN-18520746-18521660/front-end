@@ -42,7 +42,7 @@ import { NewPasswordPageComponent } from 'pages/NewPasswordPage/NewPasswordPage.
             data: { key: 'forgotpassword' }
           },
           {
-            path: 'reset-password',
+            path: 'new-password',
             component: NewPasswordPageComponent,
             data: { key: 'newpassword' }
           },

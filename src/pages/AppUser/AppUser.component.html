@@ -1,6 +1,6 @@
 <app-top-bar *ngIf="!isLoading"></app-top-bar>
 
-<div class="main pt-8" *ngIf="!isLoading && !isLoadingConfig; else loadingBlock">
+<div class="main pt-8" *ngIf="!isLoading && !isLoadingConfig">
   <div class="wrapper">
     <router-outlet *ngIf="!isError; else error"></router-outlet>
     <app-btn-scroll-to-top></app-btn-scroll-to-top>
@@ -14,9 +14,7 @@
 
 <p-toast [preventOpenDuplicates]="true"></p-toast>
 
-<ng-template #loadingBlock>
-  <app-loading></app-loading>
-</ng-template>
+<app-loading [loading]="isLoading || isLoadingConfig"></app-loading>
 
 <ng-template #error>
   <app-NotFoundPage></app-NotFoundPage>

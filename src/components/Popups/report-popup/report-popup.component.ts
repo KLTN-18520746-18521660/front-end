@@ -6,6 +6,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
 import { ReportSendModel, ReportType } from 'models/report.model';
+import _ from 'lodash';
 
 interface IReportPopup {
   key: string;
@@ -130,13 +131,16 @@ export class ReportPopupComponent implements OnInit {
       accept: () => {
         if (this.currentReason) {
           if (!this.reportSubcription) {
-            const data = {
+            let data = {
               comment_id: this.data?.comment_id,
               user_name: this.data?.user_name,
               post_slug: this.data?.post_slug,
               report_type: this.currentReason.key,
               content: this.content,
             } as ReportSendModel;
+
+            data =  _.omitBy(data, _.isNull);
+
             this.reportSubcription = this.postService
               .sendReport(this.data.type, data)
               .subscribe(

@@ -1,6 +1,6 @@
 <div class="report-wrapper flex flex-wrap" *ngIf="!success; else successBlock">
   <p class="text-500">{{'report.description' | translate}}</p>
-  <div class="col-12 text-md">
+  <div class="col-12 text-base">
     <div *ngFor="let item of listReasons" class="field-checkbox">
       <p-radioButton [inputId]="item.key" name="item" [value]="item" [(ngModel)]="currentReason"
         (onClick)="onClickReason()"></p-radioButton>
@@ -19,9 +19,9 @@
   </div>
   <div class="col-12 md:col-6 mx-auto flex justify-content-center">
     <button pButton pRipple type="button" label="{{'report.cancel' | translate}}" (click)="onClickCancel()"
-      class="p-button-danger w-full mr-2"></button>
+      class="p-button-danger mr-2"></button>
     <button pButton pRipple type="button" icon="pi pi-flag" label="{{'report.submit' | translate}}"
-      (click)="onClickSubmit()" class="w-full ml-2"></button>
+      (click)="onClickSubmit()" class="ml-2"></button>
   </div>
 </div>
 

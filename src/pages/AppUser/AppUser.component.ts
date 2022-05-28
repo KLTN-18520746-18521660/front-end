@@ -23,9 +23,9 @@ import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 })
 export class AppUserComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
 
-  isLoadingConfig: boolean = true;
+  isLoadingConfig: boolean = false;
 
   isError: boolean = false;
 
@@ -62,8 +62,6 @@ export class AppUserComponent implements OnInit {
   textTranslate: any;
   isWatching: boolean;
   lastExtend: Date;
-
-  public interval: any;
 
   /** Session is save ??? */
   remember: boolean = false;
@@ -152,6 +150,7 @@ export class AppUserComponent implements OnInit {
     console.log(this.userIdleService.getConfigValue());
 
     if (this.userService.isAuthenticated && !this.isWatching) {
+      this.isLoading = false;
       this.onStartWatching();
     }
 
@@ -167,7 +166,6 @@ export class AppUserComponent implements OnInit {
         }
       }
       else {
-        // console.log("Stop watching")
         this.onStopWatching();
       }
     });
@@ -181,7 +179,6 @@ export class AppUserComponent implements OnInit {
     // Start watching when user idle is starting.
     this.timeStartSubscription = this.userIdleService.onTimerStart().subscribe(count => {
       this.isVisible = true;
-      // console.log("Timer ", count)
     });
 
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
@@ -249,7 +246,7 @@ export class AppUserComponent implements OnInit {
 
   extendSession() {
     this.authService.extendSessionUser().subscribe(
-      (res) => {
+      () => {
         console.log("Extend Session Success");
         this.lastExtend = new Date();
       },
@@ -336,7 +333,6 @@ export class AppUserComponent implements OnInit {
       this.refReport.close();
     }
     this.userIdleService.stopWatching();
-    clearInterval(this.interval);
   }
 
 }

@@ -16,7 +16,7 @@ import Validation from 'utils/validation';
 })
 export class NewPasswordPageComponent implements OnInit {
 
-  success: boolean = true;
+  success: boolean = false;
 
   error: boolean = false;
 
@@ -54,7 +54,7 @@ export class NewPasswordPageComponent implements OnInit {
     this.isLoading = true;
     this.routerSubcription = this.activatedRoute.queryParams.subscribe(res => {
       this.params = res;
-      this.authService.sendRequestForgotPassword(this.params).subscribe(
+      this.authService.getForgotPassword(this.params).subscribe(
         () => {
           this.isLoading = false;
         },
@@ -110,7 +110,7 @@ export class NewPasswordPageComponent implements OnInit {
       return;
     };
 
-    this.authService.confirmUserPost({ ...this.params, password: this.form.get('password').value }).subscribe(
+    this.authService.resetPassword({ ...this.params, new_password: this.form.get('password').value }).subscribe(
       () => {
         this.isLoading = false;
         this.success = true;

@@ -47,6 +47,7 @@
     "edit-info": "Edit Info",
     "security": "Security your account",
     "change-password": "Change password",
+    "newpassword": "Reset password",
     "saved-post": "Save Post",
     "following": "Following",
     "followers": "Followers",
@@ -681,6 +682,42 @@
       },
       "warning": "You only have 3 times to try to reset your password"
     },
+    "newpassword": {
+      "title": "Reset your password",
+      "description": "Type new password and confirm again to reset password",
+      "password": {
+        "label": "New password",
+        "placeholder": "Enter new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Enter confirm password"
+      },
+      "submit": "Reset password",
+      "dialog": {
+        "title": "Are you sure?",
+        "description": "Do you want to reset your password?",
+        "cancel": "Cancel",
+        "ok": "Ok"
+      },
+      "validation": {
+        "password": {
+          "required": "Please enter your new password",
+          "min": "New password must be at least {{min}} characters",
+          "max": "New password must be less than {{max}} characters",
+          "special": "New password must contain at least {{num}} special character",
+          "number": "New password must contain at least {{num}} number",
+          "lower": "New password must contain at least {{num}} lowercase character",
+          "upper": "New password must contain at least {{num}} uppercase character"
+        },
+        "confirmPassword": {
+          "required": "Please enter your password again",
+          "min": "Confirm password must be at least {{min}} characters",
+          "max": "Confirm password must be less than {{max}} characters",
+          "match": "Confirm password does not match"
+        }
+      }
+    },
     "notfound": {
       "pageTitle": "Something went wrong or page not found",
       "title": "OOPS!",
@@ -769,25 +806,44 @@
   "createPost": {
     "edit": "Edit",
     "preview": "Preview",
+    "back":"Go back",
+    "next": "Next step",
     "placeholder": "Write something here ...",
     "saveDraft": "Save as draft",
     "publish": "Publish",
     "cancel": "Cancel",
     "discard": "Discard",
+    "editor": "Select editor",
     "title": "Title",
-    "thumnail": "Thumnail",
+    "shortContent": "Short content",
+    "thumbnail": {
+      "title": "Thumbnail",
+      "select": "Select thumbnail",
+      "upload": "Upload",
+      "cancel": "Clear"
+    },
     "tag": "Tags",
     "slug": "URL: ",
     "timeRead": "Time to read (2-50 mins)",
     "moreTag": "More tags",
     "category": "Category",
+    "step": {
+      "start": "Start create",
+      "title": "Add title, thumnail",
+      "content": "Add content",
+      "confirm": "Confirm your post"
+    },
+    "step1": {
+      "title": "Create post"
+    },
     "form": {
       "titlePlaceholder": "Enter title of post here",
+      "shortContentPlaceholder": "Enter short content here",
       "thumbnailPlaceholder": "Enter URL image for thumnail",
       "thumbnailError": "Please enter a valid URL image for thumnail",
       "tagPlaceHolder": "Enter tag",
       "moreTagPlaceholder": "Enter more tag",
-      "categoryPlaceHolder": "Enter category",
+      "categoryPlaceHolder": "Select category",
       "titleHere": "{{ Title here ... }}",
       "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
     },
@@ -835,7 +891,7 @@
       "thumbnailError": "Please enter a valid URL image for thumnail",
       "tagPlaceHolder": "Enter tag",
       "moreTagPlaceholder": "Enter more tag",
-      "categoryPlaceHolder": "Enter category",
+      "categoryPlaceHolder": "Select category",
       "titleHere": "{{ Title here ... }}",
       "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
     },
@@ -924,8 +980,8 @@
         "title": "Copyright violation",
         "description": "Copyright, privacy, trademark, or other intellectual property violation."
       },
-      "other": {
-        "title": "Other",
+      "others": {
+        "title": "Others",
         "description": "Other reason (description is required)"
       }
     }

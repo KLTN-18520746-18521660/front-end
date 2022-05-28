@@ -65,6 +65,27 @@ const routes: Routes = [
         component: CategoryPageComponent
       },
       {
+        path: 'goto',
+        component: GoToComponent,
+        data: {
+          key: "goto"
+        }
+      },
+      {
+        path: 'no-access',
+        component: NoAccessPageComponent,
+        data: {
+          key: "noAccess"
+        }
+      },
+      {
+        path: '404',
+        component: NotFoundPageComponent,
+        data: {
+          key: "notFound"
+        }
+      },
+      {
         path: 'search',
         loadChildren: () => import('./modules/search.module').then(m => m.SearchModule)
       },
@@ -83,27 +104,6 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin.module').then(m => m.AdminModule)
-  },
-  {
-    path: 'goto',
-    component: GoToComponent,
-    data: {
-      key: "goto"
-    }
-  },
-  {
-    path: 'no-access',
-    component: NoAccessPageComponent,
-    data: {
-      key: "noAccess"
-    }
-  },
-  {
-    path: '404',
-    component: NotFoundPageComponent,
-    data: {
-      key: "notFound"
-    }
   },
   {
     path: '**',

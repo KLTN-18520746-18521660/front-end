@@ -1,6 +1,8 @@
+@import 'styles/scss/mixins.scss';
+
 .scroll-to-top {
   position: fixed;
-  bottom: 50px;
+  bottom: 24px;
   right: 24px;
   opacity: 0;
   z-index: 999;
@@ -8,5 +10,10 @@
 
   &.show-scrollTop {
     opacity: 1;
+  }
+
+  @include breakpoint (max, 768px) {
+    right: 20px;
+    bottom: 64px;
   }
 }

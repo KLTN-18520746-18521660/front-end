@@ -11,11 +11,11 @@
     }
 
     .search-input {
-      transition: width 0.8s ease-in-out;
-      -webkit-transition: width 0.8s ease-in-out;
-      -moz-transition: width 0.8s ease-in-out;
-      -ms-transition: width 0.8s ease-in-out;
-      -o-transition: width 0.8s ease-in-out;
+      transition: width 0.5s ease-in-out;
+      -webkit-transition: width 0.5s ease-in-out;
+      -moz-transition: width 0.5s ease-in-out;
+      -ms-transition: width 0.5s ease-in-out;
+      -o-transition: width 0.5s ease-in-out;
       width: 85%;
 
       @include breakpoint(min, 1280px) {
@@ -26,11 +26,13 @@
       }
 
       &-hover {
-
         &:hover,
         &-active {
           width: 100% !important;
         }
+      }
+      &-active {
+        width: 100% !important;
       }
     }
 

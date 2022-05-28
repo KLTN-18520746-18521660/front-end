@@ -6,7 +6,7 @@ import Tag from 'models/tag.model';
 import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 import { MarkdownService } from 'ngx-markdown';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
-import { ConfirmationService, Message, MessageService, TreeNode } from 'primeng/api';
+import { ConfirmationService, Message, MessageService, TreeNode, MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUpload } from 'primeng/fileupload';
 
@@ -19,6 +19,7 @@ import { ApiParams } from 'models/api.model';
 import md from 'markdown-it';
 import mdAnchor from 'markdown-it-anchor';
 import mdTableContent from 'markdown-it-table-of-contents';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -61,11 +62,13 @@ export class CreatePostPageComponent implements OnInit {
   draft: object = {
     type: '',
     title: '',
+    short_content: '',
     thumbnail: '',
     tags: [],
     HTML: '',
     Markdown: '',
     time_read: 5,
+    step: 0,
   }
 
   ref: DynamicDialogRef;
@@ -82,12 +85,22 @@ export class CreatePostPageComponent implements OnInit {
   getTagSubscription: Subscription;
 
   uploadSubcription: Subscription;
+  getCategorySubscription: Subscription;
+  publishSubscription: Subscription;
   isSelectThumbnail: boolean;
   thumbnailPreview: any;
 
   @ViewChild('fileUpload') fileUpload: FileUpload;
 
   message: Message[] = [];
+
+  steps: MenuItem[];
+
+  activeStep: number = 0;
+
+  options: AnimationOptions = {
+    path: '/assets/jsons/publish-article.json',
+  };
 
   constructor(
     private userService: UserService,
@@ -104,6 +117,27 @@ export class CreatePostPageComponent implements OnInit {
   ngOnInit() {
     this.markdownIt = md();
 
+    this.steps = [
+      {
+        label: this.translate.instant('createPost.step.start'),
+        command: () => {
+          this.activeStep = 0;
+        }
+      },
+      {
+        label: this.translate.instant('createPost.step.title'),
+        command: () => {
+          this.activeStep = 1;
+        }
+      },
+      {
+        label: this.translate.instant('createPost.step.content'),
+        command: () => {
+          this.activeStep = 2;
+        }
+      }
+    ]
+
     this.loadDraft();
 
     this.getCategory();
@@ -111,13 +145,27 @@ export class CreatePostPageComponent implements OnInit {
     this.textTranslate = this.translate.instant('createPost.textTranslate')
   }
 
-  handleChangeTabView(event) {
-    console.log(event);
+  onClickBack() {
+    if (this.activeStep > 0) {
+      this.activeStep--;
+      this.draft['step'] = this.activeStep;
+      this.saveDraft();
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+    }
+  }
+
+  onClickNext() {
+    if (this.activeStep < this.steps.length - 1) {
+      this.activeStep++;
+      this.draft['step'] = this.activeStep;
+      this.saveDraft();
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+    }
   }
 
   getCategory() {
     this.isLoading = true;
-    this.postsService.getListCategories().subscribe(
+    this.getCategorySubscription = this.postsService.getListCategories().subscribe(
       (res: any) => {
         this.isLoading = false;
         const list = res?.data.categories.map(item => {
@@ -150,7 +198,7 @@ export class CreatePostPageComponent implements OnInit {
 
   onChangeContentMd(event) {
     this.contentMdComplied = this.markdownIt.render(event || '');
-    this.convertToShortContent();
+    // this.convertToShortContent();
     this.draft[this.selectedEditorType] = event;
     this.saveDraft();
   }
@@ -161,6 +209,14 @@ export class CreatePostPageComponent implements OnInit {
     }
     this.draft['title'] = event;
     this.slug = convertToSlug(event || '');
+    this.saveDraft();
+  }
+
+  onChangeShortContent(event) {
+    if (event && event.length > 200) {
+      event = event.slice(0, 200);
+    }
+    this.draft['short_content'] = event;
     this.saveDraft();
   }
 
@@ -217,20 +273,15 @@ export class CreatePostPageComponent implements OnInit {
     const list = this.listTagModel.map(item => {
       return item.tag;
     });
-    list.push(event.value.toLowerCase().trim().replace(/\s/g, '-'));
-    this.tags = list;
+    const tag = event.value.toLowerCase().trim().replace(/\s/g, '-');
+    if (list.includes(tag)) {
+      this.tags.filter(item => item !== tag);
+    }
     this.draft['tags'] = this.tags;
     this.saveDraft();
   }
 
   onRemoveMoreTag(event) {
-    const list = this.listTagModel.map(item => {
-      return item.tag;
-    });
-    list.filter(item => {
-      return item !== event.value.toLowerCase().trim().replace(/\s/g, '-');
-    })
-    this.tags = list;
     this.draft['tags'] = this.tags;
     this.saveDraft();
   }
@@ -243,32 +294,38 @@ export class CreatePostPageComponent implements OnInit {
       this.thumbnail = this.draft['thumbnail'] || null;
       this.thumbnailPreview = this.thumbnail ? this.thumbnail : null;
       this.title = this.draft['title'] || null;
+      this.short_content = this.draft['short_content'] || null;
       this.tags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || null;
       this.contentMd = this.draft['Markdown'] || null;
       this.contentMdComplied = this.markdownIt.render(this.contentMd || '');
       this.time_read = this.draft['time_read'] || 5;
       this.slug = convertToSlug(this.title || '');
-      this.convertToShortContent();
+      this.activeStep = this.draft['step'] || 0;
+      // this.convertToShortContent();
     }
     else {
       this.content = null;
       this.contentMd = null;
       this.thumbnail = null;
+      this.short_content = null;
       this.tags = [];
       this.validThumbnail = true;
       this.title = null;
       this.selectedEditorType = 'HTML';
       this.time_read = 5;
+      this.activeStep = 0;
 
       this.draft = {
         type: null,
         title: null,
+        short_content: null,
         tags: [],
         thumbnail: null,
         HTML: null,
         Markdown: null,
         time_read: 5,
+        step: 0
       }
       this.saveDraft();
     }
@@ -278,31 +335,31 @@ export class CreatePostPageComponent implements OnInit {
     localStorage.setItem(STORAGE_KEY.POST_DRAFT, JSON.stringify(this.draft));
   }
 
-  convertToShortContent() {
-    let temp: string;
-    try {
-      if (this.selectedEditorType === 'Markdown') {
-        temp = this.contentMdComplied
-      }
-      else {
-        temp = this.content;
-      }
-      this.short_content = (temp ? temp : '')
-        .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
-        .replace(/(&#\d+;)+/g, ' ')
-        .replace(/\n+/g,'.')
-        .slice(0, 190);
+  // convertToShortContent() {
+  //   let temp: string;
+  //   try {
+  //     if (this.selectedEditorType === 'Markdown') {
+  //       temp = this.contentMdComplied
+  //     }
+  //     else {
+  //       temp = this.content;
+  //     }
+  //     this.short_content = (temp ? temp : '')
+  //       .replace(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
+  //       .replace(/(&#\d+;)+/g, ' ')
+  //       .replace(/\n+/g, '.')
+  //       .slice(0, 190);
 
-    } catch (error) {
-      this.messageService.add({ key: 'createPostToast', severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
-    }
+  //   } catch (error) {
+  //     this.messageService.add({ key: 'createPostToast', severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
+  //   }
 
-  }
+  // }
 
   onChangeType(event: any) {
     this.draft['type'] = event.value;
     this.selectedEditorType = event.value;
-    this.convertToShortContent();
+    // this.convertToShortContent();
     this.saveDraft();
   }
 
@@ -354,7 +411,7 @@ export class CreatePostPageComponent implements OnInit {
       }]
       result = false;
     }
-    if (this.title.length == 0) {
+    if (this.title?.length == 0) {
       this.message = [...this.message, {
         severity: 'error',
         summary: '',
@@ -405,6 +462,7 @@ export class CreatePostPageComponent implements OnInit {
       );
     }
     else if (!this.checkValidPost().isvalid) {
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
       // this.messageService.addAll(this.checkValidPost().message);
     }
     else {
@@ -415,6 +473,7 @@ export class CreatePostPageComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         rejectButtonStyleClass: 'p-button-danger',
         accept: () => {
+          window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
           if (this.isSelectThumbnail) {
             this.fileUpload.upload();
           }
@@ -434,6 +493,7 @@ export class CreatePostPageComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
+        this.activeStep = 0;
         localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
         this.loadDraft();
       }
@@ -459,8 +519,8 @@ export class CreatePostPageComponent implements OnInit {
 
     post = _.omitBy(post, _.isNull)
 
-    this.postsService.publishPost(post).subscribe(
-      (res) => {
+    this.publishSubscription = this.postsService.publishPost(post).subscribe(
+      () => {
         this.isLoading = false;
 
         // discard draft
@@ -494,6 +554,12 @@ export class CreatePostPageComponent implements OnInit {
     }
     if (this.uploadSubcription) {
       this.uploadSubcription.unsubscribe();
+    }
+    if (this.getCategorySubscription) {
+      this.getCategorySubscription.unsubscribe();
+    }
+    if (this.publishSubscription) {
+      this.publishSubscription.unsubscribe();
     }
   }
 }

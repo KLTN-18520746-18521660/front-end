@@ -165,7 +165,6 @@ export class TopBarComponent implements OnInit {
       accept: () => {
         this.authService.logout().subscribe((res) => {
           this.userService.logOut();
-          clearInterval(this.appUser.interval);
           this.router.navigate(['/']);
         });
       }

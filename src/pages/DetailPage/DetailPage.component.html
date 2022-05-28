@@ -40,7 +40,7 @@
         <div class="lg:hidden mt-4">
           <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
         </div>
-        <div class="post-comment pt-6" id="comments">
+        <div #comments class="post-comment pt-6" id="comments">
           <div class="flex justify-content-between align-items-center comment-option my-3">
             <div class="comment-option-left">
               <div class="post-comment-header my-4">

@@ -4,6 +4,15 @@
     width: 100%;
     object-fit: cover;
   }
+
+  .position-sticky {
+    position: sticky;
+    top: 66px;
+    z-index: 5;
+  }
+  .min-button-width {
+    min-width: 120px;
+  }
 }
 
 :host ::ng-deep .p-tabview {
@@ -19,14 +28,21 @@
     }
   }
 
-  .p-tabview-nav li {
-    width: 50% !important;
+  .p-tabview-nav {
+    background: transparent !important;
 
-    .p-tabview-nav-link {
-      justify-content: center !important;
+    li {
+      // width: 50% !important;
 
-      &:focus {
-        box-shadow: none !important;
+      .p-tabview-nav-link {
+        min-width: 90px;
+        justify-content: center !important;
+        border-top-right-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+
+        &:focus {
+          box-shadow: none !important;
+        }
       }
     }
   }
@@ -56,6 +72,15 @@
 }
 
 :host ::ng-deep {
+  .p-steps {
+    .p-steps-item {
+      .p-menuitem-link {
+        cursor: pointer;
+        box-shadow: none !important;
+      }
+    }
+  }
+
   .p-fileupload {
     .p-fileupload-content {
       display: none !important;
@@ -64,6 +89,13 @@
 
   .p-inputtextarea.markdown-editor {
     min-height: 300px;
+  }
+  .p-inputtext.input-title,
+  .p-chips,
+  .p-autocomplete,
+  .p-inputnumber,
+  .p-treeselect {
+    height: 3.5rem;
   }
 
   .p-chips,
@@ -90,6 +122,12 @@
 
   .p-treeselect {
     width: 100% !important;
+
+    .p-treeselect-label.p-placeholder {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
 
     .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {
       box-shadow: none !important;

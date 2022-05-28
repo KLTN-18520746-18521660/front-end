@@ -1,4 +1,5 @@
-<div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
-  <button pButton pRipple type="button" icon="pi pi-chevron-up" class="p-button-rounded" (click)="scrollToTop()">
+<div class="scroll-to-top show-scrollTop" *ngIf="windowScrolled">
+  <button pButton pRipple type="button" icon="pi pi-chevron-up" class="p-button-rounded p-button-secondary"
+    (click)="scrollToTop()">
   </button>
 </div>
