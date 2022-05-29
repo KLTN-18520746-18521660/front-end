@@ -41,6 +41,10 @@ export interface ApiError {
 }
 
 export interface ApiParams {
+  // audit log
+  key?: string; // postID | commnentID
+  type?: 'comment' | 'post' | 'user';
+
   start?: number;
   size?: number;
   search_term?: string;

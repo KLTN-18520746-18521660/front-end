@@ -10,14 +10,23 @@
     top: 66px;
     z-index: 5;
   }
+
   .min-button-width {
     min-width: 120px;
   }
 }
 
 :host ::ng-deep .p-tabview {
+  position: relative;
+
   .p-tabview-panels {
     min-height: 500px;
+
+    .create-header {
+      top: 5px;
+      right: 16px;
+      position: absolute;
+    }
 
     a {
       color: var(--primary-color) !important;
@@ -29,8 +38,6 @@
   }
 
   .p-tabview-nav {
-    background: transparent !important;
-
     li {
       // width: 50% !important;
 
@@ -90,6 +97,11 @@
   .p-inputtextarea.markdown-editor {
     min-height: 300px;
   }
+
+  .p-dropdown {
+    min-width: 130px;
+  }
+
   .p-inputtext.input-title,
   .p-chips,
   .p-autocomplete,

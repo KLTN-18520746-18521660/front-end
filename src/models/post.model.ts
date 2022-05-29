@@ -53,6 +53,7 @@ export class PostModel {
   content_type?: string;
   categories?: string[];
   tags?: string[];
+  is_private?: boolean;
 
   constructor(params: any) {
     this.title = params.title;

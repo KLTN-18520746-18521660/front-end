@@ -90,6 +90,12 @@ export class PostsService {
     }));
   }
 
+  getPostTimelineById(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.AUDIT_LOG, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   deletePostByPostId(postId: number): Observable<ApiResult> {
     return this.httpClient.delete<ApiResult>(BASE_URL + REST_URL.POST_ID + `/${postId}`, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
@@ -108,13 +114,6 @@ export class PostsService {
     }));
   }
 
-  /**
-   * 
-   * @param username 
-   * @param params : { start, size, search_term, status, order: string[], desc: string[], tags: string[], categories: string[] }
-   * @param sessionId header session_token
-   * @returns 
-   */
   getPostOfUser(username: string, params: ApiParams): Observable<ApiResult> {
     return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST_USER + `/${username}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));

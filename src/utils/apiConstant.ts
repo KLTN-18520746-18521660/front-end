@@ -8,6 +8,8 @@ export const REST_URL = {
   GET_USER_BY_USERNAME: 'getUserByUsername',
   GET_USER_BY_EMAIL: 'getUserByEmail',
 
+  AUDIT_LOG: 'auditlog',
+
 
   SESSION: 'session',
   EXTENSION_SESSION_USER: 'session/extension',

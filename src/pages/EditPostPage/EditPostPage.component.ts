@@ -5,16 +5,15 @@ import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
 import { ApiParams } from 'models/api.model';
 import Category from 'models/category.model';
+import { PostModel } from 'models/post.model';
 import Tag from 'models/tag.model';
-import { MarkdownService } from 'ngx-markdown';
 import { ConfirmationService, Message, TreeNode } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from 'services/auth.service';
 import { PostsService } from 'services/posts.service';
-import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import { convertArrayToNested, convertToSlug, getDifferenceObject, removeChildrenByLevel } from 'utils/commonFunction';
-import { PostModel } from 'models/post.model';
 
 @Component({
   selector: 'app-EditPostPage',
@@ -74,7 +73,7 @@ export class EditPostPageComponent implements OnInit {
     private translate: TranslateService,
     private postService: PostsService,
     private activatedRoute: ActivatedRoute,
-    private userService: UserService,
+    private authService: AuthService,
     private confirmationService: ConfirmationService,
     private pageTitle: Title
   ) { }
@@ -82,7 +81,7 @@ export class EditPostPageComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id'];
 
-    this.MAX_FILE_SIZE = this.userService.config?.UploadFileConfig?.max_length_of_single_file || APPCONSTANT.MAX_FILE_SIZE;
+    this.MAX_FILE_SIZE = this.authService.getConfig()?.UploadFileConfig?.max_length_of_single_file || APPCONSTANT.MAX_FILE_SIZE;
 
     this.getPostDetail();
   }

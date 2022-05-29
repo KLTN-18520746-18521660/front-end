@@ -50,8 +50,8 @@
     <p class="text-lg font-medium mb-1 mt-3">{{'createPost.thumbnail.title' | translate}}</p>
     <p-fileUpload #fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate"
       chooseIcon="pi pi-upload" [cancelLabel]="'createPost.thumbnail.cancel' | translate" [customUpload]="true"
-      [showUploadButton]="false" (uploadHandler)="myUploader($event)" accept=".png, .jpg, .jpeg, .svg, .webp"
-      (onSelect)="onSelectThumbnail($event)" (onClear)="onClearSelect()" [maxFileSize]="3000000"></p-fileUpload>
+      [showUploadButton]="false" accept=".png, .jpg, .jpeg, .svg, .webp" (onSelect)="onSelectThumbnail($event)"
+      (onClear)="onClearSelect()" [maxFileSize]="MAX_FILE_SIZE"></p-fileUpload>
     <!-- <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate"
         pInputText [(ngModel)]="thumbnail" (ngModelChange)="onChangeThumbnail($event)"> -->
     <div *ngIf="!validThumbnail" class="invalid-feedback mt-1">
@@ -113,11 +113,7 @@
 </ng-template>
 
 <ng-template #step3>
-  <div class="create-header col-12 inline-flex align-items-center">
-    <p class="text-lg font-medium mb-0 mr-2">{{'createPost.editor' | translate}}: </p>
-    <p-dropdown [options]="types" [(ngModel)]="selectedEditorType" (onChange)="onChangeType($event)" placeholder="">
-    </p-dropdown>
-  </div>
+
 
   <div class="editor-post col-12 justify-content-center">
     <p-tabView styleClass="tabview-custom">
@@ -158,6 +154,12 @@
           </ng-template>
         </div>
       </p-tabPanel>
+
+      <div class="create-header inline-flex align-items-center">
+        <p class="text-lg hidden md:flex font-medium mb-0 mr-2">{{'createPost.editor' | translate}}: </p>
+        <p-dropdown [options]="types" [(ngModel)]="selectedEditorType" (onChange)="onChangeType($event)" placeholder="">
+        </p-dropdown>
+      </div>
     </p-tabView>
 
     <div class="flex justify-content-end mt-4">

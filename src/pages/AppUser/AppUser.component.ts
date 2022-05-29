@@ -84,10 +84,6 @@ export class AppUserComponent implements OnInit {
   ngOnInit() {
     if (this.userService.getSessionId()) {
       this.isLoading = true;
-
-      // this.interval = setInterval(() => {
-      //   this.userService.updateUserStatistic();
-      // }, APPCONSTANT.RELOAD_STATISTIC_TIMEOUT);
     }
     else {
       this.isLoading = false;
@@ -141,6 +137,7 @@ export class AppUserComponent implements OnInit {
     this.isLoadingConfig = false;
 
     this.authService.setConfig(data.configs);
+    this.userService.config = data.configs;
     this.userIdleService.setConfigValues({
       idle: data.configs?.SessionSocialUserConfig?.expiry_time * 60 || data.configs?.SocialUserIdle?.idle || APPCONSTANT.USER_IDLE.IDLE,
       timeout: data.configs?.SocialUserIdle?.timeout || APPCONSTANT.USER_IDLE.TIMEOUT,
@@ -200,7 +197,6 @@ export class AppUserComponent implements OnInit {
 
   updateAuthenciated() {
     if (this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
-      console.log("Ping")
       if (this.userService.isAuthenticated && !this.isVisible) {
         if (!this.remember) {
           console.log("Extend token");

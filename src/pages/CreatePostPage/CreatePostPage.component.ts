@@ -1,25 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
+import md from 'markdown-it';
+import { ApiParams } from 'models/api.model';
 import { PostModel } from 'models/post.model';
 import Tag from 'models/tag.model';
 import { NgxLinkifyjsService } from 'ngx-linkifyjs';
-import { MarkdownService } from 'ngx-markdown';
+import { AnimationOptions } from 'ngx-lottie';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
-import { ConfirmationService, Message, MessageService, TreeNode, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, Message, MessageService, TreeNode } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FileUpload } from 'primeng/fileupload';
-
 import { Subscription } from 'rxjs';
+import { AuthService } from 'services/auth.service';
 import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { convertArrayToNested, convertToSlug, removeChildrenByLevel } from 'utils/commonFunction';
-import { ApiParams } from 'models/api.model';
-import md from 'markdown-it';
-import mdAnchor from 'markdown-it-anchor';
-import mdTableContent from 'markdown-it-table-of-contents';
-import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -89,8 +85,7 @@ export class CreatePostPageComponent implements OnInit {
   publishSubscription: Subscription;
   isSelectThumbnail: boolean;
   thumbnailPreview: any;
-
-  @ViewChild('fileUpload') fileUpload: FileUpload;
+  thumbnailFile: File;
 
   message: Message[] = [];
 
@@ -102,15 +97,17 @@ export class CreatePostPageComponent implements OnInit {
     path: '/assets/jsons/publish-article.json',
   };
 
+  MAX_FILE_SIZE: number;
+
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     public dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private translate: TranslateService,
     private postsService: PostsService,
     public linkifyService: NgxLinkifyjsService,
-    private markdownService: MarkdownService,
     private appUser: AppUserComponent,
   ) { }
 
@@ -137,6 +134,8 @@ export class CreatePostPageComponent implements OnInit {
         }
       }
     ]
+
+    this.MAX_FILE_SIZE = this.authService.getConfig().UploadFileConfig.max_length_of_single_file || APPCONSTANT.MAX_FILE_SIZE;
 
     this.loadDraft();
 
@@ -221,13 +220,7 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onChangeThumbnail(event) {
-    this.validThumbnail = this.linkifyService.test(event);
-    if (this.validThumbnail) {
-      this.draft['thumbnail'] = event;
-    }
-    else {
-      this.draft['thumbnail'] = '';
-    }
+    this.draft['thumbnail'] = event;
     this.saveDraft();
   }
 
@@ -238,19 +231,7 @@ export class CreatePostPageComponent implements OnInit {
 
   myUploader(event) {
     console.log(event);
-    this.isLoading = true;
-    this.uploadSubcription = this.postsService.upLoadImage('post', event.files[0]).subscribe(
-      (res) => {
-        this.thumbnail = res.data.url;
-        this.draft['thumbnail'] = this.thumbnail;
-        this.saveDraft();
-        this.publishPost();
-      },
-      (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
-        this.isLoading = false;
-      }
-    );
+
   }
 
   onSelectThumbnail(event) {
@@ -261,12 +242,13 @@ export class CreatePostPageComponent implements OnInit {
     reader.onload = (_event) => {
       this.thumbnailPreview = reader.result as string;
     }
-    // this.user.avatar = event.files[0];
+    this.thumbnailFile = event.files[0];
   }
 
   onClearSelect() {
     this.isSelectThumbnail = false;
     this.thumbnailPreview = null;
+    this.thumbnailFile = null;
   }
 
   onAddMoreTag(event) {
@@ -275,7 +257,7 @@ export class CreatePostPageComponent implements OnInit {
     });
     const tag = event.value.toLowerCase().trim().replace(/\s/g, '-');
     if (list.includes(tag)) {
-      this.tags.filter(item => item !== tag);
+      this.tags = this.tags.filter(item => item !== tag);
     }
     this.draft['tags'] = this.tags;
     this.saveDraft();
@@ -353,7 +335,6 @@ export class CreatePostPageComponent implements OnInit {
   //   } catch (error) {
   //     this.messageService.add({ key: 'createPostToast', severity: 'error', summary: 'Markdown Error', detail: 'Error when complie markdown.' });
   //   }
-
   // }
 
   onChangeType(event: any) {
@@ -450,6 +431,22 @@ export class CreatePostPageComponent implements OnInit {
     };
   }
 
+  uploadImage() {
+    this.isLoading = true;
+    this.uploadSubcription = this.postsService.upLoadImage('post', this.thumbnailFile).subscribe(
+      (res) => {
+        this.thumbnail = res.data.url;
+        this.draft['thumbnail'] = this.thumbnail;
+        this.saveDraft();
+        this.publishPost();
+      },
+      (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+        this.isLoading = false;
+      }
+    );
+  }
+
   onClickPublish() {
     this.message = [];
     if (!this.userService.isAuthenticated) {
@@ -475,7 +472,7 @@ export class CreatePostPageComponent implements OnInit {
         accept: () => {
           window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
           if (this.isSelectThumbnail) {
-            this.fileUpload.upload();
+            this.uploadImage();
           }
           else {
             this.publishPost();
@@ -517,7 +514,7 @@ export class CreatePostPageComponent implements OnInit {
       }), this.tags),
     });
 
-    post = _.omitBy(post, _.isNull)
+    post = _.omitBy(post, _.isNull);
 
     this.publishSubscription = this.postsService.publishPost(post).subscribe(
       () => {
