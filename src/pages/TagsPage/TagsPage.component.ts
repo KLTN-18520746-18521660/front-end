@@ -21,7 +21,7 @@ import { mapActionWithTag } from 'utils/commonFunction';
 })
 export class TagsPageComponent implements OnInit {
 
-  
+
   tagID: string;
 
   tag: Tag;
@@ -31,6 +31,10 @@ export class TagsPageComponent implements OnInit {
   listPosts: Post[];
 
   isLoading: boolean = false;
+
+  PAGE_SIZE = APPCONSTANT.DEFAULT_PAGE_SIZE;
+
+  totalPosts: number = 0;
 
   isLoadingPost: boolean = false;
 
@@ -61,11 +65,13 @@ export class TagsPageComponent implements OnInit {
 
   ngOnInit() {
     this.tagID = this.activatedRoute.snapshot.params.id || null;
+
+    this.currentPage = this.activatedRoute.snapshot.queryParams.page || 1;
+
     if (this.tagID) {
       this.getTagDetail(this.tagID);
     }
 
-    this.currentPage = this.activatedRoute.snapshot.queryParams.page || 1;
     this.getPosts(this.currentPage);
   }
 
@@ -95,15 +101,16 @@ export class TagsPageComponent implements OnInit {
     }
 
     const params: ApiParams = {
-      // tags: this.tag.tag,
-      start: (page - 1) * APPCONSTANT.DEFAULT_PAGE_SIZE,
-      size: APPCONSTANT.DEFAULT_PAGE_SIZE,
-    }
+      tags: this.tagID,
+      start: (page - 1) * this.PAGE_SIZE,
+      size: this.PAGE_SIZE,
+    };
 
-    this.getPostSubcription = this.postService.getPostsByType('trending', {}).subscribe(
+    this.getPostSubcription = this.postService.getPostsByType('new', params).subscribe(
       (res) => {
         this.listPosts = res.data.posts;
         this.isLoadingPost = false;
+        this.totalPosts = res.data.total_size;
       },
       () => {
         this.isLoading = false;
@@ -113,13 +120,14 @@ export class TagsPageComponent implements OnInit {
   }
 
   onPaginate(event) {
+    console.log(event);
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       ...(event.page == 0 ? { queryParams: { page: null } } : { queryParams: { page: event.page } }),
     });
 
-    // this.currentPage = event.page + 1;
-    // this.getPosts(this.currentPage);
+    this.currentPage = event.page + 1;
+    this.getPosts(this.currentPage);
   }
 
   onClickFollow() {

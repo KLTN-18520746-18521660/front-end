@@ -171,7 +171,7 @@ export class AppUserComponent implements OnInit {
     this.idleChangeSubscription = this.userIdleService.onIdleStatusChanged().subscribe((res) => {
       // isvisible == false when focus page
       this.isVisible = res;
-      console.log("Visible: ", !res)
+      // console.log("Visible: ", !res)
     })
 
     // Start watching when user idle is starting.
@@ -187,7 +187,6 @@ export class AppUserComponent implements OnInit {
         summary: this.translate.instant('message.needRefresh'),
         sticky: true
       })
-      this.updateAuthenciated();
       this.onStopWatching();
       // window.location.reload();
     });

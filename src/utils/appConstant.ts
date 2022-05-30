@@ -21,7 +21,7 @@ export const APPCONSTANT = {
   // For infinite scroll
   DEFAULT_SIZE_LOADING_MORE: 5,
 
-  DEFAULT_PAGE_SIZE: 12,
+  DEFAULT_PAGE_SIZE: 2,
 
   PASSWORD_POLICY: {
     MIN_LEN: 5,

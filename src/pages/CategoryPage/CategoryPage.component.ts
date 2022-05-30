@@ -31,6 +31,10 @@ export class CategoryPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  PAGE_SIZE = APPCONSTANT.DEFAULT_PAGE_SIZE;
+
+  totalPosts: number = 0;
+
   isLoadingPost: boolean = false;
 
   isLoadingCategory: boolean = false;
@@ -60,11 +64,13 @@ export class CategoryPageComponent implements OnInit {
 
   ngOnInit() {
     this.categoryID = this.activatedRoute.snapshot.params.id || null;
+
+    this.currentPage = this.activatedRoute.snapshot.queryParams.page || 1;
+
     if (this.categoryID) {
       this.getCategoryDetail(this.categoryID);
     }
 
-    this.currentPage = this.activatedRoute.snapshot.queryParams.page || 1;
     this.getPosts(this.currentPage);
   }
 
@@ -94,15 +100,16 @@ export class CategoryPageComponent implements OnInit {
     }
 
     const params: ApiParams = {
-      // categories: this.category.name,
-      start: (page - 1) * APPCONSTANT.DEFAULT_PAGE_SIZE,
-      size: APPCONSTANT.DEFAULT_PAGE_SIZE,
-    }
+      categories: this.categoryID,
+      start: (page - 1) * this.PAGE_SIZE,
+      size: this.PAGE_SIZE,
+    };
 
-    this.getPostSubcription = this.postService.getPostsByType('trending', {}).subscribe(
+    this.getPostSubcription = this.postService.getPostsByType('new', params).subscribe(
       (res) => {
         this.listPosts = res.data.posts;
         this.isLoadingPost = false;
+        this.totalPosts = res.data.total_size;
       },
       () => {
         this.isLoading = false;
@@ -117,8 +124,8 @@ export class CategoryPageComponent implements OnInit {
       ...(event.page == 0 ? { queryParams: { page: null } } : { queryParams: { page: event.page } }),
     });
 
-    // this.currentPage = event.page + 1;
-    // this.getPosts(this.currentPage);
+    this.currentPage = event.page + 1;
+    this.getPosts(this.currentPage);
   }
 
   onClickFollow() {
