@@ -45,13 +45,13 @@
             <div class="comment-option-left">
               <div class="post-comment-header my-4">
                 <p class="text-2xl font-semibold">
-                  {{'postDetail.disscussion' | translate:{ count: totalSizeComments} }}
+                  {{'postDetail.discussion' | translate:{ count: totalSizeComments} }}
                 </p>
               </div>
             </div>
             <div class="comment-option-right z-0">
               <span>{{'postDetail.sort' | translate }}</span>
-              <p-dropdown *ngIf="filterComments" [options]="filterComments" [(ngModel)]="currentFilter"
+              <p-dropdown *ngIf="filterComments" class="comment-filter" [options]="filterComments" [(ngModel)]="currentFilter"
                 optionLabel="label" (onChange)="onFilterComments($event)">
               </p-dropdown>
             </div>
@@ -80,8 +80,13 @@
           </div>
         </div>
         <div class="read-next-wrapper mt-4 md:mt-8">
-          <p class="font-semibold text-2xl">{{'common.readNext' | translate}}</p>
-          <app-post-card-vertical *ngFor="let item of listRecommend" [post]="item"></app-post-card-vertical>
+          <p class="font-semibold text-2xl">{{'postDetail.readNext' | translate}}</p>
+          <ng-template [ngIf]="!isLoadingOtherPost && otherPosts" [ngIfElse]="loadingOtherPost">
+            <app-post-card-vertical *ngFor="let item of otherPosts" [post]="item"></app-post-card-vertical>
+          </ng-template>
+          <ng-template #loadingOtherPost>
+            <app-post-card-vertical *ngFor="let item of [1,2]" [loading]="true"></app-post-card-vertical>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -93,9 +98,16 @@
         <div class="col-12 mt-4">
           <span class="font-semibold text-2xl">{{'postDetail.suggest' | translate}}</span>
         </div>
-        <div class="col-12 md:col-4 lg:col-12" *ngFor="let item of listRecommend">
-          <app-recommend-post-card [post]="item"></app-recommend-post-card>
-        </div>
+        <ng-template [ngIf]="!isLoadingRelatedPost" [ngIfElse]="loadingRelated">
+          <div class="col-12 md:col-4 lg:col-12" *ngFor="let item of relatedPosts">
+            <app-recommend-post-card [post]="item"></app-recommend-post-card>
+          </div>
+        </ng-template>
+        <ng-template #loadingRelated>
+          <div class="col-12 md:col-4 lg:col-12" *ngFor="let item of [1,2]">
+            <app-recommend-post-card [loading]="true"></app-recommend-post-card>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

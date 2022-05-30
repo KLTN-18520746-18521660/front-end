@@ -1,6 +1,6 @@
 import User from "./user.model";
 
-export default class Comment {
+export interface Comment {
   id: number;
   parent_id: string;
   post_id: string;

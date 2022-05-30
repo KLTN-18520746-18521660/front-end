@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ApiResult } from 'models/api.model';
 import Category from 'models/category.model';
-import Post, { PostModel } from 'models/post.model';
-import Tag from 'models/tag.model';
+import Post, { PostModel, PostTypeView } from 'models/post.model';
+import { Tag } from 'models/tag.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ActionType, REST_URL } from 'utils/apiConstant';
@@ -102,7 +102,13 @@ export class PostsService {
     }));
   }
 
-  getPostsByType(type: 'following' | 'new' | 'trending', params: ApiParams): Observable<ApiResult> {
+  getRelatedPostsBySlug(slug: string, params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST_RECOMMEND + `/${slug}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getPostsByType(type: PostTypeView, params: ApiParams): Observable<ApiResult> {
     return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${type}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));

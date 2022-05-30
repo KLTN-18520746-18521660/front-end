@@ -3,7 +3,7 @@
     <p-steps [model]="steps" [activeIndex]="activeStep"></p-steps>
     <p-messages [(value)]="message" [enableService]="false"></p-messages>
   </div>
-  <div #editView class="grid justify-content-center pb-8">
+  <div #editView class="grid justify-content-center pb-4">
     <div *ngIf="activeStep === 0; then step1"></div>
     <div *ngIf="activeStep === 1; then step2"></div>
     <div *ngIf="activeStep === 2; then step3"></div>
@@ -35,36 +35,30 @@
 
 <ng-template #step2>
   <div class="col-12 md:col-6">
-    <p requiredField class="text-lg font-medium mb-1 mt-3">{{'createPost.title' | translate}}</p>
+    <p requiredField class="text-md font-medium mb-1 mt-3">{{'createPost.title' | translate}}</p>
     <input [(ngModel)]="title" [placeholder]="'createPost.form.titlePlaceholder' | translate"
       (ngModelChange)="onChangeTitle($event)" class="input-title w-full mb-2" pInputText>
     <span id="more-chip-help" class="block">{{'createPost.slug' | translate}}
       <span class="underline text-primary word-break-all">{{slug}}</span>
     </span>
 
-    <p requiredField class="text-lg font-medium mb-1 mt-3">{{'createPost.shortContent' | translate}}</p>
+    <p requiredField class="text-md font-medium mb-1 mt-3">{{'createPost.shortContent' | translate}}</p>
     <textarea [(ngModel)]="short_content" (ngModelChange)="onChangeShortContent($event)"
       [placeholder]="'createPost.form.shortContentPlaceholder' | translate" class="w-full" rows="4"
       pInputTextarea></textarea>
 
-    <p class="text-lg font-medium mb-1 mt-3">{{'createPost.thumbnail.title' | translate}}</p>
-    <p-fileUpload #fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate"
-      chooseIcon="pi pi-upload" [cancelLabel]="'createPost.thumbnail.cancel' | translate" [customUpload]="true"
-      [showUploadButton]="false" accept=".png, .jpg, .jpeg, .svg, .webp" (onSelect)="onSelectThumbnail($event)"
-      (onClear)="onClearSelect()" [maxFileSize]="MAX_FILE_SIZE"></p-fileUpload>
-    <!-- <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate"
-        pInputText [(ngModel)]="thumbnail" (ngModelChange)="onChangeThumbnail($event)"> -->
-    <div *ngIf="!validThumbnail" class="invalid-feedback mt-1">
-      <div class="flex align-items-end">
-        <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-        <small class="p-error inline">{{'createPost.form.thumbnailError' | translate}}</small>
-      </div>
-    </div>
-    <img *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}" class="post-thumbnail-image border-round mt-2 shadow-2"
-      alt="Post Thumbnail">
+    <p class="text-md font-medium mb-1 mt-3">{{'createPost.status.title' | translate}}</p>
+    <p-selectButton [options]="statusOptions" (onChange)="onChangeStatus($event)" [(ngModel)]="private"
+      optionLabel="label" optionValue="value">
+      <ng-template let-item>
+        <i [class]="item.icon"></i>
+        <span class="ml-2">{{item.label}}</span>
+      </ng-template>
+    </p-selectButton>
+
   </div>
   <div class="col-12 md:col-6">
-    <p requiredField class="text-lg font-medium mb-1 mt-3">{{'createPost.category' | translate}}</p>
+    <p requiredField class="text-md font-medium mb-1 mt-3">{{'createPost.category' | translate}}</p>
     <!-- <p-cascadeSelect [(ngModel)]="selectedCategory" (onChange)="onChangeSelectCategory($event)"
         [options]="listCategory" optionLabel="display_name" optionGroupLabel="display_name"
         [placeholder]="'createPost.form.categoryPlaceHolder' | translate"
@@ -81,14 +75,23 @@
       [metaKeySelection]="false" [placeholder]="'createPost.form.categoryPlaceHolder' | translate">
     </p-treeSelect>
 
-    <p class="text-lg font-medium mb-1 mt-3">{{'createPost.tag' | translate}}</p>
-    <p-autoComplete [(ngModel)]="listTagModel" field="tag" [suggestions]="listFilterTags" [required]="true"
-      (completeMethod)="onFilterTag($event)" [showEmptyMessage]="true" [unique]="true" [virtualScroll]="true"
-      [multiple]="true" [dropdown]="true" [autoHighlight]="true" [delay]="500"
-      [placeholder]="'createPost.form.tagPlaceHolder' | translate">
+    <p requiredField class="text-md font-medium mb-1 mt-3">{{'createPost.timeRead' | translate}}</p>
+    <p-inputNumber [(ngModel)]="time_read" (ngModelChange)="onChangeTimeRead($event)" mode="decimal"
+      [showButtons]="true" inputId="minmax-buttons" [min]="2" [max]="50">
+    </p-inputNumber>
+
+    <p class="text-md font-medium mb-1 mt-3">{{'createPost.tag' | translate}}</p>
+    <p-autoComplete [(ngModel)]="listTags" field="tag" [suggestions]="listFilterTags" (ngModelChange)="onChangeTags($event)"
+      (completeMethod)="onFilterTag($event)" [unique]="true" [virtualScroll]="true" [multiple]="true" [dropdown]="true"
+      [autoHighlight]="true" [delay]="500" [placeholder]="'createPost.form.tagPlaceHolder' | translate">
       <ng-template let-item pTemplate="item">
-        <div pTooltip="{{ item.name}}" tooltipPosition="top">
-          <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+        <div class="flex justify-content-between" pTooltip="{{ item.name }}" tooltipPosition="top">
+          <div class="left">
+            <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+          </div>
+          <div class="right" *ngIf="!item.is_new">
+            <i class="pi pi-check-circle"></i>
+          </div>
         </div>
       </ng-template>
       <ng-template let-item pTemplate="selectedItem">
@@ -96,25 +99,25 @@
       </ng-template>
     </p-autoComplete>
 
-    <p class="text-lg font-medium mb-1 mt-3">{{'createPost.moreTag' | translate}}</p>
-    <p-chips [(ngModel)]="tags" (onAdd)="onAddMoreTag($event)" (onRemove)="onRemoveMoreTag($event)" class="w-full"
-      [addOnTab]="true" [placeholder]="'createPost.form.moreTagPlaceholder' | translate" [allowDuplicate]="false">
-      <ng-template let-item pTemplate="item">
-        <i class="pi pi-tag mr-2"></i>{{item}}
-      </ng-template>
-    </p-chips>
-    <small id="more-chip-help" class="block">{{'createPost.form.chipHelp' | translate}}</small>
-
-    <p requiredField class="text-lg font-medium mb-1 mt-3">{{'createPost.timeRead' | translate}}</p>
-    <p-inputNumber [(ngModel)]="time_read" (ngModelChange)="onChangeTimeRead($event)" mode="decimal"
-      [showButtons]="true" inputId="minmax-buttons" [min]="2" [max]="50">
-    </p-inputNumber>
+    <p class="text-md font-medium mb-1 mt-3">{{'createPost.thumbnail.title' | translate}}</p>
+    <p-fileUpload #fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate"
+      chooseIcon="pi pi-upload" [cancelLabel]="'createPost.thumbnail.cancel' | translate" [showUploadButton]="false"
+      accept=".png, .jpg, .jpeg, .svg, .webp" (onSelect)="onSelectThumbnail($event)" (onClear)="onClearSelect()"
+      [maxFileSize]="MAX_FILE_SIZE"></p-fileUpload>
+    <!-- <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate"
+        pInputText [(ngModel)]="thumbnail" (ngModelChange)="onChangeThumbnail($event)"> -->
+    <div *ngIf="!validThumbnail" class="invalid-feedback mt-1">
+      <div class="flex align-items-end">
+        <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+        <small class="p-error inline">{{'createPost.form.thumbnailError' | translate}}</small>
+      </div>
+    </div>
+    <img *ngIf="thumbnailPreview" src="{{ thumbnailPreview }}" class="post-thumbnail-image border-round mt-2 shadow-2"
+      alt="Post Thumbnail">
   </div>
 </ng-template>
 
 <ng-template #step3>
-
-
   <div class="editor-post col-12 justify-content-center">
     <p-tabView styleClass="tabview-custom">
       <p-tabPanel>
@@ -124,13 +127,12 @@
         </ng-template>
         <ng-template [ngIf]="selectedEditorType == 'HTML'" [ngIfElse]="markdownEditor">
           <p-editor [(ngModel)]="content" (ngModelChange)="onChangeContent($event)"
-            (onTextChange)="onTextChange($event)" [placeholder]="'Write something here ...'"
-            [style]="{'min-height':'420px'}">
+            [placeholder]="'Write something here ...'" [style]="{'min-height':'420px'}">
           </p-editor>
         </ng-template>
         <ng-template #markdownEditor>
-          <textarea [(ngModel)]="contentMd" class="w-full" (onChange)="onTextChange($event)" classs="markdown-editor"
-            (ngModelChange)="onChangeContentMd($event)" pInputTextarea [autoResize]="true" rows="25"
+          <textarea [(ngModel)]="contentMd" class="w-full" classs="markdown-editor"
+            (ngModelChange)="onChangeContentMd($event)" pInputTextarea rows="32"
             placeholder="{{'createPost.placeholder' | translate}}">
           </textarea>
         </ng-template>
@@ -140,11 +142,11 @@
           <span>{{'createPost.preview' | translate}}</span>
           <!-- <i class="ml-2 pi pi-eye"></i> -->
         </ng-template>
-        <div id="post-content" class="post-content ">
+        <div id="post-content" class="post-content ql-editor p-3">
           <img imageOnError *ngIf="validThumbnail && thumbnail" src="{{ thumbnail }}" alt=""
             class="post-thumbnail-image border-round-top shadow-4" />
-          <p class="text-5xl font-bold mt-2" style="word-break: break-word;">{{title || ('createPost.form.titleHere' |
-            translate)}}</p>
+          <p *ngIf="title" class="text-5xl font-bold" style="word-break: break-word;">{{title}}</p>
+          <p *ngIf="!title" class="text-5xl font-bold text-500">{{'createPost.form.titleHere' | translate}}</p>
           <ng-template [ngIf]="selectedEditorType === 'HTML'" [ngIfElse]="markdown">
             <markdown class="preview-content content-HTML" [data]="content"></markdown>
           </ng-template>
@@ -156,7 +158,7 @@
       </p-tabPanel>
 
       <div class="create-header inline-flex align-items-center">
-        <p class="text-lg hidden md:flex font-medium mb-0 mr-2">{{'createPost.editor' | translate}}: </p>
+        <p class="text-md hidden md:flex font-medium mb-0 mr-2">{{'createPost.editor' | translate}}: </p>
         <p-dropdown [options]="types" [(ngModel)]="selectedEditorType" (onChange)="onChangeType($event)" placeholder="">
         </p-dropdown>
       </div>

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { ApiParams } from 'models/api.model';
 import Category from 'models/category.model';
 import { PostModel } from 'models/post.model';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 import { ConfirmationService, Message, TreeNode } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { Observable, Subscription } from 'rxjs';
@@ -159,7 +159,7 @@ export class EditPostPageComponent implements OnInit {
           })
         });
 
-        this.editPost = new PostModel(this.post);
+        this.editPost = this.post;
         this.updateEditPost(false);
       },
       () => {

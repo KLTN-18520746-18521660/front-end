@@ -69,6 +69,12 @@
     overflow-y: hidden;
   }
 
+  .comment-filter {
+    .p-dropdown {
+      min-width: 170px
+    }
+  }
+
   .p-breadcrumb {
     .p-menuitem-link {
       &:hover {

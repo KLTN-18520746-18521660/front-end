@@ -1,7 +1,7 @@
 import { ApiResult } from 'models/api.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Comment from 'models/comment.model';
+import { Comment } from 'models/comment.model';
 import { commentsMockData } from 'shared/mockData/commentsMockData';
 import { convertArrayToNested, removeChildrenByLevel } from 'utils/commonFunction';
 import _ from 'lodash';

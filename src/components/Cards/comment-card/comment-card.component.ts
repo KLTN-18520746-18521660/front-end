@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CommentInputComponent } from 'components/Input/comment-input/comment-input.component';
-import Comment, { CommentInput } from 'models/comment.model';
+import { Comment, CommentInput } from 'models/comment.model';
 import { ReportSendModel } from 'models/report.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { MenuItem, MessageService } from 'primeng/api';

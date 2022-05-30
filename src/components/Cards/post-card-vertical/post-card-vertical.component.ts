@@ -10,35 +10,11 @@ import { convertDateTime, mapActionWithPost } from 'utils/commonFunction';
 })
 export class PostCardVerticalComponent implements OnInit {
 
-  @Input() post: Post = {
-    id: 2,
-    title: 'Introducing Angular Mini Blog Series - Getting Started With Angular 8 - DEV Community',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl. Nullam euismod, nisi vel consectetur interdum, nisl nisi consectetur purus, eget egestas nisl nisi sed nisl.',
-    thumbnail: 'https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/777588/top-18-most-common-angularjs-developer-mistakes-41f9ad303a51db70e4a5204e101e7414.png',
-    owner: {
-      id: '2',
-      user_name: '@john_doe',
-      display_name: 'Jenny Wilson',
-      avatar: 'https://placeimg.com/320/320'
-    },
-    created_timestamp: new Date().toISOString(),
-    time_read: 1,
-    views: 3200,
-    comments: 125121,
-    likes: 30210,
-    tags: [{
-      id: 'angular',
-      name: 'Angular'
-    },
-    {
-      id: 'javascript',
-      name: 'JavaScript'
-    },
-    {
-      id: 'typescript',
-      name: 'TypeScript'
-    }]
-  }
+  @Input() post: Post;
+
+  @Input() loading: boolean = false;
+
+  @Input() showAction: boolean = false;
 
   constructor(
     private translate: TranslateService
@@ -46,6 +22,10 @@ export class PostCardVerticalComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.loading) {
+      return;
+    }
+
     this.post = {
       ...this.post,
       fromNow: {

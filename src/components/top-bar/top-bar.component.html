@@ -62,8 +62,8 @@
           </div>
         </ng-template>
         <ng-template #noLogin>
-          <a class="hidden md:flex font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/register']"
-            style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
+          <a class="hidden md:flex font-medium md:ml-2 text-right cursor-pointer button-link px-3"
+            [routerLink]="['/auth/register']" style="color: var(--primary-color)">{{'topbar.register' | translate }}</a>
           <a class="font-medium md:ml-2 text-right cursor-pointer button-link px-3" [routerLink]="['/auth/login']"
             style="color: var(--primary-color)">{{'topbar.login' | translate }}</a>
         </ng-template>
@@ -92,7 +92,7 @@
             pTooltip="{{'tooltip.copy' | translate}}">
           </i>
         </div>
-        <div class="col-12 text-center px-0 py-3">
+        <div class="col-12 text-center px-0">
           <button pButton pRipple type="button" label="{{'common.profile' | translate}}" icon="pi pi-user"
             class="p-button-outlined p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/profile']">
           </button>
@@ -100,6 +100,11 @@
             class="p-button-outlined p-button-rounded px-4 mx-1 p-button-danger" (click)="onClickLogout()">
           </button>
         </div>
+      </div>
+      <div class="create-post-button col-12 pb-4">
+        <button pButton pRipple type="button" label="{{'topbar.createPost' | translate}}"
+          class="p-button-secondary p-button-rounded w-full px-4 mx-1 p-button-primary" [routerLink]="['/create']">
+        </button>
       </div>
       <app-user-sidebar-menu (clickMenu)="onClickSidebarMenu()"></app-user-sidebar-menu>
     </ng-template>
@@ -117,6 +122,11 @@
           </button>
           <button pButton pRipple type="button" label="{{'common.login' | translate}}"
             class="p-button-rounded px-4 mx-1 p-button-primary" [routerLink]="['/auth/login']">
+          </button>
+        </div>
+        <div class="create-post-button col-12">
+          <button pButton pRipple type="button" label="{{'topbar.createPost' | translate}}"
+            class="p-button-secondary p-button-rounded w-full px-4 mx-1 p-button-primary" [routerLink]="['/create']">
           </button>
         </div>
       </div>

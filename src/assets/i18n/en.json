@@ -71,9 +71,10 @@
     "viewMore": "View More",
     "createPost": "Create Post",
     "viewOption": {
-      "foryou": "For you ",
+      "new": "Newest ",
       "following": "Following",
-      "trending": "Trending"
+      "trending": "Trending",
+      "recommend" : "Recommend"
     }
   },
   "tooltip": {
@@ -139,6 +140,7 @@
   "message": {
     "success": "Success",
     "error": "Error",
+    "needRefresh": "You no longer have access to this page. Please refresh (F5) the page to continue",
     "nochange": "No changes to save",
     "update": "Update successfully",
     "updateFail": "Failed to update",
@@ -757,7 +759,7 @@
       "unlike": "Click to unlike",
       "comment": "Comments"
     },
-    "disscussion": "Dissussion ({{count}})",
+    "discussion": "Discussion ({{count}})",
     "comment": "Comment",
     "submitComment": "Submit this comment",
     "showMoreComment": "Show more comments",
@@ -776,7 +778,7 @@
       "reply": "({{count}}) Reply"
     },
     "moreComment": "View more comments",
-    "readNext": "Read next",
+    "readNext": "Other posts",
     "commentMenu": {
       "like": "Like",
       "unlike": "Dislike",
@@ -792,7 +794,7 @@
       "likesDesc": "Likes descending",
       "likesAsc": "Likes ascending"
     },
-    "suggest": "Suggest for you",
+    "suggest": "Related posts",
     "shareAction": {
       "facebook": "Share on Facebook",
       "twitter": "Share on Twitter",
@@ -816,6 +818,12 @@
     "editor": "Select editor",
     "title": "Title",
     "shortContent": "Short content",
+    "status": {
+      "title": "Visibility",
+      "subtitle": "Choose the visibility of your post, who can see it, public or private",
+      "public": "Public",
+      "private": "Private"
+    },
     "thumbnail": {
       "title": "Thumbnail",
       "select": "Select thumbnail",
@@ -844,7 +852,7 @@
       "tagPlaceHolder": "Enter tag",
       "moreTagPlaceholder": "Enter more tag",
       "categoryPlaceHolder": "Select category",
-      "titleHere": "{{ Title here ... }}",
+      "titleHere": "No title available",
       "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
     },
     "textTranslate": {
@@ -857,7 +865,7 @@
         "footer": " "
       },
       "valid": {
-        "title": "Title must be lenght between 20 and 200 characters",
+        "title": "Title must be length between 20 and 200 characters",
         "thumbnail": "Thumbnail is required",
         "tag": "Tag is required",
         "category": "You must select at less a category",
@@ -892,7 +900,7 @@
       "tagPlaceHolder": "Enter tag",
       "moreTagPlaceholder": "Enter more tag",
       "categoryPlaceHolder": "Select category",
-      "titleHere": "{{ Title here ... }}",
+      "titleHere": "No title available",
       "chipHelp": "Type tag name different tags you alreay selected and press enter or tab to add tag"
     },
     "dialog": {

@@ -109,7 +109,7 @@ export class LoginPageComponent implements OnInit {
     const { email, password, remember } = this.form.value;
 
     const user = new LoginUserModel({
-      user_name: email,
+      user_name: email.toLowerCase(),
       password,
       remember
     });

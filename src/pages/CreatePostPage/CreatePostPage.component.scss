@@ -21,11 +21,16 @@
 
   .p-tabview-panels {
     min-height: 500px;
+    padding: 0 !important;
 
     .create-header {
       top: 5px;
       right: 16px;
       position: absolute;
+    }
+
+    .markdown-editor {
+      min-height: 400px;
     }
 
     a {
@@ -79,6 +84,12 @@
 }
 
 :host ::ng-deep {
+  .p-editor-container {
+    .p-editor-content {
+      height: 70vh !important;
+    }
+  }
+
   .p-steps {
     .p-steps-item {
       .p-menuitem-link {
@@ -94,15 +105,12 @@
     }
   }
 
-  .p-inputtextarea.markdown-editor {
-    min-height: 300px;
-  }
-
   .p-dropdown {
     min-width: 130px;
   }
 
   .p-inputtext.input-title,
+  .p-selectbutton>.p-component,
   .p-chips,
   .p-autocomplete,
   .p-inputnumber,
@@ -147,7 +155,8 @@
   }
 
   p-inputnumber,
-  .p-inputnumber {
+  .p-inputnumber,
+  .p-inputnumber-input {
     width: 100% !important;
   }
 }

@@ -1,4 +1,4 @@
-export default class Tag {
+export interface Tag {
   id?: string;
   tag?: string;
   name?: string;
@@ -16,4 +16,5 @@ export default class Tag {
   posts?: number;
   likes?: number;
   views?: number;
+  is_new?: boolean;
 }

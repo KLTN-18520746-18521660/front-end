@@ -7,3 +7,11 @@
     min-height: 90vh;
   }
 }
+
+:host ::ng-deep {
+  p-messages[key="app-message"] {
+    .p-message {
+      margin: 0;
+    }
+  }
+}

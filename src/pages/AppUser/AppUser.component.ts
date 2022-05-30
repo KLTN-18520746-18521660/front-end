@@ -14,6 +14,7 @@ import { CookieService } from 'services/cookie.service';
 import { UserConfigService } from 'services/user-config.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
+import { Message } from 'primeng/api/message';
 
 @Component({
   selector: 'app-AppUser',
@@ -179,8 +180,15 @@ export class AppUserComponent implements OnInit {
     });
 
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
-      console.log("Time out")!
+      console.log("Time out");
+      this.addMessage({
+        key: 'app-message',
+        severity: 'warn',
+        summary: this.translate.instant('message.needRefresh'),
+        sticky: true
+      })
       this.updateAuthenciated();
+      this.onStopWatching();
       // window.location.reload();
     });
   }
@@ -250,6 +258,10 @@ export class AppUserComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
       }
     )
+  }
+
+  public addMessage(message: Message) {
+    this.messageService.add(message);
   }
 
   public openLoginPopup(message = ' ', type = 'error', header = ' ', footer = ' ') {

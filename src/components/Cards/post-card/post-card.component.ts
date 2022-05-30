@@ -22,6 +22,8 @@ export class PostCardComponent implements OnInit {
 
   @Input() isSmall: boolean = false;
 
+  @Input() showAction: boolean = true;
+
   @Input() isGrid = false;
 
   @Input() post: Post;

@@ -4,7 +4,7 @@ import { UserService } from 'services/user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 import { tagsMockData } from 'shared/mockData/tagsMockData';
 import { randomArray } from 'utils/commonFunction';
 import { query } from '@angular/animations';

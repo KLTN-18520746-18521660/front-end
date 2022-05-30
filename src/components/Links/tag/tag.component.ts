@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 
 @Component({
   selector: 'app-tag',

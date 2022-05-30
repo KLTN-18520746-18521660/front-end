@@ -29,21 +29,11 @@
         <div class="col-12 md:col-12 lg:col-9 xl:col-8 min-h-screen">
           <div class="flex flex-wrap justify-content-between align-items-center mb-3">
             <div class="main-header-left ">
-              <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600"
-                [ngClass]="{ 'font-bold text-blue-600 border-bottom-3 border-blue-500' : viewOption == 'foryou'}"
-                (click)="onChangeViewOption('foryou')">
-                {{ 'home.viewOption.foryou' | translate }}
+              <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600" *ngFor="let type of listPostType"
+                [ngClass]="{ 'font-bold text-blue-600 border-bottom-3 border-blue-500' : currentPostType === type}"
+                (click)="onChangeViewOption(type)">
+                {{ ('home.viewOption.' + type) | translate }}
               </span>
-              <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600"
-                [ngClass]="{ 'font-bold text-blue-600 border-bottom-3 border-blue-500' : viewOption == 'following'}"
-                (click)="onChangeViewOption('following')">
-                {{ 'home.viewOption.following' | translate }}
-              </span>
-              <!-- <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600"
-                [ngClass]="{ 'font-bold text-blue-600 border-bottom-3 border-blue-500' : viewOption == 'trending'}"
-                (click)="onChangeViewOption('trending')">
-                {{ 'home.viewOption.trending' | translate }}
-              </span> -->
             </div>
             <div class="main-header-right">
               <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="icon" optionValue="value"

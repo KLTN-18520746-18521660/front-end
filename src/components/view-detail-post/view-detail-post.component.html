@@ -43,7 +43,7 @@
     <p class="text-6xl font-bold">{{post.title}}</p>
     <app-tag [tag]="tag" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
   </div>
-  <div id="post-content" class="post-content">
+  <div id="post-content" class="post-content ql-editor">
     <ng-template [ngIf]="post.content_type === 'HTML'" [ngIfElse]="markdown">
       <markdown class="content-HTML" [data]="post.content"></markdown>
     </ng-template>

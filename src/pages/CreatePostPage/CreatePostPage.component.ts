@@ -4,7 +4,7 @@ import _ from 'lodash';
 import md from 'markdown-it';
 import { ApiParams } from 'models/api.model';
 import { PostModel } from 'models/post.model';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 import { AnimationOptions } from 'ngx-lottie';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
@@ -47,11 +47,8 @@ export class CreatePostPageComponent implements OnInit {
   listCategory: TreeNode[] = [];
   selectedCategory: TreeNode[] = [];
 
-  listTagModel: Tag[] = [];
   listTags: Tag[] = [];
   listFilterTags: Tag[] = [];
-
-  tags: string[] = [];
 
   time_read: number = 5;
 
@@ -65,6 +62,7 @@ export class CreatePostPageComponent implements OnInit {
     Markdown: '',
     time_read: 5,
     step: 0,
+    private: false
   }
 
   ref: DynamicDialogRef;
@@ -98,6 +96,12 @@ export class CreatePostPageComponent implements OnInit {
   };
 
   MAX_FILE_SIZE: number;
+
+  private: boolean = false;
+  statusOptions = [
+    { label: this.translate.instant('createPost.status.public'), value: false, icon: 'pi pi-users' },
+    { label: this.translate.instant('createPost.status.private'), value: true, icon: 'pi pi-lock' },
+  ];
 
   constructor(
     private userService: UserService,
@@ -186,9 +190,6 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   // onChange content function
-  onTextChange(event) {
-    this.short_content = event?.textValue;
-  }
 
   onChangeContent(event) {
     this.draft[this.selectedEditorType] = event;
@@ -229,9 +230,9 @@ export class CreatePostPageComponent implements OnInit {
     this.saveDraft();
   }
 
-  myUploader(event) {
-    console.log(event);
-
+  onChangeStatus(event) {
+    this.draft['private'] = event.value;
+    this.saveDraft();
   }
 
   onSelectThumbnail(event) {
@@ -251,23 +252,6 @@ export class CreatePostPageComponent implements OnInit {
     this.thumbnailFile = null;
   }
 
-  onAddMoreTag(event) {
-    const list = this.listTagModel.map(item => {
-      return item.tag;
-    });
-    const tag = event.value.toLowerCase().trim().replace(/\s/g, '-');
-    if (list.includes(tag)) {
-      this.tags = this.tags.filter(item => item !== tag);
-    }
-    this.draft['tags'] = this.tags;
-    this.saveDraft();
-  }
-
-  onRemoveMoreTag(event) {
-    this.draft['tags'] = this.tags;
-    this.saveDraft();
-  }
-
   loadDraft() {
     const draft = localStorage.getItem(STORAGE_KEY.POST_DRAFT);
     if (draft) {
@@ -277,13 +261,14 @@ export class CreatePostPageComponent implements OnInit {
       this.thumbnailPreview = this.thumbnail ? this.thumbnail : null;
       this.title = this.draft['title'] || null;
       this.short_content = this.draft['short_content'] || null;
-      this.tags = this.draft['tags'] || [];
+      this.listTags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || null;
       this.contentMd = this.draft['Markdown'] || null;
       this.contentMdComplied = this.markdownIt.render(this.contentMd || '');
       this.time_read = this.draft['time_read'] || 5;
       this.slug = convertToSlug(this.title || '');
       this.activeStep = this.draft['step'] || 0;
+      this.private = this.draft['private'] || false;
       // this.convertToShortContent();
     }
     else {
@@ -291,12 +276,13 @@ export class CreatePostPageComponent implements OnInit {
       this.contentMd = null;
       this.thumbnail = null;
       this.short_content = null;
-      this.tags = [];
+      this.listTags = [];
       this.validThumbnail = true;
       this.title = null;
       this.selectedEditorType = 'HTML';
       this.time_read = 5;
       this.activeStep = 0;
+      this.private = false;
 
       this.draft = {
         type: null,
@@ -307,7 +293,8 @@ export class CreatePostPageComponent implements OnInit {
         HTML: null,
         Markdown: null,
         time_read: 5,
-        step: 0
+        step: 0,
+        private: false
       }
       this.saveDraft();
     }
@@ -349,6 +336,11 @@ export class CreatePostPageComponent implements OnInit {
     this.messageService.add({ key: 'createPostToast', severity: 'success', summary: 'Success', detail: 'Save draft successfully' });
   }
 
+  onChangeTags(event) {
+    this.draft['tags'] = event;
+    this.saveDraft();
+  }
+
   onFilterTag(event) {
     if (this.getTagSubscription) {
       this.getTagSubscription.unsubscribe();
@@ -357,11 +349,24 @@ export class CreatePostPageComponent implements OnInit {
     const params: ApiParams = {
       search_term: event.query,
       start: 0,
-      size: 20
+      size: 24
     }
 
-    this.getTagSubscription = this.postsService.getListTags(params).subscribe((res: any) => {
-      this.listFilterTags = res?.data.tags;
+    this.getTagSubscription = this.postsService.getListTags(params).subscribe((res) => {
+      if (res.data?.tags?.length === 0) {
+        this.listFilterTags = [
+          {
+            id: '',
+            tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+            name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+            is_new: true
+          }
+        ];
+      }
+      else {
+        this.listFilterTags = res?.data.tags;
+        this.listFilterTags.map(item => item.is_new = false);
+      }
     });
   }
 
@@ -392,7 +397,7 @@ export class CreatePostPageComponent implements OnInit {
       }]
       result = false;
     }
-    if (this.title?.length == 0) {
+    if (!this.title) {
       this.message = [...this.message, {
         severity: 'error',
         summary: '',
@@ -424,11 +429,23 @@ export class CreatePostPageComponent implements OnInit {
     //   })
     //   result = false;
     // }
+    console.log(this.message)
+    return result;
+  }
 
-    return {
-      isvalid: result,
-      message: this.message
-    };
+  onClickDiscard() {
+    this.confirmationService.confirm({
+      key: 'createPostDialog',
+      message: this.textTranslate.discard,
+      header: this.textTranslate.confirmation,
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.activeStep = 0;
+        localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
+        this.loadDraft();
+      }
+    });
   }
 
   uploadImage() {
@@ -458,7 +475,7 @@ export class CreatePostPageComponent implements OnInit {
         this.textTranslate.popup.footer,
       );
     }
-    else if (!this.checkValidPost().isvalid) {
+    else if (!this.checkValidPost()) {
       window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
       // this.messageService.addAll(this.checkValidPost().message);
     }
@@ -482,37 +499,23 @@ export class CreatePostPageComponent implements OnInit {
     }
   }
 
-  onClickDiscard() {
-    this.confirmationService.confirm({
-      key: 'createPostDialog',
-      message: this.textTranslate.discard,
-      header: this.textTranslate.confirmation,
-      icon: 'pi pi-exclamation-triangle',
-      rejectButtonStyleClass: 'p-button-danger',
-      accept: () => {
-        this.activeStep = 0;
-        localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
-        this.loadDraft();
-      }
-    });
-  }
-
   publishPost() {
     this.isLoading = true;
-    let post = new PostModel({
+    let post: PostModel = {
       title: this.title,
       thumbnail: this.thumbnail,
       content: this.selectedEditorType === 'HTML' ? this.content : this.contentMd,
-      short_content: this.short_content.slice(0, 180),
+      short_content: this.short_content ? this.short_content.slice(0, 180) : null,
       content_type: this.selectedEditorType.toUpperCase(),
       time_read: this.time_read,
       categories: this.selectedCategory.map((item: any) => {
         return item.slug;
       }),
-      tags: _.concat(this.listTagModel.map(item => {
+      tags: this.listTags.map(item => {
         return item.tag;
-      }), this.tags),
-    });
+      }),
+      is_private: this.private,
+    };
 
     post = _.omitBy(post, _.isNull);
 

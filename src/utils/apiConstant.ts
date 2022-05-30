@@ -32,6 +32,7 @@ export const REST_URL = {
   POST_ID: 'post/id',
   POST_USER: 'post/user',
   POST_NEW: 'post/new',
+  POST_RECOMMEND: 'post/recommend',
   POST_FOLLOWING: 'post/following',
   POST_TRENDING: 'post/trending',
   POST_VALUES: 'statistic',

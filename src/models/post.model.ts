@@ -1,6 +1,6 @@
 import { SafeHtml, SafeResourceUrl } from "@angular/platform-browser";
 import Category from "./category.model";
-import Tag from "./tag.model";
+import { Tag } from "./tag.model";
 import User from "./user.model";
 
 export default class Post {
@@ -44,6 +44,9 @@ export default class Post {
   new?: boolean;
 }
 
+export type PostTypeView = 'trending' | 'new' | 'following' | 'recommend';
+
+
 export class PostModel {
   title?: string;
   thumbnail?: string;
@@ -64,5 +67,6 @@ export class PostModel {
     this.content_type = params.content_type;
     this.categories = params.categories;
     this.tags = params.tags;
+    this.is_private = params.status === 'Private';
   }
 }

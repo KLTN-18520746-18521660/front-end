@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import Post from 'models/post.model';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 import { postsMockData } from 'shared/mockData/postsMockData';
 import { tagsMockData } from 'shared/mockData/tagsMockData';
 import { randomArray } from 'utils/commonFunction';

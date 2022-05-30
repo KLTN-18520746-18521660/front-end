@@ -1,22 +1,23 @@
-import { ReportSendModel, ReportType } from 'models/report.model';
-import Comment, { CommentInput } from 'models/comment.model';
-import { Subscription } from 'rxjs';
-import { UserService } from 'services/user.service';
-import { ActionType } from 'utils/apiConstant';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import mermaid from 'mermaid';
+import { ApiParams } from 'models/api.model';
+import { Comment, CommentInput } from 'models/comment.model';
 import Post from 'models/post.model';
-import { MenuItem, MessageService } from 'primeng/api';
-import { CommentService } from 'services/comment.service';
-import { postsMockData } from 'shared/mockData/postsMockData';
-import { convertDateTime, mapActionWithPost, randomArray } from 'utils/commonFunction';
-import { PostsService } from 'services/posts.service';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { DomHandler } from 'primeng/dom';
+import { ReportSendModel, ReportType } from 'models/report.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
+import { MenuItem, MessageService } from 'primeng/api';
+import { DomHandler } from 'primeng/dom';
+import { Subscription } from 'rxjs';
+import { CommentService } from 'services/comment.service';
+import { PostsService } from 'services/posts.service';
+import { UserService } from 'services/user.service';
+import { ActionType } from 'utils/apiConstant';
+import { APPCONSTANT } from 'utils/appConstant';
+import { convertDateTime, mapActionWithPost } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-DetailPage',
@@ -47,19 +48,26 @@ export class DetailPageComponent implements OnInit {
 
   postCommentSubcription: Subscription;
 
+  getRelatedSubscription: Subscription;
+
   postValuesSubcription: Subscription;
 
   deleteCommentSubcription: Subscription;
+
+  getOtherSubscription: Subscription;
 
   slug: string;
 
   contacts: any[];
 
-  listComments: any[];
+  listComments: Comment[] = [];
 
   numberComments: number = 0;
 
-  filterComments: any[];
+  filterComments: {
+    label: string,
+    value: string
+  }[];
 
   currentFilter: object;
 
@@ -72,15 +80,19 @@ export class DetailPageComponent implements OnInit {
 
   isLoadingValue: boolean = false;
 
+  isLoadingRelatedPost: boolean = false;
+
+  isLoadingOtherPost: boolean = false;
+
   postValues: any[];
 
-  listRecommend: Post[] = [];
+  relatedPosts: Post[] = [];
+
+  otherPosts: Post[];
 
   progressBar: number = 0;
 
   error: boolean = false;
-
-  textTranslate: any;
 
   @ViewChild('postContent') postContent: ElementRef;
 
@@ -100,14 +112,14 @@ export class DetailPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.listRecommend = randomArray(postsMockData, 6);
-
     this.slug = this.activatedRoute.snapshot.params.slug;
     // this.slug = decodeURI(this.slug);
 
     this.commentService.current_Slug = this.slug;
 
     this.getPostDetail();
+
+    this.getListRelatedPost();
 
     this.home = { icon: 'pi pi-home', routerLink: '/' };
 
@@ -119,10 +131,6 @@ export class DetailPageComponent implements OnInit {
   }
 
   getTranslate() {
-    const res = this.translate.instant('postDetail');
-    this.textTranslate = res;
-    let result;
-
     // menu action with post
     this.menuitem = [
       ...(this.userService.isAuthenticated && this.userService.user.user_name === this.post.owner.user_name ? [{
@@ -316,26 +324,22 @@ export class DetailPageComponent implements OnInit {
     // filter comments
     this.filterComments = [
       {
-        label: '',
+        label: this.translate.instant('postDetail.commentFilter.dateDesc'),
         value: 'created_timestamp-desc'
       },
       {
-        label: '',
+        label: this.translate.instant('postDetail.commentFilter.dateAsc'),
         value: 'created_timestamp-asc'
       },
       {
-        label: '',
-        value: 'like-desc'
+        label: this.translate.instant('postDetail.commentFilter.likesDesc'),
+        value: 'likes-desc'
       },
       {
-        label: '',
-        value: 'like-asc'
+        label: this.translate.instant('postDetail.commentFilter.likesAsc'),
+        value: 'likes-asc'
       },
     ];
-    result = Object.values(res.commentFilter) as [];
-    this.filterComments.map((item, index) => {
-      item.label = result[index]
-    });
     this.currentFilter = this.filterComments[0];
   }
 
@@ -346,12 +350,8 @@ export class DetailPageComponent implements OnInit {
       this.progressBar = 0;
       return;
     }
-    let percent = (window.pageYOffset + this.postContent?.nativeElement?.offsetTop) / (this.postContent?.nativeElement?.offsetHeight) * 100;
+    const percent = (window.pageYOffset + this.postContent?.nativeElement?.offsetTop) / (this.postContent?.nativeElement?.offsetHeight) * 100;
     this.progressBar = percent > 100 ? 100 : percent;
-  }
-
-  onTextChange(event) {
-    console.log(event)
   }
 
   getPostDetail() {
@@ -407,6 +407,7 @@ export class DetailPageComponent implements OnInit {
         }
         this.getTranslate();
         this.getPostValue(res.data.post);
+        this.getOtherPost();
         this.isLoading = false;
         this.isLoadingValue = false;
       },
@@ -414,6 +415,55 @@ export class DetailPageComponent implements OnInit {
         this.error = true;
         this.isLoadingValue = false;
         this.isLoading = false;
+      }
+    );
+  }
+
+  getListRelatedPost() {
+    this.isLoadingRelatedPost = true;
+    const params: ApiParams = {
+      start: 0,
+      size: 5
+    }
+
+    this.getRelatedSubscription = this.postsService.getRelatedPostsBySlug(this.slug, params).subscribe(
+      (res) => {
+        this.isLoadingRelatedPost = false;
+        this.relatedPosts = res.data.posts.filter((item) => item.slug !== this.slug);
+      },
+      () => {
+        this.isLoadingRelatedPost = false;
+        this.relatedPosts = [];
+      }
+    );
+  }
+
+  getOtherPost() {
+    const params: ApiParams = {
+      start: 0,
+      size: 5,
+      sort_by: 'views',
+      order: 'desc'
+    }
+
+    const user_name = this.post.owner.user_name;
+
+    if (!user_name) {
+      this.isLoadingOtherPost = false;
+      this.otherPosts = [];
+      return;
+    }
+
+    this.getOtherSubscription = this.postsService.getPostOfUser(user_name, params).subscribe(
+      (res) => {
+        this.isLoadingOtherPost = false;
+        this.otherPosts = res.data.posts.filter((item) => {
+          return item.slug !== this.slug;
+        });
+      },
+      () => {
+        this.isLoadingOtherPost = false;
+        this.otherPosts = [];
       }
     );
   }
@@ -518,19 +568,31 @@ export class DetailPageComponent implements OnInit {
     }
   }
 
-  getComments(size: number) {
+  getComments(data?: ApiParams) {
     if (this.commentSubcription) {
       this.commentSubcription.unsubscribe();
     }
 
-    this.commentSubcription = this.commentService.getCommentByPostSlug(this.slug).subscribe(
+    let params: ApiParams;
+
+    if (data) {
+      params = data;
+    }
+    else {
+      params = {
+        start: this.listComments.length,
+        size: APPCONSTANT.NUMBER_COMMENT_PER_PAGE
+      }
+    }
+
+    this.commentSubcription = this.commentService.getCommentByPostSlug(this.slug, params).subscribe(
       (res) => {
         this.totalSizeComments = res.data.total_size;
-        this.listComments = res.data.comments;
+        this.listComments = this.listComments.concat(res.data.comments);
         this.isLoadingComments = false;
         this.isLoadingMoreComments = false;
       },
-      (err) => {
+      () => {
         this.isLoadingMoreComments = false;
         this.isLoadingComments = false;
       }
@@ -557,23 +619,35 @@ export class DetailPageComponent implements OnInit {
     this.isLoadingComments = true;
 
     setTimeout(() => {
-      this.getComments(this.sizeComment);
+      this.getComments();
     }, 2000);
   }
 
   loadMoreComment() {
     this.isLoadingMoreComments = true;
 
-    this.sizeComment += 5;
-    this.getComments(this.sizeComment);
+    setTimeout(() => {
+      this.getComments();
+    }, 2000);
   }
 
   onFilterComments(event) {
     this.currentFilter = event.value;
+    this.isLoadingComments = true;
     const getParams = event.value.value.split('-');
-    // this.commentService.sortComments(getParams[0], getParams[1]);
-    // this.listComments = [];
-    // this.listComments = this.commentService.getComments(this.post.id);
+
+    const params: ApiParams = {
+      start: 0,
+      size: APPCONSTANT.NUMBER_COMMENT_PER_PAGE,
+      sort_by: getParams[0],
+      order: getParams[1]
+    }
+    
+    this.listComments = [];
+
+    setTimeout(() => {
+      this.getComments(params);
+    }, APPCONSTANT.LOADING_TIMEOUT);
   }
 
   onSubmitComment(input: CommentInput) {
@@ -648,6 +722,12 @@ export class DetailPageComponent implements OnInit {
     }
     if (this.deleteCommentSubcription) {
       this.deleteCommentSubcription.unsubscribe();
+    }
+    if (this.getRelatedSubscription) {
+      this.getRelatedSubscription.unsubscribe();
+    }
+    if (this.getOtherSubscription) {
+      this.getOtherSubscription.unsubscribe();
     }
   }
 }

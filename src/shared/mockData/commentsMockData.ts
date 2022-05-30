@@ -1,4 +1,4 @@
-import Comment from "models/comment.model";
+import { Comment } from "models/comment.model";
 import { minusDay } from 'utils/commonFunction';
 import dayjs from 'dayjs';
 

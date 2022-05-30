@@ -6,7 +6,7 @@ import { ApiParams } from 'models/api.model';
 import Post from 'models/post.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { MessageService } from 'primeng/api';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 import { Subscription } from 'rxjs';
 import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';

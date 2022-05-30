@@ -1,4 +1,7 @@
 :host ::ng-deep #post-content {
+  padding: 0;
+  font-size: calc(1rem + 1px);
+
   .content-HTML {
     blockquote {
       border-left: 4px solid #ccc;

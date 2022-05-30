@@ -1,9 +1,9 @@
 import { PublicConfig } from "./appconfig.model";
 import Category from "./category.model";
 import Post from "./post.model";
-import Tag from "./tag.model";
+import { Tag } from "./tag.model";
 import User from "./user.model";
-import Comment from "./comment.model";
+import { Comment } from "./comment.model";
 import Notification from "./notification.model";
 import { Admin } from "./admin.model";
 

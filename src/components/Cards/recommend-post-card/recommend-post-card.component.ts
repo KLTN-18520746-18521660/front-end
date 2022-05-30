@@ -12,6 +12,8 @@ export class RecommendPostCardComponent implements OnInit {
 
   @Input() loading: boolean = false;
 
+  @Input() showAction: boolean = true;
+
   @Input() post: Post = postsMockData[0];
 
   @Input() isSmall: boolean = true;

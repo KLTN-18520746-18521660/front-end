@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import Category from 'models/category.model';
 import Post, { PostModel } from 'models/post.model';
-import Tag from 'models/tag.model';
+import { Tag } from 'models/tag.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ActionType, REST_URL } from 'utils/apiConstant';
