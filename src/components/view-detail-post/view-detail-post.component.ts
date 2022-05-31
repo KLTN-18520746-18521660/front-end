@@ -1,3 +1,4 @@
+import { convertLinkRedirecting, convertMarkdown } from './../../utils/commonFunction';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { Component, Input, OnInit } from '@angular/core';
@@ -15,6 +16,8 @@ export class ViewDetailPostComponent implements OnInit {
 
   @Input() menu: MenuItem[];
 
+  markdownCompile: string = '';
+
   constructor(
     private translate: TranslateService
   ) { }
@@ -24,6 +27,14 @@ export class ViewDetailPostComponent implements OnInit {
       created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, true, false),
       approved: convertDateTime(this.post.approved_timestamp, this.translate.currentLang, true, false),
       updated: this.post.last_modified_timestamp ? convertDateTime(this.post.last_modified_timestamp, this.translate.currentLang, true, false) : null
+    }
+
+    if (this.post.content_type === 'MARKDOWN') {
+      this.markdownCompile = convertMarkdown(this.post.content);
+      this.markdownCompile = convertLinkRedirecting(this.markdownCompile);
+    }
+    else {
+      this.post.content = convertLinkRedirecting(this.post.content);
     }
   }
 

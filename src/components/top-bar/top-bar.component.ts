@@ -80,49 +80,41 @@ export class TopBarComponent implements OnInit {
       this.isLoggedin = res.isAuthenticated;
     });
 
-    this.translate.get('topbar.user').subscribe(res => {
-      this.menuUser = [
-        {
-          id: 'dashboard',
-          label: res.dashboard,
-          icon: 'pi pi-home',
-          routerLink: ['/profile']
-        },
-        {
-          id: 'profile',
-          label: res.profile,
-          icon: 'pi pi-user',
-          routerLink: ['/profile/user-info']
-        },
-        {
-          id: 'edit-info',
-          label: res.edit,
-          icon: 'pi pi-user-edit',
-          routerLink: ['/profile/edit-info']
-        },
-        {
-          id: 'setting',
-          label: res.setting,
-          icon: 'pi pi-cog',
-          routerLink: ['/setting']
-        },
-        {
-          id: 'help',
-          label: res.help,
-          icon: 'pi pi-question-circle',
-          routerLink: ['/help']
-        },
-        { separator: true },
-        {
-          id: 'logout',
-          label: res.logout,
-          icon: 'pi pi-power-off',
-          command: () => {
-            this.onClickLogout();
-          }
+    this.menuUser = [
+      {
+        id: 'dashboard',
+        label: this.translate.instant('topbar.user.dashboard'),
+        icon: 'pi pi-home',
+        routerLink: ['/profile']
+      },
+      {
+        id: 'profile',
+        label: this.translate.instant('topbar.user.profile'),
+        icon: 'pi pi-user',
+        routerLink: ['/profile/user-info']
+      },
+      {
+        id: 'notification',
+        label: this.translate.instant('topbar.user.notification'),
+        icon: 'pi pi-bell',
+        routerLink: ['/profile/notification']
+      },
+      {
+        id: 'setting',
+        label: this.translate.instant('topbar.user.setting'),
+        icon: 'pi pi-cog',
+        routerLink: ['/profile/setting']
+      },
+      { separator: true },
+      {
+        id: 'logout',
+        label: this.translate.instant('topbar.user.logout'),
+        icon: 'pi pi-power-off',
+        command: () => {
+          this.onClickLogout();
         }
-      ];
-    })
+      }
+    ];
 
     this.translate.get('dialog.logout').subscribe((res) => {
       this.textTranslation = res;

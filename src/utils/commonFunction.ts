@@ -6,6 +6,7 @@ import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import calendar from 'dayjs/plugin/calendar';
 import { SortMeta } from "models/table.model";
+import md from 'markdown-it';
 
 export const handleError = (error?: HttpErrorResponse) => {
   let obj = {
@@ -95,6 +96,21 @@ export const convertDateTime = (
   }
 }
 
+export const convertMarkdown = (text: string = '') => {
+  const markdownIt = md();
+  return markdownIt.render(text || '');
+}
+
+export const convertLinkRedirecting = (str: string) => {
+  str = str.replace(/<a[^>]*href=["']([^"']*)["']/g, (item) => {
+    item = item.replace(/(?<=href=[\'\"])([^\'\"]+)/gm, (match) => {
+      return `${window.location.origin}/goto?url=${match}`;
+    })
+    return item;
+  })
+  return str;
+}
+
 export const getDiffDay = (date: string) => {
   return dayjs().diff(date, 'day', true);
 }
@@ -167,12 +183,12 @@ export const removeChildrenByLevel = (list, maxLevel = 3, level = 0) => {
   }
 }
 
-export const getDifferenceObject = (obj1, obj2) => {
+export const getDifferenceObject = (oldObject, newObject) => {
   const diff = {};
-  for (const key in obj1) {
-    if (obj1.hasOwnProperty(key)) {
-      if (!_.isEqual(obj1[key], obj2[key])) {
-        diff[key] = obj2[key];
+  for (const key in oldObject) {
+    if (oldObject.hasOwnProperty(key)) {
+      if (!_.isEqual(oldObject[key], newObject[key])) {
+        diff[key] = newObject[key];
       }
     }
   }

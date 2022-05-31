@@ -2,11 +2,6 @@
 
 :host ::ng-deep .detail-post-layout {
   .post-content {
-    img {
-      display: block;
-      margin: 0 auto;
-      max-height: 400px;
-    }
 
     a {
       color: var(--primary-color) !important;

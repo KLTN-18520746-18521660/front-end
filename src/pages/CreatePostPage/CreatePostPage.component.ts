@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
-import md from 'markdown-it';
 import { ApiParams } from 'models/api.model';
 import { PostModel } from 'models/post.model';
 import { Tag } from 'models/tag.model';
@@ -16,6 +15,7 @@ import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { convertArrayToNested, convertToSlug, removeChildrenByLevel } from 'utils/commonFunction';
+import { convertMarkdown } from './../../utils/commonFunction';
 
 @Component({
   selector: 'app-CreatePostPage',
@@ -29,7 +29,6 @@ export class CreatePostPageComponent implements OnInit {
 
   content: string = '';
 
-  markdownIt: any;
   contentMd: string = '';
   contentMdComplied: string = '';
 
@@ -116,8 +115,6 @@ export class CreatePostPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.markdownIt = md();
-
     this.steps = [
       {
         label: this.translate.instant('createPost.step.start'),
@@ -197,7 +194,7 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onChangeContentMd(event) {
-    this.contentMdComplied = this.markdownIt.render(event || '');
+    this.contentMdComplied = convertMarkdown(event || '');
     // this.convertToShortContent();
     this.draft[this.selectedEditorType] = event;
     this.saveDraft();
@@ -264,12 +261,11 @@ export class CreatePostPageComponent implements OnInit {
       this.listTags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || null;
       this.contentMd = this.draft['Markdown'] || null;
-      this.contentMdComplied = this.markdownIt.render(this.contentMd || '');
+      this.contentMdComplied = convertMarkdown(this.contentMd || '');
       this.time_read = this.draft['time_read'] || 5;
       this.slug = convertToSlug(this.title || '');
       this.activeStep = this.draft['step'] || 0;
       this.private = this.draft['private'] || false;
-      // this.convertToShortContent();
     }
     else {
       this.content = null;
@@ -298,6 +294,7 @@ export class CreatePostPageComponent implements OnInit {
       }
       this.saveDraft();
     }
+    this.slug = convertToSlug(this.title || '');
   }
 
   saveDraft() {
@@ -333,7 +330,7 @@ export class CreatePostPageComponent implements OnInit {
 
   onClickSaveDraft() {
     this.saveDraft();
-    this.messageService.add({ key: 'createPostToast', severity: 'success', summary: 'Success', detail: 'Save draft successfully' });
+    this.messageService.add({ key: 'createPostToast', severity: 'success', summary: this.translate.instant('message.success'), detail: this.translate.instant('message.savePostDraftSuccess') });
   }
 
   onChangeTags(event) {
@@ -458,7 +455,7 @@ export class CreatePostPageComponent implements OnInit {
         this.publishPost();
       },
       (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+        this.messageService.add({ severity: 'error', summary: this.translate.instant('message.error'), detail: err.error.message });
         this.isLoading = false;
       }
     );
@@ -524,14 +521,15 @@ export class CreatePostPageComponent implements OnInit {
         this.isLoading = false;
 
         // discard draft
+        this.selectedCategory = [];
         localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
         this.loadDraft();
 
         this.messageService.add({
           key: 'createPostToast',
           severity: 'success',
-          summary: '',
-          detail: this.translate.instant('message.publishpost'),
+          summary: this.translate.instant('message.success'),
+          detail: this.private ? this.translate.instant('message.createPostSuccess') : this.translate.instant('message.publicPostSuccess'),
           life: APPCONSTANT.TOAST_TIMEOUT
         });
       },
@@ -540,7 +538,7 @@ export class CreatePostPageComponent implements OnInit {
         this.messageService.add({
           key: 'createPostToast',
           severity: 'error',
-          summary: err.error,
+          summary: this.translate.instant('message.error'),
           detail: err.message,
           life: APPCONSTANT.TOAST_TIMEOUT
         });

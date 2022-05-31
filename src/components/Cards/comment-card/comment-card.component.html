@@ -34,9 +34,7 @@
           </div>
           <p-divider></p-divider>
           <div class="comment-card_content mt-3 mb-1">
-            <p #textContent class="read-more inline">
-              <markdown [data]="comment.content | linkify"></markdown>
-            </p>
+            <div #textContent [innerHTML]="comment.content | linkify"></div>
             <span class="read-more-link cursor-pointer">
               <a readMore [readMore-length]="300" [readMore-element]="textContent">
                 <span class="less underline font-medium">{{'common.readLess' | translate}}<i class="fa fa-angle-right"

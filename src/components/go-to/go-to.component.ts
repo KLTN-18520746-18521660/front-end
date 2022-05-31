@@ -19,8 +19,8 @@ export class GoToComponent implements OnInit {
 
   ngOnInit() {
     this.url = this.activatedRoute.snapshot.queryParams.url || null;
-    // this.postService.gotoUrl(res.url).subscribe(
-    //   () => {
+    this.postService.gotoUrl(this.url).subscribe(
+      () => {
         setTimeout(() => {
           if (this.url) {
             this.router.ngOnDestroy();
@@ -29,11 +29,11 @@ export class GoToComponent implements OnInit {
           else {
             this.router.navigate(['/']);
           }
-        }, 2000);
-    //   },
-    //   () => {
-    //     this.router.navigate(['/']);
-    //   }
-    // );
+        }, 1000);
+      },
+      () => {
+        this.router.navigate(['/']);
+      }
+    );
   }
 }

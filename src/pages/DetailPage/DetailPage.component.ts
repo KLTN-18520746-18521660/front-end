@@ -375,27 +375,16 @@ export class DetailPageComponent implements OnInit {
         categories.map((item) => {
           this.breadcrumbItems.push({
             label: item.display_name,
-            url: `/category/${item.slug}`
+            routerLink: `/category/${item.slug}`
           });
         });
         this.breadcrumbItems.push({
           label: res.data.post.title,
-          url: `/post/${res.data.post.slug}`
+          routerLink: `/post/${res.data.post.slug}`
         });
-
-        const convertLink = (str: string) => {
-          str = str.replace(/<a[^>]*href=["']([^"']*)["']/g, (item) => {
-            item = item.replace(/(?<=href=[\'\"])([^\'\"]+)/gm, (match) => {
-              return `${window.location.origin}/goto?url=${match}`;
-            })
-            return item;
-          })
-          return str;
-        }
 
         this.post = res.data.post;
 
-        this.post.content = convertLink(this.post.content);
         // this.post.content = res.data.post.content.replace(/<img[^>]+>/g, convert);
         this.post.mapAction = mapActionWithPost(res.data.post.actions || []);
 

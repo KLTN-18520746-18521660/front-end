@@ -127,7 +127,7 @@
         </ng-template>
         <ng-template [ngIf]="selectedEditorType == 'HTML'" [ngIfElse]="markdownEditor">
           <p-editor [(ngModel)]="content" (ngModelChange)="onChangeContent($event)"
-            [placeholder]="'Write something here ...'" [style]="{'min-height':'420px'}">
+            [placeholder]="'createPost.placeholder' | translate" [style]="{'min-height':'420px'}">
           </p-editor>
         </ng-template>
         <ng-template #markdownEditor>
@@ -148,11 +148,10 @@
           <p *ngIf="title" class="text-5xl font-bold" style="word-break: break-word;">{{title}}</p>
           <p *ngIf="!title" class="text-5xl font-bold text-500">{{'createPost.form.titleHere' | translate}}</p>
           <ng-template [ngIf]="selectedEditorType === 'HTML'" [ngIfElse]="markdown">
-            <markdown class="preview-content content-HTML" [data]="content"></markdown>
+            <div class="preview-content content-HTML" [innerHTML]="content"></div>
           </ng-template>
           <ng-template #markdown>
-            <markdown class="preview-content" [data]="contentMdComplied"></markdown>
-            <!-- <div class="preview-content" [innerHTML]="contentMdComplied"></div> -->
+            <div class="preview-content content-HTML" [innerHTML]="contentMdComplied"></div>
           </ng-template>
         </div>
       </p-tabPanel>

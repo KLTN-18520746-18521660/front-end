@@ -26,7 +26,7 @@ export const REST_URL = {
   FOLLOWER: 'follower',
   FOLLOWING: 'following',
 
-  LINK_REDIRECT: 'link/redirect',
+  LINK_REDIRECT: 'goto',
 
   POST: 'post',
   POST_ID: 'post/id',

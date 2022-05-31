@@ -25,7 +25,8 @@
     "logout": "Logout",
     "register": "Register",
     "profile": "Profile",
-    "language": "Language"
+    "language": "Language",
+    "feedback": "Give feedback"
   },
   "titlePage": {
     "default": "Home - Heovi",
@@ -74,7 +75,7 @@
       "new": "Newest ",
       "following": "Following",
       "trending": "Trending",
-      "recommend" : "Recommend"
+      "recommend": "Recommend"
     }
   },
   "tooltip": {
@@ -144,6 +145,9 @@
     "nochange": "No changes to save",
     "update": "Update successfully",
     "updateFail": "Failed to update",
+    "publicPostSuccess": "Your post will be pending for approval by admin, once it is approved, it will be displayed on the website",
+    "createPostSuccess": "Your post has been created successfully, only you can see it",
+    "savePostDraftSuccess": "Your post has been saved as draft successfully",
     "copied": "Link copied to clipboard",
     "delete": "Delete successfully",
     "save": "Save successfully",
@@ -216,9 +220,10 @@
     "wellcome": "Wellcome to",
     "description": "Login or register to start your journey and share your posts with the world, discuss with your friends, and more.",
     "user": {
-      "dashboard": "My Dashboard",
+      "dashboard": "Dashboard",
       "profile": "My Profile",
       "edit": "Edit Profile",
+      "notification": "Notification",
       "setting": "Setting",
       "help": "Help & Support",
       "separator": "|",
@@ -227,6 +232,21 @@
   },
   "footer": {
     "copyright": "Copyright &copy; 2022. All rights reserved."
+  },
+  "feedback": {
+    "title": "Give feedback to us",
+    "description": "Fill in the form below to send us your feedback. We are always happy and gratefull to hear from you.",
+    "placeholder": "Please enter your feedback here...",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "validation": "Content not valid",
+    "success": "Thank you for your feedback. We will get back to you as soon as possible.",
+    "fail": "Failed to send feedback. Please try again later."
   },
   "profile": {
     "show": "Show Menu",
@@ -438,7 +458,7 @@
         "delete": "Delete",
         "data": "Data",
         "thisDevice": "This device",
-        "savePassword": "Save password"
+        "savePassword": "Saved password"
       },
       "device": {
         "title": "Device",
@@ -673,7 +693,7 @@
           "invalid": "Please enter a valid email"
         }
       },
-      "registerHere":"Register here",
+      "registerHere": "Register here",
       "loginHere": "Login here",
       "submit": "Reset password",
       "login": "Login here",
@@ -808,7 +828,7 @@
   "createPost": {
     "edit": "Edit",
     "preview": "Preview",
-    "back":"Go back",
+    "back": "Go back",
     "next": "Next step",
     "placeholder": "Write something here ...",
     "saveDraft": "Save as draft",

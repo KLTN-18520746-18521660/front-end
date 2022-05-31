@@ -46,28 +46,23 @@
           </p-treeSelect>
 
           <p class="font-medium mb-1 mt-3">{{'editPost.tag' | translate}}</p>
-          <p-autoComplete [(ngModel)]="listTagModel" field="tag" [suggestions]="listFilterTags" [required]="true"
-            (completeMethod)="onFilterTag($event)" [showEmptyMessage]="true" [unique]="true" [virtualScroll]="true"
-            [multiple]="true" [dropdown]="true" [autoHighlight]="true" [delay]="500"
-            [placeholder]="'editPost.form.tagPlaceHolder' | translate">
+          <p-autoComplete [(ngModel)]="listTags" field="tag" [suggestions]="listFilterTags" (ngModelChange)="onChangeTags($event)"
+            (completeMethod)="onFilterTag($event)" [unique]="true" [virtualScroll]="true" [multiple]="true" [dropdown]="true"
+            [autoHighlight]="true" [delay]="500" [placeholder]="'editPost.form.tagPlaceHolder' | translate">
             <ng-template let-item pTemplate="item">
-              <div pTooltip="{{ item.name}}" tooltipPosition="top">
-                <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+              <div class="flex justify-content-between" pTooltip="{{ item.name }}" tooltipPosition="top">
+                <div class="left">
+                  <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+                </div>
+                <div class="right" *ngIf="!item.is_new">
+                  <i class="pi pi-check-circle"></i>
+                </div>
               </div>
             </ng-template>
             <ng-template let-item pTemplate="selectedItem">
               <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
             </ng-template>
           </p-autoComplete>
-
-          <p class="font-medium mb-1 mt-3">{{'editPost.moreTag' | translate}}</p>
-          <p-chips [(ngModel)]="moreTags" (onAdd)="onAddMoreTag($event)" (onRemove)="onRemoveMoreTag($event)" class="w-full" [addOnTab]="true"
-            [placeholder]="'editPost.form.moreTagPlaceholder' | translate" [allowDuplicate]="false">
-            <ng-template let-item pTemplate="item">
-              <i class="pi pi-tag mr-2"></i>{{item}}
-            </ng-template>
-          </p-chips>
-          <small id="more-chip-help" class="block">{{'editPost.form.chipHelp' | translate}}</small>
 
           <p requiredField class="font-medium mb-1 mt-3">{{'editPost.timeRead' | translate}}</p>
           <p-inputNumber [(ngModel)]="time_read" (ngModelChange)="onChangeTimeRead($event)" mode="decimal"
@@ -83,11 +78,11 @@
               <i class="ml-2 pi pi-pencil"></i>
             </ng-template>
             <ng-template [ngIf]="content_type.toUpperCase() == 'HTML'" [ngIfElse]="markdownEditor">
-              <p-editor [(ngModel)]="content" (onTextChange)="onTextChange($event)"
-                [placeholder]="'Write something here ...'" [style]="{'min-height':'420px'}"></p-editor>
+              <p-editor [(ngModel)]="content" [placeholder]="'Write something here ...'"
+                [style]="{'min-height':'420px'}"></p-editor>
             </ng-template>
             <ng-template #markdownEditor>
-              <textarea [(ngModel)]="content" class="w-full" (onChange)="onTextChange($event)" classs="markdown-editor"
+              <textarea [(ngModel)]="content" class="w-full" classs="markdown-editor"
                 (ngModelChange)="onChangeContentMd($event)" pInputTextarea [autoResize]="true" rows="25"
                 placeholder="{{'editPost.placeholder' | translate}}">
             </textarea>
@@ -104,10 +99,10 @@
               <p class="text-5xl font-bold mt-2" style="word-break: break-word;">
                 {{title || ('editPost.form.titleHere' | translate)}}</p>
               <ng-template [ngIf]="content_type.toUpperCase() === 'HTML'" [ngIfElse]="markdown">
-                <markdown class="preview-content content-HTML" [data]="content"></markdown>
+                <div class="preview-content content-HTML" [innerHTML]="content"></div>
               </ng-template>
               <ng-template #markdown>
-                <markdown class="preview-content" [data]="content"></markdown>
+                <div class="preview-content content-HTML" [innerHTML]="contentMdComplied"></div>
               </ng-template>
             </div>
           </p-tabPanel>

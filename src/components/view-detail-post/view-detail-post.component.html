@@ -45,13 +45,10 @@
   </div>
   <div id="post-content" class="post-content ql-editor">
     <ng-template [ngIf]="post.content_type === 'HTML'" [ngIfElse]="markdown">
-      <markdown class="content-HTML" [data]="post.content"></markdown>
+      <div class="content-HTML" [innerHTML]="post.content"></div>
     </ng-template>
     <ng-template #markdown>
-      <markdown class="" [data]="post.content"></markdown>
+      <div class="content-HTML" [innerHTML]="markdownCompile"></div>
     </ng-template>
-    <!-- <div [innerHTML]="post.content"></div> -->
-    <!-- <p-editor [(ngModel)]="post.content" (onTextChange)="onTextChange($event)"></p-editor> -->
-    <!-- <markdown class="variable-binding" [src]="'assets/test.md'"></markdown> -->
   </div>
 </div>

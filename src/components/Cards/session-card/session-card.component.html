@@ -2,19 +2,24 @@
   <div class="card overflow-hidden text-overflow-ellipsis">
     <div class="flex justify-content-between">
       <div>
-        <app-status-badge *ngIf="session.saved" [label]="'profile.security.session.savePassword' | translate"
-          [translation]="false"></app-status-badge>
         <app-status-badge *ngIf="session.iscurrent" [label]="'profile.security.session.thisDevice' | translate"
           [translation]="false"></app-status-badge>
         <!-- <p class="font-medium mt-3">{{session.session_token.substring(1, 10)}}...</p> -->
         <ul class="text-sm pl-4">
           <li class="my-2">
-            <span>{{'profile.security.session.created' | translate}} {{session.fromNow.created}} -
-              {{session.created_timestamp | date: 'dd/MM/yyyy hh:mm'}}</span>
+            <span pTooltip="{{session.last_interaction_time | date: 'dd/MM/yyyy hh:mm'}}" tooltipPosition="top">
+              {{'profile.security.session.lastAccess' | translate}} {{session.fromNow.updated}}
+            </span>
           </li>
           <li class="my-2">
-            <span>{{'profile.security.session.lastAccess' | translate}} {{session.fromNow.updated}} -
-              {{session.last_interaction_time | date: 'dd/MM/yyyy hh:mm'}}</span>
+            <span pTooltip="{{session.created_timestamp | date: 'dd/MM/yyyy hh:mm'}}" tooltipPosition="top">
+              {{'profile.security.session.created' | translate}} {{session.fromNow.created}}
+            </span>
+          </li>
+          <li class="my-2">
+            <span>
+              {{'profile.security.session.savePassword' | translate}}
+            </span>
           </li>
           <li class="my-2">
             <span>{{'profile.security.session.data' | translate}}:</span>

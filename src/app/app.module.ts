@@ -1,3 +1,4 @@
+import { BtnGiveFeedbackComponent } from './../components/Buttons/btn-give-feedback/btn-give-feedback.component';
 import { SessionCardComponent } from 'components/Cards/session-card/session-card.component';
 import { UserSecurityComponent } from 'components/Profile/user-security/user-security.component';
 import { SimpleGridViewComponent } from 'components/simple-grid-view/simple-grid-view.component';
@@ -33,7 +34,6 @@ import { APPCONSTANT } from 'utils/appConstant';
 import { NgprimeModule } from './modules/ngprime.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
-import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { CookieService } from 'services/cookie.service';
 
 
@@ -215,6 +215,7 @@ export function playerFactory() {
     SimpleGridViewComponent,
     UserSecurityComponent,
     SessionCardComponent,
+    BtnGiveFeedbackComponent,
 
     SwitchThemeComponent,
 
@@ -246,14 +247,6 @@ export function playerFactory() {
       ping: APPCONSTANT.USER_IDLE.PING
     }),
     InfiniteScrollModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-      sanitize: SecurityContext.NONE,
-      markedOptions: {
-        provide: MarkedOptions,
-        useFactory: markedOptionsFactory,
-      }
-    }),
     NgxLinkifyjsModule.forRoot(),
     SocialLoginModule,
     LottieModule.forRoot({ player: playerFactory }),
@@ -300,23 +293,3 @@ export function playerFactory() {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-// function that returns `MarkedOptions` with renderer override
-export function markedOptionsFactory(): MarkedOptions {
-  const renderer = new MarkedRenderer();
-  renderer.code = function (code, language) {
-    if (language.match(/^mermaid/)) {
-      return '<div class="mermaid">' + code + '</div>';
-    } else {
-      return '<pre><code>' + code + '</code></pre>';
-    }
-  };
-  return {
-    renderer: renderer,
-    gfm: true,
-    breaks: false,
-    pedantic: false,
-    smartLists: true,
-    smartypants: false
-  };
-}

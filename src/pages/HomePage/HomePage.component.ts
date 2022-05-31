@@ -160,6 +160,10 @@ export class HomePageComponent implements OnInit {
       this.isLoadingPosts = true;
     }
 
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
+    }
+
     const params: ApiParams = {
       start: this.start,
       size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
@@ -175,6 +179,8 @@ export class HomePageComponent implements OnInit {
       },
       () => {
         this.isLoadingPosts = false;
+        this.listPosts = this.listPosts ? this.listPosts : [];
+        this.totalSizePost = this.listPosts.length;
         this.isLoadingMorePosts = false;
       }
     );
@@ -183,6 +189,9 @@ export class HomePageComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
     }
   }
 }

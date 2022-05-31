@@ -44,13 +44,14 @@ export class EditPostPageComponent implements OnInit {
   short_content: string = '';
   time_read: number;
   content_type: string = 'MARKDOWN';
+  contentMdComplied: string;
+
   listCategory: Category[];
   selectedCategory: TreeNode[] = [];
   categories: Category[];
+
+  listTags: Tag[] = [];
   listFilterTags: Tag[] = [];
-  listTagModel: Tag[] = [];
-  tags: string[];
-  moreTags: string[];
 
   uploadSubscription: Subscription;
 
@@ -101,18 +102,25 @@ export class EditPostPageComponent implements OnInit {
         this.isLoading = false;
         this.postSlug = res.data.post.slug;
 
-        this.post = new PostModel(res.data.post);
-
-        this.post.categories = res.data.post.categories.map(item => {
-          return item.name;
-        })
-        this.post.tags = res.data.post.tags.map(item => {
-          return item.tag;
-        })
+        this.post = {
+          title: res.data.post.title,
+          content: res.data.post.content,
+          content_type: res.data.post.content_type,
+          short_content: res.data.post.short_content,
+          thumbnail: res.data.post.thumbnail,
+          time_read: res.data.post.time_read,
+          is_private: res.data.post.status === 'Private',
+          categories: res.data.post.categories.map(item => {
+            return item.name;
+          }),
+          tags: res.data.post.tags.map(item => {
+            return item.tag;
+          })
+        };
 
         this.slug = convertToSlug(res.data.post.title);
         this.categories = res.data.post.categories;
-        this.listTagModel = res.data.post.tags;
+        this.listTags = res.data.post.tags;
         this.content = this.post.content;
         this.short_content = this.post.short_content;
         this.title = this.post.title;
@@ -120,9 +128,6 @@ export class EditPostPageComponent implements OnInit {
         this.thumbnailPreview = this.post.thumbnail;
         this.time_read = this.post.time_read;
         this.content_type = this.post.content_type;
-        this.tags = this.listTagModel.map(item => {
-          return item.tag;
-        });
 
         this.getCategory();
       },
@@ -168,6 +173,10 @@ export class EditPostPageComponent implements OnInit {
     );
   }
 
+  onChangeTags(event) {
+    this.updateEditPost();
+  }
+
   onFilterTag(event) {
     if (this.getTagSubscription) {
       this.getTagSubscription.unsubscribe();
@@ -176,11 +185,24 @@ export class EditPostPageComponent implements OnInit {
     const params: ApiParams = {
       search_term: event.query,
       start: 0,
-      size: 20
+      size: 24
     }
 
-    this.getTagSubscription = this.postService.getListTags(params).subscribe((res: any) => {
-      this.listFilterTags = res?.data.tags;
+    this.getTagSubscription = this.postService.getListTags(params).subscribe((res) => {
+      if (res.data?.tags?.length === 0) {
+        this.listFilterTags = [
+          {
+            id: '',
+            tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+            name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+            is_new: true
+          }
+        ];
+      }
+      else {
+        this.listFilterTags = res?.data.tags;
+        this.listFilterTags.map(item => item.is_new = false);
+      }
     });
   }
 
@@ -188,42 +210,24 @@ export class EditPostPageComponent implements OnInit {
     if (edit) {
       this.editing = true;
     }
-    this.editPost.content = this.content;
-    this.editPost.short_content = this.short_content;
-    this.editPost.title = this.title;
-    this.editPost.thumbnail = this.thumbnail;
-    this.editPost.time_read = this.time_read;
-    this.editPost.content_type = this.content_type;
-    this.editPost.categories = this.selectedCategory.map(item => {
-      return item.data.name;
-    });
-    this.editPost.tags = this.tags;
-    console.log(this.editPost);
-  }
+    this.editPost = {
+      content: this.content,
+      short_content: this.short_content,
+      title: this.title,
+      thumbnail: this.thumbnail,
+      time_read: this.time_read,
+      content_type: this.content_type,
+      categories: this.selectedCategory.map(item => {
+        return item.data.name;
+      }),
+      tags: this.listTags.map(item => {
+        return item.tag;
+      }),
+      is_private: this.post.is_private
+    };
 
-  onAddMoreTag(event) {
-    const list = this.listTagModel.map(item => {
-      return item.tag;
-    });
-    list.push(event.value.toLowerCase().trim().replace(/\s/g, '-'));
-    this.tags = list;
-    this.updateEditPost();
-  }
-
-  onRemoveMoreTag(event) {
-    const list = this.listTagModel.map(item => {
-      return item.tag;
-    });
-    list.filter(item => {
-      return item !== event.value.toLowerCase().trim().replace(/\s/g, '-');
-    })
-    this.tags = list;
-    this.updateEditPost();
-  }
-
-  // for content
-  onTextChange(event) {
-    this.updateEditPost();
+    const diff = getDifferenceObject(this.post, this.editPost);
+    this.editing = !_.isEqual(diff, {});
   }
 
   onChangeContentMd(event) {
@@ -377,12 +381,10 @@ export class EditPostPageComponent implements OnInit {
       accept: () => {
 
         if (this.isSelectFile) {
-          console.log("selectted")
           this.fileUpload.upload();
         }
         else {
           const data = getDifferenceObject(this.post, this.editPost) as any;
-          console.log("not selectted")
           this.modifyPost(data);
         }
       }
@@ -391,7 +393,6 @@ export class EditPostPageComponent implements OnInit {
 
   modifyPost(diffData) {
     if (_.isEmpty(diffData)) {
-      console.log("no change");
       return;
     }
     if (this.modifyPostSubscription) {
@@ -399,19 +400,15 @@ export class EditPostPageComponent implements OnInit {
     }
     this.isLoading = true;
 
-    const body = { ...this.post, ...diffData };
-
-    console.log(diffData);
-
     this.modifyPostSubscription = this.postService.modifyPostByPostId(this.id, diffData).subscribe(
       (res) => {
         this.isLoading = false;
         this.editing = false;
-        this.message = [{ severity: 'success', summary: 'Success', detail: this.translate.instant('message.modifyPostSuccess') }];
+        this.message = [{ severity: 'success', summary: '', detail: this.translate.instant('message.modifyPostSuccess') }];
       },
       () => {
         this.isLoading = false;
-        this.message = [{ severity: 'error', summary: 'Error', detail: this.translate.instant('message.modifyPostFail') }];
+        this.message = [{ severity: 'error', summary: '', detail: this.translate.instant('message.modifyPostFail') }];
       }
     );
   }

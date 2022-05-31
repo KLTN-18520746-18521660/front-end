@@ -1,0 +1,41 @@
+@import 'styles/scss/mixins.scss';
+
+:host ::ng-deep {
+  .give-feedback-wrapper {
+    position: fixed;
+    right: 0;
+    top: 25%;
+    z-index: 1000;
+
+    .btn-feedback {
+      padding: 1rem 0.75rem !important;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+
+      @include breakpoint(max, 768px) {
+        padding: 1rem 0.6rem !important;
+      }
+
+      span {
+        font-weight: 400;
+        font-size: 0.9rem;
+        writing-mode: vertical-rl;
+        -webkit-writing-mode: vertical-rl;
+        -ms-writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+      }
+    }
+  }
+
+  .min-button-width {
+    min-width: 8rem;
+  }
+
+  .p-dialog-content {
+    padding-bottom: 0;
+  }
+}
