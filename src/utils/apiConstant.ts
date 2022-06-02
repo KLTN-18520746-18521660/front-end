@@ -10,6 +10,7 @@ export const REST_URL = {
 
   AUDIT_LOG: 'auditlog',
 
+  SEARCH: "search",
 
   SESSION: 'session',
   EXTENSION_SESSION_USER: 'session/extension',

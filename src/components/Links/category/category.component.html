@@ -1,6 +1,6 @@
 <a class="category-link inline-flex mr-2 my-1 text-overflow-ellipsis overflow-hidden {{width}}"
   [routerLink]="['/category', category.slug]">
-  <p class="category-title py-2 px-2 text-{{ size }} font-medium border-round" title="{{ category?.describe }}"
+  <p class="category-title tranform text-{{ size }} font-medium border-round" title="{{ category?.describe }}"
     [ngClass]="width ? width : 'max-width'">
     <span>{{ category?.display_name }}</span>
     <span class="link-icon "><i class="pi pi-arrow-right"></i></span>

@@ -109,13 +109,6 @@
         </p-tabView>
 
         <p-messages [(value)]="message" [enableService]="false"></p-messages>
-
-        <div class="flex justify-content-end mt-4">
-          <button pButton pRipple type="button" [disabled]="!editing" label="{{'editPost.discard' | translate}}"
-            (click)="onClickDiscard()" class="p-button-outlined p-button-danger ml-2"></button>
-          <button pButton pRipple type="button" [disabled]="!editing" label="{{'editPost.publish' | translate}}"
-            (click)="onClickPublish()" class="p-button-raised ml-2"></button>
-        </div>
       </div>
     </div>
   </div>

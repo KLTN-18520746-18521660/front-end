@@ -30,7 +30,7 @@ export class SearchPageComponent implements OnInit {
 
   ngOnInit() {
     this.keyword = this.activatedRoute.snapshot.queryParams.q || null;
-    if (!this.keyword) {
+    if (this.keyword) {
       this.title.setTitle(this.translate.instant('search.title.result', { query: this.keyword }));
     }
     else {

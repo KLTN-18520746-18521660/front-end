@@ -60,11 +60,23 @@ export class PostsService {
     private cookieService: CookieService
   ) { }
 
-  // getListPosts(): Observable<ApiResult> {
-  //   return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST, this.httpOptions()).pipe(catchError(error => {
-  //     return throwError(handleError(error));
-  //   }));
-  // }
+  searchAll(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${REST_URL.SEARCH}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  searchPost(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${REST_URL.SEARCH}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  searchUser(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.USER + `/${REST_URL.SEARCH}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
 
   getPostBySlug(slug: string): Observable<ApiResult> {
     return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${slug}`, this.httpOptions()).pipe(catchError(error => {
@@ -134,6 +146,12 @@ export class PostsService {
 
   sendActionWithPost(slug: string, action: ActionType): Observable<ApiResult> {
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.POST + `/${slug}`, {}, { ...this.httpOptions(), params: { action } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  changeStatusPost(type: 'publish' | 'private', postId: number): Observable<ApiResult> {
+    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.POST + `/${type}` + `/id/${postId}`, {}, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

@@ -97,7 +97,7 @@ export class TopBarComponent implements OnInit {
         id: 'notification',
         label: this.translate.instant('topbar.user.notification'),
         icon: 'pi pi-bell',
-        routerLink: ['/profile/notification']
+        routerLink: ['/profile/notifications']
       },
       {
         id: 'setting',

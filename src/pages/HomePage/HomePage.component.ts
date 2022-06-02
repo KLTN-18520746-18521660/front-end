@@ -9,7 +9,6 @@ import { AppConfigService } from 'services/app.config.service';
 import { PostsService } from 'services/posts.service';
 import { UserConfigService } from 'services/user-config.service';
 import { UserService } from 'services/user.service';
-import { postsMockData } from 'shared/mockData/postsMockData';
 import { tagsMockData } from 'shared/mockData/tagsMockData';
 import { APPCONSTANT, BREAKPOINT, CONTACT_INFO } from 'utils/appConstant';
 import { randomArray } from 'utils/commonFunction';

@@ -1,3 +1,5 @@
+import { ApiParams } from './../../../models/api.model';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { PostsService } from 'services/posts.service';
 import { Component, OnInit } from '@angular/core';
@@ -25,12 +27,47 @@ export class UserManagePostComponent implements OnInit {
 
   subscription: Subscription;
 
+  orderBy: {
+    label?: string;
+    value?: string;
+  };
+
+  orderOptions: {
+    label?: string;
+    value?: string;
+  }[];
+
   constructor(
     private postService: PostsService,
-    private userService: UserService
+    private userService: UserService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
+    this.orderOptions = [
+      {
+        label: this.translate.instant('order.post.dateDesc'),
+        value: 'created_timestamp-desc'
+      },
+      {
+        label: this.translate.instant('order.post.dateAsc'),
+        value: 'created_timestamp-asc'
+      },
+      {
+        label: this.translate.instant('order.post.modifyDesc'),
+        value: 'last_modified_timestamp-desc'
+      },
+      {
+        label: this.translate.instant('order.post.likesDesc'),
+        value: 'likes-desc'
+      },
+      {
+        label: this.translate.instant('order.post.viewsDesc'),
+        value: 'views-desc'
+      }
+    ];
+
+    this.orderBy = this.orderOptions[0];
     this.getListPosts();
   }
 
@@ -44,9 +81,11 @@ export class UserManagePostComponent implements OnInit {
     else
       this.isLoading = true;
 
-    const params = {
+    const params: ApiParams = {
       start: this.start,
-      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE
+      size: APPCONSTANT.DEFAULT_SIZE_LOADING_MORE,
+      sort_by: this.orderBy.value.split('-')[0],
+      order: this.orderBy.value.split('-')[1]
     }
 
     this.subscription = this.postService.getPostOfUser(this.userService.user.user_name, params).subscribe(
@@ -65,10 +104,24 @@ export class UserManagePostComponent implements OnInit {
     );
   }
 
+  deletePost(id) {
+    this.listPosts = this.listPosts.filter(post => post.id !== id);
+  }
+
   onScroll() {
     if (this.listPosts?.length < this.totalSize) {
       this.getListPosts(true);
     }
+  }
+
+  onOrderPosts(event) {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.start = 0;
+    this.listPosts = [];
+    this.getListPosts();
   }
 
   ngOnDestroy() {

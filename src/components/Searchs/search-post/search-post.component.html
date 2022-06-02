@@ -1,3 +1,27 @@
-<p>
-  search-post works!
-</p>
+<div class="flex flex-wrap">
+  <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
+    <div class="col-12">
+      <div [innerHTML]="'search.resultCount' | translate : { count: listPosts.length, total: totalSize}"></div>
+    </div>
+    <div class="col-12 md:col-6" *ngFor="let item of listPosts">
+      <app-recommend-post-card [showMenu]="false" [showStatus]="false" [isSmall]="false" [post]="item">
+      </app-recommend-post-card>
+    </div>
+    <div class="col-12 pb-4 pt-2" *ngIf="totalSize > listPosts?.length">
+      <span class="text-primary text-md font-medium cursor-pointer button-link" (click)="onViewMore()">
+        {{'search.viewMore' | translate}}
+        <i *ngIf="isLoadingMore" class="pi pi-spin pi-spinner" style="font-size: 1.1rem"></i>
+      </span>
+    </div>
+    <div class="col-12 flex justify-content-center">
+      <div class="col-12 md:col-6">
+        <app-empty [visible]="listPosts?.length === 0"></app-empty>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #loadingBlock>
+    <div class="col-12 sm:col-6" *ngFor="let user of [1,2]">
+      <app-recommend-post-card [showStatus]="true" [isSmall]="false" [loading]="true"></app-recommend-post-card>
+    </div>
+  </ng-template>
+</div>

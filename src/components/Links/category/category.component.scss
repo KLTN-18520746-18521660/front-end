@@ -6,14 +6,22 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline;
+    padding: 0.5rem 1rem 0.5rem 0;
 
     .link-icon {
       display: none;
       float: right;
     }
 
+    transition: all 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+    -webkit-transition: all 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+    -moz-transition: all 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+    -ms-transition: all 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+    -o-transition: all 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+
     &:hover {
       background-color: var(--surface-c);
+      padding-left: 1rem;
 
       .link-icon {
         color: var(--primary-color);

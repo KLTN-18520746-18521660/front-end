@@ -1,3 +1,5 @@
+import { LinkItem } from "models/app.model";
+
 export const APPCONSTANT = {
   // PLACEHOLDER_IMAGE: 'assets/images/placeholder-image.jpg',
   PLACEHOLDER_IMAGE: 'assets/images/svg/thumbnail-placeholder.svg',
@@ -19,9 +21,9 @@ export const APPCONSTANT = {
   },
   SESSION_TIMEOUT_DEFAULT: 5,
   // For infinite scroll
-  DEFAULT_SIZE_LOADING_MORE: 5,
+  DEFAULT_SIZE_LOADING_MORE: 12,
 
-  DEFAULT_PAGE_SIZE: 2,
+  DEFAULT_PAGE_SIZE: 12,
 
   PASSWORD_POLICY: {
     MIN_LEN: 5,
@@ -35,34 +37,33 @@ export const APPCONSTANT = {
   }
 }
 
-export const CONTACT_INFO = [
+export const CONTACT_INFO: LinkItem[] = [
   {
     id: 'facebook',
     name: 'Facebook',
     icon: 'pi-facebook',
+    iconColor: '#3b5998',
     color: '',
-    style: 'p-button-rounded'
-  },
-  {
-    id: 'twitter',
-    name: 'Twitter',
-    icon: 'pi-twitter',
-    color: 'p-button-info',
-    style: 'p-button-rounded'
+    style: 'p-button-rounded',
+    url: 'https://www.facebook.com/tnvinh00',
   },
   {
     id: 'youtube',
     name: 'Youtube',
     icon: 'pi-youtube',
+    iconColor: '#ff0000',
     color: 'p-button-danger',
-    style: 'p-button-rounded'
+    style: 'p-button-rounded',
+    url: '#',
   },
   {
     id: 'github',
     name: 'Github',
     icon: 'pi-github',
+    iconColor: '#333',
     color: 'p-button-secondary',
-    style: 'p-button-rounded'
+    style: 'p-button-rounded',
+    url: 'https://github.com/KLTN-18520746-18521660',
   }
 ];
 

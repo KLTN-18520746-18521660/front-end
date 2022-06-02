@@ -3,26 +3,29 @@
 <div class="home-layout container py-6">
   <div class="flex flex-wrap justify-content-center">
     <div class="col-12 md:col-3 lg:col-2 xl:col-2 md:px-2 xl:px-4">
-      <div class="create-post">
-        <p-button pButton pRipple [routerLink]="['/create']" class="p-button-text p-button-primary">
+      <div class="create-post col-12">
+        <p-button pButton pRipple [routerLink]="['/create']" class="p-button-text p-button-primary w-full">
           {{'home.createPost' | translate}}
         </p-button>
       </div>
-      <div class="contact-block">
-        <p class="font-semibold text-lg">{{ 'label.connectus' | translate }}</p>
-        <app-btn-fab *ngFor="let item of contacts" [data]="item"></app-btn-fab>
-      </div>
-      <div class="category-tags w-full hidden md:block">
-        <p class="font-semibold text-lg mt-4">{{ 'label.popular.category' | translate }}</p>
-        <app-category [category]="category" [size]="'base py-3 px-3'" [width]="'w-full'"
-          *ngFor="let category of listCategory">
-        </app-category>
-      </div>
-      <div class="popular-tags w-full hidden md:block">
+      <div class="popular-tags w-full mb-6 hidden md:block">
         <p class="font-semibold text-lg mt-4">{{ 'label.popular.tags' | translate }}</p>
         <app-tag [tag]="tag" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of tags">
         </app-tag>
       </div>
+      <div class="category-tags w-full mb-6 hidden md:block">
+        <p class="font-semibold text-lg mt-4">{{ 'label.popular.category' | translate }}</p>
+        <app-category [category]="category" [size]="'base'" [width]="'w-full'"
+          *ngFor="let category of listCategory">
+        </app-category>
+      </div>
+      <div class="contact-block mb-6 hidden md:block">
+        <p class="font-semibold text-lg">{{ 'label.connectus' | translate }}</p>
+        <li class="my-2" *ngFor="let item of contacts">
+          <app-link-text [item]="item"></app-link-text>
+        </li>
+      </div>
+      <app-footer class="hidden md:block"></app-footer>
     </div>
     <div class="col-12 md:col-9 lg:col-10 xl:col-10">
       <div class="grid">
@@ -30,7 +33,7 @@
           <div class="flex flex-wrap justify-content-between align-items-center mb-3">
             <div class="main-header-left ">
               <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600" *ngFor="let type of listPostType"
-                [ngClass]="{ 'font-bold text-blue-600 border-bottom-3 border-blue-500' : currentPostType === type}"
+                [ngClass]="{ 'font-bold text-blue-500 border-bottom-3 border-blue-500' : currentPostType === type}"
                 (click)="onChangeViewOption(type)">
                 {{ ('home.viewOption.' + type) | translate }}
               </span>

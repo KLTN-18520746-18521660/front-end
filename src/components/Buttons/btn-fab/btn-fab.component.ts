@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { LinkItem } from 'models/app.model';
 
 @Component({
   selector: 'app-btn-fab',
@@ -11,7 +12,7 @@ export class BtnFabComponent implements OnInit {
 
   @Input() isLoading: boolean = false;
 
-  @Input() data;
+  @Input() data: LinkItem;
 
   @Input() width: string = '';
 

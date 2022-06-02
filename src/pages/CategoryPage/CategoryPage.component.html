@@ -67,14 +67,17 @@
         </div>
       </div>
     </div>
-    <div class="main card">
-      <div class="list-post flex flex-wrap" *ngIf="!isLoadingPost; else loadingPost">
+    <div class="main card" *ngIf="!isLoadingPost; else loadingPost">
+      <div class="list-post flex flex-wrap">
         <div class="col-12 lg:col-6" *ngFor="let item of listPosts">
           <app-post-card [hasAnimation]="false" [post]="item"></app-post-card>
         </div>
       </div>
-      <p-paginator *ngIf="!isLoadingPost" [rows]="PAGE_SIZE" [totalRecords]="totalPosts" [first]="currentPage"
+      <p-paginator *ngIf="listPosts.length > 0" [rows]="PAGE_SIZE" [totalRecords]="totalPosts" [first]="currentPage"
         (onPageChange)="onPaginate($event)"></p-paginator>
+        <div class="flex justify-content-center">
+          <app-empty class="col-12 md:col-6" [visible]="listPosts?.length === 0"></app-empty>
+        </div>
     </div>
   </div>
 </ng-template>

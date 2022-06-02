@@ -1,3 +1,4 @@
+import { PostsService } from 'services/posts.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,7 +12,9 @@ export class SearchAllComponent implements OnInit {
 
   isLoadingTag: boolean = false;
 
-  constructor() { }
+  constructor(
+    private postsService: PostsService,
+  ) { }
 
   ngOnInit() {
   }

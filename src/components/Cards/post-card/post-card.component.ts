@@ -97,12 +97,7 @@ export class PostCardComponent implements OnInit {
         label: this.translate.instant('card.action.report'),
         icon: 'pi pi-flag-fill',
         command: (event) => {
-          if (this.post.mapAction.report) {
-            this.actionWithPost('unsave');
-          }
-          else {
-            this.actionWithPost('save');
-          }
+          this.onClickReport();
         }
       }] : [])
     ]

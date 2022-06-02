@@ -76,7 +76,7 @@ export class AppComponent {
         if (key) {
           // Get title page when router changes
           this.translate.get(`titlePage.${key}`).subscribe((title) =>
-            this.title.setTitle(title)
+            this.title.setTitle(title + this.translate.instant('titlePage.suffix'))
           );
         }
       });

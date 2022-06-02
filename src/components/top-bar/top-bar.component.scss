@@ -18,7 +18,11 @@
 
         &.btn-active,
         &:hover {
-          background: #e9ecef;
+          background: var(--bluegray-100);
+        }
+
+        i {
+          color: var(--bluegray-600);
         }
       }
     }

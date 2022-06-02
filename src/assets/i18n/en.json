@@ -29,7 +29,8 @@
     "feedback": "Give feedback"
   },
   "titlePage": {
-    "default": "Home - Heovi",
+    "prefix": "",
+    "suffix": " - oOwlet, the social media platform for the all-round developer and everyone",
     "home": "Home",
     "post": "Post",
     "postdetail": "Post Detail",
@@ -75,7 +76,7 @@
       "new": "Newest ",
       "following": "Following",
       "trending": "Trending",
-      "recommend": "Recommend"
+      "recommend": "For you"
     }
   },
   "tooltip": {
@@ -759,6 +760,39 @@
       "copy": "Copy link",
       "share": "Share",
       "report": "Report"
+    },
+    "recommnedCard": {
+      "menu": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": "Status"
+      },
+      "deletePost": {
+        "title": "Are you sure?",
+        "description": "Do you want to delete \"<b>{{title}}</b>\"?",
+        "cancel": "Cancel",
+        "ok": "Yes, delete it"
+      },
+      "changeStatus": {
+        "title": "Change status",
+        "status": {
+          "Approved": "Public",
+          "Private": "Private"
+        },
+        "description": "Select status you want to change for \"<b>{{title}}</b>\"",
+        "cancel": "Cancel",
+        "ok": "Save change"
+      }
+    }
+  },
+  "order": {
+    "post": {
+      "title": "Sort by",
+      "dateDesc": "Newest",
+      "dateAsc": "Oldest",
+      "modifyDesc": "Last edited",
+      "likesDesc": "Most liked",
+      "viewsDesc": "Most viewed"
     }
   },
   "postDetail": {
@@ -1017,14 +1051,16 @@
   "search": {
     "title": {
       "search": "Search",
-      "result": "Search result for {{query}}"
+      "result": "Search result for <b>{{query}}</b>"
     },
+    "resultCount": "Showing <b>{{count}}</b> of <b>{{total}}</b> results",
+    "viewMore": "View more results",
     "menu": {
       "all": "All",
       "post": "Post",
       "user": "User"
     },
-    "result": "Search results for <b>{{query}}</b>",
+    "result": "Search results for <b>\"{{query}}\"</b>",
     "noResult": "No results found for <b>{{query}}</b>",
     "sort": "Sort by ",
     "filter": {

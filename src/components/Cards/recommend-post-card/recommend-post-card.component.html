@@ -1,8 +1,13 @@
 <ng-template [ngIf]="!loading" [ngIfElse]="loadingCard">
   <div class="card p-3 recommend-post-card mb-1">
     <div class="card-container flex flex-wrap">
-      <div class="col-12" *ngIf="showStatus">
-        <app-status-badge [label]="post.status"></app-status-badge>
+      <div class="col-12 flex align-items-center justify-content-between" *ngIf="showStatus || showMenu">
+        <app-status-badge *ngIf="showStatus" [label]="post.status"></app-status-badge>
+
+        <div class="flex">
+          <app-btn-menu [menuClass]="'shadow-4'" [items]="menuitem" [icon]="'pi pi-ellipsis-h'">
+          </app-btn-menu>
+        </div>
       </div>
       <div class="col-12">
         <a [routerLink]="['/post', post.slug]">
@@ -18,21 +23,21 @@
           <div
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'surface-200 text-primary': post.mapAction.like && showAction}">
+            [ngClass]="{'text-primary': post.mapAction.like && showAction}">
             <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
             <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
           </div>
           <div
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'surface-200 text-primary': post.mapAction.comment && showAction}">
+            [ngClass]="{'text-primary': post.mapAction.comment && showAction}">
             <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
             <i style="font-size: 1.2rem" class="pi pi-comment"></i>
           </div>
           <div
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'surface-200 text-primary': post.mapAction.visited && showAction}">
+            [ngClass]="{'text-primary': post.mapAction.visited && showAction}">
             <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
             <i style="font-size: 1.25rem" class="pi pi-eye"></i>
           </div>
@@ -52,6 +57,36 @@
     </div>
   </div>
 </ng-template>
+
+<p-dialog [(visible)]="displayDialog" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '96vw'}"
+  [style]="{width: '50vw'}">
+  <ng-template pTemplate="header">
+    <span class="font-semibold text-800 text-xl">{{'card.recommnedCard.changeStatus.title' | translate}}</span>
+  </ng-template>
+
+  <p [innerHTML]="'card.recommnedCard.changeStatus.description' | translate : { title: post.title}"></p>
+
+  <div class="field-radiobutton">
+    <p-radioButton name="status" value="Approved" [(ngModel)]="status" inputId="Approved"></p-radioButton>
+    <label for="Approved">{{'card.recommnedCard.changeStatus.status.Approved' | translate}}</label>
+  </div>
+  <div class="field-radiobutton">
+    <p-radioButton name="status" value="Private" [(ngModel)]="status" inputId="Private"></p-radioButton>
+    <label for="Private">{{'card.recommnedCard.changeStatus.status.Private' | translate}}</label>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple type="button" label="{{'card.recommnedCard.changeStatus.cancel' | translate}}"
+      (click)="displayDialog = false" class="min-button-width p-button-outlined"></button>
+    <button pButton pRipple type="button" [disabled]="post.status === status" [loading]="isLoading"
+      label="{{'card.recommnedCard.changeStatus.ok' | translate}}" (click)="onClickChangsStatus()"
+      class="min-button-width p-button-raised"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [key]="'recommendCard' + post.id" [breakpoints]="{'960px': '70vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+  [dismissableMask]="true">
+</p-confirmDialog>
 
 <ng-template #loadingCard>
   <div class="card p-3 recommend-post-card mb-1">

@@ -1,3 +1,7 @@
+import { SearchPostComponent } from 'components/Searchs/search-post/search-post.component';
+import { SearchAllComponent } from 'components/Searchs/search-all/search-all.component';
+import { LinkTextComponent } from './../components/Links/link-text/link-text.component';
+import { EmptyComponent } from './../components/empty/empty.component';
 import { BtnGiveFeedbackComponent } from './../components/Buttons/btn-give-feedback/btn-give-feedback.component';
 import { SessionCardComponent } from 'components/Cards/session-card/session-card.component';
 import { UserSecurityComponent } from 'components/Profile/user-security/user-security.component';
@@ -124,6 +128,7 @@ import { NewPasswordPageComponent } from 'pages/NewPasswordPage/NewPasswordPage.
 import { GoToComponent } from 'components/go-to/go-to.component';
 import { UserSidebarMenuComponent } from 'components/Profile/user-sidebar-menu/user-sidebar-menu.component';
 import { OpenNewWindowDirective } from 'shared/directives/openNewWindow.directive';
+import { SearchUserComponent } from 'components/Searchs/search-user/search-user.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -216,6 +221,11 @@ export function playerFactory() {
     UserSecurityComponent,
     SessionCardComponent,
     BtnGiveFeedbackComponent,
+    EmptyComponent,
+    LinkTextComponent,
+    SearchAllComponent,
+    SearchPostComponent,
+    SearchUserComponent,
 
     SwitchThemeComponent,
 

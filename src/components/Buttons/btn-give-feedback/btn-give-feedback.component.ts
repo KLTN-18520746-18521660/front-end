@@ -43,8 +43,13 @@ export class BtnGiveFeedbackComponent implements OnInit {
       this.empty = false;
     }
   }
-  
+
   onClickSubmit() {
+    if (this.content.trim() === '') {
+      this.empty = true;
+      return;
+    }
+
     this.isLoading = true;
     const data: ReportSendModel = {
       content: this.content,
@@ -67,8 +72,8 @@ export class BtnGiveFeedbackComponent implements OnInit {
 
   onClickClose() {
     this.display = false;
-    this.content = '';
-    this.success = false;
+    // this.content = '';
+    // this.success = false;
   }
 
   ngOnDestroy() {

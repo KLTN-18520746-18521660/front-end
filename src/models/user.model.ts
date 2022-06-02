@@ -24,18 +24,10 @@ export default class User {
   unread_notifications?: number;
   public?: string[];
   rights?: {
-    comment?: {
-      read?: boolean,
-      write?: boolean,
-    };
-    post?: {
-      read?: boolean,
-      write?: boolean,
-    };
-    report: {
-      read?: boolean,
-      write?: boolean,
-    }
+    comment?: UserRight;
+    post?: UserRight;
+    report: UserRight;
+    upload?: UserRight;
   };
   roles?: string[];
   settings?: {
@@ -83,6 +75,11 @@ export default class User {
     this.user_name = params.user_name;
   }
 }
+
+export interface UserRight {
+  read?: boolean,
+  write?: boolean,
+};
 
 export interface AuthUpdateUser {
   session_id?: string; 
