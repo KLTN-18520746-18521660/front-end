@@ -20,6 +20,8 @@ export class UserCardComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  showButton: boolean = true;
+
   constructor(
     private userService: UserService,
     private messageService: MessageService
@@ -28,6 +30,10 @@ export class UserCardComponent implements OnInit {
   ngOnInit() {
     if (!this.loading) {
       this.user.mapAction = mapActionWithUser(this.user.actions || []);
+    }
+
+    if (this.userService.isAuthenticated && this.user?.user_name === this.userService.user.user_name) {
+      this.showButton = false;
     }
   }
 

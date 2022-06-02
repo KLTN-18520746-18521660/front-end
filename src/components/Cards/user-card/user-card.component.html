@@ -10,7 +10,7 @@
           </div>
         </div>
       </a>
-      <div class="action">
+      <div class="action" *ngIf="showButton">
         <button pButton pRipple label="{{(user.mapAction.follow ? 'common.following' : 'common.follow') | translate}}"
           icon="{{user.mapAction.follow ? 'pi pi-check-circle' : 'pi pi-user-plus'}}"
           pTooltip="{{(user.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"

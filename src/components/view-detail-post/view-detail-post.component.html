@@ -40,7 +40,7 @@
   <app-status-badge *ngIf="post.status !== 'Approved'" [size]="'base'" [label]="post.status">
   </app-status-badge>
   <div class="post-title mb-5">
-    <p class="text-6xl font-bold">{{post.title}}</p>
+    <p class="text-6xl font-bold word-break-all">{{post.title}}</p>
     <app-tag [tag]="tag" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
   </div>
   <div id="post-content" class="post-content ql-editor">
