@@ -1,12 +1,26 @@
-<!-- <app-search-input [query]="keyword" [wFull]="true"></app-search-input> -->
+<ng-template [ngIf]="keyword" [ngIfElse]="searchInput">
+  <div class="search-page-layout mt-4 container">
+    <div class="card">
+      <div class="flex justify-content-between">
+        <p class="text-lg" [innerHTML]="'search.result' | translate: { query: keyword}"></p>
+        <div class="right">
+          <div class="p-inputgroup">
+            <input #inputQuery type="text" pInputText (keyup.enter)="onSearch()"
+              placeholder="{{'search.placeholder' | translate}}" value="{{keyword}}">
+            <button type="button" pButton pRipple (click)="onSearch()" icon="pi pi-search"></button>
+          </div>
+        </div>
+      </div>
 
-<div class="search-page-layout mt-4 container">
-  <div class="card">
-    <p class="text-lg" [innerHTML]="'search.result' | translate: { query: keyword}"></p>
-    <p-tabMenu styleClass="mb-5" [model]="routeItems"></p-tabMenu>
+      <p-tabMenu styleClass="mb-5" [model]="routeItems"></p-tabMenu>
 
-    <div class="min-h-screen">
-      <router-outlet></router-outlet>
+      <div class="min-h-screen">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+<ng-template #searchInput>
+  <app-search-input [query]="keyword" [wFull]="true" [showPopular]="true"></app-search-input>
+</ng-template>

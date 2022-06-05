@@ -94,6 +94,12 @@ export class TopBarComponent implements OnInit {
         routerLink: ['/profile/user-info']
       },
       {
+        id: 'post',
+        label: this.translate.instant('topbar.user.post'),
+        icon: 'pi pi-book',
+        routerLink: ['/profile/manage-post']
+      },
+      {
         id: 'notification',
         label: this.translate.instant('topbar.user.notification'),
         icon: 'pi pi-bell',
@@ -164,7 +170,7 @@ export class TopBarComponent implements OnInit {
   }
 
   onClickCopy() {
-    this.clipboard.copy(decodeURI(window.location.origin + '/user/' + this.user.user_name + `?utm_source=${window.location.hostname}&utm_medium=user`))
+    this.clipboard.copy(decodeURI(window.location.origin + '/user/' + this.user.user_name));
   }
 
   onClickSeach() {

@@ -1,4 +1,4 @@
-<div class="search-input-wrapper pt-3" [ngClass]="config.dark ? 'layout-dark' : 'layout-light'">
+<div class="search-input-wrapper py-3" [ngClass]="config.dark ? 'layout-dark' : 'layout-light'">
   <div class="flex align-items-center justify-content-center">
     <div class="col-12 align-items-center justify-content-center" [ngClass]="{'md:col-6' : wFull}">
       <div class="search-input mx-auto"
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="my-3 px-2 md:px-5 flex">
+      <div class="my-3 px-2 md:px-5 flex" *ngIf="showPopular">
         <span class="m-2 white-space-nowrap">{{'label.popular.tags' | translate}}</span>
         <div class="tag-recommend py-0 flex flex-wrap">
           <app-tag [tag]="tag" *ngFor="let tag of tags"></app-tag>

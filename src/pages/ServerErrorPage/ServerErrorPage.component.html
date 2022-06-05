@@ -1,0 +1,9 @@
+<div class="container py-6" *ngIf="visible">
+  <div class="flex justify-content-center">
+    <div class="col-10 md:col-7 lg:col-5">
+      <app-server-error *ngIf="visible"></app-server-error>
+    </div>
+  </div>
+</div>
+
+<app-switch-theme class="hidden"></app-switch-theme>

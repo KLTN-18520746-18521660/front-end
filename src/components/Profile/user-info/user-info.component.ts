@@ -62,7 +62,7 @@ export class UserInfoComponent implements OnInit {
 
   onClickCopy() {
     this.messageService.add({ key: 'userInfo', severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
-    this.clipboard.copy(decodeURI(window.location.origin + '/user/' + this.user.user_name + `?utm_source=${window.location.hostname}&utm_medium=user`))
+    this.clipboard.copy(decodeURI(window.location.origin + '/user/' + this.user.user_name))
   }
 
   ngOnDestroy() {

@@ -1,3 +1,43 @@
-<p>
-  user-post-saved works!
-</p>
+<p>{{'profile.actionPosts.title' | translate}}</p>
+
+<p-tabMenu styleClass="mb-5" [activeItem]="tabMenu[0]" [scrollable]="true" [model]="tabMenu"></p-tabMenu>
+
+<div class="user-manage-post-wrapper flex flex-wrap" infiniteScroll [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
+  <div class="flex col-12 justify-content-between align-items-center">
+    <div class="left">
+      <div class="text-700 w-full"
+        [innerHTML]="'common.result' | translate : { count: listPosts?.length, total: totalSize}">
+      </div>
+    </div>
+    <div class="flex align-items-center">
+      <span class="mr-2">{{'order.post.title' | translate }}</span>
+      <p-dropdown *ngIf="orderOptions" class="post-filter" [options]="orderOptions" [(ngModel)]="orderBy"
+        optionLabel="label" (onChange)="onOrderPosts($event)">
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="grid col-12">
+    <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingSpinner">
+      <div class="col-12 md:col-6 lg:col-12 xl:col-6" *ngFor="let item of listPosts">
+        <app-post-card [isGrid]="false" [post]="item">
+        </app-post-card>
+      </div>
+      <div class="col-12 flex justify-content-center">
+        <div class="col-8 md:col-4">
+          <app-empty [visible]="listPosts?.length === 0" [title]="'profile.actionPosts.empty' | translate"></app-empty>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #loadingSpinner>
+      <div class="col-12 md:col-6 lg:col-12 xl:col-6" *ngFor="let item of [1,2]">
+        <app-post-card [isGrid]="false" [loading]="true"></app-post-card>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="isLoadingMore">
+      <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    </ng-template>
+  </div>
+</div>

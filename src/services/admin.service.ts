@@ -84,25 +84,6 @@ export class AdminService {
     }));
   }
 
-  getPublicConfig(): Observable<ApiResult> {
-    return this.http.get(BASE_URL + REST_URL.CONFIG, httpOptions).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
-  }
-
-  getAdminConfig(sessionId): Observable<ApiResult> {
-    return this.http.get(BASE_URL + REST_URL.ADMIN.CONFIG, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
-  }
-
-  reloadConfig(sessionId): Observable<ApiResult> {
-    console.log(sessionId)
-    return this.http.post(BASE_URL + REST_URL.ADMIN.RELOAD_CONFIG, {}, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
-  }
-
   authAdminUpdate = new Subject<AuthUpdateUser>();
 
   authAdminUpdate$ = this.authAdminUpdate.asObservable();

@@ -80,7 +80,7 @@
       <p-paginator *ngIf="listPosts.length > 0" [rows]="PAGE_SIZE" [totalRecords]="totalPosts" [first]="currentPage"
         (onPageChange)="onPaginate($event)"></p-paginator>
       <div class="flex justify-content-center">
-        <app-empty class="col-12 md:col-6" [visible]="listPosts.length === 0"></app-empty>
+        <app-empty class="col-8 md:col-4" [visible]="listPosts.length === 0"></app-empty>
       </div>
     </div>
   </div>
@@ -113,11 +113,8 @@
 
 <ng-template #loadingPost>
   <div class="list-post flex flex-wrap">
-    <div class="col-12 lg:col-6" *ngFor="let item of [1, 2, 3]">
+    <div class="col-12 lg:col-6" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
       <app-post-card [loading]="true"></app-post-card>
-    </div>
-    <div class="col-12 md:col-6 lg:col-3" *ngFor="let item of [1, 2, 3]">
-      <app-post-card [isGrid]="true" [loading]="true"></app-post-card>
     </div>
   </div>
 </ng-template>

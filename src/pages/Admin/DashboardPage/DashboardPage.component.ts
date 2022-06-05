@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'services/admin.service';
+import { ManageConfigService } from 'services/admin/manage-config.service';
 
 @Component({
   selector: 'app-DashboardPage',
@@ -14,6 +15,7 @@ export class DashboardPageComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
+    private manageConfig: ManageConfigService,
     private messageService: MessageService
   ) { }
 
@@ -24,7 +26,7 @@ export class DashboardPageComponent implements OnInit {
     if (this.reloadSubscription) {
       return;
     }
-    this.reloadSubscription = this.adminService.reloadConfig(this.adminService.getSessionId()).subscribe(
+    this.reloadSubscription = this.manageConfig.reloadConfig().subscribe(
       (res) => {
         this.messageService.add({ severity: 'success', summary: res.message, detail: 'Config reloaded' });
       },

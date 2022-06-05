@@ -161,7 +161,7 @@ export class DetailPageComponent implements OnInit {
         label: this.translate.instant('postDetail.action.copy'),
         icon: 'pi pi-copy',
         command: () => {
-          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug));
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
         }
       },
@@ -234,7 +234,7 @@ export class DetailPageComponent implements OnInit {
         icon: 'pi pi-link',
         command: () => {
           this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
-          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug));
         }
       },
       {
@@ -306,7 +306,7 @@ export class DetailPageComponent implements OnInit {
         style: 'p-button-rounded',
         command: () => {
           this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
-          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug));
         }
       },
       ...(this.post.mapAction.report ? [{

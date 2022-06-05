@@ -71,6 +71,7 @@
         </div>
       </div>
       <div class="editor-post col-12 lg:col-8 justify-content-center">
+        <p-messages [(value)]="message" [enableService]="false"></p-messages>
         <p-tabView styleClass="tabview-custom">
           <p-tabPanel>
             <ng-template pTemplate="header">
@@ -83,7 +84,7 @@
             </ng-template>
             <ng-template #markdownEditor>
               <textarea [(ngModel)]="content" class="w-full" classs="markdown-editor"
-                (ngModelChange)="onChangeContentMd($event)" pInputTextarea [autoResize]="true" rows="25"
+                (ngModelChange)="onChangeContentMd($event)" pInputTextarea rows="50"
                 placeholder="{{'editPost.placeholder' | translate}}">
             </textarea>
             </ng-template>
@@ -107,8 +108,6 @@
             </div>
           </p-tabPanel>
         </p-tabView>
-
-        <p-messages [(value)]="message" [enableService]="false"></p-messages>
       </div>
     </div>
   </div>

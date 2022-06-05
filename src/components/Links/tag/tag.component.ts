@@ -10,7 +10,10 @@ import { Tag } from 'models/tag.model';
 export class TagComponent implements OnInit {
   @Input() tag: Tag;
 
-  @Input() size = 'sm';
+  /**
+   * xs, sm, base, lg, xl
+   */
+  @Input() size: string = 'sm';
 
   @Input() color = 'bg-indigo'
 
@@ -23,9 +26,4 @@ export class TagComponent implements OnInit {
   ngOnInit() {
     // this.tag.name = this.tag.tag?.replace(/\s/g, '');
   }
-
-  onClickTag() {
-    this.router.navigate(['/tag', this.tag.tag]);
-  }
-
 }

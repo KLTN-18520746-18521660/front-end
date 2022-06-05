@@ -64,6 +64,7 @@ export class LanguageSelectorComponent implements OnInit {
   onChangeLanguage(event) {
     this.userConfig.addConfig('language', event.value.lang);
     this.translate.use(event.value.lang);
+    window.location.reload();
   }
 
   onChangeLanguageListBox(event) {

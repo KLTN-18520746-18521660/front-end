@@ -1,8 +1,11 @@
+import { ServerErrorPageComponent } from 'pages/ServerErrorPage/ServerErrorPage.component';
+import { ServerErrorComponent } from 'components/Errors/server-error/server-error.component';
+import { UserPostSavedComponent } from 'components/Profile/user-post-saved/user-post-saved.component';
 import { SearchPostComponent } from 'components/Searchs/search-post/search-post.component';
 import { SearchAllComponent } from 'components/Searchs/search-all/search-all.component';
-import { LinkTextComponent } from './../components/Links/link-text/link-text.component';
-import { EmptyComponent } from './../components/empty/empty.component';
-import { BtnGiveFeedbackComponent } from './../components/Buttons/btn-give-feedback/btn-give-feedback.component';
+import { LinkTextComponent } from 'components/Links/link-text/link-text.component';
+import { EmptyComponent } from 'components/Errors/empty/empty.component';
+import { BtnGiveFeedbackComponent } from 'components/Buttons/btn-give-feedback/btn-give-feedback.component';
 import { SessionCardComponent } from 'components/Cards/session-card/session-card.component';
 import { UserSecurityComponent } from 'components/Profile/user-security/user-security.component';
 import { SimpleGridViewComponent } from 'components/simple-grid-view/simple-grid-view.component';
@@ -115,7 +118,7 @@ import { ManagePostsPageComponent } from 'pages/Admin/ManagePostsPage/ManagePost
 import { ReportPopupComponent } from 'components/Popups/report-popup/report-popup.component';
 import { UserIdleModule } from 'angular-user-idle';
 import { CheckIconComponent } from 'components/check-icon/check-icon.component';
-import { NotFoundComponent } from 'components/not-found/not-found.component';
+import { NotFoundComponent } from 'components/Errors/not-found/not-found.component';
 import { AutoFocusDirective } from 'shared/directives/autofocus.directive';
 import { NAPipe } from 'shared/pipes/n-a.pipe';
 import { CapitalizePipe } from 'shared/pipes/capitalize.pipe';
@@ -226,6 +229,9 @@ export function playerFactory() {
     SearchAllComponent,
     SearchPostComponent,
     SearchUserComponent,
+    UserPostSavedComponent,
+    ServerErrorComponent,
+    ServerErrorPageComponent,
 
     SwitchThemeComponent,
 

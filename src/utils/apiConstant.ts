@@ -9,6 +9,7 @@ export const REST_URL = {
   GET_USER_BY_EMAIL: 'getUserByEmail',
 
   AUDIT_LOG: 'auditlog',
+  ACTION: 'action',
 
   SEARCH: "search",
 

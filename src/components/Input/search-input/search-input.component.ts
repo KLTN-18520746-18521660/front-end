@@ -25,6 +25,8 @@ export class SearchInputComponent implements OnInit {
 
   @Input() hasAnimation: boolean = false;
 
+  @Input() showPopular: boolean = false;
+
   form: FormGroup;
 
   tags: Tag[] = randomArray(tagsMockData, 5);

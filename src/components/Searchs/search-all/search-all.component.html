@@ -1,3 +1,47 @@
-<p>
-  search-all works!
-</p>
+<div class="flex flex-wrap">
+  <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
+    <ng-template [ngIf]="listPosts?.length > 0">
+      <p class="text-xl font-semibold w-full mt-2">{{'search.searchAll.post' | translate}}</p>
+      <div class="col-12 md:col-6" *ngFor="let post of listPosts">
+        <app-post-card [post]="post"></app-post-card>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="listUsers?.length > 0">
+      <p class="text-xl font-semibold w-full mt-2">{{'search.searchAll.user' | translate}}</p>
+      <div class="col-12">
+        <div class="col-12 md:col-6" *ngFor="let user of listUsers">
+          <app-user-card [user]="user"></app-user-card>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="listTags?.length > 0">
+      <p class="text-xl font-semibold w-full mt-2">{{'search.searchAll.tag' | translate}}</p>
+      <div class="col-12">
+        <app-tag [tag]="tag" [size]="" *ngFor="let tag of listTags"></app-tag>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="listCategories?.length > 0">
+      <p class="text-xl font-semibold w-full mt-2">{{'search.searchAll.category' | translate}}</p>
+      <div class="col-12">
+        <app-category [category]="category" [size]="'base'" [width]="'w-full'" *ngFor="let category of listCategories">
+        </app-category>
+      </div>
+    </ng-template>
+    <div class="col-12 flex justify-content-center">
+      <div class="col-8 md:col-4">
+        <app-empty
+          [visible]="listUsers.length === 0 && listPosts?.length === 0 && listTags.length === 0 && listCategories.length === 0"
+          [title]="'search.noResult' | translate : { query: keyword }"></app-empty>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #loadingBlock>
+  <div class="col-12 sm:col-6" *ngFor="let i of [1,2]">
+    <app-post-card [loading]="true"></app-post-card>
+  </div>
+  <div class="col-12 sm:col-6" *ngFor="let i of [1,2]">
+    <app-user-card [loading]="true"></app-user-card>
+  </div>
+</ng-template>

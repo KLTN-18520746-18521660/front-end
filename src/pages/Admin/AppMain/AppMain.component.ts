@@ -1,3 +1,4 @@
+import { ManageConfigService } from './../../../services/admin/manage-config.service';
 import { MessageService } from 'primeng/api';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { CookieService } from 'services/cookie.service';
@@ -93,6 +94,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     public app: AppComponent,
     public configService: AppConfigService,
     private adminService: AdminService,
+    private manageConfig: ManageConfigService,
     private cookieService: CookieService,
     private router: Router,
     private messageService: MessageService,
@@ -170,7 +172,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   async getPublishConfig() {
-    const { data } = await this.adminService.getPublicConfig().toPromise();
+    const { data } = await this.manageConfig.getPublicConfig().toPromise();
 
     this.adminService.setConfig(data.configs);
     this.userIdleService.setConfigValues({

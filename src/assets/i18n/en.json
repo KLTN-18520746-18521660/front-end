@@ -14,6 +14,8 @@
     "like": "Like",
     "likes": "Likes",
     "submit": "Submit",
+    "comment": "Comment",
+    "visited": "Visited",
     "save": "Save changes",
     "new": "New",
     "darkMode": "Dark Mode",
@@ -26,7 +28,8 @@
     "register": "Register",
     "profile": "Profile",
     "language": "Language",
-    "feedback": "Give feedback"
+    "feedback": "Give feedback",
+    "result": "Showing <b>{{count}}</b> of <b>{{total}}</b> results"
   },
   "titlePage": {
     "prefix": "",
@@ -50,7 +53,7 @@
     "security": "Security your account",
     "change-password": "Change password",
     "newpassword": "Reset password",
-    "saved-post": "Save Post",
+    "history-activity": "History activity",
     "following": "Following",
     "followers": "Followers",
     "manageUser": "Manage User",
@@ -64,6 +67,7 @@
     },
     "goto": "Redirecting ...",
     "notFound": "Page not found",
+    "serverError": "Server error, please try again later",
     "noAccess": "You don't have access to this page"
   },
   "home": {
@@ -162,6 +166,10 @@
     "forgotpassword": "Reset password successfully",
     "resetpassword": "Reset password successfully",
     "changepassword": "Change password successfully",
+    "modifyPostSuccess": "Your post has been modified successfully",
+    "deletePostSuccess": "Your post has been deleted successfully",
+    "approvePostSuccess": "Your post has been approved successfully",
+    "modifyPostFail": "Failed to modify post",
     "follow": "Follow successfully",
     "unfollow": "Unfollow successfully",
     "like": "Like successfully",
@@ -208,6 +216,14 @@
     "Handled": "Handled",
     "Public": "Public"
   },
+  "empty": {
+    "title": "Sorry, No Result Found",
+    "description": "Please try again with different keywords",
+    "noresult": "No results found",
+    "nodata": "No data to show",
+    "noPost": "No post to show",
+    "noComment": "No comment to show"
+  },
   "topbar": {
     "login": "Login",
     "register": "Register",
@@ -224,6 +240,7 @@
       "dashboard": "Dashboard",
       "profile": "My Profile",
       "edit": "Edit Profile",
+      "post": "Manage Posts",
       "notification": "Notification",
       "setting": "Setting",
       "help": "Help & Support",
@@ -277,7 +294,7 @@
         "title": "Management",
         "items": {
           "managePost": "Manage Post",
-          "savedPost": "Save Post",
+          "savedPost": "History activity",
           "following": "Following",
           "followers": "Followers"
         }
@@ -470,6 +487,16 @@
         "device": "Device",
         "last_login": "Last login"
       }
+    },
+    "actionPosts": {
+      "menu": {
+        "saved": "Saved",
+        "liked": "Liked",
+        "visited": "Viewed",
+        "following": "Following"
+      },
+      "title": "See all posts you saved, liked or viewed",
+      "empty": "You don't have any posts here"
     }
   },
   "admin": {
@@ -498,7 +525,10 @@
     "view": "View",
     "like": "Like",
     "unlike": "Unlike",
-    "save": "Save"
+    "save": "Save",
+    "unsave": "Unsave",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
   },
   "label": {
     "redirecting": {
@@ -747,6 +777,11 @@
       "description": "Something went wrong or the page you are looking for does not exist, please try again later",
       "home": "Go to home page",
       "back": "Go back"
+    },
+    "serverError": {
+      "pageTitle": "Something went wrong or page not found",
+      "title": "Server Error",
+      "description":  "500 - Internal Server Error, please try again later"
     }
   },
   "card": {
@@ -765,7 +800,7 @@
       "menu": {
         "edit": "Edit",
         "delete": "Delete",
-        "status": "Status"
+        "status": "Change Status"
       },
       "deletePost": {
         "title": "Are you sure?",
@@ -1051,14 +1086,21 @@
   "search": {
     "title": {
       "search": "Search",
-      "result": "Search result for <b>{{query}}</b>"
+      "result": "Search result for {{query}}"
     },
+    "placeholder": "Type here to search",
     "resultCount": "Showing <b>{{count}}</b> of <b>{{total}}</b> results",
     "viewMore": "View more results",
     "menu": {
       "all": "All",
       "post": "Post",
       "user": "User"
+    },
+    "searchAll": {
+      "post": "Posts",
+      "user": "Users",
+      "tag": "Tags",
+      "category": "Categories"
     },
     "result": "Search results for <b>\"{{query}}\"</b>",
     "noResult": "No results found for <b>{{query}}</b>",

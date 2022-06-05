@@ -2,7 +2,9 @@
   [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
   <div class="flex col-12 justify-content-between align-items-center">
     <div class="left">
-      <p class="text-2xl w-full">{{'common.post' | translate}} ({{listPosts?.length}})</p>
+      <div class="text-700 w-full"
+        [innerHTML]="'common.result' | translate : { count: listPosts?.length, total: totalSize}">
+      </div>
     </div>
     <div class="flex align-items-center">
       <span class="mr-2">{{'order.post.title' | translate }}</span>
@@ -17,6 +19,11 @@
         <app-recommend-post-card (deletePost)="deletePost(item.id)" [showMenu]="true" [showStatus]="true"
           [isSmall]="false" [post]="item">
         </app-recommend-post-card>
+      </div>
+      <div class="col-12 flex justify-content-center">
+        <div class="col-8 md:col-4">
+          <app-empty [visible]="listPosts?.length === 0" [title]="'profile.actionPosts.empty' | translate"></app-empty>
+        </div>
       </div>
     </ng-template>
     <ng-template #loadingSpinner>

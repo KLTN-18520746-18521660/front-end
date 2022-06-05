@@ -6,6 +6,8 @@ import User from "./user.model";
 import { Comment } from "./comment.model";
 import Notification from "./notification.model";
 import { Admin } from "./admin.model";
+import { ActionType } from "utils/apiConstant";
+import { ConfigFormat } from "./Admins/config.model";
 
 export interface ApiResult {
   status?: number;
@@ -30,7 +32,36 @@ export interface ApiResult {
     total_size?: number;
     session_id?: string;
     user_id?: string;
-    // [key: string]: any;
+
+    /**
+     * only for admin
+     */
+    config: {
+      [key: string]: any;
+    };
+    format?: {
+      [key: string]: ConfigFormat;
+    };
+
+    /**
+     * search result
+     */
+    search_category?: {
+      categories: Category[];
+      total_size: number;
+    };
+    search_tag?: {
+      tags: Tag[];
+      total_size: number;
+    };
+    search_user?: {
+      users: User[];
+      total_size: number;
+    };
+    search_post?: {
+      posts: Post[];
+      total_size: number;
+    };
   }
 }
 
@@ -41,7 +72,7 @@ export interface ApiError {
 }
 
 export interface ApiParams {
-  // audit log
+  // for audit log
   key?: string; // postID | commnentID
   type?: 'comment' | 'post' | 'user';
 
@@ -51,16 +82,18 @@ export interface ApiParams {
   tags?: string;
   status?: string;
   categories?: string;
-  /**s
-   * 'view','like'
+  /**
+   * 'views,likes, ...'
    */
   sort_by?: string;
-  order?: string;
   /**
-   * true,fale
+   * 'asc,desc, ...'
    */
-  desc?: string;
+  order?: string;
 }
+
+export type ActionPostParams = 'saved' | 'like' | 'visited' | 'follow';
+
 export interface Session {
   created_timestamp: string;
   data: any;

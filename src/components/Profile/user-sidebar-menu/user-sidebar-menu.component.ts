@@ -74,10 +74,10 @@ export class UserSidebarMenuComponent implements OnInit {
           routerLink: ['/profile/manage-post'],
         },
         {
-          id: 'saved-post',
+          id: 'history-activity',
           label: this.translate.instant('profile.menu.managePost.items.savedPost'),
           icon: 'pi pi-bookmark',
-          routerLink: ['/profile/saved-post'],
+          routerLink: ['/profile/history-activity'],
         },
         {
           id: 'following',

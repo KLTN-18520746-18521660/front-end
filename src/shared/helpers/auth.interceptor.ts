@@ -3,10 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { handleError } from 'utils/commonFunction';
-
-// const TOKEN_HEADER_KEY = 'Authorization';  // for Spring Boot back-end
-const TOKEN_HEADER_KEY = 'x-access-token';    // for Node.js Express back-end
 
 @Injectable({
   providedIn: 'root'
@@ -20,17 +16,18 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     return next.handle(req).pipe(
       catchError(error => {
-        console.log(req);
-        // if (error instanceof HttpErrorResponse) {
-        //   if (error.status === 401) {
-        //     document.cookie = 'session_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; Max-Age=-99999999;';
-        //     this.router.navigate(['/auth/login']);
-        //   }
-        //   else if (error.status === 403) {
-        //     this.router.navigate(['/admin/login']);
-        //   }
-        //   return throwError(error);
-        // }
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 401) {
+            this.router.navigate(['/auth/login']);
+          }
+          else if (error.status === 403) {
+            this.router.navigate(['/admin/login']);
+          }
+          else if (error.status >= 500) {
+            this.router.navigate(['/500']);
+          }
+          return throwError(error);
+        }
         return throwError((error));
       })
     );

@@ -13,12 +13,14 @@ import { PostsService } from 'services/posts.service';
 })
 export class SearchUserComponent implements OnInit {
 
-  listUsers: User[];
+  listUsers: User[] = [];
   
   isLoading: boolean = false;
   isLoadingMore: boolean = false;
 
   getListSubscription: Subscription;
+
+  routeSubscription: Subscription;
 
   totalSize: number = 0;
 
@@ -30,12 +32,13 @@ export class SearchUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.keyword = this.activatedRoute.snapshot.queryParams.q || null;
-
-    this.getListPost();
+    this.routeSubscription = this.activatedRoute.queryParams.subscribe(params => {
+      this.keyword = params.q || null;
+      this.getListUser();
+    });
   }
 
-  getListPost(loadMore = false) {
+  getListUser(loadMore = false) {
     if (loadMore) {
       this.isLoadingMore = true;
     }
@@ -48,7 +51,7 @@ export class SearchUserComponent implements OnInit {
     }
 
     const params: ApiParams = {
-      start: this.getListPost.length,
+      start: this.listUsers.length,
       size: APPCONSTANT.DEFAULT_PAGE_SIZE,
       search_term: this.keyword
     }
@@ -72,12 +75,15 @@ export class SearchUserComponent implements OnInit {
   onViewMore() {
     this.isLoadingMore = true;
 
-    this.getListPost(true);
+    this.getListUser(true);
   }
 
   ngOnDestroy() {
     if (this.getListSubscription) {
       this.getListSubscription.unsubscribe();
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
 }

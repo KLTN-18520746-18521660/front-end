@@ -1,5 +1,5 @@
 import { ReportSendModel, ReportType } from 'models/report.model';
-import { ApiParams } from 'models/api.model';
+import { ActionPostParams, ApiParams } from 'models/api.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -60,8 +60,11 @@ export class PostsService {
     private cookieService: CookieService
   ) { }
 
+  /**
+   * @param only need search_term
+   */
   searchAll(params: ApiParams): Observable<ApiResult> {
-    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${REST_URL.SEARCH}`, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.SEARCH, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
@@ -98,6 +101,12 @@ export class PostsService {
 
   modifyPostByPostId(postId: number, post: PostModel): Observable<Post> {
     return this.httpClient.put<Post>(BASE_URL + REST_URL.POST_ID + `/${postId}`, post, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getPostByActionType(actionType: ActionPostParams, params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.POST + `/${REST_URL.ACTION}`, { ...this.httpOptions(), params: { ...params, action: actionType } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

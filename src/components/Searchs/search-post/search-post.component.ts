@@ -20,6 +20,8 @@ export class SearchPostComponent implements OnInit {
 
   getListSubscription: Subscription;
 
+  routeSubscription: Subscription;
+
   totalSize: number = 0;
 
   keyword: string;
@@ -30,9 +32,10 @@ export class SearchPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.keyword = this.activatedRoute.snapshot.queryParams.q || null;
-
-    this.getListPost();
+    this.routeSubscription = this.activatedRoute.queryParams.subscribe(params => {
+      this.keyword = params.q || null;
+      this.getListPost();
+    });
   }
 
   getListPost(loadMore = false) {
@@ -48,7 +51,7 @@ export class SearchPostComponent implements OnInit {
     }
 
     const params: ApiParams = {
-      start: this.getListPost.length,
+      start: this.listPosts.length,
       size: APPCONSTANT.DEFAULT_PAGE_SIZE,
       search_term: this.keyword
     }
@@ -76,6 +79,9 @@ export class SearchPostComponent implements OnInit {
   ngOnDestroy() {
     if (this.getListSubscription) {
       this.getListSubscription.unsubscribe();
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
 

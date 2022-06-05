@@ -75,10 +75,10 @@ import { AuthGuard } from 'shared/guards/auth.guard';
             }
           },
           {
-            path: 'saved-post',
+            path: 'history-activity',
             component: UserPostSavedComponent,
             data: {
-              key: 'saved-post'
+              key: 'history-activity'
             }
           },
           {

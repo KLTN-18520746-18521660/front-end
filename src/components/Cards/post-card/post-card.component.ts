@@ -20,8 +20,6 @@ export class PostCardComponent implements OnInit {
 
   @Input() loading: boolean = false;
 
-  @Input() isSmall: boolean = false;
-
   @Input() showAction: boolean = true;
 
   @Input() isGrid = false;
@@ -65,8 +63,8 @@ export class PostCardComponent implements OnInit {
       {
         id: 'save',
         label: this.post.mapAction.saved ? this.translate.instant('action.unsave') : this.translate.instant('action.save'),
-        icon: 'pi pi-bookmark-fill',
-        command: (event) => {
+        icon: this.post.mapAction.saved ? 'pi pi-bookmark-fill' : 'pi pi-bookmark',
+        command: () => {
           if (this.post.mapAction.saved) {
             this.actionWithPost('unsave');
           }
@@ -76,12 +74,25 @@ export class PostCardComponent implements OnInit {
         }
       },
       {
+        id: 'follow',
+        label: this.post.mapAction.follow ? this.translate.instant('action.unfollow') : this.translate.instant('action.follow'),
+        icon: this.post.mapAction.follow ? 'pi pi-minus' : 'pi pi-plus',
+        command: (event) => {
+          if (this.post.mapAction.follow) {
+            this.actionWithPost('unfollow');
+          }
+          else {
+            this.actionWithPost('follow');
+          }
+        }
+      },
+      {
         id: 'copy',
         label: this.translate.instant('card.action.copy'),
         icon: 'pi pi-copy',
         command: () => {
           this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
-          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug + `?utm_source=${window.location.hostname}&utm_medium=home&utm_campaign=copy`));
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug));
         }
       },
       {
@@ -122,7 +133,12 @@ export class PostCardComponent implements OnInit {
         () => {
           this.getPostValueWhenAction();
           if (action === 'save' || action === 'unsave') {
-            this.messageService.add({ severity: 'success', summary: action.toUpperCase(), detail: this.translate.instant('status.success').toString() });
+            this.post.mapAction.saved = !this.post.mapAction.saved;
+            this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
+          }
+          else if (action === 'follow' || action === 'unfollow') {
+            this.post.mapAction.follow = !this.post.mapAction.follow;
+            this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
           }
         },
         (err) => {

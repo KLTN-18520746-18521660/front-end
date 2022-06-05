@@ -1,6 +1,6 @@
 <div class="thumnail-post border-round-top overflow-hidden" *ngIf="post.thumbnail">
-  <p-image class="post-thumbnail-image border-round-top shadow-2" src="{{ post.thumbnail }}"
-    alt="{{ post.title }}" [preview]="true">
+  <p-image class="post-thumbnail-image border-round-top shadow-2" src="{{ post.thumbnail }}" alt="{{ post.title }}"
+    [preview]="true">
   </p-image>
 </div>
 <div class="main-post p-3 md:p-4 mt-3">
@@ -18,11 +18,11 @@
           </a>
         </div>
         <span class="text-base">
-          <span class="spacing-1 text-600" pTooltip="{{post.approved_timestamp}}" tooltipPosition="top">
+          <span class="spacing-1 text-600" tooltipPosition="top"
+            pTooltip="{{post.approved_timestamp | date : 'dd/MM/yyyy hh:mm'}}">
             {{'postDetail.postedOn' | translate}} {{post?.fromNow?.approved}}
           </span>
-          <span class="spacing-1 text-600" *ngIf="post.fromNow.updated"
-            title="{{post.last_modified_timestamp}}">
+          <span class="spacing-1 text-600" *ngIf="post.fromNow.updated" title="{{post.last_modified_timestamp}}">
             &#183; {{'postDetail.updatedOn' | translate}} {{post.fromNow.updated}}
           </span>
           <span class="spacing-1 text-600">

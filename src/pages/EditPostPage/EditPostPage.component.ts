@@ -25,6 +25,7 @@ export class EditPostPageComponent implements OnInit {
   MAX_FILE_SIZE: number;
 
   isLoading: boolean = false;
+  isLoadingSubmit: boolean = false;
 
   editing: boolean = false;
 
@@ -239,7 +240,7 @@ export class EditPostPageComponent implements OnInit {
   }
 
   myUploader(event) {
-    this.isLoading = true;
+    this.isLoadingSubmit = true;
     if (this.uploadSubscription) {
       this.uploadSubscription.unsubscribe();
     }
@@ -379,7 +380,7 @@ export class EditPostPageComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-danger p-button-outlined',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
+        window.scrollTo(0, 0);
         if (this.isSelectFile) {
           this.fileUpload.upload();
         }
@@ -392,22 +393,23 @@ export class EditPostPageComponent implements OnInit {
   }
 
   modifyPost(diffData) {
+    this.isLoadingSubmit = true;
     if (_.isEmpty(diffData)) {
+      this.isLoadingSubmit = false;
       return;
     }
     if (this.modifyPostSubscription) {
-      return;
+      this.modifyPostSubscription.unsubscribe();
     }
-    this.isLoading = true;
 
     this.modifyPostSubscription = this.postService.modifyPostByPostId(this.id, diffData).subscribe(
       (res) => {
-        this.isLoading = false;
+        this.isLoadingSubmit = false;
         this.editing = false;
         this.message = [{ severity: 'success', summary: '', detail: this.translate.instant('message.modifyPostSuccess') }];
       },
       () => {
-        this.isLoading = false;
+        this.isLoadingSubmit = false;
         this.message = [{ severity: 'error', summary: '', detail: this.translate.instant('message.modifyPostFail') }];
       }
     );

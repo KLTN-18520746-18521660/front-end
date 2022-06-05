@@ -2,7 +2,7 @@ import { LinkItem } from "models/app.model";
 
 export const APPCONSTANT = {
   // PLACEHOLDER_IMAGE: 'assets/images/placeholder-image.jpg',
-  PLACEHOLDER_IMAGE: 'assets/images/svg/thumbnail-placeholder.svg',
+  PLACEHOLDER_IMAGE: 'assets/images/logo/placeholder.png',
   TOAST_TIMEOUT: 6000,
   LOADING_TIMEOUT: 2000,
 
