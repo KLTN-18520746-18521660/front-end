@@ -1,3 +1,60 @@
-<p>
-  ManageRightUserPage works!
-</p>
+<ng-template [ngIf]="!isLoading">
+  <div class="card">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <p class="mb-0 text-xl">Manage Right User</p>
+      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create right" class="">
+      </button>
+    </div>
+    <p-table [value]="listRights" [scrollable]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="right_name">Right name <p-sortIcon field="right_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="display_name">Display name <p-sortIcon field="display_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="describe">Describe <p-sortIcon field="describe"></p-sortIcon>
+          </th>
+          <th>Action </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-right>
+        <tr>
+          <td>{{right.id}}</td>
+          <td>{{right.right_name}}</td>
+          <td>{{right.display_name}}</td>
+          <td>{{right.describe}}</td>
+          <td>
+            <button pButton type="button" (click)="onClickEdit(right)" class="p-button-sm" icon="pi pi-eye"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-template>
+
+<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" (onHide)="currentRight = null" [modal]="true"
+  [style]="{width: '60vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <ng-template [ngIf]="viewDialog === 'edit'">
+      <p class="text-2xl max-1-line">Edit right: <b>{{currentRight.display_name}}</b></p>
+    </ng-template>
+    <ng-template [ngIf]="viewDialog === 'create'">
+      <p class="text-2xl max-1-line">Create new right for user</p>
+    </ng-template>
+  </ng-template>
+
+  <ng-template [ngIf]="viewDialog === 'edit' && currentRight">
+    <admin-create-edit-right [type]="'user'" [view]="'edit'" [right]="currentRight" (onClose)="onSuccess()">
+    </admin-create-edit-right>
+  </ng-template>
+  <ng-template [ngIf]="viewDialog === 'create'">
+    <admin-create-edit-right [type]="'user'" [view]="'create'" (onClose)="onSuccess()"></admin-create-edit-right>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+  </ng-template>
+</p-dialog>
+
+<app-loading [loading]="isLoading"></app-loading>

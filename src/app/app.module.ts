@@ -1,3 +1,5 @@
+import { CreateEditRoleComponent } from './../components/Admin/create-edit-role/create-edit-role.component';
+import { CreateEditRightComponent } from './../components/Admin/create-edit-right/create-edit-right.component';
 import { ManageRightUserPageComponent } from 'pages/Admin/ManageRightUserPage/ManageRightUserPage.component';
 import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/ManageRoleUserPage.component';
 import { ManageRightAdminPageComponent } from 'pages/Admin/ManageRightAdminPage/ManageRightAdminPage.component';
@@ -257,6 +259,8 @@ export function playerFactory() {
     ManageRightUserPageComponent,
     DynamicFormComponent,
     AdminChangePasswordPageComponent,
+    CreateEditRightComponent,
+    CreateEditRoleComponent,
   ],
   imports: [
     BrowserModule,

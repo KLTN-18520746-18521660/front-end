@@ -53,28 +53,30 @@ export class ManageRightService {
     }));
   }
 
-  createRightAdmin(body): Observable<ApiResult> {
-    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_ADMIN, body, this.httpOptions()).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
+  createRight(type: 'admin' | 'user', body): Observable<ApiResult> {
+    if (type === 'admin') {
+      return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_ADMIN, body, this.httpOptions()).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+    else {
+      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_USER, body, this.httpOptions()).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
   }
 
-  createRightUser(body): Observable<ApiResult> {
-    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_USER, body, this.httpOptions()).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
-  }
-
-  updateRightAdmin(id, body): Observable<ApiResult> {
-    return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_ADMIN + `/${id}`, body, this.httpOptions()).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
-  }
-
-  updateRightUser(id, body): Observable<ApiResult> {
-    return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_USER + `/${id}`, body, this.httpOptions()).pipe(catchError(error => {
-      return throwError(handleError(error));
-    }));
+  updateRight(type: 'admin' | 'user', id, body): Observable<ApiResult> {
+    if (type === 'admin') {
+      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_ADMIN + `/${id}`, body, this.httpOptions()).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
+    else {
+      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.RIGHT_USER + `/${id}`, body, this.httpOptions()).pipe(catchError(error => {
+        return throwError(handleError(error));
+      }));
+    }
   }
 
 }

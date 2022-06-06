@@ -1,0 +1,34 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <ng-template [ngIf]="view === 'create'">
+    <label requiredField for="right_name" class="block text-900 text-lg font-medium mb-2">
+      Right name
+    </label>
+    <input formControlName="right_name" id="right_name" type="text" autofocus placeholder="" pInputText
+      [placeholder]="'Right name ...'" class="w-full mb-1" style="padding:1rem;"
+      [ngClass]="{ 'ng-invalid ng-dirty': f['right_name'].errors }">
+  </ng-template>
+
+  <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
+    Display name
+  </label>
+  <input formControlName="display_name" id="display_name" type="text" autofocus placeholder="" pInputText
+    [placeholder]="'Display name ...'" class="w-full mb-1" style="padding:1rem;"
+    [ngClass]="{ 'ng-invalid ng-dirty': f['display_name'].errors }">
+
+  <label requiredField for="describe" class="block text-900 text-lg font-medium mb-2">
+    Describe
+  </label>
+  <input formControlName="describe" id="describe" type="text" autofocus placeholder="" pInputText class="w-full mb-1"
+    [placeholder]="'Describe ...'" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': f['describe'].errors }">
+
+  <div *ngIf="form.invalid" class="invalid-feedback">
+    <div class="flex align-items-end">
+      <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+      <small class="p-error inline">Form is invalid </small>
+    </div>
+  </div>
+
+  <button type="submit" [loading]="isLoading" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+  </button>
+
+</form>

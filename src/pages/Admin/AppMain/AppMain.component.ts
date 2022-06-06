@@ -213,7 +213,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     this.idleChangeSubscription = this.userIdleService.onIdleStatusChanged().subscribe((res) => {
       // isvisible == false when focus page
       this.isVisible = res;
-      console.log("Visible: ", !res)
+      // console.log("Visible: ", !res)
     })
 
     // Start watching when user idle is starting.
@@ -230,8 +230,8 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
   updateAuthenciated() {
     if (this.cookieService.check(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)) {
-      console.log("Ping has token");
       if (this.adminService.isAuthenticated && !this.isVisible) {
+        // console.log("Ping has token");
         if (!this.remember) {
           this.extendSession();
         }
@@ -241,7 +241,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     }
     else {
-      console.log("Ping no token")
+      // console.log("Ping no token")
       if (this.isWatching)
         this.onStopWatching();
       this.adminService.messages = [{

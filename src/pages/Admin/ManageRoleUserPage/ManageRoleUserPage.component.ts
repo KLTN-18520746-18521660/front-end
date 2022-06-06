@@ -9,6 +9,13 @@ import { ManageRoleService } from 'services/admin/manage-role.service';
   styleUrls: ['./ManageRoleUserPage.component.scss']
 })
 export class ManageRoleUserPageComponent implements OnInit {
+
+  viewDialog: 'edit' | 'create' = 'edit';
+
+  displayDialog: boolean = false;
+
+  currentRole: Role;
+
   isLoading: boolean = false;
 
   listRoles: Role[];
@@ -35,6 +42,23 @@ export class ManageRoleUserPageComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  onClickCreate() {
+    this.currentRole = null;
+    this.viewDialog = 'create';
+    this.displayDialog = true;
+  }
+
+  onClickEdit(role: Role) {
+    this.currentRole = role;
+    this.viewDialog = 'edit';
+    this.displayDialog = true;
+  }
+
+  onSuccess() {
+    this.displayDialog = false;
+    this.getListRoles();
   }
 
   ngOnDestroy() {

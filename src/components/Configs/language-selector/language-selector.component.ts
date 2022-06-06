@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig, MenuItem } from 'primeng/api';
@@ -27,7 +28,10 @@ export class LanguageSelectorComponent implements OnInit {
 
   currentLanguage: string;
 
+  subscription: Subscription;
+
   constructor(
+    private config: PrimeNGConfig,
     private translate: TranslateService,
     private userConfig: UserConfigService
   ) {
@@ -56,12 +60,10 @@ export class LanguageSelectorComponent implements OnInit {
     this.selectedLanguage = this.listLanguages.find(e => e.lang === this.translate.currentLang);
     this.selectedLanguageListBox = this.listLanguages.find(e => e.lang === this.translate.currentLang);
 
-    // this.translate.onLangChange.subscribe(() => {
-    //   console.log(this.translate.currentLang);
-    //   this.selectedLanguage = this.listLanguages.find(e => e.lang === this.translate.currentLang);
-    //   this.selectedLanguageListBox = this.translate.currentLang;
-    //   this.translate.get('primeng').subscribe(res => this.config.setTranslation(res));
-    // })
+    this.subscription = this.translate.onLangChange.subscribe(() => {
+      this.currentLanguage = this.translate.currentLang;
+      this.config.setTranslation(this.translate.instant('primeng'));
+    })
   }
 
   onChangeLanguage(event) {
@@ -77,6 +79,12 @@ export class LanguageSelectorComponent implements OnInit {
       this.userConfig.addConfig('language', event.value.lang);
       this.translate.use(event.value.lang);
       window.location.reload();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }

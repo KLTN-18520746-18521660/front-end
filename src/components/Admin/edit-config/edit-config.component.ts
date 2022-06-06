@@ -71,7 +71,7 @@ export class EditConfigComponent implements OnInit {
       (res) => {
         this.isLoading = false;
         this.showButtonSave = false;
-        this.config = this.editingConfig;
+        this.config = { ...this.editingConfig };
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
