@@ -10,7 +10,7 @@ import { ManageRightService } from 'services/admin/manage-right.service';
 })
 export class ManageRightUserPageComponent implements OnInit {
 
-  viewDialog: 'edit' | 'create' = 'edit';
+  viewDialog: 'edit' | 'create';
 
   displayDialog: boolean = false;
 

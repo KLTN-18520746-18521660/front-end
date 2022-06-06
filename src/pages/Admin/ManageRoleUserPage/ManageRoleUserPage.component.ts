@@ -10,7 +10,7 @@ import { ManageRoleService } from 'services/admin/manage-role.service';
 })
 export class ManageRoleUserPageComponent implements OnInit {
 
-  viewDialog: 'edit' | 'create' = 'edit';
+  viewDialog: 'edit' | 'create';
 
   displayDialog: boolean = false;
 

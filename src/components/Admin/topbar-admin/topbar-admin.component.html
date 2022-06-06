@@ -12,9 +12,11 @@
   </a>
 
   <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
-    <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
-      <p-avatar label="{{admin.display_name.substring(0,1) | uppercase}}" class="cursor-pointer" shape="circle" size="large" (click)="menu.toggle($event)">
-      </p-avatar>
+    <ng-template [ngIf]="isLoggedin">
+      <div class="user-info flex align-items-center cursor-pointer" (click)="menu.toggle($event)">
+        <p class="font-medium text-md mb-0 mr-2">{{ admin?.display_name }}</p>
+        <app-avatar [user]="admin"></app-avatar>
+      </div>
 
       <p-menu #menu [popup]="true" [model]="items"></p-menu>
 
@@ -23,17 +25,6 @@
         <i class="pi pi-sign-out"></i>
         <span>Log out</span>
       </button>
-    </ng-template>
-    <ng-template #noLogin>
-      <a href="#" class="p-link layout-topbar-button">
-        <i class="pi pi-bell"></i>
-        <span>Notification</span>
-      </a>
-      <a href="#" class="p-link layout-topbar-button">
-        <i class="pi pi-cog"></i>
-        <span>Settings</span>
-      </a>
-
     </ng-template>
   </div>
 </div>
