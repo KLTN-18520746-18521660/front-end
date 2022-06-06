@@ -41,7 +41,7 @@
             <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
             <i style="font-size: 1.25rem" class="pi pi-eye"></i>
           </div>
-          <div
+          <div *ngIf="showVisited"
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{'common.visited' | translate}}: {{post?.visited_count | number:'1.0-2'}}" tooltipPosition="bottom">
             <span class="text-sm mr-1 font-normal">{{ post?.visited_count | shortNumber }}</span>

@@ -51,7 +51,9 @@ export const REST_URL = {
   REPORT: 'report',
 
   CATEGORY: 'category',
+  CATEGORY_TRENDING: 'category/trending',
   TAG: 'tag',
+  TAG_TRENDING: 'tag/trending',
 
   ADMIN: {
     LOGIN: 'admin/login',
@@ -66,6 +68,15 @@ export const REST_URL = {
     RELOAD_CONFIG: 'admin/config/reload',
 
     USER: 'user',
+    CHANGE_PASSWORD: 'admin/user/changepassword',
+    FORGOT_PASSWORD: 'admin/user/forgotpassword',
+
+    RIGHT_ADMIN: 'admin/right/admin',
+    RIGHT_USER: 'admin/right/social',
+
+    ROLE_ADMIN: 'admin/role/admin',
+    ROLE_USER: 'admin/role/social',
+
 
     POST: 'admin/post',
     POSTS: 'admin/posts',

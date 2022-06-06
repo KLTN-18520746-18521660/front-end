@@ -10,6 +10,8 @@ export class CategoryComponent implements OnInit {
   
   @Input() category: Category;
 
+  @Input() loading: boolean = false;
+
   @Input() size = 'sm';
 
   @Input() color = 'bg-indigo'

@@ -1,4 +1,4 @@
-import { ApiParams } from './../../../models/api.model';
+import { ApiParams } from 'models/api.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { PostsService } from 'services/posts.service';

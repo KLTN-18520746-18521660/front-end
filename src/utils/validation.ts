@@ -100,4 +100,23 @@ export default class Validation {
       return null;
     };
   }
+
+  // must contains string
+  static mustContains(contains: string[]): ValidatorFn {
+    return (controls: AbstractControl): ValidationErrors | null => {
+      if (contains.length === 0) {
+        return null;
+      }
+      if (controls?.value) {
+        const regex = new RegExp(contains.join('|'), 'gm');
+        if (regex.test(controls.value)) {
+          return null;
+        }
+        else {
+          return { contains: true };
+        }
+      }
+      return null;
+    };
+  }
 }

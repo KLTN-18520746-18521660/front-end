@@ -8,12 +8,13 @@ import Notification from "./notification.model";
 import { Admin } from "./admin.model";
 import { ActionType } from "utils/apiConstant";
 import { ConfigFormat } from "./Admins/config.model";
+import { Right, Role } from "./Admins/role_right.model";
 
 export interface ApiResult {
   status?: number;
   message?: string;
   data?: {
-    url: string;
+    url?: string;
     posts?: Post[];
     post?: Post;
     categories?: Category[];
@@ -26,22 +27,12 @@ export interface ApiResult {
     sessions?: Session[];
     comments?: Comment[];
     comment?: Comment;
-    notifications: Notification[];
-    notification: Notification;
+    notifications?: Notification[];
+    notification?: Notification;
     configs?: PublicConfig;
     total_size?: number;
     session_id?: string;
     user_id?: string;
-
-    /**
-     * only for admin
-     */
-    config: {
-      [key: string]: any;
-    };
-    format?: {
-      [key: string]: ConfigFormat;
-    };
 
     /**
      * search result
@@ -62,6 +53,20 @@ export interface ApiResult {
       posts: Post[];
       total_size: number;
     };
+
+
+    /**
+     * only for admin
+     */
+    config?: {
+      [key: string]: any;
+    };
+    format?: {
+      [key: string]: ConfigFormat;
+    };
+
+    roles?: Role[];
+    rights?: Right[];
   }
 }
 
@@ -78,6 +83,10 @@ export interface ApiParams {
 
   start?: number;
   size?: number;
+  /**
+   * @default -1
+   */
+  time?: number;
   search_term?: string;
   tags?: string;
   status?: string;

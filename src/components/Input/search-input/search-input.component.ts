@@ -1,3 +1,5 @@
+import { ApiParams } from 'models/api.model';
+import { PostsService } from 'services/posts.service';
 import { AppConfig } from 'models/appconfig.model';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
@@ -25,11 +27,11 @@ export class SearchInputComponent implements OnInit {
 
   @Input() hasAnimation: boolean = false;
 
-  @Input() showPopular: boolean = false;
+  @Input() showPopular: boolean = true;
 
   form: FormGroup;
 
-  tags: Tag[] = randomArray(tagsMockData, 5);
+  popularTags: Tag[] = [];
 
   userName: string;
 
@@ -37,7 +39,11 @@ export class SearchInputComponent implements OnInit {
 
   isFocus: boolean = false;
 
+  isLoadingTag: boolean = false;
+
   config: AppConfig;
+
+  getTagSubscription: Subscription;
 
   configSubscription: Subscription;
 
@@ -48,10 +54,13 @@ export class SearchInputComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
+    private postService: PostsService,
     private configService: AppConfigService,
   ) { }
 
   ngOnInit() {
+    this.getTrendingTags();
+
     this.form = new FormGroup({
       search: new FormControl(this.query)
     });
@@ -84,6 +93,26 @@ export class SearchInputComponent implements OnInit {
         this.userName = null;
       }
     })
+  }
+
+  getTrendingTags() {
+    this.isLoadingTag = true;
+
+    const params: ApiParams = {
+      start: 0,
+      size: 6
+    };
+
+    this.getTagSubscription = this.postService.getTrendingTags(params).subscribe(
+      (res) => {
+        this.isLoadingTag = false;
+        this.popularTags = res.data.tags;
+      },
+      (err) => {
+        this.popularTags = [];
+        this.isLoadingTag = false;
+      }
+    );
   }
 
   onSubmit() {
@@ -120,6 +149,12 @@ export class SearchInputComponent implements OnInit {
     }
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+    if (this.getTagSubscription) {
+      this.getTagSubscription.unsubscribe();
+    }
+    if (this.configSubscription) {
+      this.configSubscription.unsubscribe();
     }
   }
 }

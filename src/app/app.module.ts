@@ -1,3 +1,10 @@
+import { ManageRightUserPageComponent } from 'pages/Admin/ManageRightUserPage/ManageRightUserPage.component';
+import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/ManageRoleUserPage.component';
+import { ManageRightAdminPageComponent } from 'pages/Admin/ManageRightAdminPage/ManageRightAdminPage.component';
+import { ManageRoleAdminPageComponent } from 'pages/Admin/ManageRoleAdminPage/ManageRoleAdminPage.component';
+import { AdminChangePasswordPageComponent } from 'pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
+import { EditConfigComponent } from 'components/Admin/edit-config/edit-config.component';
+import { ManageConfigPageComponent } from 'pages/Admin/ManageConfigPage/ManageConfigPage.component';
 import { ServerErrorPageComponent } from 'pages/ServerErrorPage/ServerErrorPage.component';
 import { ServerErrorComponent } from 'components/Errors/server-error/server-error.component';
 import { UserPostSavedComponent } from 'components/Profile/user-post-saved/user-post-saved.component';
@@ -132,6 +139,7 @@ import { GoToComponent } from 'components/go-to/go-to.component';
 import { UserSidebarMenuComponent } from 'components/Profile/user-sidebar-menu/user-sidebar-menu.component';
 import { OpenNewWindowDirective } from 'shared/directives/openNewWindow.directive';
 import { SearchUserComponent } from 'components/Searchs/search-user/search-user.component';
+import { DynamicFormComponent } from 'components/Admin/dynamic-form/dynamic-form.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -232,6 +240,7 @@ export function playerFactory() {
     UserPostSavedComponent,
     ServerErrorComponent,
     ServerErrorPageComponent,
+    ViewDetailPostComponent,
 
     SwitchThemeComponent,
 
@@ -240,8 +249,14 @@ export function playerFactory() {
     MenuComponent,
     AppMenuitemComponent,
     AdminLoginPageComponent,
-    ViewDetailPostComponent,
-
+    ManageConfigPageComponent,
+    EditConfigComponent,
+    ManageRoleAdminPageComponent,
+    ManageRightAdminPageComponent,
+    ManageRoleUserPageComponent,
+    ManageRightUserPageComponent,
+    DynamicFormComponent,
+    AdminChangePasswordPageComponent,
   ],
   imports: [
     BrowserModule,

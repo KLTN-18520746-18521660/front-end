@@ -21,7 +21,7 @@ export class TagComponent implements OnInit {
 
   @Input() loading: boolean = false;
   
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     // this.tag.name = this.tag.tag?.replace(/\s/g, '');

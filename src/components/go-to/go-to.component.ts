@@ -1,3 +1,4 @@
+import { APPCONSTANT } from 'utils/appConstant';
 import { PostsService } from 'services/posts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -29,7 +30,7 @@ export class GoToComponent implements OnInit {
           else {
             this.router.navigate(['/']);
           }
-        }, 1000);
+        }, APPCONSTANT.LOADING_TIMEOUT);
       },
       () => {
         this.router.navigate(['/']);

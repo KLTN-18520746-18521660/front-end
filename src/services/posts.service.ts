@@ -181,6 +181,12 @@ export class PostsService {
     }));
   }
 
+  getTrendingCategories(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.CATEGORY_TRENDING, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   sendActionWithCategory(category: string, action: ActionType): Observable<ApiResult> {
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.CATEGORY + `/${category}`, {}, { ...this.httpOptions(), params: { action } }).pipe(catchError(error => {
       return throwError(handleError(error));
@@ -199,6 +205,12 @@ export class PostsService {
 
   getTagDetail(tag: string): Observable<ApiResult> {
     return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.TAG + `/${tag}`, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getTrendingTags(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.TAG_TRENDING, { ...this.httpOptions, params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

@@ -1,17 +1,16 @@
-import { ApiParams } from './../../models/api.model';
 import { Component, OnInit } from '@angular/core';
+import { ApiParams } from 'models/api.model';
 import { AppConfig } from 'models/appconfig.model';
 import Category from 'models/category.model';
 import Post, { PostTypeView } from 'models/post.model';
 import { Tag } from 'models/tag.model';
+import User from 'models/user.model';
 import { Subscription } from 'rxjs';
 import { AppConfigService } from 'services/app.config.service';
 import { PostsService } from 'services/posts.service';
 import { UserConfigService } from 'services/user-config.service';
 import { UserService } from 'services/user.service';
-import { tagsMockData } from 'shared/mockData/tagsMockData';
 import { APPCONSTANT, BREAKPOINT, CONTACT_INFO } from 'utils/appConstant';
-import { randomArray } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-HomePage',
@@ -27,7 +26,7 @@ export class HomePageComponent implements OnInit {
 
   contacts = CONTACT_INFO;
 
-  tags: Tag[] = [];
+  popularTags: Tag[] = [];
 
   currentPostType: PostTypeView = 'trending';
 
@@ -45,6 +44,7 @@ export class HomePageComponent implements OnInit {
   config: AppConfig;
 
   subscription: Subscription;
+  authSubscription: Subscription;
   postSubscription: Subscription;
   recommendSubscription: Subscription;
 
@@ -53,6 +53,9 @@ export class HomePageComponent implements OnInit {
 
   listCategory: Category[] = [];
   isLoadingCategory: boolean = false;
+  isLoadingTag: boolean = false;
+
+  currentUser: User;
 
   constructor(
     private userConfigService: UserConfigService,
@@ -65,18 +68,9 @@ export class HomePageComponent implements OnInit {
       { icon: 'pi pi-th-large', value: 'grid' },
     ];
 
-    if (this.userService.isAuthenticated) {
-      this.listPostType = ['recommend', 'following'];
-    }
-    else {
-      this.listPostType = ['new', 'trending']
-    }
-
     const _layout = this.userConfigService.getConfigByKey('layout') || 'list';
     this.layout = _layout;
     this.isGrid = _layout === 'grid' ? true : false;
-
-    this.currentPostType = this.listPostType.includes(this.userConfigService.getConfigByKey('viewOption')) ? this.userConfigService.getConfigByKey('viewOption') : this.listPostType[0];
   }
 
   ngOnInit() {
@@ -85,19 +79,63 @@ export class HomePageComponent implements OnInit {
       this.config = config;
     });
 
+    this.currentUser = this.userService.user;
+
+    if (this.userService.isAuthenticated) {
+      this.listPostType = ['recommend', 'following', 'new'];
+    }
+    else {
+      this.listPostType = ['new']
+    }
+
+    this.currentPostType = this.listPostType.includes(this.userConfigService.getConfigByKey('viewOption')) ? this.userConfigService.getConfigByKey('viewOption') : this.listPostType[0];
+
+    this.authSubscription = this.userService.authUpdate$.subscribe((res) => {
+      this.currentUser = res.user;
+      if (res.isAuthenticated) {
+        this.listPostType = ['recommend', 'following', 'new'];
+      }
+      else {
+        this.listPostType = ['new']
+      }
+      this.currentPostType = this.listPostType.includes(this.userConfigService.getConfigByKey('viewOption')) ? this.userConfigService.getConfigByKey('viewOption') : this.listPostType[0];
+    })
+
     this.getListPostsByType(this.currentPostType, false);
 
-    this.tags = randomArray(tagsMockData, 5);
     this.onLoadRecommend();
+    this.getPopularTags();
     this.getListCategory();
   }
 
   getListCategory() {
     this.isLoadingCategory = true;
-    this.postSubscription = this.postService.getListCategories().subscribe(
+
+    const params: ApiParams = {
+      start: 0,
+      size: 8
+    };
+
+    this.postSubscription = this.postService.getTrendingCategories(params).subscribe(
       (res) => {
         this.listCategory = res.data.categories;
         this.isLoadingCategory = false;
+      }
+    );
+  }
+
+  getPopularTags() {
+    this.isLoadingTag = true;
+
+    const params: ApiParams = {
+      start: 0,
+      size: 12
+    };
+
+    this.postService.getTrendingTags(params).subscribe(
+      (res) => {
+        this.popularTags = res.data.tags;
+        this.isLoadingTag = false;
       }
     );
   }
@@ -191,6 +229,12 @@ export class HomePageComponent implements OnInit {
     }
     if (this.postSubscription) {
       this.postSubscription.unsubscribe();
+    }
+    if (this.recommendSubscription) {
+      this.recommendSubscription.unsubscribe();
+    }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
 }

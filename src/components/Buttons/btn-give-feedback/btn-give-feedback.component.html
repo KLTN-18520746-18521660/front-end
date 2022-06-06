@@ -23,7 +23,7 @@
   </div>
   <ng-template pTemplate="footer">
     <button *ngIf="!success" pButton pRipple type="button" label="{{'feedback.cancel' | translate}}"
-      (click)="display = false" class="min-button-width p-button-outlined"></button>
+      (click)="display = false; content = null" class="min-button-width p-button-danger p-button-outlined"></button>
     <button *ngIf="!success" pButton pRipple type="button" [loading]="isLoading" label="{{'feedback.send' | translate}}"
       (click)="onClickSubmit()" icon="pi pi-send" iconPos="right" class="min-button-width p-button-raised"></button>
   </ng-template>

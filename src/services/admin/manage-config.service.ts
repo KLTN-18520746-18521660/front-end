@@ -43,7 +43,7 @@ export class ManageConfigService {
 
 
   getPublicConfig(): Observable<ApiResult> {
-    return this.httpClient.get(BASE_URL + REST_URL.CONFIG, this.httpOptions()).pipe(catchError(error => {
+    return this.httpClient.get(BASE_URL + REST_URL.ADMIN.CONFIG, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

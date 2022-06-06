@@ -237,6 +237,7 @@ export class ManagePostsPageComponent implements OnInit {
               }
               return item;
             });
+            this.displayDialog = false;
             this.messageService.add({
               key: 'manage-post',
               severity: 'success',

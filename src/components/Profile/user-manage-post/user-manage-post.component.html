@@ -16,7 +16,7 @@
   <div class="grid col-12">
     <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingSpinner">
       <div class="col-12 md:col-6 lg:col-6 xl:col-4" *ngFor="let item of listPosts">
-        <app-recommend-post-card (deletePost)="deletePost(item.id)" [showMenu]="true" [showStatus]="true"
+        <app-recommend-post-card (deletePost)="deletePost(item.id)" [showVisited]="true" [showMenu]="true" [showStatus]="true"
           [isSmall]="false" [post]="item">
         </app-recommend-post-card>
       </div>
@@ -28,7 +28,7 @@
     </ng-template>
     <ng-template #loadingSpinner>
       <div class="col-12 md:col-6 lg:col-6 xl:col-4" *ngFor="let item of [1,2,3,4,5,6]">
-        <app-recommend-post-card [showStatus]="true" [isSmall]="false" [loading]="true"></app-recommend-post-card>
+        <app-recommend-post-card [showVisited]="true" [showStatus]="true" [isSmall]="false" [loading]="true"></app-recommend-post-card>
       </div>
     </ng-template>
     <ng-template [ngIf]="isLoadingMore">

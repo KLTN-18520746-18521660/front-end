@@ -1,0 +1,10 @@
+<ng-template [ngIf]="config">
+  <div *ngFor="let config of listConfig" class="mt-2">
+    <admin-dynamic-form [config]="config" (onChange)="onChange($event)"></admin-dynamic-form>
+  </div>
+
+  <div class="col-12 p-0">
+    <button pButton pRipple [loading]="isLoading" [disabled]="!showButtonSave" type="button" (click)="onClickSave()" label="Save changes"
+      icon="pi pi-check" class="p-button-raised p-button-success w-full mt-3"></button>
+  </div>
+</ng-template>

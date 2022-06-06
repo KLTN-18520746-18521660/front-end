@@ -9,10 +9,10 @@
   *ngIf="isLoggedIn; else gotoLogin">
   <app-topbar-admin></app-topbar-admin>
   <div class="layout-sidebar">
-    <app-menu></app-menu>
+    <admin-menu></admin-menu>
   </div>
   <div class="layout-main-container" *ngIf="!isError; else error">
-    <div class="layout-main" *ngIf="!isLoading">
+    <div class="layout-main" *ngIf="!isLoading && !isLoadingConfig">
       <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>
@@ -33,7 +33,7 @@
   </div>
 </ng-template>
 
-<app-loading [loading]="isLoading"></app-loading>
+<app-loading [loading]="isLoading || isLoadingConfig"></app-loading>
 
 <!-- <app-switch-theme class="hidden"></app-switch-theme> -->
 

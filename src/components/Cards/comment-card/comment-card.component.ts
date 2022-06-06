@@ -108,7 +108,7 @@ export class CommentCardComponent implements OnInit {
       //     console.log(event);
       //   }
       // },
-      ...(this.comment.owner.user_name === this.userService.user.user_name ? [{
+      ...(this.userService?.user && (this.comment.owner.user_name === this.userService?.user?.user_name) ? [{
         id: 'delete',
         label: this.translate.instant('postDetail.commentMenu.delete'),
         disabled: false,

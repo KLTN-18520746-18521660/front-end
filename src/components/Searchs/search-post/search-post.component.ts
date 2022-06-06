@@ -1,4 +1,4 @@
-import { ApiParams } from './../../../models/api.model';
+import { ApiParams } from 'models/api.model';
 import { Subscription } from 'rxjs';
 import { PostsService } from 'services/posts.service';
 import { Component, OnInit } from '@angular/core';

@@ -3,7 +3,6 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import mermaid from 'mermaid';
 import { ApiParams } from 'models/api.model';
 import { Comment, CommentInput } from 'models/comment.model';
 import Post from 'models/post.model';
@@ -56,6 +55,8 @@ export class DetailPageComponent implements OnInit {
 
   getOtherSubscription: Subscription;
 
+  routeSubscription: Subscription;
+
   slug: string;
 
   contacts: any[];
@@ -86,11 +87,11 @@ export class DetailPageComponent implements OnInit {
 
   postValues: any[];
 
-  relatedPosts: Post[] = [];
+  relatedPosts: Post[];
 
   otherPosts: Post[];
 
-  progressBar: number = 0;
+  progressBar: number;
 
   error: boolean = false;
 
@@ -112,22 +113,26 @@ export class DetailPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.slug = this.activatedRoute.snapshot.params.slug;
-    // this.slug = decodeURI(this.slug);
+    this.routeSubscription = this.activatedRoute.params.subscribe(
+      (params) => {
+        this.slug = params.slug;
+        // this.slug = decodeURI(this.slug);
 
-    this.commentService.current_Slug = this.slug;
+        this.commentService.current_Slug = this.slug;
 
-    this.getPostDetail();
+        this.progressBar = 0;
 
-    this.getListRelatedPost();
+        this.listComments = [];
 
-    this.home = { icon: 'pi pi-home', routerLink: '/' };
+        this.breadcrumbItems = [];
 
-    // Config markdown view mermaid
-    mermaid.initialize({
-      securityLevel: 'loose'
-    });
-    mermaid.init();
+        this.getPostDetail();
+
+        this.getListRelatedPost();
+
+        this.home = { icon: 'pi pi-home', routerLink: '/' };
+      }
+    );
   }
 
   getTranslate() {
@@ -210,7 +215,7 @@ export class DetailPageComponent implements OnInit {
         },
         icon: 'pi pi-linkedin',
         command: () => {
-          window.open(`sharing/share-offsite/?url=${decodeURI(window.location.href)}`, '_blank');
+          window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${decodeURI(window.location.href)}`, '_blank');
         }
       },
       {
@@ -409,7 +414,11 @@ export class DetailPageComponent implements OnInit {
   }
 
   getListRelatedPost() {
+    this.relatedPosts = [];
     this.isLoadingRelatedPost = true;
+    if (this.getRelatedSubscription) {
+      this.getRelatedSubscription.unsubscribe();
+    }
     const params: ApiParams = {
       start: 0,
       size: 5
@@ -607,9 +616,7 @@ export class DetailPageComponent implements OnInit {
   initLoadComment() {
     this.isLoadingComments = true;
 
-    setTimeout(() => {
-      this.getComments();
-    }, 2000);
+    this.getComments();
   }
 
   loadMoreComment() {
@@ -617,7 +624,7 @@ export class DetailPageComponent implements OnInit {
 
     setTimeout(() => {
       this.getComments();
-    }, 2000);
+    }, APPCONSTANT.LOADING_TIMEOUT);
   }
 
   onFilterComments(event) {
@@ -631,7 +638,7 @@ export class DetailPageComponent implements OnInit {
       sort_by: getParams[0],
       order: getParams[1]
     }
-    
+
     this.listComments = [];
 
     setTimeout(() => {
@@ -717,6 +724,9 @@ export class DetailPageComponent implements OnInit {
     }
     if (this.getOtherSubscription) {
       this.getOtherSubscription.unsubscribe();
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
 }

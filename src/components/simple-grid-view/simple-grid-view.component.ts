@@ -55,10 +55,10 @@ export class SimpleGridViewComponent implements OnInit {
   }
 
   renderHTML(key: string, value: string) {
-    key = key.replace(/[_]/g, ' ');
+    const tempKey = key.replace(/[_]/g, ' ');
     return `
-      <dt class="col-4 pt-0 capitalize font-semibold">${key}</dt>
-      <dd class="ml-0 pt-0 col-8 break-word" title="${value}">${value}</dd>
+      <dt class="col-4 pt-0 capitalize font-semibold" title="${key}">${tempKey}</dt>
+      <dd class="ml-0 pt-0 col-8 break-word"><textarea disabled>${value}</textarea></code></pre></dd>
     `;
   }
 

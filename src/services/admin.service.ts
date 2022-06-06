@@ -15,16 +15,28 @@ import { AuthUpdateUser } from 'models/user.model';
 
 const BASE_URL = environment.baseApiUrl;
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json-patch+json',
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+
+  httpOptions() {
+    if (this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'session_token': this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN)
+        })
+      };
+    }
+    else {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+      }
+    }
+  }
 
   ref: DynamicDialogRef[] = [];
 
@@ -55,31 +67,31 @@ export class AdminService {
   }
 
   login(admin: AdminLoginModel): Observable<ApiResult> {
-    return this.http.post(BASE_URL + REST_URL.ADMIN.LOGIN, admin, httpOptions).pipe(catchError(error => {
+    return this.http.post(BASE_URL + REST_URL.ADMIN.LOGIN, admin, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  logout(session_token_admin) {
-    return this.http.post(BASE_URL + REST_URL.ADMIN.LOGOUT, {}, { ...httpOptions, headers: { session_token_admin: session_token_admin } }).pipe(catchError(error => {
+  logout() {
+    return this.http.post(BASE_URL + REST_URL.ADMIN.LOGOUT, {}, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getAdminInfor(sessionId): Observable<ApiResult> {
-    return this.http.get(BASE_URL + REST_URL.ADMIN.GET_ADMIN_USER_BY_SESSIONID, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
+  getAdminInfor(): Observable<ApiResult> {
+    return this.http.get(BASE_URL + REST_URL.ADMIN.GET_ADMIN_USER_BY_SESSIONID, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  extendSessionAdmin(sessionId: string): Observable<ApiResult> {
-    return this.http.post(BASE_URL + REST_URL.ADMIN.EXTEND_SESSION, {}, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
+  extendSessionAdmin(): Observable<ApiResult> {
+    return this.http.post(BASE_URL + REST_URL.ADMIN.EXTEND_SESSION, {}, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
   deleteSessionAdmin(sessionId: string): Observable<any> {
-    return this.http.delete(BASE_URL + REST_URL.ADMIN.SESSION + `/${sessionId}`, { ...httpOptions, headers: { session_token_admin: sessionId } }).pipe(catchError(error => {
+    return this.http.delete(BASE_URL + REST_URL.ADMIN.SESSION + `/${sessionId}`, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
@@ -94,7 +106,7 @@ export class AdminService {
       this.authAdminUpdate.next({ session_id: null, user: null, isAuthenticated: false });
       return;
     }
-    this.getAdminInfor(sessionId).subscribe(
+    this.getAdminInfor().subscribe(
       (res) => {
         this.admin = res.data.user;
         this.session_id = sessionId;
@@ -127,9 +139,32 @@ export class AdminService {
     return this.cookieService.get(STORAGE_KEY.ADMIN_SESSIONS_TOKEN) || null;
   }
 
-  // saveAdmin(admin) {
-  //   window.sessionStorage.setItem(STORAGE_KEY.ADMIN_INFO, JSON.stringify(admin));
-  // }
+  //#region [Password]
+  changePassword(body: any): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.ADMIN.CHANGE_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  sendForgotPassword(body: any): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.ADMIN.FORGOT_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getForgotPassword(params: any): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.ADMIN.FORGOT_PASSWORD, { ...this.httpOptions(), params: params }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  resetPassword(body: any): Observable<ApiResult> {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.ADMIN.FORGOT_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  //#endregion
 
   logOut() {
     this.isAuthenticated = false;

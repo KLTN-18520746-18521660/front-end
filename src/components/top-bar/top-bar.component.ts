@@ -11,7 +11,7 @@ import { filter, Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
 import { categoriesMockData } from 'shared/mockData/categoriesMockData';
-import { SearchInputComponent } from '../Input/search-input/search-input.component';
+import { SearchInputComponent } from 'components/Input/search-input/search-input.component';
 import { TopBarMenuItem } from './menu-item';
 import { Clipboard } from '@angular/cdk/clipboard';
 

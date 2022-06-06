@@ -1,0 +1,49 @@
+<form [formGroup]="form">
+  <div class="field grid dynamic-form">
+    <label htmlFor="{config.key}}" title="{{config.key}}"
+      class="col-12 mb-2 md:col-4 md:mb-0 capitalize">{{displayKey}}</label>
+    <div class="col-12 md:col-8">
+      <ng-template [ngIf]="config.format.type === 'string'">
+        <input pInputText formControlName="{{config.key}}" id="{{this.config.key}}" type="text" />
+      </ng-template>
+      <ng-template [ngIf]="config.format.type === 'text'">
+        <textarea pInputTextarea formControlName="{{config.key}}" id="{{config.key}}" [rows]="5" [cols]="30">
+        </textarea>
+      </ng-template>
+      <ng-template [ngIf]="config.format.type === 'integer'">
+        <input pInputText formControlName="{{config.key}}" id="{{config.key}}" type="number" />
+      </ng-template>
+      <ng-template [ngIf]="config.format.type === 'boolean'">
+        <p-inputSwitch formControlName="{{config.key}}" id="{{config.key}}"></p-inputSwitch>
+      </ng-template>
+      <div *ngIf="(f[config.key].touched) && f[config.key].errors" class="invalid-feedback">
+        <div class="flex align-items-end mb-1" *ngIf="f[config.key].errors['required']">
+          <small class="p-error inline list-span">
+            This field is required.
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f[config.key].errors['pattern']">
+          <small class="p-error inline list-span">
+            This field is invalid. (regex: {{config.format.regex}})
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f[config.key].errors['min']">
+          <small class="p-error inline list-span">
+            This key must be at least {{config.format.min}}.
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f[config.key].errors['max']">
+          <small class="p-error inline list-span">
+            This key must be at most {{config.format.max}}.
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f[config.key].errors['contains']">
+          <small class="p-error inline list-span">
+            This key must contain {{config.format.contains.toString()}}.
+          </small>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>

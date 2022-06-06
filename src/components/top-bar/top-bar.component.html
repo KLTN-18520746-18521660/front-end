@@ -6,7 +6,7 @@
         </p-button>
         <div class="logo">
           <a [routerLink]="['/']">
-            <img src="/assets/images/logo/logo-purple.png" style="height: 3.5rem;" class="hidden lg:flex"
+            <img src="/assets/images/logo/logo-purple.png" style="height: 3.5rem;" class="hidden lg:block"
               alt="oOwlet Logo">
             <img src="/assets/images/logo/oOwlet.png" class="ml-2 h-2rem lg:hidden"
               alt="oOwlet Logo">
@@ -59,8 +59,8 @@
           <p-menu #menu [popup]="true" [model]="menuUser"></p-menu>
           <div class="user-dropdown flex align-items-center align-content-center cursor-pointer"
             (click)="menu.toggle($event)">
-            <span class="ml-2 font-semibold mx-2">{{user.display_name}}</span>
-            <app-avatar [user]="user"></app-avatar>
+            <span class="ml-2 font-semibold hidden md:flex mx-2">{{user.display_name}}</span>
+            <app-avatar class="ml-2" [user]="user"></app-avatar>
           </div>
         </ng-template>
         <ng-template #noLogin>

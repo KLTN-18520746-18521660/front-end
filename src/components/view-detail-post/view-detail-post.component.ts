@@ -1,4 +1,4 @@
-import { convertLinkRedirecting, convertMarkdown } from './../../utils/commonFunction';
+import { convertLinkRedirecting, convertMarkdown } from 'utils/commonFunction';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { Component, Input, OnInit } from '@angular/core';

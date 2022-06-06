@@ -1,9 +1,9 @@
 <ng-template [ngIf]="keyword" [ngIfElse]="searchInput">
   <div class="search-page-layout mt-4 container">
-    <div class="card">
-      <div class="flex justify-content-between">
-        <p class="text-lg" [innerHTML]="'search.result' | translate: { query: keyword}"></p>
-        <div class="right">
+    <div class="card p-2 md:p-4">
+      <div class="flex flex-wrap justify-content-between">
+        <p class="text-lg col-12 md:col-6 mb-1" [innerHTML]="'search.result' | translate: { query: keyword}"></p>
+        <div class="right col-12 md:col-4">
           <div class="p-inputgroup">
             <input #inputQuery type="text" pInputText (keyup.enter)="onSearch()"
               placeholder="{{'search.placeholder' | translate}}" value="{{keyword}}">

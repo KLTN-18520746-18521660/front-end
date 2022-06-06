@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AppMainComponent } from 'pages/Admin/AppMain/AppMain.component';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'admin-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
@@ -43,9 +43,34 @@ export class MenuComponent implements OnInit {
             routerLink: ['./unlock-user']
           },
           {
-            label: 'Role',
+            label: 'Role User',
             icon: 'pi pi-fw pi-plus-circle',
-            routerLink: ['./role']
+            routerLink: ['./role-user']
+          },
+          {
+            label: 'Right User',
+            icon: 'pi pi-fw pi-plus-circle',
+            routerLink: ['./right-user']
+          }
+        ]
+      },
+      {
+        label: 'Admin Management',
+        items: [
+          {
+            label: 'List Admin',
+            icon: 'pi pi-fw pi-list',
+            routerLink: ['./manage-admin']
+          },
+          {
+            label: 'Role Admin',
+            icon: 'pi pi-fw pi-plus-circle',
+            routerLink: ['./role-admin']
+          },
+          {
+            label: 'Right Admin',
+            icon: 'pi pi-fw pi-plus-circle',
+            routerLink: ['./right-admin']
           }
         ]
       },
@@ -57,36 +82,16 @@ export class MenuComponent implements OnInit {
             icon: 'pi pi-fw pi-list',
             routerLink: ['./manage-post']
           },
-          {
-            label: 'Create post',
-            icon: 'pi pi-fw pi-plus-circle',
-            routerLink: ['./create-post']
-          },
-          {
-            label: 'Deleted post',
-            icon: 'pi pi-fw pi-trash',
-            routerLink: ['./delete-post']
-          }
         ]
       },
       {
-        label: 'Notification',
+        label: 'Config',
         items: [
           {
-            label: 'List',
+            label: 'Manage Config',
             icon: 'pi pi-fw pi-list',
-            routerLink: ['/documentation']
+            routerLink: ['./manage-config']
           },
-          {
-            label: 'Create',
-            icon: 'pi pi-fw pi-plus-circle',
-            url: ['https://github.com/primefaces/sakai-ng'],
-            target: '_blank'
-          },
-          {
-            label: 'Deleted',
-            icon: 'pi pi-fw pi-trash',
-          }
         ]
       },
       {
@@ -95,18 +100,18 @@ export class MenuComponent implements OnInit {
           {
             label: 'Report from user',
             icon: 'pi pi-fw pi-flag',
-            routerLink: ['/documentation']
-          },
+            routerLink: ['./documentation']
+          }
+        ]
+      },
+      {
+        label: 'Acount',
+        items: [
           {
-            label: 'User Action',
-            icon: 'pi pi-fw pi-users',
-            routerLink: ['/documentation']
-          },
-          {
-            label: 'Trending',
-            icon: 'pi pi-fw pi-chart-line',
-            routerLink: ['/documentation']
-          },
+            label: 'Change Password',
+            icon: 'pi pi-fw pi-lock',
+            routerLink: ['./change-password']
+          }
         ]
       }
     ];

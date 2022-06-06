@@ -1,3 +1,4 @@
+import { APPCONSTANT } from 'utils/appConstant';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import Post from 'models/post.model';
@@ -31,7 +32,7 @@ export class PostsPageComponent implements OnInit {
     setTimeout(() => {
       this.listPosts = postsMockData;
       this.isLoading = false;
-    }, 3000);
+    }, APPCONSTANT.LOADING_TIMEOUT);
   }
 
   onScroll() {

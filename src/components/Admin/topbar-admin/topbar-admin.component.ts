@@ -74,7 +74,7 @@ export class TopbarAdminComponent implements OnInit {
       rejectLabel: "No, cancel",
       rejectButtonStyleClass: 'p-button-danger p-button-outlined',
       accept: () => {
-        this.adminService.logout(this.session_id).subscribe(res => {
+        this.adminService.logout().subscribe(res => {
           this.adminService.logOut();
           this.adminService.messages = [];
         })

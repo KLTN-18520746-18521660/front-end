@@ -4,7 +4,7 @@ export const APPCONSTANT = {
   // PLACEHOLDER_IMAGE: 'assets/images/placeholder-image.jpg',
   PLACEHOLDER_IMAGE: 'assets/images/logo/placeholder.png',
   TOAST_TIMEOUT: 6000,
-  LOADING_TIMEOUT: 2000,
+  LOADING_TIMEOUT: 1000,
 
   RELOAD_STATISTIC_TIMEOUT: 30000,
 

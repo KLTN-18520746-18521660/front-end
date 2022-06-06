@@ -1,4 +1,4 @@
-import { UserSecurityComponent } from './../../components/Profile/user-security/user-security.component';
+import { UserSecurityComponent } from 'components/Profile/user-security/user-security.component';
 import { UserFollowerComponent } from 'components/Profile/user-follower/user-follower.component';
 import { UserFollowingComponent } from 'components/Profile/user-following/user-following.component';
 import { UserPostSavedComponent } from 'components/Profile/user-post-saved/user-post-saved.component';

@@ -26,6 +26,8 @@ export class RecommendPostCardComponent implements OnInit {
 
   @Input() showStatus: boolean = false;
 
+  @Input() showVisited: boolean = false;
+
   @Input() showMenu: boolean = false;
 
   @Output() deletePost: EventEmitter<number> = new EventEmitter();

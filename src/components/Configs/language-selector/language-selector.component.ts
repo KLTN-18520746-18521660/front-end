@@ -25,8 +25,9 @@ export class LanguageSelectorComponent implements OnInit {
 
   selectedLanguage: LanguageSelector;
 
+  currentLanguage: string;
+
   constructor(
-    private config: PrimeNGConfig,
     private translate: TranslateService,
     private userConfig: UserConfigService
   ) {
@@ -44,12 +45,14 @@ export class LanguageSelectorComponent implements OnInit {
         lang: "vi",
         flag: "vn"
       },
-      {
-        name: "日本",
-        lang: "jp",
-        flag: "jp"
-      }
+      // {
+      //   name: "日本",
+      //   lang: "jp",
+      //   flag: "jp"
+      // }
     ];
+
+    this.currentLanguage = this.translate.currentLang;
     this.selectedLanguage = this.listLanguages.find(e => e.lang === this.translate.currentLang);
     this.selectedLanguageListBox = this.listLanguages.find(e => e.lang === this.translate.currentLang);
 
@@ -62,13 +65,18 @@ export class LanguageSelectorComponent implements OnInit {
   }
 
   onChangeLanguage(event) {
-    this.userConfig.addConfig('language', event.value.lang);
-    this.translate.use(event.value.lang);
-    window.location.reload();
+    if (event.value.lang !== this.currentLanguage) {
+      this.userConfig.addConfig('language', event.value.lang);
+      this.translate.use(event.value.lang);
+      window.location.reload();
+    }
   }
 
   onChangeLanguageListBox(event) {
-    this.userConfig.addConfig('language', event.value.lang);
-    this.translate.use(event.value.lang);
+    if (event.value.lang !== this.currentLanguage) {
+      this.userConfig.addConfig('language', event.value.lang);
+      this.translate.use(event.value.lang);
+      window.location.reload();
+    }
   }
 }

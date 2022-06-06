@@ -1,4 +1,4 @@
-import { ManageConfigService } from './../../../services/admin/manage-config.service';
+import { ManageConfigService } from 'services/admin/manage-config.service';
 import { MessageService } from 'primeng/api';
 import { APPCONSTANT, STORAGE_KEY } from 'utils/appConstant';
 import { CookieService } from 'services/cookie.service';
@@ -79,6 +79,8 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
   isLoading: boolean = false;
 
+  isLoadingConfig: boolean = false;
+
   isVisible: boolean;
   textTranslate: any;
   previousURL: string;
@@ -106,7 +108,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     if (sessionId) {
       console.log("AdminID: ", sessionId);
       this.isLoading = true;
-      this.adminService.getAdminInfor(sessionId).subscribe(
+      this.adminService.getAdminInfor().subscribe(
         (res) => {
           this.isLoading = false;
           this.remember = res.data?.session?.saved || false;
@@ -172,7 +174,10 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   async getPublishConfig() {
+    this.isLoadingConfig = true;
     const { data } = await this.manageConfig.getPublicConfig().toPromise();
+
+    this.isLoadingConfig = false;
 
     this.adminService.setConfig(data.configs);
     this.userIdleService.setConfigValues({
@@ -279,7 +284,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   extendSession() {
-    this.adminService.extendSessionAdmin(this.adminService.getSessionId()).subscribe(
+    this.adminService.extendSessionAdmin().subscribe(
       (res) => {
         console.log("Extend Session Success");
       },

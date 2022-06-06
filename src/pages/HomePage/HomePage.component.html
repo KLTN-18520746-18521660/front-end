@@ -1,23 +1,29 @@
-<app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
+<app-search-input [showPopular]="false" [wFull]="true" [hasAnimation]="true"></app-search-input>
 
-<div class="home-layout container py-6">
+<div class="home-layout container py-3 md:py-6">
   <div class="flex flex-wrap justify-content-center">
     <div class="col-12 md:col-3 lg:col-2 xl:col-2 md:px-2 xl:px-4">
-      <div class="create-post">
-        <p-button pButton pRipple [routerLink]="['/create']" class="p-button-text p-button-primary">
-          {{'home.createPost' | translate}}
-        </p-button>
-      </div>
-      <div class="popular-tags w-full mb-6 hidden md:block">
+      <div class="popular-tags w-full mt-8 mb-6 hidden md:block">
         <p class="font-semibold text-lg mt-4">{{ 'label.popular.tags' | translate }}</p>
-        <app-tag [tag]="tag" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of tags">
-        </app-tag>
+        <ng-template [ngIf]="!isLoadingTag" [ngIfElse]="loadingTagBlock">
+          <app-tag [tag]="tag" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of popularTags">
+          </app-tag>
+        </ng-template>
+        <ng-template #loadingTagBlock>
+          <app-tag [loading]="true" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of [1,2,3]">
+          </app-tag>
+        </ng-template>
       </div>
       <div class="category-tags w-full mb-6 hidden md:block">
         <p class="font-semibold text-lg mt-4">{{ 'label.popular.category' | translate }}</p>
-        <app-category [category]="category" [size]="'base'" [width]="'w-full'"
-          *ngFor="let category of listCategory">
-        </app-category>
+        <ng-template [ngIf]="!isLoadingCategory" [ngIfElse]="loadingCategoryBlock">
+          <app-category [category]="category" [size]="'base'" [width]="'w-full'" *ngFor="let category of listCategory">
+          </app-category>
+        </ng-template>
+        <ng-template #loadingCategoryBlock>
+          <app-category [loading]="true" [size]="'base'" [width]="'w-full'" *ngFor="let category of [1,2,3]">
+          </app-category>
+        </ng-template>
       </div>
       <div class="contact-block mb-6 hidden md:block">
         <p class="font-semibold text-lg">{{ 'label.connectus' | translate }}</p>
@@ -30,9 +36,16 @@
     <div class="col-12 md:col-9 lg:col-10 xl:col-10">
       <div class="grid">
         <div class="col-12 md:col-12 lg:col-9 xl:col-8 min-h-screen">
+          <div class="col-12 p-0 flex mb-3">
+            <app-avatar class="mr-2" *ngIf="currentUser" [user]="currentUser"></app-avatar>
+            <button pButton pRipple type="button" label="{{'home.createPostPlaceholder' | translate}}"
+              [routerLink]="['/create']"
+              class="p-button-outlined p-button-rounded p-button-secondary w-full text-left"></button>
+          </div>
           <div class="flex flex-wrap justify-content-between align-items-center mb-3">
             <div class="main-header-left ">
-              <span class="p-2 mr-2 text-lg font-medium cursor-pointer text-600" *ngFor="let type of listPostType"
+              <span class="p-2 text-md md:text-lg font-medium cursor-pointer text-600"
+                *ngFor="let type of listPostType"
                 [ngClass]="{ 'font-bold text-blue-500 border-bottom-3 border-blue-500' : currentPostType === type}"
                 (click)="onChangeViewOption(type)">
                 {{ ('home.viewOption.' + type) | translate }}
@@ -118,8 +131,7 @@
       <app-loading-spinner></app-loading-spinner>
     </div>
   </ng-template>
-  <div class="col-12 text-center mt-2 cursor-pointer" *ngIf="start < totalSizePost"
-    (click)="onLoadMorePosts()">
+  <div class="col-12 text-center mt-2 cursor-pointer" *ngIf="start < totalSizePost" (click)="onLoadMorePosts()">
     <p class="font-semibold mb-2">{{'home.viewMore' | translate}}</p>
     <i class="pi pi-angle-double-down up-down text-lg"></i>
   </div>
