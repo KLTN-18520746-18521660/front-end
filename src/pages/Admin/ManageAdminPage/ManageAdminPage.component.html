@@ -1,0 +1,75 @@
+<ng-template [ngIf]="!isLoading">
+  <div class="card px-2 md:px-3 lg:px-4">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <p class="mb-0 text-xl">Manage ADMIN</p>
+      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create right" class="">
+      </button>
+    </div>
+    <p-table #dt [value]="listAdmins" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10,25,50]" responsiveLayout="scroll" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+      [globalFilterFields]="['name','country.name','representative.name','status']">
+      <ng-template pTemplate="caption">
+        <div class="table-header">
+          List of Customers
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
+              placeholder="Global Search" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="user_name">User name <p-sortIcon field="user_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="display_name">Display name <p-sortIcon field="display_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="roles">Roles <p-sortIcon field="roles"></p-sortIcon>
+          </th>
+          <th>Action </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-admin>
+        <tr>
+          <td>{{admin.id}}</td>
+          <td>{{admin.user_name}}</td>
+          <td>{{admin.email}}</td>
+          <td>{{admin.display_name}}</td>
+          <td>{{admin.roles}}</td>
+          <td>
+            <!-- <button pButton type="button" (click)="onClickEdit(admin)" class="p-button-sm p-button-secondary" icon="pi pi-pencil"></button> -->
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-template>
+
+<p-dialog [(visible)]="displayDialog" [keepInViewport]="false" [dismissableMask]="true" [modal]="true"
+  [style]="{width: '60vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <ng-template [ngIf]="viewDialog === 'edit'">
+      <p class="text-2xl max-1-line">Edit admin: <b>{{currentAdmin?.display_name}}</b></p>
+    </ng-template>
+    <ng-template [ngIf]="viewDialog === 'create'">
+      <p class="text-2xl max-1-line">Create new admin</p>
+    </ng-template>
+  </ng-template>
+
+  <ng-template [ngIf]="viewDialog === 'edit' && currentAdmin">
+    <admin-create-edit-admin [view]="'edit'" [id]="currentAdmin.user_name"></admin-create-edit-admin>
+  </ng-template>
+  <ng-template [ngIf]="viewDialog === 'create'">
+    <admin-create-edit-admin [view]="'create'"></admin-create-edit-admin>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+  </ng-template>
+</p-dialog>
+
+<app-loading [loading]="isLoading"></app-loading>

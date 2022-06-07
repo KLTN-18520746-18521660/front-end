@@ -3,10 +3,6 @@ export const REST_URL = {
   USER_SIGNUP: 'signup',
   USER_LOGOUT: 'logout',
   GET_USER_BY_SESSIONID: 'session/user',
-  GET_USER_BY_APIKEY: 'getuser',
-  GET_USER_BY_ID: 'getUserById',
-  GET_USER_BY_USERNAME: 'getUserByUsername',
-  GET_USER_BY_EMAIL: 'getUserByEmail',
 
   AUDIT_LOG: 'auditlog',
   ACTION: 'action',
@@ -67,6 +63,8 @@ export const REST_URL = {
     CONFIG: 'admin/config',
     RELOAD_CONFIG: 'admin/config/reload',
 
+    ADMIN: 'admin/user',
+
     USER: 'user',
     CHANGE_PASSWORD: 'admin/user/changepassword',
     FORGOT_PASSWORD: 'admin/user/forgotpassword',
@@ -76,7 +74,6 @@ export const REST_URL = {
 
     ROLE_ADMIN: 'admin/role/admin',
     ROLE_USER: 'admin/role/social',
-
 
     POST: 'admin/post',
     POSTS: 'admin/posts',

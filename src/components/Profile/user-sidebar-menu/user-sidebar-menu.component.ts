@@ -13,18 +13,18 @@ import User from 'models/user.model';
 export class UserSidebarMenuComponent implements OnInit {
 
   menu: MenuItem[] = [
-    {
-      id: 'dashboard',
-      label: this.translate.instant('profile.menu.dashboard.title'),
-      items: [
-        {
-          id: 'dashboard',
-          label: this.translate.instant('profile.menu.dashboard.items.dashboard'),
-          icon: 'pi pi-fw pi-home',
-          routerLink: ['/profile/dashboard'],
-        }
-      ]
-    },
+    // {
+    //   id: 'dashboard',
+    //   label: this.translate.instant('profile.menu.dashboard.title'),
+    //   items: [
+    //     {
+    //       id: 'dashboard',
+    //       label: this.translate.instant('profile.menu.dashboard.items.dashboard'),
+    //       icon: 'pi pi-fw pi-home',
+    //       routerLink: ['/profile/dashboard'],
+    //     }
+    //   ]
+    // },
     {
       id: 'profile',
       label: this.translate.instant('profile.menu.profile.title'),

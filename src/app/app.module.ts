@@ -1,3 +1,6 @@
+import { CreateEditAdminComponent } from './../components/Admin/create-edit-admin/create-edit-admin.component';
+import { AdminSecurityAcountPageComponent } from './../pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
+import { ManageAdminPageComponent } from './../pages/Admin/ManageAdminPage/ManageAdminPage.component';
 import { RightFormComponent } from './../components/Admin/right-form/right-form.component';
 import { CreateEditRoleComponent } from './../components/Admin/create-edit-role/create-edit-role.component';
 import { CreateEditRightComponent } from './../components/Admin/create-edit-right/create-edit-right.component';
@@ -262,7 +265,10 @@ export function playerFactory() {
     AdminChangePasswordPageComponent,
     CreateEditRightComponent,
     CreateEditRoleComponent,
-    RightFormComponent
+    RightFormComponent,
+    ManageAdminPageComponent,
+    AdminSecurityAcountPageComponent,
+    CreateEditAdminComponent,
   ],
   imports: [
     BrowserModule,

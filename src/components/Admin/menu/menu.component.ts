@@ -32,16 +32,16 @@ export class MenuComponent implements OnInit {
             icon: 'pi pi-fw pi-list',
             routerLink: ['./manage-user']
           },
-          {
-            label: 'Verify User',
-            icon: 'pi pi-fw pi-plus-circle',
-            routerLink: ['./verify-user']
-          },
-          {
-            label: 'Unlock User',
-            icon: 'pi pi-fw pi-unlock',
-            routerLink: ['./unlock-user']
-          },
+          // {
+          //   label: 'Verify User',
+          //   icon: 'pi pi-fw pi-plus-circle',
+          //   routerLink: ['./verify-user']
+          // },
+          // {
+          //   label: 'Unlock User',
+          //   icon: 'pi pi-fw pi-unlock',
+          //   routerLink: ['./unlock-user']
+          // },
           {
             label: 'Role User',
             icon: 'pi pi-fw pi-plus-circle',
@@ -111,6 +111,11 @@ export class MenuComponent implements OnInit {
             label: 'Change Password',
             icon: 'pi pi-fw pi-lock',
             routerLink: ['./change-password']
+          },
+          {
+            label: 'Security account',
+            icon: 'pi pi-fw pi-lock',
+            routerLink: ['./security-account']
           }
         ]
       }

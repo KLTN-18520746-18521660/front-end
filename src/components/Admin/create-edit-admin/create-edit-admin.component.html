@@ -1,0 +1,47 @@
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label requiredField for="email" class="block text-900 text-lg font-medium mb-2">
+      Email
+    </label>
+    <input formControlName="email" id="email" type="text" pInputText class="w-full mb-3" [placeholder]="'Email ...'"
+      style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
+
+    <label requiredField for="user_name" class="block text-900 text-lg font-medium mb-2">
+      User name
+    </label>
+    <input formControlName="user_name" id="user_name" type="text" pInputText [placeholder]="'User name ...'"
+      class="w-full mb-3" style="padding:1rem;"
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['user_name'].errors }">
+
+    <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
+      Display name
+    </label>
+    <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
+      class="w-full mb-3" style="padding:1rem;"
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
+
+    <ng-template [ngIf]="view === 'create'">
+      <label requiredField for="password" class="block text-900 text-lg font-medium mb-2">
+        Password
+      </label>
+      <input formControlName="password" id="password" type="text" pInputText [placeholder]="'Password ...'"
+        class="w-full mb-3" style="padding:1rem;" [type]="'password'"
+        [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }">
+    </ng-template>
+
+    <div *ngIf="submitted && form.invalid" class="invalid-feedback">
+      <div class="flex align-items-end">
+        <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+        <small class="p-error inline">Form is invalid </small>
+      </div>
+    </div>
+
+    <button type="submit" [loading]="isLoading" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+    </button>
+
+  </form>
+</ng-template>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

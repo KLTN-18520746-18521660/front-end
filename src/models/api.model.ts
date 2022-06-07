@@ -6,7 +6,6 @@ import User from "./user.model";
 import { Comment } from "./comment.model";
 import Notification from "./notification.model";
 import { Admin } from "./admin.model";
-import { ActionType } from "utils/apiConstant";
 import { ConfigFormat } from "./Admins/config.model";
 import { Right, Role } from "./Admins/role_right.model";
 
@@ -67,6 +66,9 @@ export interface ApiResult {
 
     roles?: Role[];
     rights?: Right[];
+
+    admins: Admin[];
+    admin: Admin;
   }
 }
 

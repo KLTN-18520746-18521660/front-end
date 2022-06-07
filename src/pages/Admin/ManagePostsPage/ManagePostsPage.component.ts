@@ -9,7 +9,7 @@ import { ConfirmationService, MessageService, SortMeta } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { convertDateTime, convertToMultiSortMeta } from 'utils/commonFunction';
 import { ManagePostService } from 'services/admin/manage-post.service';
-import { ManageUserService } from 'services/admin/manage-user.service';
+import { ManageAdminUserService } from 'services/admin/manage-admin-user.service';
 
 @Component({
   selector: 'app-ManagePostsPage',
@@ -80,7 +80,7 @@ export class ManagePostsPageComponent implements OnInit {
 
   constructor(
     private managePostService: ManagePostService,
-    private manageUserService: ManageUserService,
+    private manageAdminUserService: ManageAdminUserService,
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -183,7 +183,7 @@ export class ManagePostsPageComponent implements OnInit {
       this.getUserSubscription.unsubscribe();
     }
     this.isLoadingUser = true;
-    this.getUserSubscription = this.manageUserService.getUserByUsername(user_name).subscribe(
+    this.getUserSubscription = this.manageAdminUserService.getUserByUsername(user_name).subscribe(
       (res) => {
         this.isLoadingUser = false;
         this.currentUser = res.data.user;

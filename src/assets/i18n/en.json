@@ -66,11 +66,13 @@
       "manage-post": "Manage Post",
       "manage-user": "Manage User",
       "manage-config": "Manage Config",
+      "manage-admin": "Manage Admin",
       "roleUser": "Role User",
       "rightUser": "Right User",
       "roleAdmin": "Role Admin",
       "rightAdmin": "Right Admin",
-      "change-password": "Change password"
+      "change-password": "Change password",
+      "security-account": "Security your account"
     },
     "goto": "Redirecting ...",
     "notFound": "Page not found",

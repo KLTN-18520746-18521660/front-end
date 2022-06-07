@@ -1,3 +1,4 @@
+import { Right } from 'models/Admins/role_right.model';
 export class Admin {
   id?: string;
   user_name?: string;
@@ -5,6 +6,9 @@ export class Admin {
   email?: string;
   status?: string;
   settings?: object;
+  roles?: string[];
+  right?: Right;
+  password?: string;
   created_timestamp?: string;
   last_access_timestamp?: string;
 }

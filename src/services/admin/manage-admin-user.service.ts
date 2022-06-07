@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { ApiParams, ApiResult } from 'models/api.model';
-import Post from 'models/post.model';
+import { Admin } from 'models/admin.model';
+import { ApiResult, ApiParams } from 'models/api.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CookieService } from 'services/cookie.service';
@@ -15,7 +15,7 @@ const BASE_URL = environment.baseApiUrl;
 @Injectable({
   providedIn: 'root'
 })
-export class ManagePostService {
+export class ManageAdminUserService {
 
   httpOptions() {
     if (this.cookieService.check(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)) {
@@ -39,34 +39,36 @@ export class ManagePostService {
     private cookieService: CookieService
   ) { }
 
-  getListPosts(params: ApiParams): Observable<ApiResult> {
-    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.POSTS, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+  getUserByUsername(user_name: string): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.USER + `/${user_name}`, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getPostById(postId: number): Observable<ApiResult> {
-    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.POST + `/${postId}`, { ...this.httpOptions() }).pipe(catchError(error => {
+  //#region @Admin
+  getListAdmin(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.ADMIN, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  getPostBySlug(slug: string): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(BASE_URL + REST_URL.POST + `/${slug}`, { ...this.httpOptions() }).pipe(catchError(error => {
+  createAdmin(admin: Admin): Observable<ApiResult> {
+    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.ADMIN, admin, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  approvePostByPostId(postId: number): Observable<ApiResult> {
-    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.APPROVE_POST + `/${postId}`, {}, { ...this.httpOptions() }).pipe(catchError(error => {
+  getAdminById(id: string): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.ADMIN + `/${id}`, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
 
-  rejectPostByPostId(postId: number, pending: boolean = false): Observable<ApiResult> {
-    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.REJECT_POST + `/${postId}`, { reject_pending_content: pending }, { ...this.httpOptions() }).pipe(catchError(error => {
+  modifyAdmin(id: string, admin: Admin): Observable<ApiResult> {
+    return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.ADMIN + `/${id}`, admin, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }
+  //#endregion
 
 }

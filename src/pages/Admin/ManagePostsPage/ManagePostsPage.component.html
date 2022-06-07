@@ -119,7 +119,8 @@
         </td>
         <td>
           <button pButton type="button" (click)="onClickViewDetail(post.id)" class="p-button-sm p-button-secondary"
-            icon="pi pi-eye"></button>
+            icon="pi pi-eye">
+          </button>
         </td>
       </tr>
     </ng-template>
@@ -144,15 +145,15 @@
     <ng-template [ngIf]="viewDialog === 'detail' && !!currentPost">
       <app-view-detail-post [post]="currentPost"></app-view-detail-post>
       <div class="flex justify-content-end">
-        <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple type="button"
-          (click)="onClickReject(currentPost.id, true)" label="Reject Pending Content"
+        <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple
+          type="button" (click)="onClickReject(currentPost.id, true)" label="Reject Pending Content"
           class="p-button-outlined mr-2" icon="pi pi-ti"></button>
-        <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple type="button"
-          (click)="onClickApprove(currentPost.id)" label="Approve Pending Content"
+        <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple
+          type="button" (click)="onClickApprove(currentPost.id)" label="Approve Pending Content"
           class="p-button-outlined p-button-danger mr-2" icon="pi pi-ti"></button>
         <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
-          (click)="onClickReject(currentPost.id)" label="Reject"
-          class="p-button-outlined p-button-danger mr-2" icon="pi pi-ti"></button>
+          (click)="onClickReject(currentPost.id)" label="Reject" class="p-button-outlined p-button-danger mr-2"
+          icon="pi pi-ti"></button>
         <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
           (click)="onClickApprove(currentPost.id)" label="Approve" class="p-button-raised p-button-success"
           icon="pi pi-check"></button>

@@ -1,6 +1,6 @@
 <ng-template [ngIf]="!loading">
   <form [formGroup]="form">
-    <div class="flex justify-content-between col-12">
+    <div class="flex justify-content-between border-1 surface-border col-12">
       <div class="flex col-4 align-items-center">
         <p-checkbox formControlName="selected" inputId="selected" [binary]="true"></p-checkbox>
         <label for="selected" class="ml-2" pTooltip="{{right.describe}}">{{right.display_name}} </label>

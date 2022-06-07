@@ -81,12 +81,12 @@ export class TopBarComponent implements OnInit {
     });
 
     this.menuUser = [
-      {
-        id: 'dashboard',
-        label: this.translate.instant('topbar.user.dashboard'),
-        icon: 'pi pi-home',
-        routerLink: ['/profile']
-      },
+      // {
+      //   id: 'dashboard',
+      //   label: this.translate.instant('topbar.user.dashboard'),
+      //   icon: 'pi pi-home',
+      //   routerLink: ['/profile']
+      // },
       {
         id: 'profile',
         label: this.translate.instant('topbar.user.profile'),

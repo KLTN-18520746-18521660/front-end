@@ -1,3 +1,5 @@
+import { ManageAdminPageComponent } from './../../pages/Admin/ManageAdminPage/ManageAdminPage.component';
+import { AdminSecurityAcountPageComponent } from './../../pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
 import { AdminChangePasswordPageComponent } from './../../pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
 import { AdminGuard } from 'shared/guards/admin.guard';
 import { RouterModule } from '@angular/router';
@@ -43,6 +45,11 @@ import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/Mana
             data: { key: 'admin.manage-config' }
           },
           {
+            path: 'manage-admin',
+            component: ManageAdminPageComponent,
+            data: { key: 'admin.manage-admin' }
+          },
+          {
             path: 'role-user',
             component: ManageRoleUserPageComponent,
             data: { key: 'admin.roleUser' }
@@ -66,6 +73,11 @@ import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/Mana
             path: 'change-password',
             component: AdminChangePasswordPageComponent,
             data: { key: 'admin.change-password' }
+          },
+          {
+            path: 'security-account',
+            component: AdminSecurityAcountPageComponent,
+            data: { key: 'admin.security-account' }
           }
         ]
       },
