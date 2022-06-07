@@ -3,7 +3,7 @@ export interface Role {
   role_name?: string;
   display_name?: string;
   describe?: string;
-  rights: {
+  rights?: {
     [key: string]: RightDetail;
   };
   priority?: boolean;
@@ -21,6 +21,7 @@ export interface Right {
 export interface RightDetail {
   key?: string;
   display_name?: string;
+  describe?: string;
   selected?: boolean;
   read?: boolean;
   write?: boolean;

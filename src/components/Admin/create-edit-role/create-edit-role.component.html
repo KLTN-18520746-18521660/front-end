@@ -1,49 +1,52 @@
-<ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ng-template [ngIf]="view === 'create'">
-      <label requiredField for="role_name" class="block text-900 text-lg font-medium mb-2">
-        Right name
-      </label>
-      <input formControlName="role_name" id="role_name" type="text" pInputText [placeholder]="'Right name ...'"
-        class="w-full mb-3" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['role_name'].errors }">
-    </ng-template>
-
-    <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
-      Display name
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <ng-template [ngIf]="view === 'create'">
+    <label requiredField for="role_name" class="block text-900 text-lg font-medium mb-2">
+      Right name
     </label>
-    <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
-      class="w-full mb-3" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
+    <input formControlName="role_name" id="role_name" type="text" pInputText [placeholder]="'Right name ...'"
+      class="w-full mb-3" style="padding:1rem;"
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['role_name'].errors }">
+  </ng-template>
 
-    <label requiredField for="describe" class="block text-900 text-lg font-medium mb-2">
-      Describe
-    </label>
-    <input formControlName="describe" id="describe" type="text" pInputText class="w-full mb-3"
-      [placeholder]="'Describe ...'" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
+  <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
+    Display name
+  </label>
+  <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
+    class="w-full mb-3" style="padding:1rem;"
+    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
 
-    <label requiredField for="priority" class="block text-900 text-lg font-medium mb-2">
-      Priority
-    </label>
-    <p-inputSwitch formControlName="priority" id="priority" class="mb-3"></p-inputSwitch>
+  <label requiredField for="describe" class="block text-900 text-lg font-medium mb-2">
+    Describe
+  </label>
+  <input formControlName="describe" id="describe" type="text" pInputText class="w-full mb-3"
+    [placeholder]="'Describe ...'" style="padding:1rem;"
+    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
 
-    <div *ngIf="submitted && form.invalid" class="invalid-feedback">
-      <div class="flex align-items-end">
-        <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-        <small class="p-error inline">Form is invalid </small>
-      </div>
+  <label requiredField for="priority" class="block text-900 text-lg font-medium mb-2">
+    Priority
+  </label>
+  <p-inputSwitch formControlName="priority" id="priority" class="mb-3"></p-inputSwitch>
+
+  <div *ngIf="submitted && form.invalid" class="invalid-feedback">
+    <div class="flex align-items-end">
+      <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+      <small class="p-error inline">Form is invalid </small>
     </div>
+  </div>
 
-    <label class="block text-900 text-lg font-medium mt-4 mb-2">
-      Right of role
-    </label>
-    <small>Select right to edit</small>
+  <label class="block text-900 text-lg font-medium mt-4 mb-2">
+    Right of role
+  </label>
+  <small>Select right to edit</small>
+  <ng-template [ngIf]="!isLoadingRights" [ngIfElse]="loadingBlock">
     <admin-right-form *ngFor="let right of listRightControl" [right]="right" (onChange)="onChange($event)">
     </admin-right-form>
+  </ng-template>
 
-    <button type="submit" [loading]="isLoading" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
-    </button>
+  <button type="submit" [loading]="isLoading" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+  </button>
 
-  </form>
-</ng-template>
+</form>
 
 <ng-template #loadingBlock>
   <app-loading-spinner></app-loading-spinner>

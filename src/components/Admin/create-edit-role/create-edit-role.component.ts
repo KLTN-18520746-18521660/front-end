@@ -40,6 +40,11 @@ export class CreateEditRoleComponent implements OnInit {
 
   submitted: boolean = false;
 
+  rightModel: {
+    [key: string]: RightDetail;
+  } = {};
+
+
   constructor(
     private manageRoleService: ManageRoleService,
     private manageRightService: ManageRightService,
@@ -85,7 +90,15 @@ export class CreateEditRoleComponent implements OnInit {
   }
 
   onChange(event: RightDetail) {
-    console.log(event);
+    if (event.selected && (event.read || event.write)) {
+      this.rightModel[event.key] = {
+        read: true,
+        write: true,
+      };
+    }
+    else {
+      delete this.rightModel[event.key];
+    }
   }
 
   onSubmit() {
@@ -107,22 +120,20 @@ export class CreateEditRoleComponent implements OnInit {
     if (this.type === 'admin') {
       this.subscription = this.manageRightService.getRightAdmin().subscribe(
         (res) => {
-          this.isLoadingRights = false;
           this.listRights = res.data.rights;
 
           this.listRightControl = this.convertListRights(this.listRights);
-          console.log(this.listRightControl);
+          this.isLoadingRights = false;
         }
       );
     }
     else if (this.type === 'user') {
       this.subscription = this.manageRightService.getRightUser().subscribe(
         (res) => {
-          this.isLoadingRights = false;
           this.listRights = res.data.rights;
 
           this.listRightControl = this.convertListRights(this.listRights);
-          console.log(this.listRightControl);
+          this.isLoadingRights = false;
         }
       );
     }
@@ -135,6 +146,7 @@ export class CreateEditRoleComponent implements OnInit {
         list.push({
           key: item.right_name,
           display_name: item.display_name,
+          describe: item.describe,
           read: this.role?.rights[item.right_name] ? this.role?.rights[item.right_name]?.read : false,
           write: this.role?.rights[item.right_name] ? this.role?.rights[item.right_name]?.write : false,
           selected: this.role?.rights[item.right_name] ? true : false,
@@ -146,6 +158,7 @@ export class CreateEditRoleComponent implements OnInit {
         list.push({
           key: item.right_name,
           display_name: item.display_name,
+          describe: item.describe,
           read: false,
           write: false,
           selected: false,
@@ -158,10 +171,12 @@ export class CreateEditRoleComponent implements OnInit {
   createRole() {
     this.isLoading = true;
     if (this.form.valid) {
-      const body = {
+      const body: Role = {
         role_name: this.form.value.role_name,
         display_name: this.form.value.display_name,
         describe: this.form.value.describe,
+        priority: this.form.value.priority,
+        rights: this.rightModel,
       };
 
       this.subscription = this.manageRoleService.createRole(this.type, body).subscribe(
@@ -190,18 +205,18 @@ export class CreateEditRoleComponent implements OnInit {
         describe: this.form.value.describe,
       };
 
-      this.subscription = this.manageRoleService.updateRole(this.type, this.role.role_name, body).subscribe(
-        (res) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited role success' });
-          this.isLoading = false;
-          this.onClose.emit();
-        },
-        (err) => {
-          this.isLoading = false;
+      // this.subscription = this.manageRoleService.updateRole(this.type, this.role.role_name, body).subscribe(
+      //   (res) => {
+      //     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited role success' });
+      //     this.isLoading = false;
+      //     this.onClose.emit();
+      //   },
+      //   (err) => {
+      //     this.isLoading = false;
 
-          this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
-        }
-      );
+      //     this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+      //   }
+      // );
     }
     else {
       this.isLoading = false;

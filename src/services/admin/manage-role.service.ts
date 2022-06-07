@@ -11,6 +11,7 @@ import { catchError } from 'rxjs/operators';
 import { ActionType, REST_URL } from 'utils/apiConstant';
 import { handleError } from 'utils/commonFunction';
 import { STORAGE_KEY } from 'utils/appConstant';
+import { Role } from 'models/Admins/role_right.model';
 
 const BASE_URL = environment.baseApiUrl;
 
@@ -53,7 +54,7 @@ export class ManageRoleService {
     }));
   }
 
-  createRole(type: 'admin' | 'user', body): Observable<ApiResult> {
+  createRole(type: 'admin' | 'user', body: Role): Observable<ApiResult> {
     if (type === 'admin') {
       return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.ROLE_ADMIN, body, this.httpOptions()).pipe(catchError(error => {
         return throwError(handleError(error));

@@ -10,6 +10,12 @@ import { ManageRoleService } from 'services/admin/manage-role.service';
 })
 export class ManageRoleAdminPageComponent implements OnInit {
 
+  viewDialog: 'edit' | 'create';
+
+  displayDialog: boolean = false;
+
+  currentRole: Role;
+
   isLoading: boolean = false;
 
   listRoles: Role[];
@@ -38,10 +44,26 @@ export class ManageRoleAdminPageComponent implements OnInit {
     );
   }
 
+  onClickCreate() {
+    this.currentRole = null;
+    this.viewDialog = 'create';
+    this.displayDialog = true;
+  }
+
+  onClickEdit(role: Role) {
+    this.currentRole = role;
+    this.viewDialog = 'edit';
+    this.displayDialog = true;
+  }
+
+  onSuccess() {
+    this.displayDialog = false;
+    this.getListRoles();
+  }
+
   ngOnDestroy() {
     if (this.getListSubscription) {
       this.getListSubscription.unsubscribe();
     }
   }
-
 }

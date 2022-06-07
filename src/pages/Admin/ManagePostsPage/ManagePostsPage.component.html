@@ -1,4 +1,4 @@
-<div class="card manage-post-wrapper" *ngIf="!isLoading && !error">
+<div class="card px-2 md:px-3 lg:px-4 manage-post-wrapper" *ngIf="!isLoading && !error">
   <p-table #dt [value]="listPosts" dataKey="id" responsiveLayout="scroll" [paginator]="true" [rowHover]="true"
     [loading]="isLoadingTable" [totalRecords]="totalRecords" [(selection)]="selectedPosts"
     (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll" (selectAllChange)="onSelectAllChange($event)"

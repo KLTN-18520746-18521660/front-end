@@ -20,7 +20,7 @@ export class RightFormComponent implements OnInit {
 
   subscription: Subscription;
 
-  disabled: boolean = false;
+  selectSubscription: Subscription;
 
   constructor(
   ) { }
@@ -28,35 +28,33 @@ export class RightFormComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       selected: new FormControl(this.right?.selected || false),
-      read: new FormControl(this.right?.read || false),
-      write: new FormControl(this.right?.write || false),
+      read: new FormControl({ value: this.right?.read || false, disabled: !this.right?.selected || false }),
+      write: new FormControl({ value: this.right?.write || false, disabled: !this.right?.selected || false }),
     });
-
-    if (!this.right.selected) {
-      this.disabled = true;
-    }
-    else {
-      this.disabled = false;
-    }
 
     this.subscription = this.form.valueChanges.subscribe(
       (res: RightDetail) => {
-
-        //disable form for read and write if selected is false
-        if (!res.selected) {
-          this.disabled = true;
-        }
-        else {
-          this.disabled = false;
-        }
-
         this.onChange.emit({
           key: this.right?.key,
           display_name: this.right?.display_name,
-          read: res.read,
-          write: res.write,
+          describe: this.right?.describe,
+          read: res?.read || false,
+          write: res?.write || false,
           selected: res.selected,
         });
+      }
+    );
+
+    this.selectSubscription = this.form.get('selected').valueChanges.subscribe(
+      (res: boolean) => {
+        if (res) {
+          this.form.get('read').enable();
+          this.form.get('write').enable();
+        }
+        else {
+          this.form.get('read').disable();
+          this.form.get('write').disable();
+        }
       }
     );
   }
@@ -68,6 +66,9 @@ export class RightFormComponent implements OnInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.selectSubscription) {
+      this.selectSubscription.unsubscribe();
     }
   }
 
