@@ -1,3 +1,4 @@
+import { RightFormComponent } from './../components/Admin/right-form/right-form.component';
 import { CreateEditRoleComponent } from './../components/Admin/create-edit-role/create-edit-role.component';
 import { CreateEditRightComponent } from './../components/Admin/create-edit-right/create-edit-right.component';
 import { ManageRightUserPageComponent } from 'pages/Admin/ManageRightUserPage/ManageRightUserPage.component';
@@ -261,6 +262,7 @@ export function playerFactory() {
     AdminChangePasswordPageComponent,
     CreateEditRightComponent,
     CreateEditRoleComponent,
+    RightFormComponent
   ],
   imports: [
     BrowserModule,

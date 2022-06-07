@@ -19,6 +19,9 @@ export interface Right {
 }
 
 export interface RightDetail {
+  key?: string;
+  display_name?: string;
+  selected?: boolean;
   read?: boolean;
   write?: boolean;
 }

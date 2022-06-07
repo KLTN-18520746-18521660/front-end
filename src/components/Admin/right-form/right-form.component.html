@@ -1,0 +1,20 @@
+<ng-template [ngIf]="!loading">
+  <form [formGroup]="form">
+    <div class="flex justify-content-between col-12 p-0">
+      <div class="flex col-4 align-items-center">
+        <p-checkbox formControlName="selected" inputId="selected" [binary]="true"></p-checkbox>
+        <label for="selected" class="ml-2" title="{{right.key}}">{{right.display_name}} </label>
+      </div>
+      <div class="flex col-4 justify-content-center align-items-center"
+        [ngClass]="{'opacity-60': !f['selected'].value}">
+        <label for="read" class="mr-2">Read </label>
+        <p-inputSwitch [disabled]="disabled" formControlName="read" inputId="read"></p-inputSwitch>
+      </div>
+      <div class="flex col-4 justify-content-center align-items-center"
+        [ngClass]="{'opacity-60': !f['selected'].value}">
+        <label for="write" class="mr-2">Write </label>
+        <p-inputSwitch [disabled]="disabled" formControlName="write" inputId="write"></p-inputSwitch>
+      </div>
+    </div>
+  </form>
+</ng-template>

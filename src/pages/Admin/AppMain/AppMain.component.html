@@ -25,12 +25,6 @@
 <p-toast [preventOpenDuplicates]="true"></p-toast>
 
 <ng-template #gotoLogin>
-  <div class="h-screen w-screen">
-    <div class="flex h-full justify-content-center align-items-center">
-      <button [routerLink]="['./login']" pButton pRipple type="button" label="Go to Login Page"
-        class="p-button-raised p-button-danger"></button>
-    </div>
-  </div>
 </ng-template>
 
 <app-loading [loading]="isLoading || isLoadingConfig"></app-loading>

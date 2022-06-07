@@ -28,6 +28,8 @@ export class CreateEditRightComponent implements OnInit {
 
   form: FormGroup;
 
+  submitted: boolean = false;
+
   constructor(
     private manageRightService: ManageRightService,
     private messageService: MessageService,
@@ -66,6 +68,7 @@ export class CreateEditRightComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.view === 'edit') {
       this.editRight();
     }

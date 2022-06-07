@@ -146,6 +146,9 @@
       <div class="flex justify-content-end">
         <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple type="button"
           (click)="onClickReject(currentPost.id, true)" label="Reject Pending Content"
+          class="p-button-outlined mr-2" icon="pi pi-ti"></button>
+        <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple type="button"
+          (click)="onClickApprove(currentPost.id)" label="Approve Pending Content"
           class="p-button-outlined p-button-danger mr-2" icon="pi pi-ti"></button>
         <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
           (click)="onClickReject(currentPost.id)" label="Reject"
@@ -163,7 +166,7 @@
 
 <ng-template #loadingBlock>
   <div class="flex justify-content-center">
-    <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </ng-template>
 

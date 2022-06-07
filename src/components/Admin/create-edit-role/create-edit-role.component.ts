@@ -1,8 +1,10 @@
+import { RightDetail } from './../../../models/Admins/role_right.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Role } from 'models/Admins/role_right.model';
+import { Role, Right } from 'models/Admins/role_right.model';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subscription, map } from 'rxjs';
+import { ManageRightService } from 'services/admin/manage-right.service';
 import { ManageRoleService } from 'services/admin/manage-role.service';
 
 @Component({
@@ -24,12 +26,23 @@ export class CreateEditRoleComponent implements OnInit {
 
   subscription: Subscription;
 
+  getRightSubscription: Subscription;
+
   isLoading: boolean = false;
+
+  listRights: Right[] = [];
+
+  listRightControl: RightDetail[] = [];
+
+  isLoadingRights: boolean = false;
 
   form: FormGroup;
 
+  submitted: boolean = false;
+
   constructor(
     private manageRoleService: ManageRoleService,
+    private manageRightService: ManageRightService,
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) { }
@@ -39,11 +52,13 @@ export class CreateEditRoleComponent implements OnInit {
       this.form = new FormGroup({
         display_name: new FormControl(this.role.display_name),
         describe: new FormControl(this.role.describe),
+        priority: new FormControl(this.role.priority),
       });
 
       this.form = this.formBuilder.group({
         display_name: [this.role.display_name, [Validators.required]],
         describe: [this.role.describe, [Validators.required]],
+        priority: [this.role.priority, [Validators.required]],
       });
     }
     else {
@@ -51,27 +66,93 @@ export class CreateEditRoleComponent implements OnInit {
         role_name: new FormControl(''),
         display_name: new FormControl(''),
         describe: new FormControl(''),
+        priority: new FormControl(false),
       });
 
       this.form = this.formBuilder.group({
         role_name: ['', [Validators.required]],
         display_name: ['', [Validators.required]],
         describe: ['', [Validators.required]],
+        priority: [false, [Validators.required]],
       });
     }
+
+    this.getListRights();
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
+  onChange(event: RightDetail) {
+    console.log(event);
+  }
+
   onSubmit() {
+    this.submitted = true;
     if (this.view === 'edit') {
       this.editRole();
     }
     else {
       this.createRole();
     }
+  }
+
+  getListRights() {
+    this.listRights = [];
+    if (this.getRightSubscription) {
+      this.getRightSubscription.unsubscribe();
+    }
+    this.isLoadingRights = true;
+    if (this.type === 'admin') {
+      this.subscription = this.manageRightService.getRightAdmin().subscribe(
+        (res) => {
+          this.isLoadingRights = false;
+          this.listRights = res.data.rights;
+
+          this.listRightControl = this.convertListRights(this.listRights);
+          console.log(this.listRightControl);
+        }
+      );
+    }
+    else if (this.type === 'user') {
+      this.subscription = this.manageRightService.getRightUser().subscribe(
+        (res) => {
+          this.isLoadingRights = false;
+          this.listRights = res.data.rights;
+
+          this.listRightControl = this.convertListRights(this.listRights);
+          console.log(this.listRightControl);
+        }
+      );
+    }
+  }
+
+  convertListRights(listRights: Right[]): RightDetail[] {
+    let list: RightDetail[] = [];
+    if (this.view === 'edit') {
+      listRights.map((item) => {
+        list.push({
+          key: item.right_name,
+          display_name: item.display_name,
+          read: this.role?.rights[item.right_name] ? this.role?.rights[item.right_name]?.read : false,
+          write: this.role?.rights[item.right_name] ? this.role?.rights[item.right_name]?.write : false,
+          selected: this.role?.rights[item.right_name] ? true : false,
+        });
+      });
+    }
+    else if (this.view === 'create') {
+      listRights.map((item) => {
+        list.push({
+          key: item.right_name,
+          display_name: item.display_name,
+          read: false,
+          write: false,
+          selected: false,
+        });
+      });
+    }
+    return list;
   }
 
   createRole() {
@@ -109,7 +190,7 @@ export class CreateEditRoleComponent implements OnInit {
         describe: this.form.value.describe,
       };
 
-      this.subscription = this.manageRoleService.updateRole(this.type, this.role.id, body).subscribe(
+      this.subscription = this.manageRoleService.updateRole(this.type, this.role.role_name, body).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited role success' });
           this.isLoading = false;
@@ -130,6 +211,9 @@ export class CreateEditRoleComponent implements OnInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.getRightSubscription) {
+      this.getRightSubscription.unsubscribe();
     }
   }
 }

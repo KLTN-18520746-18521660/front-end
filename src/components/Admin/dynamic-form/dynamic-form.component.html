@@ -1,7 +1,8 @@
 <form [formGroup]="form">
   <div class="field grid dynamic-form">
-    <label htmlFor="{config.key}}" title="{{config.key}}"
-      class="col-12 mb-2 md:col-4 md:mb-0 capitalize">{{displayKey}}</label>
+    <label htmlFor="{config.key}}" title="{{config.key}}" class="col-12 mb-2 md:col-4 md:mb-0 capitalize">
+      {{displayKey}}
+    </label>
     <div class="col-12 md:col-8">
       <ng-template [ngIf]="config.format.type === 'string'">
         <input pInputText formControlName="{{config.key}}" id="{{this.config.key}}" type="text" />
