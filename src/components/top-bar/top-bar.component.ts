@@ -105,12 +105,12 @@ export class TopBarComponent implements OnInit {
         icon: 'pi pi-bell',
         routerLink: ['/profile/notifications']
       },
-      {
-        id: 'setting',
-        label: this.translate.instant('topbar.user.setting'),
-        icon: 'pi pi-cog',
-        routerLink: ['/profile/setting']
-      },
+      // {
+      //   id: 'setting',
+      //   label: this.translate.instant('topbar.user.setting'),
+      //   icon: 'pi pi-cog',
+      //   routerLink: ['/profile/setting']
+      // },
       { separator: true },
       {
         id: 'logout',
