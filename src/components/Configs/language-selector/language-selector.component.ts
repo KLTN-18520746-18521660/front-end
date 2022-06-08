@@ -8,6 +8,7 @@ interface LanguageSelector {
   name: string;
   lang: string;
   flag: string;
+  short_name: string;
 }
 
 @Component({
@@ -42,12 +43,14 @@ export class LanguageSelectorComponent implements OnInit {
       {
         name: "English",
         lang: "en",
-        flag: "us"
+        flag: "us",
+        short_name: "ENG"
       },
       {
         name: "Tiếng Việt",
         lang: "vi",
-        flag: "vn"
+        flag: "vn",
+        short_name: "VIE"
       },
       // {
       //   name: "日本",
@@ -66,19 +69,26 @@ export class LanguageSelectorComponent implements OnInit {
     })
   }
 
+  // for dropdown
   onChangeLanguage(event) {
-    if (event.value.lang !== this.currentLanguage) {
-      this.userConfig.addConfig('language', event.value.lang);
-      this.translate.use(event.value.lang);
-      window.location.reload();
+    console.log(event);
+    if (event.value !== this.currentLanguage) {
+      this.userConfig.addConfig('language', event.value);
+      this.translate.use(event.value);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   }
 
   onChangeLanguageListBox(event) {
+    console.log(event);
     if (event.value.lang !== this.currentLanguage) {
       this.userConfig.addConfig('language', event.value.lang);
       this.translate.use(event.value.lang);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   }
 

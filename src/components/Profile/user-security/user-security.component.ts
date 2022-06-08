@@ -38,4 +38,8 @@ export class UserSecurityComponent implements OnInit {
     );
   }
 
+  onDelete(id) {
+    this.listSession = this.listSession.filter(item => item.session_token !== id);
+  }
+
 }

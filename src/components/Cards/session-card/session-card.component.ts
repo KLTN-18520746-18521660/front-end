@@ -2,7 +2,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'services/auth.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Session } from 'models/api.model';
 import { convertDateTime } from 'utils/commonFunction';
 
@@ -16,6 +16,8 @@ export class SessionCardComponent implements OnInit {
   @Input() loading: boolean = false;
 
   @Input() session: Session;
+
+  @Output() onDelete: EventEmitter<any> = new EventEmitter();
 
   deleteSubcription: Subscription;
 
@@ -54,6 +56,7 @@ export class SessionCardComponent implements OnInit {
     this.deleteSubcription = this.authService.deleteSessionUser(sessionId).subscribe(
       (res) => {
         this.loading = false;
+        this.onDelete.emit(sessionId);
         this.messageService.add({
           key: 'sessionCard',
           severity: 'success',

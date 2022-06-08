@@ -1,69 +1,1206 @@
 {
-  "home": {
-    "title": "Trang chủ",
-    "description": "Home page",
-    "keywords": "home, page",
-    "viewOption": {
-      "foryou": "For you ",
-      "following": "Following",
-      "trending": "Trending"
-    }
+  "common": {
+    "post": "Bài viết",
+    "posts": "Bài viết",
+    "follow": "Theo dõi",
+    "unfollow": "Bỏ theo dõi",
+    "clickFollow": "Nhấn để theo dõi",
+    "clickUnfollow": "Nhấn để bỏ theo dõi",
+    "following": "Đang theo dõi",
+    "follower": "Người theo dõi",
+    "followers": "Người theo dõi",
+    "view": "Lượt xem",
+    "views": "Lượt xem",
+    "like": "Lượt thích",
+    "likes": "Lượt thích",
+    "submit": "Gửi",
+    "comment": "Bình luận",
+    "visited": "Đã xem",
+    "save": "Lưu thay đổi",
+    "new": "Mới",
+    "darkMode": "Chế độ tối",
+    "dark": "Chuyển sang chế độ tối",
+    "light": "Chuyển sang chế độ sáng",
+    "readMore": "Xem thêm",
+    "readLess": "Ẩn bớt",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "register": "Đăng ký",
+    "profile": "Hồ sơ",
+    "language": "Ngôn ngữ",
+    "feedback": "Góp ý và phản hồi",
+    "result": "Hiển thị <b>{{count}}</b> trong tổng số <b>{{total}}</b> kết quả",
+    "noUser": "Người dùng không tồn tại"
   },
   "titlePage": {
-    "default": "Home - Heovi",
+    "prefix": "",
+    "suffix": " - oOwlet, nền tảng chia sẻ bài viết cho nhà phát triển và mọi người",
     "home": "Trang chủ",
-    "post": "Post",
-    "profile": "Profile",
-    "login": "Login",
-    "register": "Register",
-    "logout": "Logout",
-    "search": "Search result for {{query}}",
-    "trending": "Trending"
+    "post": "Bài viết",
+    "postdetail": "Chi tiết bài viết",
+    "createPost": "Tạo bài viết",
+    "editPost": "Sửa bài viết",
+    "profile": "Hồ sơ",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "forgotpassword": "Quên mật khẩu",
+    "confirm-account": "Xác nhận tài khoản",
+    "dashboard": "Bảng điều khiển",
+    "notifications": "Thông báo",
+    "setting": "Cài đặt",
+    "manage-post": "Quản lý bài viết",
+    "user-info": "Thông tin người dùng",
+    "edit-info": "Sửa thông tin",
+    "security": "Bảo mật tài khoản",
+    "change-password": "Đổi mật khẩu",
+    "newpassword": "Đặt lại mật khẩu mới",
+    "history-activity": "Lịch sử hoạt động",
+    "following": "Đang theo dõi",
+    "followers": "Người theo dõi",
+    "manageUser": "Quản lý người dùng",
+    "logout": "Đăng xuất",
+    "trending": "Xu hướng",
+    "admin": {
+      "dashboard": "Admin Dashboard",
+      "login": "Admin Login",
+      "manage-post": "Manage Post",
+      "manage-user": "Manage User",
+      "manage-config": "Manage Config",
+      "manage-admin": "Manage Admin",
+      "roleUser": "Role User",
+      "rightUser": "Right User",
+      "roleAdmin": "Role Admin",
+      "rightAdmin": "Right Admin",
+      "change-password": "Change password",
+      "security-account": "Security your account"
+    },
+    "goto": "Đang chuyển hướng ...",
+    "notFound": "Không tìm thấy trang",
+    "serverError": "Lỗi hệ thống, vui lòng thử lại sau",
+    "noAccess": "Không có quyền truy cập"
   },
-  "action": {},
+  "home": {
+    "title": "Trang chủ",
+    "description": "Trang chủ",
+    "keywords": "Trang chủ",
+    "viewMore": "Xem thêm",
+    "createPost": "Tạo bài viết",
+    "viewOption": {
+      "new": "Mới nhất",
+      "following": "Đang theo dõi",
+      "trending": "Xu hướng",
+      "recommend": "Dành cho bạn"
+    },
+    "createPostPlaceholder": "Bắt đầu tìm kiếm tại đây ..."
+  },
+  "tooltip": {
+    "copy": "Nhấn để sao chép"
+  },
+  "notification": {
+    "title": "Thông báo",
+    "subTitle": "Bạn có <b>{{count}}</b> thông báo chưa đoc",
+    "viewRead": "Chỉ hiển thị chưa đọc",
+    "viewAll": "Đánh dấu tất cả đã đọc",
+    "viewOption": {
+      "all": "Tất cả",
+      "unread": "Chưa đọc"
+    },
+    "noNotification": "Không có thông báo nào",
+    "read": "Đã đọc",
+    "unread": "Chưa đọc",
+    "delete": "Xóa thông báo này",
+    "markRead": "Đánh dấu đã đọc",
+    "markReadSuccess": "Đánh dấu thành công",
+    "markAllReadSuccess": "Đánh dấu tất cả thành công",
+    "markUnread": "Đánh dấu chưa đọc",
+    "deleteAll": "Xóa tất cả thông báo",
+    "deleteAllConfirm": "Bạn có chắc chắn muốn xóa tất cả thông báo?",
+    "deleteAllSuccess": "Xóa tất cả thông báo thành công",
+    "deleteAllFail": "Xóa thất bại",
+    "deleteConfirm": "Bạn có chắc chắn muốn xóa thông báo này?",
+    "deleteSuccess": "Xóa thành công",
+    "deleteFail": "Xóa thất bại",
+    "type": {
+      "default": "Thông báo mặc định",
+      "follow": "<b>{{user}}</b> đã theo dõi bạn",
+      "addComment": "<b>{{user}}</b> đã bình luận bài viết của bạn: <b>{{content}}</b>",
+      "replyComment": "<b>{{user}}</b> đã trả lời bình luận của bạn: <b>{{content}}</b>",
+      "likeComment": "<b>{{user}}</b> đã thích bình luận của bạn: <b>{{content}}</b>",
+      "mention": "<b>{{user}}</b> đã nhắc đến bạn trong bài viết: <b>{{content}}</b>",
+      "save": "<b>{{user}}</b> đã lưu bài viết của bạn: <b>{{content}}</b>",
+      "share": "<b>{{user}}</b> đã chia sẻ bài viết của bạn: <b>{{content}}</b>",
+      "newPost": "<b>{{user}}</b> đã thêm bài viết mới: <b>{{content}}</b>",
+      "likePost": "<b>{{user}}</b> đã thích bài viết của bạn: <b>{{content}}</b>",
+      "deletePost": "<b>{{user}}</b> đã xóa bài viết của bạn: <b>{{content}}</b>",
+      "approvePost": "<b>{{user}}</b> đã chấp nhận bài viết của bạn: <b>{{content}}</b>",
+      "rejectPost": "<b>{{user}}</b> đã từ chối bài viết của bạn: <b>{{content}}</b>"
+    }
+  },
+  "dialog": {
+    "confirmation": "Xác nhận",
+    "login": "Bạn cần đăng nhập để tiếp tục",
+    "logout": {
+      "header": "Đăng xuất",
+      "title": "Bạn có chắc chắn muốn đăng xuất?",
+      "yes": "Đăng xuất",
+      "no": "Hủy"
+    },
+    "unsavechange": {
+      "header": "Xác nhận hủy lưu",
+      "title": "Bạn chưa lưu thay đổi. Thay đổi của bạn sẽ bị mất nếu bạn không lưu chúng. Nhấn Hủy để quay lại và lưu chúng.",
+      "yes": "Không lưu",
+      "no": "Ở lại"
+    },
+    "changepassword": {}
+  },
+  "message": {
+    "success": "Thành công",
+    "error": "Lỗi",
+    "needRefresh": "Bạn không truy cập vào trang này trong một thời gian dài. Vui lòng tải lại (F5) trang để tiếp tục làm mới dữ liệu",
+    "nochange": "Không có thay đổi",
+    "update": "Cập nhật thành công",
+    "updateFail": "Cập nhật thất bại",
+    "publicPostSuccess": "Bài viết của bạn đã được đăng trên website. Bạn cần phải chờ đợi phê duyệt của admin để hiển thị bài viết của bạn.",
+    "createPostSuccess": "Bài viết của bạn đã được tạo thành công, chỉ bạn mới có thể xem bài viết này",
+    "savePostDraftSuccess": "Bài viết của bạn đã được lưu thành công",
+    "copied": "Đã sao chép",
+    "delete": "Xóa thành công",
+    "save": "Lưu thành công",
+    "create": "Tạo thành công",
+    "login": "Đăng nhập thành công",
+    "register": "Đăng ký thành công",
+    "confirm": "Xác nhận thành công",
+    "uploadfail": "Tải lên thất bại",
+    "needlogin": "Bạn cần đăng nhập để tiếp tục",
+    "filesize": "Kích thước file quá lớn",
+    "forgotpassword": "Đặt lại mật khẩu thành công",
+    "resetpassword": "Đặt lại mật khẩu thành công",
+    "changepassword": "Đổi mật khẩu thành công",
+    "modifyPostSuccess": "Đã sửa bài viết thành công",
+    "deletePostSuccess": "Đã xóa bài viết thành công",
+    "approvePostSuccess": "Đã chấp nhận bài viết",
+    "modifyPostFail": "Sửa bài viết thất bại",
+    "follow": "Đã theo dõi",
+    "unfollow": "Đã bỏ theo dõi",
+    "like": "Đã thích",
+    "unlike": "Đã bỏ thích",
+    "savepost": "Đã lưu",
+    "publishpost": "Đã đăng",
+    "deletepost": "Đã xóa",
+    "approvepost": "Đã chấp nhận",
+    "rejectpost": "Đã từ chối",
+    "sharepost": "Đã chia sẻ",
+    "addcomment": "Đã bình luận",
+    "replycomment": "Đã trả lời",
+    "likecomment": "Đã thích bình luận",
+    "unlikecomment": "Đã bỏ thích bình luận",
+    "deletepostcomment": "Đã xóa bình luận",
+    "deletepostreply": "Đã xóa trả lời",
+    "deletepostlike": "Đã bỏ thích bài viết",
+    "deletepostreplylike": "Đã bỏ thích trả lời",
+    "deletepostcommentlike": "Đã bỏ thích bình luận"
+  },
+  "status": {
+    "success": "Thành công",
+    "error": "Lỗi",
+    "warning": "Cảnh báo",
+    "Enabled": "Đã kích hoạt",
+    "Disabled": "Đã vô hiệu hóa",
+    "Readonly": "Chỉ đọc",
+    "Activated": "Đã kích hoạt",
+    "Deleted": "Đã xóa",
+    "Blocked": "Đã khóa",
+    "Created": "Đã tạo",
+    "Edited": "Đã chỉnh sửa",
+    "Sent": "Đã gửi",
+    "Read": "Đã đọc",
+
+    "Pending": "Đang chờ",
+    "Approved": "Đã chấp nhận",
+    "Rejected": "Đã từ chối",
+    "Private": "Riêng tư",
+    "Ignored": "Đã bỏ qua",
+    "Handled": "Đã xử lý",
+    "Public": "Công khai"
+  },
+  "empty": {
+    "title": "Không có dữ liệu",
+    "description": "Vui lòng thử lại với từ khóa khác",
+    "noresult": "Không có kết quả nào",
+    "nodata": "Không có dữ liệu",
+    "noPost": "Không có bài viết nào",
+    "noComment": "Không có bình luận nào"
+  },
+  "topbar": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "profile": "Hồ sơ",
+    "search": "Tìm kiếm",
+    "searchTitle": "Tìm kiếm bài viết, thẻ, người dùng ...",
+    "home": "Trang chủ",
+    "more": "Thêm",
+    "createPost": "Tạo bài viết",
+    "notification": "Thông báo",
+    "wellcome": "Chào mừng bạn đến với",
+    "description": "Đăng nhập hoặc đăng ký để bắt đầu chuyến đi khám phá của bạn và chia sẻ bài viết của bạn với thế giới, thảo luận với bạn bè của bạn và nhiều thứ khác.",
+    "user": {
+      "dashboard": "Bảng điều khiển",
+      "profile": "",
+      "edit": "Chỉnh sửa hồ sơ",
+      "post": "Quản lí bài viết",
+      "notification": "Thông báo",
+      "setting": "Cài đặt",
+      "help": "Trợ giúp",
+      "separator": "|",
+      "logout": "Đăng xuất"
+    }
+  },
+  "footer": {
+    "copyright": "Copyright &copy; 2022. All rights reserved."
+  },
+  "feedback": {
+    "title": "Góp ý cho chúng tôi",
+    "description": "Điền vào mẫu dưới đây để gửi cho chúng tôi góp ý của bạn. Chúng tôi luôn sẵn sàng để phản hồi cho bạn.",
+    "placeholder": "Vui lòng nhập góp ý vào dưới đây ...",
+    "name": "Tên",
+    "email": "Email",
+    "subject": "Chủ đề",
+    "message": "Nội dung",
+    "send": "Gửi",
+    "cancel": "Hủy",
+    "ok": "Đồng ý",
+    "validation": "Vui lòng nhập đầy đủ thông tin",
+    "success": "Cảm ơn bạn đã góp ý. Chúng tôi sẽ phản hồi cho bạn sớm nhất có thể.",
+    "fail": "Gửi thất bại. Vui lòng thử lại sau."
+  },
+  "profile": {
+    "show": "Hiện menu",
+    "hide": "Ẩn Menu",
+    "menu": {
+      "dashboard": {
+        "title": "Bảng điều khiển",
+        "items": {
+          "dashboard": "Bảng điều khiển"
+        }
+      },
+      "profile": {
+        "title": "Hồ sơ",
+        "items": {
+          "profile": "Hồ sơ",
+          "edit": "Chỉnh sửa hồ sơ"
+        }
+      },
+      "account": {
+        "title": "Tài khoản",
+        "items": {
+          "security": "Bảo mật",
+          "changePassword": "Đổi mật khẩu"
+        }
+      },
+      "managePost": {
+        "title": "Quản lí",
+        "items": {
+          "managePost": "Quản lí bài viết",
+          "savedPost": "Lịch sử hoạt động",
+          "following": "Đang theo dõi",
+          "followers": "Người theo dõi"
+        }
+      },
+      "notifications": {
+        "title": "Thông báo",
+        "items": {
+          "notifications": "Thông báo"
+        }
+      },
+      "others": {
+        "title": "Khác",
+        "items": {
+          "settings": "Cài đặt",
+          "help": "Trợ giúp"
+        }
+      }
+    },
+    "dashboard": {
+      "card": {
+        "post": {
+          "title": "Bài viết",
+          "desc": "since last week"
+        },
+        "follow": {
+          "title": "Followers",
+          "desc": "since last week"
+        },
+        "view": {
+          "title": "Views",
+          "desc": "since last week"
+        },
+        "like": {
+          "title": "Likes",
+          "desc": "since last week"
+        },
+        "read": {
+          "title": "Reading posts",
+          "desc": "since last week"
+        },
+        "save": {
+          "title": "Saved posts",
+          "desc": "since last week"
+        },
+        "likes": {
+          "title": "Likes posts",
+          "desc": "since last week"
+        },
+        "comment": {
+          "title": "Comments posts",
+          "desc": "since last week"
+        }
+      }
+    },
+    "user": {
+      "firstname": "Tên",
+      "lastname": "Họ",
+      "email": "Email",
+      "verified": "Đã xác nhận vào",
+      "checkMail": "Kiểm tra email để xác nhận tài khoản. Ngày gửi: ",
+      "country": "Quốc gia",
+      "sex": "Giới tính",
+      "gender": {
+        "male": "Nam",
+        "female": "Nữ",
+        "other": "Khác"
+      },
+      "phone": "Điện thoại",
+      "joined": "Ngày tham gia",
+      "password": "Lần gần nhất đổi mật khẩu"
+    },
+    "result": {
+      "following": "Bạn đang theo dõi <b>{{count}}</b> người dùng",
+      "follower": "Bạn có <b>{{count}}</b> người theo dõi"
+    },
+    "editProfile": {
+      "title": "Chỉnh sửa hồ sơ",
+      "dialog": {
+        "title": "Xác nhận",
+        "description": "Bạn có chắc chắn muốn lưu thay đổi?",
+        "cancel": "Hủy",
+        "ok": "Đồng ý"
+      },
+      "first_name": {
+        "label": "Tên",
+        "placeholder": "Nhập tên",
+        "error": {
+          "required": "Vui lòng nhập tên"
+        }
+      },
+      "last_name": {
+        "label": "Họ",
+        "placeholder": "Nhập họ",
+        "error": {
+          "required": "Vui lòng nhập họ"
+        }
+      },
+      "display_name": {
+        "label": "Tên hiển thị",
+        "placeholder": "Nhập tên hiển thị",
+        "error": {
+          "required": "Vui lòng nhập tên hiển thị"
+        }
+      },
+      "description": {
+        "label": "Mô tả",
+        "placeholder": "Nhập mô tả",
+        "error": {
+          "required": "Vui lòng nhập mô tả",
+          "length": "Mô tả phải có ít nhất 10 ký tự"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Nhập email",
+        "error": {
+          "required": "Vui lòng nhập email",
+          "email": "Email không hợp lệ"
+        }
+      },
+      "country": {
+        "label": "Quốc gia",
+        "placeholder": "Chọn quốc gia",
+        "error": {
+          "required": "Vui lòng chọn quốc gia"
+        }
+      },
+      "sex": {
+        "label": "Giới tính",
+        "placeholder": "Chọn giới tính",
+        "options": {
+          "male": "Nam",
+          "female": "Nữ",
+          "other": "Khác"
+        },
+        "error": {
+          "required": "Vui lòng chọn giới tính",
+          "sex": "Giới tính không hợp lệ"
+        }
+      },
+      "phone": {
+        "label": "Số điện thoại",
+        "placeholder": "Nhập số điện thoại",
+        "error": {
+          "required": "Vui lòng nhập số điện thoại",
+          "phone": "Số điện thoại không hợp lệ"
+        }
+      },
+      "city": {
+        "label": "Thành phố",
+        "placeholder": "Nhập thành phố",
+        "error": {
+          "required": "Vui lòng nhập thành phố"
+        }
+      },
+      "province": {
+        "label": "Tỉnh/Thành phố",
+        "placeholder": "Nhập tỉnh/thành phố",
+        "error": {
+          "required": "Vui lòng nhập tỉnh/thành phố"
+        }
+      },
+      "avatar": {
+        "label": "Ảnh đại diện",
+        "placeholder": "Chọn ảnh đại diện",
+        "error": {
+          "required": "Vui lòng chọn ảnh đại diện"
+        }
+      }
+    },
+    "security": {
+      "title": "Tất cả thiết bị đang đăng nhập",
+      "session": {
+        "title": "Thiết bị đang đăng nhập",
+        "location": "Địa điểm",
+        "created": "Thời gian đăng nhập",
+        "lastAccess": "Thời gian truy cập gần nhất",
+        "logout": "Đăng xuất",
+        "delete": "Xóa",
+        "data": "Dữ liệu",
+        "thisDevice": "Thiết bị này",
+        "savePassword": "Lưu mật khẩu"
+      },
+      "device": {
+        "title": "Device",
+        "type": "Type",
+        "ip": "IP",
+        "browser": "Browser",
+        "os": "OS",
+        "device": "Device",
+        "last_login": "Lần đăng nhập gần nhất"
+      }
+    },
+    "actionPosts": {
+      "menu": {
+        "saved": "Đã lưu",
+        "liked": "Đã thích",
+        "visited": "Đã xem",
+        "following": "Đang theo dõi"
+      },
+      "title": "Xem lại tất cả bài viêt bạn đã xem",
+      "empty": "Bạn không có bài viết nào"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "description": "Login by admin account to access app",
+      "email": "Email or username",
+      "emailPlaceholder": "Enter email or username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "remember": "Remember me",
+      "submit": "Login",
+      "validation": {
+        "email": {
+          "required": "Email is required",
+          "email": "Email is invalid"
+        },
+        "password": {
+          "required": "Password is required",
+          "min": "Password must be at least 6 ký tự"
+        }
+      }
+    }
+  },
+  "action": {
+    "view": "Xem",
+    "like": "Thích",
+    "unlike": "Bỏ thích",
+    "save": "Lưu",
+    "unsave": "Bỏ lưu",
+    "follow": "Theo dõi",
+    "unfollow": "Bỏ theo dõi"
+  },
   "label": {
-    "searchWithName": "Chào {{name}}, tìm kiếm tại đây ...",
+    "redirecting": {
+      "title": "Đang chuyển hướng ...",
+      "description": "Vui lòng chờ trong giây lát"
+    },
+    "searchWithName": "Chào {{name}}, bắt đầu tìm kiếm tại đây ...",
     "search": "Bắt đầu tìm kiếm tại đây ...",
     "recommend": {
-      "foryou": "For you: ",
-      "tags": "Recommend tags for you: ",
-      "posts": "Recommend:"
+      "foryou": "Dành cho bạn: ",
+      "tags": "Gợi ý thẻ: ",
+      "posts": "Gợi ý bài viết:"
     },
     "popular": {
-      "tags": "Popular tags: ",
-      "posts": "Popular posts: "
+      "tags": "Thẻ phổ biến: ",
+      "posts": "Bài viết phổ biến:: ",
+      "category": "Danh mục phổ biến: ",
+      "posts_by_tag": "Bài viết phổ biến theo thẻ: "
     },
-    "trending": "Trending",
-    "connectus": "Connect us"
+    "trending": "Xu hướng",
+    "connectus": "Kết nối với chúng tôi",
+    "session": {
+      "expired": {
+        "title": "Phiên đăng nhập đã hết hạn",
+        "message": "Vui lòng đăng nhập lại để tiếp tục"
+      },
+      "logout": "Bạn đã bị đăng xuất khỏi hệ thống"
+    },
+    "login": {
+      "title": "Đăng nhập",
+      "description": "Đăng nhập để tiếp tục",
+      "email": "Email",
+      "emailPlaceholder": "Nhập email hoặc tên người dùng",
+      "password": "Mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu",
+      "remember": "Nhớ mật khẩu",
+      "forgot": "Quên mật khẩu?",
+      "submit": "Đăng nhập",
+      "register": "Đăng ký",
+      "or": "Hoặc",
+      "facebook": "Đăng nhập bằng Facebook",
+      "google": "Đăng nhập bằng Google",
+      "dontHaveAccount": "Bạn chưa có tài khoản?",
+      "registerHere": "Đăng ký tại đây",
+      "validation": {
+        "email": {
+          "required": "Vui lòng nhập email",
+          "email": "Email không hợp lệ"
+        },
+        "password": {
+          "required": "Vui lòng nhập mật khẩu",
+          "min": "Mật khẩu phải có ít nhất 6 ký tự"
+        }
+      }
+    },
+    "signup": {
+      "title": "Đăng ký",
+      "description": "Đăng ký để tiếp tục",
+      "fullname": "Họ và tên",
+      "fullnamePlaceholder": "Nhập họ và tên",
+      "firstname": "Tên",
+      "firstnamePlaceholder": "Nhập tên",
+      "lastname": "Họ",
+      "lastnamePlaceholder": "Nhập họ",
+      "email": "Email",
+      "emailPlaceholder": "Nhập email",
+      "password": "Mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "confirmPasswordPlaceholder": "Nhập lại mật khẩu",
+      "name": "Tên",
+      "namePlaceholder": "Nhập tên",
+      "accept": "Tôi đồng ý với các điều khoản của ứng dụng",
+      "submit": "Đăng ký",
+      "alreadyHaveAccount": "Bạn đã có tài khoản?",
+      "loginHere": "Đăng nhập",
+      "validation": {
+        "email": {
+          "required": "Vui lòng nhập email",
+          "invalid": "Email không hợp lệ"
+        },
+        "fullname": {
+          "required": "Vui lòng nhập họ và tên",
+          "minlength": "Họ và tên phải có ít nhất 3 ký tự",
+          "maxlength": "Họ và tên không được vượt quá 50 ký tự"
+        },
+        "firstname": {
+          "required": "Vui lòng nhập tên",
+          "minlength": "Tên phải có ít nhất 3 ký tự",
+          "maxlength": "Tên không được vượt quá 50 ký tự"
+        },
+        "lastname": {
+          "required": "Vui lòng nhập họ",
+          "minlength": "Họ phải có ít nhất 3 ký tự",
+          "maxlength": "Họ không được vượt quá 50 ký tự"
+        },
+        "password": {
+          "required": "Vui lòng nhập mật khẩu",
+          "min": "Mật khẩu phải có ít nhất {{min}} ký tự",
+          "max": "Mật khẩu phải có ít nhất {{max}} ký tự",
+          "special": "Mật khẩu phải có ít nhất {{num}} ký tự đặc biệt",
+          "number": "Mật khẩu phải có ít nhất {{num}} ký tự số",
+          "lower": "Mật khẩu phải có ít nhất {{num}} ký tự thường",
+          "upper": "Mật khẩu phải có ít nhất {{num}} ký tự hoa"
+        },
+        "confirmPassword": {
+          "required": "Vui lòng nhập lại mật khẩu",
+          "min": "Mật khẩu phải có ít nhất {{num}} ký tự",
+          "max": "Mật khẩu phải có ít nhất {{num}} ký tự",
+          "match": "Mật khẩu không khớp"
+        },
+        "accept": "Vui lòng chấp nhận điều khoản của ứng dụng"
+      }
+    },
+    "confirm": {
+      "title": "Xác nhận email",
+      "description": "Nhập mật khẩu để xác nhận email",
+      "email": {
+        "label": "Địa chỉ email",
+        "placeholder": "Vui lòng nhập email",
+        "required": "Vui lòng nhập email"
+      },
+      "password": {
+        "label": "Mật khẩu",
+        "placeholder": "Vui lòng nhập mật khẩu",
+        "required": "Vui lòng nhập mật khẩu",
+        "min": "Mật khẩu phải có ít nhất 6 ký tự"
+      },
+      "submit": "Xác nhận",
+      "login": "Đăng nhập",
+      "home": "Trở lại trang chủ",
+      "success": {
+        "title": "Tuyệt vời!",
+        "description": "Email của bạn đã được xác nhận. Bạn có thể đăng nhập ngay bây giờ."
+      },
+      "warning": "Bạn chỉ có 3 lần nhập sai mật khẩu liên tiếp"
+    },
+    "changepassword": {
+      "title": "Đổi mật khẩu",
+      "description": "Nhập mật khẩu cũ và mật khẩu mới để đổi mật khẩu",
+      "oldPassword": {
+        "label": "Mật khẩu cũ",
+        "placeholder": "Vui lòng nhập mật khẩu cũ"
+      },
+      "newPassword": {
+        "label": "Mật khẩu mới",
+        "placeholder": "Vui lòng nhập mật khẩu mới"
+      },
+      "confirmPassword": {
+        "label": "Xác nhận mật khẩu",
+        "placeholder": "Vui lòng nhập lại mật khẩu mới"
+      },
+      "submit": "Đổi mật khẩu",
+      "dialog": {
+        "title": "Bạn chắc chắn?",
+        "description": "Bạn có chắc chắn muốn đổi mật khẩu?",
+        "cancel": "Hủy",
+        "ok": "Ok"
+      },
+      "validation": {
+        "oldPassword": {
+          "required": "Vui lòng nhập mật khẩu cũ",
+          "min": "Mật khẩu cũ {{min}} ký tự",
+          "max": "New password must be less than {{max}} ký tự"
+        },
+        "newPassword": {
+          "required": "Vui lòng nhập mật khẩu mới",
+          "min": "Mật khẩu mới {{min}} ký tự",
+          "max": " Mật khẩu mới có tối đa {{max}} ký tự",
+          "special": "Mật khẩu mới phải có ít nhất {{num}} ký tự đặc biệt",
+          "number": "Mật khẩu mới phải có ít nhất {{num}} số",
+          "lower": "Mật khẩu mới phải có ít nhất {{num}} ký tự viết thường",
+          "upper": "Mật khẩu mới phải có ít nhất {{num}} ký tự viết hoa"
+        },
+        "confirmPassword": {
+          "required": "Vui lòng nhập lại mật khẩu mới",
+          "min": "Mật khẩu phải có ít nhất {{min}} ký tự",
+          "max": "Mật khẩu mới phải có tối đa {{max}} ký tự",
+          "match": "Mật khẩu mới và xác nhận mật khẩu không khớp"
+        }
+      }
+    },
+    "forgotpassword": {
+      "title": "Quên mật khẩu",
+      "description": "Nhập địa chỉ email để lấy lại mật khẩu",
+      "email": {
+        "label": "Địa chỉ email hoặc tên người dùng",
+        "placeholder": "Nhập địa chỉ email hoặc tên người dùng"
+      },
+      "validation": {
+        "email": {
+          "required": "Vui lòng nhập địa chỉ email hoặc tên người dùng",
+          "invalid": "Địa chỉ email hoặc tên người dùng không hợp lệ"
+        }
+      },
+      "registerHere": "Đăng ký tại đây",
+      "loginHere": "Đăng nhập tại đây",
+      "submit": "Lấy lại mật khẩu",
+      "login": "Đăng nhập",
+      "home": "Trang chủ",
+      "success": {
+        "title": "Tuyệt vời!",
+        "description": "Một email đã được gửi đến địa chỉ email của bạn. Vui lòng kiểm tra email và làm theo hướng dẫn để lấy lại mật khẩu."
+      },
+      "warning": "Bạn có tối đa 3 lần xác nhận"
+    },
+    "newpassword": {
+      "title": "Đặt lại mật khẩu",
+      "description": "Nhập mật khẩu mới và xác nhận để đặt lại mật khẩu",
+      "password": {
+        "label": "Mật khẩu mới",
+        "placeholder": "Nhập mật khẩu mới"
+      },
+      "confirmPassword": {
+        "label": "Xác nhận mật khẩu",
+        "placeholder": "Nhập lại mật khẩu mới"
+      },
+      "submit": "Đặt lại mật khẩu",
+      "dialog": {
+        "title": "Xác nhận",
+        "description": "Bạn có chắc chắn muốn đặt lại mật khẩu?",
+        "cancel": "Hủy",
+        "ok": "OK"
+      },
+      "validation": {
+        "password": {
+          "required": "Vui lòng nhập mật khẩu mới",
+          "min": "Mật khẩu mới ít nhất có {{min}} ký tự",
+          "max": "Mật khẩu mới tối đa {{max}} ký tự",
+          "special": "Mật khẩu mới phải có ít nhất {{num}} ký tự đặc biệt",
+          "number": "Mật khẩu mới phải có ít nhất {{num}} chữ số",
+          "lower": "Mật khẩu mới phải có ít nhất {{num}} ký tự thường",
+          "upper": "Mật khẩu mới phải có ít nhất {{num}} ký tự viết hoa"
+        },
+        "confirmPassword": {
+          "required": "Vui lòng nhập lại mật khẩu mới",
+          "min": "Xác nhận mật khẩu mới có ít nhất {{min}} ký tự",
+          "max": "Xác nhận mật khẩu có tối đa {{max}} ký tự",
+          "match": "Xác nhận mật khẩu không khớp"
+        }
+      }
+    },
+    "notfound": {
+      "pageTitle": "Không tìm thấy trang",
+      "title": "OOPS!",
+      "description": "Trang bạn đang tìm kiếm không tồn tại, vui lòng kiểm tra lại địa chỉ URL.",
+      "home": "Về trang chủ",
+      "back": "Trở lại"
+    },
+    "serverError": {
+      "pageTitle": "500 - Lỗi hệ thống",
+      "title": "Lỗi hệ thống",
+      "description":  "500 - Lỗi hệ thống, vui lòng thử lại sau"
+    }
   },
   "card": {
-    "time_read": "{{time_read}} mins read",
-    "like": "Like",
-    "comment": "Comment",
-    "view": "View",
-    "read_more": "Read more",
+    "time_read": "{{time_read}} phút đọc",
+    "like": "Thích",
+    "comment": "Bình luận",
+    "view": "Lượt xem",
+    "read_more": "Xem thêm",
     "action": {
-      "save": "Save",
-      "copy": "Copy link",
-      "share": "Share",
-      "report": "Report"
+      "save": "Lưu",
+      "copy": "Sao chép",
+      "share": "Chia sẻ",
+      "report": "Báo cáo"
+    },
+    "recommnedCard": {
+      "menu": {
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "status": "Chuyển trạng thái"
+      },
+      "deletePost": {
+        "title": "Xóa bài viết",
+        "description": "Bạn chắc chắn muốn xóa bài viết: \"<b>{{title}}</b>\"?",
+        "cancel": "Hủy",
+        "ok": "Đồng ý"
+      },
+      "changeStatus": {
+        "title": "Chuyển trạng thái",
+        "status": {
+          "Approved": "Đã duyệt",
+          "Private": "Chỉ mình tôi"
+        },
+        "description": "Chọn trạng thái để thay đổi cho \"<b>{{title}}</b>\"",
+        "cancel": "Hủy",
+        "ok": "Lưu thay đổi"
+      }
     }
   },
-  "language": {
-    "en": {
-      "name": "Tiếng Anh",
-      "lang": "en",
-      "code": "us"
-    },
-    "vi": {
-      "name": "Tiếng Việt",
-      "lang": "vi",
-      "code": "vn"
-    },
-    "jp": {
-      "name": "Tiếng Nhật",
-      "lang": "jp",
-      "code": "jp"
+  "order": {
+    "post": {
+      "title": "Sắp xếp theo",
+      "dateDesc": "Mới nhất",
+      "dateAsc": "Cũ nhất",
+      "modifyDesc": "Chỉnh sửa gần nhất",
+      "likesDesc": "Yêu thích nhất",
+      "viewsDesc": "Xem nhiều nhất"
     }
+  },
+  "postDetail": {
+    "postedOn": "Đăng lúc ",
+    "updatedOn": "Cập nhật lúc ",
+    "share": "Chia sẻ",
+    "action": {
+      "edit": "Chỉnh sửa",
+      "save": "Lưu",
+      "unsave": "Bỏ lưu",
+      "copy": "Sao chép",
+      "share": "Chia sẻ",
+      "report": "Báo cáo"
+    },
+    "values": {
+      "view": "Lượt xem",
+      "like": "Nhấn để thích",
+      "unlike": "Nhấn để bỏ thích",
+      "comment": "Bình luận"
+    },
+    "discussion": "Thảo luận ({{count}})",
+    "comment": "Bình luận",
+    "submitComment": "Gửi bình luận",
+    "showMoreComment": "Xem thêm bình luận",
+    "showMoreReply": "Xem thêm trả lời",
+    "reply": "Trả lời",
+    "replyTo": "Trả lời đến {{name}}",
+    "commentPlaceholder": "Nhập bình luận của bạn ...",
+    "commentError": "Bình luận không hợp lệ",
+    "edited": "Đã chỉnh sửa",
+    "readMore": "Xem thêm",
+    "readLess": "Ẩn bớt",
+    "commentAction": {
+      "like": "({{count}})",
+      "unlike": "({{count}})",
+      "report": "Báo cáo",
+      "reply": "({{count}}) Trả lời"
+    },
+    "moreComment": "Xem thêm bình luận",
+    "readNext": "Bài viết khác",
+    "commentMenu": {
+      "like": "Thích",
+      "unlike": "Bỏ thích",
+      "reply": "Trả lời",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa",
+      "report": "Báo cáo"
+    },
+    "sort": "Sắp xếp theo ",
+    "commentFilter": {
+      "dateDesc": "Mới nhất",
+      "dateAsc": "Cũ nhất",
+      "likesDesc": "Yêu thích nhất",
+      "likesAsc": "Ít yêu thích nhất"
+    },
+    "suggest": "Bài viết liên quan",
+    "shareAction": {
+      "facebook": "Chia sẻ Facebook",
+      "twitter": "Chia sẻ Twitter",
+      "linkedin": "Chia sẻ Linkedin",
+      "save": "Lưu bài viết",
+      "unsave": "Bỏ lưu bài viết",
+      "copy": "Sao chép",
+      "report": "Báo cáo"
+    }
+  },
+  "createPost": {
+    "edit": "Chỉnh sửa",
+    "preview": "Xem trước",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "placeholder": "Nhập nội dung bài viết của bạn ...",
+    "saveDraft": "Lưu nháp",
+    "publish": "Đăng bài",
+    "cancel": "Hủy",
+    "discard": "Bỏ qua",
+    "editor": "Trình soạn thảo",
+    "title": "Tiêu đề",
+    "shortContent": "Nội dung ngắn",
+    "status": {
+      "title": "Trạng thái",
+      "subtitle": "Chọn trạng thái cho bài viết, chỉ mình tôi hoặc mọi người có thể xem",
+      "public": "Công khai",
+      "private": "Riêng tư"
+    },
+    "thumbnail": {
+      "title": "Ảnh đại diện",
+      "select": "Chọn ảnh",
+      "upload": "Tải ảnh lên",
+      "cancel": "Hủy"
+    },
+    "tag": "Thẻ",
+    "slug": "Đường dẫn: ",
+    "timeRead": "Thời gian đọc (2-50 phút)",
+    "moreTag": "Thêm thẻ",
+    "category": "Danh mục",
+    "step": {
+      "start": "Bắt đầu",
+      "title": "Thêm tiêu đề, hình ảnh",
+      "content": "Thêm nội dung",
+      "confirm": "Xác nhận"
+    },
+    "step1": {
+      "title": "Tạo bài viết"
+    },
+    "form": {
+      "titlePlaceholder": "Nhập tiêu đề bài viết",
+      "shortContentPlaceholder": "Nhập nội dung ngắn",
+      "thumbnailPlaceholder": "Điền đường dẫn ảnh đại diện",
+      "thumbnailError": "Đường dẫn ảnh không hợp lệ",
+      "tagPlaceHolder": "Nhập thẻ",
+      "moreTagPlaceholder": "Nhập thêm thẻ",
+      "categoryPlaceHolder": "Chọn danh mục",
+      "titleHere": "Tiêu đề trống",
+      "chipHelp": "Thêm thẻ"
+    },
+    "textTranslate": {
+      "confirmation": "Xác nhận",
+      "discard": "Bạn có chắc chắn muốn bỏ qua?",
+      "publish": "Bạn có chắc chắn muốn đăng bài viết?",
+      "popup": {
+        "message": "Bạn phải đăng nhập để thực hiện chức năng này",
+        "header": " ",
+        "footer": " "
+      },
+      "valid": {
+        "title": "Title must be length between 20 and 200 ký tự",
+        "thumbnail": "Thumbnail is required",
+        "tag": "Tag is required",
+        "category": "You must select at less a category",
+        "timeRead": "Time to read is between 2 and 50 minutes",
+        "content": "Content is empty"
+      }
+    }
+  },
+  "editPost": {
+    "pageTitle": "Chỉnh sửa: {{title}}",
+    "viewPost": "Xem bài viết",
+    "edit": "Chỉnh sửa",
+    "preview": "Xem trước",
+    "saveDraft": "Lưu nháp",
+    "publish": "Lưu thay đổi",
+    "cancel": "Hủy",
+    "discard": "Bỏ qua",
+    "title": "Tiêu đề",
+    "shortContent": "Nội dung ngắn",
+    "thumnail": "Ảnh đại diện",
+    "tag": "Thẻ",
+    "slug": "Đường dẫn: ",
+    "timeRead": "Thời gian đọc (2-50 phút)",
+    "moreTag": "Thêm thẻ",
+    "category": "Danh mục",
+    "form": {
+      "titlePlaceholder": "Nhập tiêu đề bài viết",
+      "shortContentPlaceholder": "Nhập nội dung ngắn",
+      "shortContentLength": "Nội dung ngắn phải từ 20-200 ký tự",
+      "thumbnailPlaceholder": "Điền đường dẫn ảnh đại diện",
+      "thumbnailError": "Đường dẫn ảnh không hợp lệ",
+      "tagPlaceHolder": "Nhập thẻ",
+      "moreTagPlaceholder": "Nhập thêm thẻ",
+      "categoryPlaceHolder": "Chọn danh mục",
+      "titleHere": "Tiêu đề trống",
+      "chipHelp": "Thêm thẻ"
+    },
+    "dialog": {
+      "title": "Xác nhận",
+      "discard": "Bạn có chắc chắn muốn bỏ qua?",
+      "publish": "Bạn có chắc chắn muốn chỉnh sửa bài viết? Bài viết này sẽ chờ để được duyệt. Bài viết cũ sẽ được hiển thị trong khi bài viết mới được duyệt.",
+      "ok": "Đồng ý",
+      "cancel": "Hủy",
+      "popup": {
+        "message": "Bạn phải đăng nhập để thực hiện chức năng này",
+        "header": " ",
+        "footer": " "
+      },
+      "valid": {
+        "title": "Tiêu đề phải dài từ 20 đến 200 ký tự",
+        "thumbnail": "Ảnh đại diện không được để trống",
+        "tag": "Thẻ không được để trống",
+        "category": "Bạn phải chọn ít nhất một danh mục",
+        "timeRead": "Thời gian đọc phải từ 2 đến 50 phút",
+        "content": "Nội dung không được để trống",
+        "shortContent": "Nội dung ngắn phải từ 20 đến 200 ký tự"
+      }
+    }
+  },
+  "report": {
+    "title": "Báo cáo cho đội ngũ của chúng tôi",
+    "description": "Cho chúng tôi biết về những gì sai, chọn lý do báo cáo bài viết này. Sau khi bạn gửi, quản trị viên sẽ đọc báo cáo của bạn và thực hiện hành động. Chỉ quản trị viên mới có thể xem báo cáo của bạn.",
+    "submit": "Gửi",
+    "cancel": "Hủy",
+    "ok": "OK",
+    "reason": "Mô tả",
+    "reasonPlaceholder": "Nhập mô tả cho báo cáo của bạn",
+    "dialog": {
+      "cancel": {
+        "title": "Hủy báo cáo",
+        "description": "Bạn có chắc chắn muốn hủy báo cáo?",
+        "confirm": "Hủy",
+        "cancel": "Tiếp tục"
+      },
+      "submit": {
+        "title": "Gửi báo cáo",
+        "description": "Bạn có chắc chắn muốn gửi báo cáo?",
+        "confirm": "Vâng, gửi báo cáo",
+        "cancel": "Không, tiếp tục chỉnh sửa"
+      }
+    },
+    "success": {
+      "title": "Báo cáo đã được gửi",
+      "description": "Bạn đã gửi báo cáo thành công. Cảm ơn bạn đã báo cáo cho chúng tôi."
+    },
+    "reasons": {
+      "inappropriate": {
+        "title": "Bài viết không phù hợp",
+        "description": "Bài viết không phù hợp với tôi"
+      },
+      "spam": {
+        "title": "Bài viết là spam",
+        "description": "Nội dung được đăng nhiều hoặc không phù hợp với tôi"
+      },
+      "rules": {
+        "title": "Vi phạm các quy tắc",
+        "description": "Bài đăng này vi phạm các quy tắc của trang web."
+      },
+      "hate": {
+        "title": "Nội dung gây thù ghét",
+        "description": "Nội dung gây thù ghét là một hình thức lạm dụng bằng nội dung nhằm mục đích làm tổn thương cảm xúc của người khác thông qua việc sử dụng ngôn ngữ, chẳng hạn như chửi bới, đe dọa bạo lực hoặc tấn công cá nhân."
+      },
+      "violence": {
+        "title": "Bạo lực",
+        "description": "Nội dung bạo lực, phản cảm hoặc được đăng để gây sốc cho người xem."
+      },
+      "false": {
+        "title": "Thông tin sai",
+        "description": "Nội dung sai sự thật, gây hiểu lầm hoặc được đăng để gây hiểu lầm."
+      },
+      "irrelevant": {
+        "title": "Không liên quan",
+        "description": "Nội dung không liên quan đến chủ đề của trang web."
+      },
+      "sexual": {
+        "title": "Nội dung tình dục",
+        "description": "Nội dung bao gồm hoạt động tình dục bằng hình ảnh, ảnh khỏa thân hoặc các loại nội dung khiêu dâm khác."
+      },
+      "copyright": {
+        "title": "Vi phạm bản quyền",
+        "description": "Bản quyền, quyền riêng tư, nhãn hiệu hoặc vi phạm sở hữu trí tuệ khác."
+      },
+      "others": {
+        "title": "Khác",
+        "description": "Lý do khác (mô tả là bắt buộc)"
+      }
+    }
+  },
+  "search": {
+    "title": {
+      "search": "Tìm kiếm",
+      "result": "Kết quả tìm kiếm cho {{query}}"
+    },
+    "placeholder": "Nhập từ khóa để tìm kiếm ",
+    "resultCount": "Đang hiển thị <b>{{count}}</b> của tổng số <b>{{total}}</b> kết quả",
+    "viewMore": "Xem thêm kết quả",
+    "menu": {
+      "all": "Tất cả",
+      "post": "Bài viết",
+      "user": "Nguời dùng"
+    },
+    "searchAll": {
+      "post": "Bài viết",
+      "user": "Nguời dùng",
+      "tag": "Thẻ",
+      "category": "Danh mục"
+    },
+    "result": "Kết quả tìm kiếm cho <b>\"{{query}}\"</b>",
+    "noResult": "Không tìm thấy kết quả cho <b>{{query}}</b>",
+    "sort": "Sắp xếp theo",
+    "filter": {
+      "dateDesc": "Mới nhất",
+      "dateAsc": "Cũ nhất",
+      "likesDesc": "Yêu thích nhất",
+      "likesAsc": "Ít yêu thích nhất"
+    },
+    "form": {
+      "placeholder": "Tìm kiếm bài viết, người dùng, thẻ..."
+    }
+  },
+  "primeng": {
+    "startsWith": "Bắt đầu bằng",
+    "contains": "Chứa",
+    "notContains": "Không chứa",
+    "endsWith": "Kết thúc bằng",
+    "equals": "Bằng",
+    "notEquals": "Không bằng",
+    "noFilter": "Không có bộ lọc",
+    "lt": "Nhỏ hơn",
+    "lte": "Nhỏ hơn hoặc bằng",
+    "gt": "Lớn hơn",
+    "gte": "Lớn hơn hoặc bằng",
+    "is": "Là",
+    "isNot": "Không là",
+    "before": "Trước",
+    "after": "Sau",
+    "dateIs": "Ngày là",
+    "dateIsNot": "Ngày không là",
+    "dateBefore": "Ngày trước",
+    "dateAfter": "Ngày sau",
+    "clear": "Xóa",
+    "apply": "Áp dụng",
+    "matchAll": "Phù hợp với tất cả",
+    "matchAny": "Phù hợp với bất kỳ",
+    "addRule": "Thêm quy tắc",
+    "removeRule": "Xóa quy tắc",
+    "accept": "Chấp nhận",
+    "reject": "Từ chối",
+    "choose": "Chọn",
+    "upload": "Tải lên",
+    "cancel": "Hủy",
+    "dayNames": [
+      "Chủ nhật",
+      "Thứ hai",
+      "Thứ ba",
+      "Thứ tư",
+      "Thứ năm",
+      "Thứ sáu",
+      "Thứ bảy"
+    ],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    "monthNames": [
+      "Tháng một",
+      "Tháng hai",
+      "Tháng ba",
+      "Tháng tư",
+      "Tháng năm",
+      "Tháng sáu",
+      "Tháng bảy",
+      "Tháng tám",
+      "Tháng chín",
+      "Tháng mười",
+      "Tháng mười một",
+      "Tháng mười hai"
+    ],
+    "monthNamesShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "dateFormat": "mm/dd/yy",
+    "firstDayOfWeek": 0,
+    "today": "Hôm nay",
+    "weekHeader": "Wk",
+    "weak": "Yếu",
+    "medium": "Trung bình",
+    "strong": "Mạnh",
+    "passwordPrompt": "Nhập mật khẩu:",
+    "emptyMessage": "Không có dữ liệu",
+    "emptyFilterMessage": "Không có dữ liệu"
   }
 }

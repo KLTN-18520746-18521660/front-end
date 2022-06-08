@@ -86,9 +86,15 @@ export const convertDateTime = (
     return dayjs(date).calendar();
   }
   else if (dayjs().diff(date, 'month', true) < 1) {
+    if (locale === 'vi') {
+      return showTime ? dayjs(date).format('D MMMM, HH:mm') : dayjs(date).format('D MMMM');
+    }
     return showTime ? dayjs(date).format('MMMM D, HH:mm') : dayjs(date).format('MMMM D');
   }
   else if (dayjs().diff(date, 'month', true) < 12) {
+    if (locale === 'vi') {
+      return showTime ? dayjs(date).format('D MMMM, HH:mm') : dayjs(date).format('D MMMM');
+    }
     return showTime ? dayjs(date).format('MMMM D, HH:mm') : dayjs(date).format('MMMM D');
   }
   else {

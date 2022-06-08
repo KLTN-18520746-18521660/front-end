@@ -156,7 +156,7 @@
   "message": {
     "success": "Success",
     "error": "Error",
-    "needRefresh": "You no longer have access to this page. Please refresh (F5) the page to continue",
+    "needRefresh": "You don't access to this page a long time. Please refresh (F5) the page to continue",
     "nochange": "No changes to save",
     "update": "Update successfully",
     "updateFail": "Failed to update",
@@ -198,10 +198,7 @@
     "deletepostreply": "Delete post reply successfully",
     "deletepostlike": "Delete post like successfully",
     "deletepostreplylike": "Delete post reply like successfully",
-    "deletepostcommentlike": "Delete post comment like successfully",
-    "deletepostreplycommentlike": "Delete post reply comment like successfully",
-    "deletepostcommentreplylike": "Delete post comment reply like successfully",
-    "deletepostreplycommentreplylike": "Delete post reply comment reply like successfully"
+    "deletepostcommentlike": "Delete post comment like successfully"
   },
   "status": {
     "success": "Success",
@@ -741,7 +738,7 @@
       "home": "Go to home page",
       "success": {
         "title": "Good job!",
-        "description": "Your password has been reset successfully"
+        "description": "Your password has been reset successfully. Please check your email to get new password"
       },
       "warning": "You only have 3 times to try to reset your password"
     },
@@ -758,7 +755,7 @@
       },
       "submit": "Reset password",
       "dialog": {
-        "title": "Are you sure?",
+        "title": "Confirmation",
         "description": "Do you want to reset your password?",
         "cancel": "Cancel",
         "ok": "Ok"
@@ -789,7 +786,7 @@
       "back": "Go back"
     },
     "serverError": {
-      "pageTitle": "Something went wrong or page not found",
+      "pageTitle": "500 - Server error",
       "title": "Server Error",
       "description":  "500 - Internal Server Error, please try again later"
     }
@@ -888,10 +885,10 @@
     },
     "sort": "Sort by ",
     "commentFilter": {
-      "dateDesc": "Date descending",
-      "dateAsc": "Date ascending",
-      "likesDesc": "Likes descending",
-      "likesAsc": "Likes ascending"
+      "dateDesc": "Newest",
+      "dateAsc": "Oldest",
+      "likesDesc": "Most liked",
+      "likesAsc": "Least liked"
     },
     "suggest": "Related posts",
     "shareAction": {

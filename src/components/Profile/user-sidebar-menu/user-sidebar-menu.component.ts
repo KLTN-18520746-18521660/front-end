@@ -111,24 +111,24 @@ export class UserSidebarMenuComponent implements OnInit {
         }
       ]
     },
-    {
-      id: 'others',
-      label: this.translate.instant('profile.menu.others.title'),
-      items: [
-        {
-          id: 'settings',
-          label: this.translate.instant('profile.menu.others.items.settings'),
-          icon: 'pi pi-cog',
-          routerLink: ['/profile/settings'],
-        },
-        {
-          id: 'help',
-          label: this.translate.instant('profile.menu.others.items.help'),
-          icon: 'pi pi-question',
-          routerLink: ['/profile/help'],
-        }
-      ]
-    }
+    // {
+    //   id: 'others',
+    //   label: this.translate.instant('profile.menu.others.title'),
+    //   items: [
+    //     {
+    //       id: 'settings',
+    //       label: this.translate.instant('profile.menu.others.items.settings'),
+    //       icon: 'pi pi-cog',
+    //       routerLink: ['/profile/settings'],
+    //     },
+    //     {
+    //       id: 'help',
+    //       label: this.translate.instant('profile.menu.others.items.help'),
+    //       icon: 'pi pi-question',
+    //       routerLink: ['/profile/help'],
+    //     }
+    //   ]
+    // }
   ];
 
   userStatisticSubscription: Subscription;

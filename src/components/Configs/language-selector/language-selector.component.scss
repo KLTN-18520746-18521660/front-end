@@ -8,4 +8,18 @@
       width: 20px !important;
     }
   }
+
+  .language-dropdown {
+    .p-dropdown-label {
+      padding: 0.5rem !important;
+    }
+
+    .p-inputtext {
+      box-shadow: none !important;
+    }
+
+    .p-dropdown-trigger {
+      width: 2rem !important;
+    }
+  }
 }

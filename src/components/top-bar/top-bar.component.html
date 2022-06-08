@@ -47,6 +47,7 @@
           </button>
         </div>
         <app-switch-theme></app-switch-theme>
+        <app-language-selector class="hidden lg:flex mx-2" [type]="'dropdown'"></app-language-selector>
         <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
           <div
             class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"

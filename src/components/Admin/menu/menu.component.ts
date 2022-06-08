@@ -44,12 +44,12 @@ export class MenuComponent implements OnInit {
           // },
           {
             label: 'Role User',
-            icon: 'pi pi-fw pi-plus-circle',
+            icon: 'pi pi-fw pi-users',
             routerLink: ['./role-user']
           },
           {
             label: 'Right User',
-            icon: 'pi pi-fw pi-plus-circle',
+            icon: 'pi pi-fw pi-bolt',
             routerLink: ['./right-user']
           }
         ]
@@ -64,12 +64,12 @@ export class MenuComponent implements OnInit {
           },
           {
             label: 'Role Admin',
-            icon: 'pi pi-fw pi-plus-circle',
+            icon: 'pi pi-fw pi-globe',
             routerLink: ['./role-admin']
           },
           {
             label: 'Right Admin',
-            icon: 'pi pi-fw pi-plus-circle',
+            icon: 'pi pi-fw pi-bolt',
             routerLink: ['./right-admin']
           }
         ]
@@ -94,22 +94,22 @@ export class MenuComponent implements OnInit {
           },
         ]
       },
-      {
-        label: 'Report',
-        items: [
-          {
-            label: 'Report from user',
-            icon: 'pi pi-fw pi-flag',
-            routerLink: ['./documentation']
-          }
-        ]
-      },
+      // {
+      //   label: 'Report',
+      //   items: [
+      //     {
+      //       label: 'Report from user',
+      //       icon: 'pi pi-fw pi-flag',
+      //       routerLink: ['./documentation']
+      //     }
+      //   ]
+      // },
       {
         label: 'Acount',
         items: [
           {
             label: 'Change Password',
-            icon: 'pi pi-fw pi-lock',
+            icon: 'pi pi-fw pi-lock-open',
             routerLink: ['./change-password']
           },
           {

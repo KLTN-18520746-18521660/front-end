@@ -1,7 +1,26 @@
 .auth-block {
-  background: linear-gradient(-45deg, #ec7e5c, #e76798, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #ec7e5c, #e76798, var(--primary-color), #23d5ab);
   background-size: 400% 400%;
   animation: gradient 20s ease infinite;
+  -webkit-animation: gradient 20s ease infinite;
+
+  &.auth-dark {
+    background: linear-gradient(-45deg, #030d19, #061220, #081527, #0c1618);
+    background-size: 400% 400%;
+    animation: gradient 20s ease infinite;
+    -webkit-animation: gradient 20s ease infinite;
+  }
+
+  .auth-card {
+    border-radius: 56px;
+    padding: 0.3rem;
+    background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);
+
+    .auth-card-inner {
+      border-radius: 53px;
+      background: linear-gradient(180deg, var(--surface-0), var(--surface-ground) 38.9%);
+    }
+  }
 }
 
 @keyframes gradient {
