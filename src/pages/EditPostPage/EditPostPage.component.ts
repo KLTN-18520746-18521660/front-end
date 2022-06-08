@@ -211,6 +211,9 @@ export class EditPostPageComponent implements OnInit {
     if (edit) {
       this.editing = true;
     }
+    else {
+      this.editing = false;
+    }
     this.editPost = {
       content: this.content,
       short_content: this.short_content,
@@ -248,6 +251,7 @@ export class EditPostPageComponent implements OnInit {
       (res) => {
         this.editPost.thumbnail = res.data.url;
         this.thumbnailPreview = res.data.url;
+        this.thumbnail = res.data.url;
         this.isSelectFile = false;
         this.updateEditPost();
         const data = getDifferenceObject(this.post, this.editPost) as any;
@@ -393,11 +397,10 @@ export class EditPostPageComponent implements OnInit {
   }
 
   modifyPost(diffData) {
-    this.isLoadingSubmit = true;
     if (_.isEmpty(diffData)) {
-      this.isLoadingSubmit = false;
       return;
     }
+    this.isLoadingSubmit = true;
     if (this.modifyPostSubscription) {
       this.modifyPostSubscription.unsubscribe();
     }

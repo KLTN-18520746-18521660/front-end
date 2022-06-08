@@ -35,14 +35,14 @@ export const handleError = (error?: HttpErrorResponse) => {
       message_code: error.error.message_code || ''
     };
   }
-  else if (error.error instanceof ProgressEvent as any) {
-    obj = {
-      error: '',
-      status: error.status,
-      message: error.message,
-      message_code: error.error.message_code || ''
-    };
-  }
+  // else if (error.error instanceof ProgressEvent as any) {
+  //   obj = {
+  //     error: '',
+  //     status: error.status,
+  //     message: error.message,
+  //     message_code: error.error.message_code || ''
+  //   };
+  // }
   else if (error?.error?.data) {
     const err = Object.values(error?.error?.data) as [];
     obj = {

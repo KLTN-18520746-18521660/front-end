@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { PasswordPolicy } from 'models/appconfig.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppConfigService } from 'services/app.config.service';
@@ -51,7 +52,8 @@ export class LoginPageComponent implements OnInit {
     private messageService: MessageService,
     private userService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService 
   ) { }
 
   ngOnInit(): void {
@@ -78,12 +80,12 @@ export class LoginPageComponent implements OnInit {
       password: [null,
         [
           Validators.required,
-          // Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
-          // Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
-          // Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
-          // Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
-          // Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
-          // Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
+          Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
+          Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
+          Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
+          Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
+          Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
+          Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
         ]
       ],
       remember: [false]
@@ -139,7 +141,7 @@ export class LoginPageComponent implements OnInit {
         this.message = [{
           severity: 'success',
           summary: '',
-          detail: 'Login Success!!!!!!!!',
+          detail: this.translate.instant('apiResult.login.success'),
           life: APPCONSTANT.TOAST_TIMEOUT
         }];
         this.userService.messages = [];

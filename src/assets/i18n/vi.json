@@ -153,6 +153,12 @@
     },
     "changepassword": {}
   },
+  "apiResult":{
+    "login": {
+      "success": "Đăng nhập thành công",
+      "fail": "Đăng nhập thất bại"
+    }
+  },
   "message": {
     "success": "Thành công",
     "error": "Lỗi",
@@ -215,7 +221,7 @@
     "Sent": "Đã gửi",
     "Read": "Đã đọc",
 
-    "Pending": "Đang chờ",
+    "Pending": "Đang chờ duyệt",
     "Approved": "Đã chấp nhận",
     "Rejected": "Đã từ chối",
     "Private": "Riêng tư",

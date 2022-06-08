@@ -125,7 +125,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.changeTheme("lara-light-blue", false);
+    // this.changeTheme("lara-light-blue", false);
     // this.changeTheme("tailwind-light", false);
     this.userIdleService.setCustomActivityEvents(
       merge(

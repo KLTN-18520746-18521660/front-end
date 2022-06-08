@@ -153,6 +153,12 @@
     },
     "changepassword": {}
   },
+  "apiResult":{
+    "login": {
+      "success": "Login successfully",
+      "fail": "Login failed"
+    }
+  },
   "message": {
     "success": "Success",
     "error": "Error",
