@@ -795,6 +795,11 @@
       "pageTitle": "500 - Lỗi hệ thống",
       "title": "Lỗi hệ thống",
       "description":  "500 - Lỗi hệ thống, vui lòng thử lại sau"
+    },
+    "noAccess": {
+      "pageTitle": "Truy cập bị từ chối",
+      "title": "Truy cập bị từ chối",
+      "description": "Bạn không có quyền truy cập vào trang này, vui lòng thử lại sau hoặc liên hệ với quản trị viên."
     }
   },
   "card": {

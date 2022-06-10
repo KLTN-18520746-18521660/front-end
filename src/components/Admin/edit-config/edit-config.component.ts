@@ -1,6 +1,6 @@
 import { getDifferenceObject } from 'utils/commonFunction';
 import { ManageConfigService } from 'services/admin/manage-config.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigFormat, ConfigWithFormat } from 'models/Admins/config.model';
 import { MessageService } from 'primeng/api';
 import _ from 'lodash';
@@ -16,6 +16,8 @@ export class EditConfigComponent implements OnInit {
   @Input() configKey: string;
 
   @Input() config: any;
+
+  @Output() onClose = new EventEmitter();
 
   editingConfig: any;
 
@@ -72,6 +74,7 @@ export class EditConfigComponent implements OnInit {
         this.isLoading = false;
         this.showButtonSave = false;
         this.config = { ...this.editingConfig };
+        this.onClose.emit();
         this.messageService.add({
           severity: 'success',
           summary: 'Success',

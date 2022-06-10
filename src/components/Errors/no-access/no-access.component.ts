@@ -4,16 +4,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
-  selector: 'app-server-error',
-  templateUrl: './server-error.component.html',
-  styleUrls: ['./server-error.component.scss']
+  selector: 'app-no-access',
+  templateUrl: './no-access.component.html',
+  styleUrls: ['./no-access.component.scss']
 })
-export class ServerErrorComponent implements OnInit {
+export class NoAccessComponent implements OnInit {
 
   @Input() visible: boolean = true;
 
   options: AnimationOptions = {
-    path: '/assets/jsons/server-error.json',
+    path: '/assets/jsons/acces-denied.json',
   };
 
   constructor(
@@ -25,7 +25,6 @@ export class ServerErrorComponent implements OnInit {
     if (!this.visible) {
       return;
     }
-    this.title.setTitle(this.translate.instant('label.serverError.pageTitle'));
+    this.title.setTitle(this.translate.instant('label.noAccess.pageTitle'));
   }
-
 }

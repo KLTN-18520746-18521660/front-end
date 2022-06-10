@@ -202,7 +202,22 @@ export class EditPostPageComponent implements OnInit {
       }
       else {
         this.listFilterTags = res?.data.tags;
-        this.listFilterTags.map(item => item.is_new = false);
+        let check = false;
+        this.listFilterTags.map(item => {
+          if (item.tag === event.query.toLowerCase().trim().replace(/\s/g, '-')) {
+            check = true;
+          }
+          item.is_new = false
+        });
+
+        if (!check) {
+          this.listFilterTags.unshift({
+            id: '',
+            tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+            name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+            is_new: true
+          });
+        }
       }
     });
   }

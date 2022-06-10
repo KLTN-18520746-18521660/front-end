@@ -85,7 +85,7 @@ const routes: Routes = [
         }
       },
       {
-        path: '500',
+        path: 'server-error',
         component: ServerErrorPageComponent,
         data: {
           key: "serverError"

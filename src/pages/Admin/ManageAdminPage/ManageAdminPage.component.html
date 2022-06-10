@@ -2,7 +2,7 @@
   <div class="card px-2 md:px-3 lg:px-4">
     <div class="flex justify-content-between align-items-center mb-3">
       <p class="mb-0 text-xl">Manage ADMIN</p>
-      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create right" class="">
+      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create admin user" class="">
       </button>
     </div>
     <p-table #dt [value]="listAdmins" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
@@ -62,13 +62,14 @@
   </ng-template>
 
   <ng-template [ngIf]="viewDialog === 'edit' && currentAdmin">
-    <admin-create-edit-admin [view]="'edit'" [id]="currentAdmin.user_name"></admin-create-edit-admin>
+    <admin-create-edit-admin [view]="'edit'" [id]="currentAdmin.user_name" (onClose)="onSuccess()">
+    </admin-create-edit-admin>
   </ng-template>
-  <ng-template [ngIf]="viewDialog === 'create'">
-    <admin-create-edit-admin [view]="'create'"></admin-create-edit-admin>
+  <ng-template [ngIf]=" viewDialog==='create'">
+    <admin-create-edit-admin [view]="'create'" (onClose)="onSuccess()"></admin-create-edit-admin>
   </ng-template>
 
-  <ng-template pTemplate="footer">
+  <ng-template pTemplate=" footer">
   </ng-template>
 </p-dialog>
 

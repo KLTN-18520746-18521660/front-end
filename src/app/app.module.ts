@@ -1,9 +1,10 @@
-import { CreateEditAdminComponent } from './../components/Admin/create-edit-admin/create-edit-admin.component';
-import { AdminSecurityAcountPageComponent } from './../pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
-import { ManageAdminPageComponent } from './../pages/Admin/ManageAdminPage/ManageAdminPage.component';
-import { RightFormComponent } from './../components/Admin/right-form/right-form.component';
-import { CreateEditRoleComponent } from './../components/Admin/create-edit-role/create-edit-role.component';
-import { CreateEditRightComponent } from './../components/Admin/create-edit-right/create-edit-right.component';
+import { NoAccessComponent } from 'components/Errors/no-access/no-access.component';
+import { CreateEditAdminComponent } from 'components/Admin/create-edit-admin/create-edit-admin.component';
+import { AdminSecurityAcountPageComponent } from 'pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
+import { ManageAdminPageComponent } from 'pages/Admin/ManageAdminPage/ManageAdminPage.component';
+import { RightFormComponent } from 'components/Admin/right-form/right-form.component';
+import { CreateEditRoleComponent } from 'components/Admin/create-edit-role/create-edit-role.component';
+import { CreateEditRightComponent } from 'components/Admin/create-edit-right/create-edit-right.component';
 import { ManageRightUserPageComponent } from 'pages/Admin/ManageRightUserPage/ManageRightUserPage.component';
 import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/ManageRoleUserPage.component';
 import { ManageRightAdminPageComponent } from 'pages/Admin/ManageRightAdminPage/ManageRightAdminPage.component';
@@ -247,6 +248,7 @@ export function playerFactory() {
     ServerErrorComponent,
     ServerErrorPageComponent,
     ViewDetailPostComponent,
+    NoAccessComponent,
 
     SwitchThemeComponent,
 

@@ -1,9 +1,13 @@
+import { PasswordPolicy } from 'models/appconfig.model';
+import { AdminService } from 'services/admin.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Admin } from 'models/admin.model';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { ManageAdminUserService } from 'services/admin/manage-admin-user.service';
+import { APPCONSTANT } from 'utils/appConstant';
+import Validation from 'utils/validation';
 
 @Component({
   selector: 'admin-create-edit-admin',
@@ -26,19 +30,26 @@ export class CreateEditAdminComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  isLoadingSubmit: boolean = false;
+
   form: FormGroup;
 
   submitted: boolean = false;
 
   getAdminSubscription: Subscription;
 
+  passwordPolicy: PasswordPolicy;
+
   constructor(
     private manageAdminUserService: ManageAdminUserService,
     private messageService: MessageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private adminService: AdminService
   ) { }
 
   ngOnInit() {
+    this.passwordPolicy = this.adminService.getConfig().AdminPasswordPolicy;
+    console.log(this.passwordPolicy);
     this.form = new FormGroup({
       email: new FormControl(''),
       display_name: new FormControl(''),
@@ -50,7 +61,15 @@ export class CreateEditAdminComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       display_name: ['', [Validators.required]],
       user_name: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
+        Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
+        Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
+        Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
+        Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
+        Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
+      ]],
     });
 
     if (this.view === 'edit') {
@@ -91,31 +110,31 @@ export class CreateEditAdminComponent implements OnInit {
   }
 
   createAdmin() {
-    this.isLoading = true;
+    this.isLoadingSubmit = true;
     if (this.form.valid) {
       const body = {
         user_name: this.form.value.user_name,
         display_name: this.form.value.display_name,
         email: this.form.value.email,
         password: this.form.value.password,
-        setting: {}
+        settings: {}
       };
 
       this.subscription = this.manageAdminUserService.createAdmin(body).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Create admin success' });
           this.form.reset();
-          this.isLoading = false;
+          this.isLoadingSubmit = false;
           this.onClose.emit();
         },
         (err) => {
-          this.isLoading = false;
+          this.isLoadingSubmit = false;
           this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
         }
       );
     }
     else {
-      this.isLoading = false;
+      this.isLoadingSubmit = false;
     }
   };
 

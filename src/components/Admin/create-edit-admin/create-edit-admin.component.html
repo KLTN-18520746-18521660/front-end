@@ -4,20 +4,20 @@
       Email
     </label>
     <input formControlName="email" id="email" type="text" pInputText class="w-full mb-3" [placeholder]="'Email ...'"
-      style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
+      autocomplete="off" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
 
     <label requiredField for="user_name" class="block text-900 text-lg font-medium mb-2">
       User name
     </label>
     <input formControlName="user_name" id="user_name" type="text" pInputText [placeholder]="'User name ...'"
-      class="w-full mb-3" style="padding:1rem;"
+      autocomplete="off" class="w-full mb-3" style="padding:1rem;"
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['user_name'].errors }">
 
     <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
       Display name
     </label>
     <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
-      class="w-full mb-3" style="padding:1rem;"
+      autocomplete="off" class="w-full mb-3" style="padding:1rem;"
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
 
     <ng-template [ngIf]="view === 'create'">
@@ -28,15 +28,49 @@
         class="w-full mb-3" style="padding:1rem;" [type]="'password'"
         [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }">
     </ng-template>
-
-    <div *ngIf="submitted && form.invalid" class="invalid-feedback">
-      <div class="flex align-items-end">
-        <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
-        <small class="p-error inline">Form is invalid </small>
+    <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="invalid-feedback">
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['required']">
+        <small class="p-error inline list-span">{{'label.signup.validation.password.required' | translate}}</small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.min' | translate : { min: passwordPolicy.min_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['maxlength']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.max' | translate : { max: passwordPolicy.max_len} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minspecial']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.special' | translate : { num: passwordPolicy.min_special_char} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minnumber']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.number' | translate : { num: passwordPolicy.min_number_char} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minupper']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.upper' | translate : { num: passwordPolicy.min_upper_char} }}
+        </small>
+      </div>
+      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlower']">
+        <small class="p-error inline list-span">
+          {{'label.signup.validation.password.lower' | translate : { num: passwordPolicy.min_lower_char} }}
+        </small>
       </div>
     </div>
 
-    <button type="submit" [loading]="isLoading" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+    <div *ngIf="submitted && form.invalid" class="invalid-feedback">
+      <div class="flex align-items-end">
+        <small class="p-error inline list-span">Please fill all field </small>
+      </div>
+    </div>
+
+    <button type="submit" [loading]="isLoadingSubmit" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
     </button>
 
   </form>

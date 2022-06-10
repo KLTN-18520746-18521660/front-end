@@ -374,6 +374,12 @@ export class ManagePostsPageComponent implements OnInit {
         orderBy: this.multiSortMeta ? this.multiSortMeta.map(item => item.order === 1 ? 'desc' : 'asc').join(',') : null,
       }
     }
+    if (query.page === 1) {
+      query.page = null;
+    }
+    if (query.size === this.rowsPerPageOptions[0]) {
+      query.size = null;
+    }
     query = _.omitBy(query, _.isNull);
     return query;
   }

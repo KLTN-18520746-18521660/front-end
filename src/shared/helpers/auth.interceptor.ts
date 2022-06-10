@@ -17,14 +17,22 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         if (error instanceof HttpErrorResponse) {
-          if (error.status === 401) {
-            this.router.navigate(['/auth/login']);
-          }
-          else if (error.status === 403) {
-            this.router.navigate(['/admin/login']);
-          }
-          else if (error.status >= 500) {
-            this.router.navigate(['/500']);
+          switch (error.status) {
+            case 401:
+              if (req.url.includes('/api/admin')) {
+                this.router.navigate(['/admin/login']);
+                break;
+              }
+              this.router.navigate(['/auth/login']);
+              break;
+            case 403:
+              this.router.navigate(['/no-access']);
+              break;
+            case 500:
+              this.router.navigate(['/server-error']);
+              break;
+            default:
+              break;
           }
           return throwError(error);
         }

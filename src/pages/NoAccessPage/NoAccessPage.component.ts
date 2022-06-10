@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-NoAccessPage',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./NoAccessPage.component.scss']
 })
 export class NoAccessPageComponent implements OnInit {
+
+  @Input() visible: boolean = true;
 
   constructor() { }
 

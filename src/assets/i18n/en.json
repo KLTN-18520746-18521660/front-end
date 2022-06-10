@@ -795,6 +795,11 @@
       "pageTitle": "500 - Server error",
       "title": "Server Error",
       "description":  "500 - Internal Server Error, please try again later"
+    },
+    "noAccess": {
+      "pageTitle": "Access Denied",
+      "title": "Access Denied",
+      "description": "You do not have the necesary permisions. Please try again or contact admins."
     }
   },
   "card": {

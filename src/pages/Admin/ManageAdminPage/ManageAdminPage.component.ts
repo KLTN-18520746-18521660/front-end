@@ -48,6 +48,11 @@ export class ManageAdminPageComponent implements OnInit {
     );
   }
 
+  onSuccess() {
+    this.displayDialog = false;
+    this.getListAdmins();
+  }
+
   onClickCreate() {
     this.viewDialog = 'create';
     this.displayDialog = true;

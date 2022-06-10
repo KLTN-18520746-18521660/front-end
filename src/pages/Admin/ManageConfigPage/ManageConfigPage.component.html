@@ -24,7 +24,7 @@
   </ng-template>
 
   <ng-template [ngIf]="!isLoadingDetail && config && format" [ngIfElse]="loadingSpinner">
-    <admin-edit-config [configKey]="currentKey" [config]="config" [formats]="format"></admin-edit-config>
+    <admin-edit-config [configKey]="currentKey" [config]="config" [formats]="format" (onClose)="onSuccess()"></admin-edit-config>
   </ng-template>
 
   <ng-template pTemplate="footer">

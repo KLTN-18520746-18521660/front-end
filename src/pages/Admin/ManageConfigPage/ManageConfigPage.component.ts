@@ -45,6 +45,9 @@ export class ManageConfigPageComponent implements OnInit {
   }
 
   getAllConfig() {
+    this.listConfigKey = [];
+    this.listConfigValue = [];
+    this.currentKey = '';
     this.isLoading = true;
     this.getAllSubscription = this.manageConfigService.getAllConfig().subscribe(
       (res) => {
@@ -97,6 +100,11 @@ export class ManageConfigPageComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
       }
     )
+  }
+
+  onSuccess() {
+    this.displayDialog = false;
+    this.getAllConfig();
   }
 
   ngOnDestroy() {
