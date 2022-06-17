@@ -127,7 +127,7 @@ export class ChangePasswordComponent implements OnInit {
         this.message = [{
           severity: 'error',
           summary: '',
-          detail: err.message
+          detail: this.translate.instant(`messageCode.${err.message_code}`)
         }];
       }
     );

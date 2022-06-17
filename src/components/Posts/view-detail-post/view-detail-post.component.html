@@ -1,0 +1,58 @@
+<div class="thumnail-post border-round-top overflow-hidden" *ngIf="post.thumbnail">
+  <p-image class="post-thumbnail-image border-round-top shadow-2" src="{{ post.thumbnail }}" alt="{{ post.title }}"
+    [preview]="true">
+  </p-image>
+</div>
+<div class="main-post p-3 md:p-4 mt-3">
+  <div class="post-info mb-4">
+    <div class="flex">
+      <div class="flex avatar">
+        <ng-template [ngIf]="post.owner?.user_name" [ngIfElse]="noUserAvatar">
+          <a [routerLink]="['/user', post.owner?.user_name]">
+            <app-avatar [height]="'4rem'" [user]="post?.owner"></app-avatar>
+          </a>
+        </ng-template>
+        <ng-template #noUserAvatar>
+          <app-avatar [height]="'4rem'" [user]="post?.owner"></app-avatar>
+        </ng-template>
+      </div>
+      <div class="flex-auto name-info mx-2 py-1">
+        <div class="block mb-2">
+          <ng-template [ngIf]="post.owner?.user_name" [ngIfElse]="noUserName">
+            <a [routerLink]="['/user', post.owner?.user_name]">
+              <span class="font-semibold text-xl">{{ post.owner?.display_name }}</span>
+            </a>
+          </ng-template>
+          <ng-template #noUserName>
+            <span class="font-semibold text-xl text-600">{{'common.noUser' | translate}}</span>
+          </ng-template>
+        </div>
+        <span class="text-base">
+          <span class="spacing-1 text-600" tooltipPosition="top"
+            pTooltip="{{post.approved_timestamp | date : 'dd/MM/yyyy HH:mm'}}">
+            {{'postDetail.postedOn' | translate}} {{post?.fromNow?.approved}}
+          </span>
+          <span class="spacing-1 text-600" *ngIf="post.fromNow?.updated" title="{{post.last_modified_timestamp}}">
+            &#183; {{'postDetail.updatedOn' | translate}} {{post.fromNow?.updated}}
+          </span>
+          <span class="spacing-1 text-600">
+            &#183; {{ "card.time_read" | translate: post }}
+          </span>
+        </span>
+      </div>
+      <div *ngIf="menu">
+        <app-btn-menu [btnClass]="'p-button-rounded p-button-secondary'" [menuClass]="'shadow-4'" [ngClass]=""
+          [items]="menu" [icon]="'pi pi-ellipsis-v'">
+        </app-btn-menu>
+      </div>
+    </div>
+  </div>
+  <app-status-badge *ngIf="post.status !== 'Approved'" [size]="'base'" [label]="post.status">
+  </app-status-badge>
+  <div class="post-title mb-5">
+    <p class="text-4xl md:text-6xl font-bold word-break">{{post.title}}</p>
+    <app-tag [tag]="tag" [size]="'base'" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
+  </div>
+  
+  <app-render-content [type]="post.content_type" [content]="post.content"></app-render-content>
+</div>

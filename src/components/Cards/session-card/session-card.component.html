@@ -7,12 +7,12 @@
         <!-- <p class="font-medium mt-3">{{session.session_token.substring(1, 10)}}...</p> -->
         <ul class="text-sm pl-4">
           <li class="my-2">
-            <span pTooltip="{{session.last_interaction_time | date: 'dd/MM/yyyy hh:mm'}}" tooltipPosition="top">
+            <span pTooltip="{{session.last_interaction_time | date: 'dd/MM/yyyy HH:mm'}}" tooltipPosition="top">
               {{'profile.security.session.lastAccess' | translate}} {{session.fromNow.updated}}
             </span>
           </li>
           <li class="my-2">
-            <span pTooltip="{{session.created_timestamp | date: 'dd/MM/yyyy hh:mm'}}" tooltipPosition="top">
+            <span pTooltip="{{session.created_timestamp | date: 'dd/MM/yyyy HH:mm'}}" tooltipPosition="top">
               {{'profile.security.session.created' | translate}} {{session.fromNow.created}}
             </span>
           </li>

@@ -1,6 +1,8 @@
-import { ManageAdminPageComponent } from './../../pages/Admin/ManageAdminPage/ManageAdminPage.component';
-import { AdminSecurityAcountPageComponent } from './../../pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
-import { AdminChangePasswordPageComponent } from './../../pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
+import { ManageCategoryPageComponent } from 'pages/Admin/ManageCategoryPage/ManageCategoryPage.component';
+import { StatisticPostPageComponent } from 'pages/Admin/StatisticPostPage/StatisticPostPage.component';
+import { ManageAdminPageComponent } from 'pages/Admin/ManageAdminPage/ManageAdminPage.component';
+import { AdminSecurityAcountPageComponent } from 'pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
+import { AdminChangePasswordPageComponent } from 'pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
 import { AdminGuard } from 'shared/guards/admin.guard';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -14,6 +16,7 @@ import { ManageRightAdminPageComponent } from 'pages/Admin/ManageRightAdminPage/
 import { ManageRoleAdminPageComponent } from 'pages/Admin/ManageRoleAdminPage/ManageRoleAdminPage.component';
 import { ManageRightUserPageComponent } from 'pages/Admin/ManageRightUserPage/ManageRightUserPage.component';
 import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/ManageRoleUserPage.component';
+import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.component';
 
 @NgModule({
   imports: [
@@ -38,6 +41,21 @@ import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/Mana
             path: 'manage-post',
             component: ManagePostsPageComponent,
             data: { key: 'admin.manage-post' }
+          },
+          {
+            path: 'manage-category',
+            component: ManageCategoryPageComponent,
+            data: { key: 'admin.manage-category' }
+          },
+          {
+            path: 'manage-tag',
+            component: ManageTagPageComponent,
+            data: { key: 'admin.manage-tag' }
+          },
+          {
+            path: 'statistic-post',
+            component: StatisticPostPageComponent,
+            data: { key: 'admin.statistic-post' }
           },
           {
             path: 'manage-config',

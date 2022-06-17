@@ -30,7 +30,7 @@ export class GoToComponent implements OnInit {
           else {
             this.router.navigate(['/']);
           }
-        }, APPCONSTANT.LOADING_TIMEOUT);
+        }, 200);
       },
       () => {
         this.router.navigate(['/']);

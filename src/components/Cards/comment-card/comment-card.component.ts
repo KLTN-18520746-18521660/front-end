@@ -166,7 +166,7 @@ export class CommentCardComponent implements OnInit {
     if (value.trim()) {
       console.log(value);
       if (!this.userService.getSessionId()) {
-        this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+        this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant('message.needlogin') });
         this.appUser.openLoginPopup();
         return;
       }
@@ -175,14 +175,14 @@ export class CommentCardComponent implements OnInit {
       }
       this.postCommentSubcription = this.commentService.postComment(this.commentService.current_Slug, this.comment.id, value).subscribe(
         (res) => {
-          this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully' });
+          this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.addcomment') });
           this.comment.reply_comments.comments.unshift(res.data.comment);
           this.sizeComment++;
           this.isLoading = false;
           this.isShowReply = false;
         },
         (err) => {
-          this.messageService.add({ severity: 'error', summary: '', detail: err.message });
+          this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) });
           this.isLoading = false;
         }
       );
@@ -195,13 +195,13 @@ export class CommentCardComponent implements OnInit {
     }
     this.deleteCommentSubcription = this.commentService.deleteComment(comment.id).subscribe(
       (res) => {
-        this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully deleted' });
+        this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.deletepostcomment') });
         this.comment.replies--;
         this.comment.reply_comments.total_size--;
         this.comment.reply_comments.comments = this.comment.reply_comments.comments.filter(item => item.id !== comment.id);
       },
       (err) => {
-        this.messageService.add({ severity: 'error', summary: '', detail: err.message });
+        this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) });
       }
     );
   }
@@ -218,7 +218,6 @@ export class CommentCardComponent implements OnInit {
     if (sessionId) {
       this.actionSubcription = this.commentService.sendActionWithComment(this.comment.id, action).subscribe(
         () => {
-          // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Success' });
           if (action === 'like') {
             this.comment.mapAction.like = true;
             this.comment.likes++;
@@ -237,12 +236,12 @@ export class CommentCardComponent implements OnInit {
           }
         },
         (err) => {
-          this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+          this.messageService.add({ severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });
         }
       );
     }
     else {
-      this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+      this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant('message.needlogin') });
       this.appUser.openLoginPopup();
       return;
     }

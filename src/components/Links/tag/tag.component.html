@@ -3,13 +3,13 @@
     [routerLink]="['/tag', tag.tag]">
     <span
       class="tag-title {{ color }}-400 hover:{{ color }}-500 py-2 px-2 text-0 text-{{ size }} font-semibold border-round"
-      title="{{ tag?.name }}" [ngClass]="width ? width : 'max-width'">
+      title="{{ tag?.name }}" [ngClass]="width ? width : 'max-width'"
+      [ngClass]="{'opacity-50': tag?.status === 'Disabled'}">
       #{{ tag?.tag }}
     </span>
   </a>
 </ng-template>
 <ng-template #loadingBlock>
-  <p-skeleton styleClass="" [ngClass]="{'mr-2' : width}" width="{{width ? '8rem' : '100%'}}"
-    height="1.6rem">
+  <p-skeleton styleClass="" [ngClass]="{'mr-2' : width}" width="{{width ? '8rem' : '100%'}}" height="1.6rem">
   </p-skeleton>
 </ng-template>

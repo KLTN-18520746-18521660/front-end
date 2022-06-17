@@ -1,0 +1,10 @@
+<div id="post-content" class="post-content ql-editor">
+  <ng-template [ngIf]="type === 'HTML'" [ngIfElse]="markdown">
+    <div class="content-HTML" [innerHTML]="content"></div>
+  </ng-template>
+  <ng-template #markdown>
+    <div class="content-HTML" [innerHTML]="markdownCompile"></div>
+  </ng-template>
+</div>
+
+<app-view-image [src]="imgSrc" [visible]="viewImage" (onHide)="onHideImage()"></app-view-image>

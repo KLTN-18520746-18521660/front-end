@@ -1,9 +1,6 @@
-import { TranslateService } from '@ngx-translate/core';
-import { convertDateTime } from 'utils/commonFunction';
-import { AuthService } from 'services/auth.service';
-import { ConfirmationService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { Session } from 'models/api.model';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-user-security',
@@ -17,7 +14,6 @@ export class UserSecurityComponent implements OnInit {
   listSession: Session[];
 
   constructor(
-    private confirmationService: ConfirmationService,
     private authService: AuthService,
   ) { }
 

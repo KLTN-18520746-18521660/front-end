@@ -1,3 +1,14 @@
+import { CreateEditUserComponent } from 'components/Admin/create-edit-user/create-edit-user.component';
+import { CreateEditTagComponent } from 'components/Admin/create-edit-tag/create-edit-tag.component';
+import { CreateEditCategoryComponent } from 'components/Admin/create-edit-category/create-edit-category.component';
+import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.component';
+import { ManageCategoryPageComponent } from 'pages/Admin/ManageCategoryPage/ManageCategoryPage.component';
+import { StatisticPostPageComponent } from 'pages/Admin/StatisticPostPage/StatisticPostPage.component';
+import { DiffTextComponent } from 'components/Posts/diff-text/diff-text.component';
+import { ComparePostComponent } from 'components/Posts/compare-post/compare-post.component';
+import { RenderContentComponent } from 'components/Posts/render-content/render-content.component';
+import { ViewImageComponent } from 'components/Popups/view-image/view-image.component';
+import { PostTimlineComponent } from 'components/Timlines/post-timline/post-timline.component';
 import { NoAccessComponent } from 'components/Errors/no-access/no-access.component';
 import { CreateEditAdminComponent } from 'components/Admin/create-edit-admin/create-edit-admin.component';
 import { AdminSecurityAcountPageComponent } from 'pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
@@ -23,7 +34,7 @@ import { BtnGiveFeedbackComponent } from 'components/Buttons/btn-give-feedback/b
 import { SessionCardComponent } from 'components/Cards/session-card/session-card.component';
 import { UserSecurityComponent } from 'components/Profile/user-security/user-security.component';
 import { SimpleGridViewComponent } from 'components/simple-grid-view/simple-grid-view.component';
-import { ViewDetailPostComponent } from 'components/view-detail-post/view-detail-post.component';
+import { ViewDetailPostComponent } from 'components/Posts/view-detail-post/view-detail-post.component';
 import { DockComponent } from 'components/dock/dock.component';
 import { EditPostPageComponent } from 'pages/EditPostPage/EditPostPage.component';
 import { SwitchThemeComponent } from 'components/Configs/switch-theme/switch-theme.component';
@@ -249,6 +260,11 @@ export function playerFactory() {
     ServerErrorPageComponent,
     ViewDetailPostComponent,
     NoAccessComponent,
+    PostTimlineComponent,
+    ViewImageComponent,
+    RenderContentComponent,
+    ComparePostComponent,
+    DiffTextComponent,
 
     SwitchThemeComponent,
 
@@ -271,6 +287,12 @@ export function playerFactory() {
     ManageAdminPageComponent,
     AdminSecurityAcountPageComponent,
     CreateEditAdminComponent,
+    StatisticPostPageComponent,
+    ManageCategoryPageComponent,
+    ManageTagPageComponent,
+    CreateEditCategoryComponent,
+    CreateEditTagComponent,
+    CreateEditUserComponent,
   ],
   imports: [
     BrowserModule,

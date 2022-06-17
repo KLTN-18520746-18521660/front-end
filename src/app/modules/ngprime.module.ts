@@ -3,10 +3,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { CaptchaModule } from 'primeng/captcha';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
+import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
@@ -54,6 +56,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { TimelineModule } from 'primeng/timeline';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -66,10 +69,12 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     BadgeModule,
     BreadcrumbModule,
     ButtonModule,
+    CalendarModule,
     CaptchaModule,
     CardModule,
     CarouselModule,
     CascadeSelectModule,
+    ChartModule,
     CheckboxModule,
     ChipModule,
     ChipsModule,
@@ -116,6 +121,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     TabViewModule,
     TagModule,
     TieredMenuModule,
+    TimelineModule,
     ToastModule,
     TooltipModule,
     TreeSelectModule,

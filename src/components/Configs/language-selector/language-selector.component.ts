@@ -77,7 +77,7 @@ export class LanguageSelectorComponent implements OnInit {
       this.translate.use(event.value);
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 500);
     }
   }
 
@@ -88,7 +88,7 @@ export class LanguageSelectorComponent implements OnInit {
       this.translate.use(event.value.lang);
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 500);
     }
   }
 

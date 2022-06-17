@@ -1,0 +1,13 @@
+:host ::ng-deep {
+  .diff-text {
+    .output-diff {
+
+      &.break-line {
+
+        span.d2h-code-line-ctn {
+          white-space: pre-wrap !important;
+        }
+      }
+    }
+  }
+}

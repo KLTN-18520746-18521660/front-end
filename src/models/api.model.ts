@@ -69,6 +69,25 @@ export interface ApiResult {
 
     admins: Admin[];
     admin: Admin;
+
+    logs?: any[];
+
+    statistic?: {
+      posts: number;
+      visited: number;
+      views: number;
+      likes: number;
+      saved: number;
+      follows: number;
+      dislikes: number;
+      comments: number;
+    };
+    chart?: {
+      [key: string]: {
+        created: number;
+        approved: number;
+      };
+    }
   }
 }
 
@@ -80,7 +99,7 @@ export interface ApiError {
 
 export interface ApiParams {
   // for audit log
-  key?: string; // postID | commnentID
+  key?: string; // postID | commentID
   type?: 'comment' | 'post' | 'user';
 
   start?: number;
@@ -101,6 +120,9 @@ export interface ApiParams {
    * 'asc,desc, ...'
    */
   order?: string;
+
+  start_date?: string;
+  end_date?: string;
 }
 
 export type ActionPostParams = 'saved' | 'like' | 'visited' | 'follow';

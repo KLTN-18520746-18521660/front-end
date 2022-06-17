@@ -1,3 +1,4 @@
+import { AdminService } from 'services/admin.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +16,8 @@ export class SessionCardComponent implements OnInit {
 
   @Input() loading: boolean = false;
 
+  @Input() type: 'admin' | 'user' = 'user';
+
   @Input() session: Session;
 
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
@@ -25,6 +28,7 @@ export class SessionCardComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private adminService: AdminService,
     private translate: TranslateService,
     private messageService: MessageService
   ) { }
@@ -44,7 +48,12 @@ export class SessionCardComponent implements OnInit {
       }
     ];
 
-    this.session.iscurrent = this.session.session_token === this.authService.getSessionId();
+    if (this.type === 'admin') {
+      this.session.iscurrent = this.session.session_token === this.adminService.getSessionId();
+    }
+    else if (this.type === 'user') {
+      this.session.iscurrent = this.session.session_token === this.authService.getSessionId();
+    }
 
     this.session.fromNow = {
       created: convertDateTime(this.session.created_timestamp, this.translate.currentLang, false, false, true),
@@ -53,27 +62,52 @@ export class SessionCardComponent implements OnInit {
   }
 
   deleteSession(sessionId: string) {
-    this.deleteSubcription = this.authService.deleteSessionUser(sessionId).subscribe(
-      (res) => {
-        this.loading = false;
-        this.onDelete.emit(sessionId);
-        this.messageService.add({
-          key: 'sessionCard',
-          severity: 'success',
-          summary: '',
-          detail: this.translate.instant('message.delete')
-        });
-      },
-      (err) => {
-        this.loading = false;
-        this.messageService.add({
-          key: 'sessionCard',
-          severity: 'error',
-          summary: err.error,
-          detail: err.message
-        });
-      }
-    );
+    if (this.type === 'admin') {
+      this.deleteSubcription = this.adminService.deleteSessionAdmin(sessionId).subscribe(
+        (res) => {
+          this.loading = false;
+          this.onDelete.emit(sessionId);
+          this.messageService.add({
+            key: 'sessionCard',
+            severity: 'success',
+            summary: '',
+            detail: this.translate.instant('message.delete')
+          });
+        },
+        (err) => {
+          this.loading = false;
+          this.messageService.add({
+            key: 'sessionCard',
+            severity: 'error',
+            summary: err.error,
+            detail: this.translate.instant(`messageCode.${err.message_code}`),
+          });
+        }
+      );
+    }
+    else if (this.type === 'user') {
+      this.deleteSubcription = this.authService.deleteSessionUser(sessionId).subscribe(
+        (res) => {
+          this.loading = false;
+          this.onDelete.emit(sessionId);
+          this.messageService.add({
+            key: 'sessionCard',
+            severity: 'success',
+            summary: '',
+            detail: this.translate.instant('message.delete')
+          });
+        },
+        (err) => {
+          this.loading = false;
+          this.messageService.add({
+            key: 'sessionCard',
+            severity: 'error',
+            summary: err.error,
+            detail: this.translate.instant(`messageCode.${err.message_code}`)
+          });
+        }
+      );
+    }
   }
 
   ngOnDestroy() {

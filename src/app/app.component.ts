@@ -18,7 +18,6 @@ export class AppComponent {
   menuMode = 'static';
 
   constructor(
-    private primengConfig: PrimeNGConfig,
     private themeService: ThemeService,
     private translate: TranslateService,
     private primeConfig: PrimeNGConfig,
@@ -45,7 +44,7 @@ export class AppComponent {
   ngOnInit() {
     this.setupTitleListener();
     this.translate.get('primeng').subscribe(res => this.primeConfig.setTranslation(res));
-    this.primengConfig.ripple = true;
+    this.primeConfig.ripple = true;
 
     // set font size for all pages ... = 1rem
     document.documentElement.style.fontSize = APPCONSTANT.FONT_SIZE + 'px';

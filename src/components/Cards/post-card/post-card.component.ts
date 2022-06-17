@@ -142,7 +142,7 @@ export class PostCardComponent implements OnInit {
           }
         },
         (err) => {
-          this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+          this.messageService.add({ severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });
         }
       );
     }

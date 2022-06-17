@@ -1,6 +1,6 @@
 export default class Category {
-  id?: string;
-  parent_id?: string;
+  id?: number;
+  parent_id?: number;
   name?: string;
   display_name?: string;
   describe?: string;
