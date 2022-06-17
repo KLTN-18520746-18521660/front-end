@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     route: any,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
-      this.router.navigate(["auth/login"], { queryParams: { returnUrl: route._routerState.url } });
+      this.router.navigate(["auth/login"], { queryParams: { returnUrl: state.url } });
       return false;
     }
     return true;
@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
-      this.router.navigate(["auth/login"], { queryParams: { returnUrl: childRoute.url } });
+      this.router.navigate(["auth/login"], { queryParams: { returnUrl: state.url } });
       return false;
     }
     return true;

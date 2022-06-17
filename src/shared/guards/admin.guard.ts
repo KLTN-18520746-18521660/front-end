@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     route: any,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.cookieService.check(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)) {
-      this.router.navigate(["admin/login"], { queryParams: { returnUrl: route._routerState.url } });
+      this.router.navigate(["admin/login"], { queryParams: { returnUrl: state.url } });
       return false;
     }
     return true;
@@ -25,7 +25,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.cookieService.check(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)) {
-      this.router.navigate(["admin/login"], { queryParams: { returnUrl: childRoute.url } });
+      this.router.navigate(["admin/login"], { queryParams: { returnUrl: state.url } });
       return false;
     }
     return true;
