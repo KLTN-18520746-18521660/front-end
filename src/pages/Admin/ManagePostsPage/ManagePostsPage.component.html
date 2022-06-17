@@ -34,6 +34,8 @@
         </th>
         <th pSortableColumn="created_timestamp">Created Date <p-sortIcon field="created_timestamp"></p-sortIcon>
         </th>
+        <th pSortableColumn="approved_timestamp">Approved <p-sortIcon field="approved_timestamp"></p-sortIcon>
+        </th>
         <th pSortableColumn="last_modified_timestamp">Last Modify <p-sortIcon field="last_modified_timestamp">
           </p-sortIcon>
         </th>
@@ -55,7 +57,7 @@
         </th>
         <th pSortableColumn="dislikes">Dislike <p-sortIcon field="dislikes"></p-sortIcon>
         </th>
-        <th pSortableColumn="comments">Comment <p-sortIcon field="comments"></p-sortIcon>
+        <th pSortableColumn="comments">CMT <p-sortIcon field="comments"></p-sortIcon>
         </th>
         <th>Note</th>
         <th>Actions</th>
@@ -88,6 +90,10 @@
         <td>
           <p pTooltip="{{post.created_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}" tooltipPosition="top">
             {{post?.fromNow?.created}}</p>
+        </td>
+        <td>
+          <p pTooltip="{{post.approved_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}" tooltipPosition="top">
+            {{post?.fromNow?.approved}}</p>
         </td>
         <td>
           <p pTooltip="{{post.last_modified_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}" tooltipPosition="top">

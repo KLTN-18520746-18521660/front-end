@@ -29,8 +29,8 @@
         </div>
         <span class="text-base">
           <span class="spacing-1 text-600" tooltipPosition="top"
-            pTooltip="{{post.approved_timestamp | date : 'dd/MM/yyyy HH:mm'}}">
-            {{'postDetail.postedOn' | translate}} {{post?.fromNow?.approved}}
+            pTooltip="{{(post.approved_timestamp ? post.approved_timestamp : post.created_timestamp) | date : 'dd/MM/yyyy HH:mm'}}">
+            {{'postDetail.postedOn' | translate}} {{post?.fromNow?.approved ? post?.fromNow?.approved : post?.fromNow?.created}}
           </span>
           <span class="spacing-1 text-600" *ngIf="post.fromNow?.updated" title="{{post.last_modified_timestamp}}">
             &#183; {{'postDetail.updatedOn' | translate}} {{post.fromNow?.updated}}
@@ -53,6 +53,6 @@
     <p class="text-4xl md:text-6xl font-bold word-break">{{post.title}}</p>
     <app-tag [tag]="tag" [size]="'base'" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
   </div>
-  
+
   <app-render-content [type]="post.content_type" [content]="post.content"></app-render-content>
 </div>

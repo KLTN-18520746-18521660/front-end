@@ -23,7 +23,7 @@ export class ViewDetailPostComponent implements OnInit {
   ngOnInit() {
     this.post.fromNow = {
       created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, true, false),
-      approved: convertDateTime(this.post.approved_timestamp, this.translate.currentLang, true, false),
+      approved: this.post.approved_timestamp ? convertDateTime(this.post.approved_timestamp, this.translate.currentLang, true, false) : null,
       updated: this.post.last_modified_timestamp ? convertDateTime(this.post.last_modified_timestamp, this.translate.currentLang, true, false) : null
     }
   }

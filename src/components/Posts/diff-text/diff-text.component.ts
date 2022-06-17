@@ -18,10 +18,10 @@ export class DiffTextComponent implements OnInit {
 
   outputHtml: string;
 
-  outputFormat: OutputFormatType = 'line-by-line';
+  outputFormat: OutputFormatType = 'side-by-side';
   outputFormats: OutputFormatType[] = ['side-by-side', 'line-by-line'];
 
-  breakLine: boolean = false;
+  breakLine: boolean = true;
 
   constructor() { }
 
