@@ -21,7 +21,7 @@ export class StatisticService {
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'session_token': this.cookieService.get(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)
+          'session_token_admin': this.cookieService.get(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)
         })
       };
     }

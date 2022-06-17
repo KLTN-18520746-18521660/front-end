@@ -25,7 +25,7 @@ export class AdminService {
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'session_token': this.cookieService.get(STORAGE_KEY.USER_SESSIONS_TOKEN)
+          'session_token_admin': this.cookieService.get(STORAGE_KEY.ADMIN_SESSIONS_TOKEN)
         })
       };
     }

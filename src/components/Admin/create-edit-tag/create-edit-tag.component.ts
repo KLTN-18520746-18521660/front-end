@@ -99,6 +99,10 @@ export class CreateEditTagComponent implements OnInit {
         status: this.form.value.status,
       };
 
+      if (body.status === 'Readonly') {
+        delete body.status
+      }
+
       this.subscription = this.manageCategoryTagService.updateTag(this.tag.id, body).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited tag success' });

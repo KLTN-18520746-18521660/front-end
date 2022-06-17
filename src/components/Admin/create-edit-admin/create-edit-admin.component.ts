@@ -178,6 +178,10 @@ export class CreateEditAdminComponent implements OnInit {
         roles: this.form.value.roles,
       };
 
+      if (body.status === 'Readonly') {
+        delete body.status
+      }
+
       this.subscription = this.manageAdminUserService.modifyAdmin(this.admin.id, body).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited admin success' });

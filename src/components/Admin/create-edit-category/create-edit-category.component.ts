@@ -107,6 +107,10 @@ export class CreateEditCategoryComponent implements OnInit {
         status: this.form.value.status,
       };
 
+      if (body.status === 'Readonly') {
+        delete body.status
+      }
+
       this.subscription = this.manageCategoryTagService.updateCategory(this.category.id, body).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited category success' });
