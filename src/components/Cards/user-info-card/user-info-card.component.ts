@@ -15,6 +15,8 @@ export class UserInfoCardComponent implements OnInit {
 
   @Input() user_name: string;
 
+  @Input() showInfo: boolean = true;
+
   user: User;
 
   subcription: Subscription;

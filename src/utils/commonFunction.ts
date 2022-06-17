@@ -30,10 +30,10 @@ export const handleError = (error?: HttpErrorResponse) => {
 
   if (error.error instanceof ErrorEvent as any) {
     obj = {
-      error: error.error.message,
+      error: error?.error?.message,
       status: error.status,
       message: error.statusText,
-      message_code: error.error.message_code || ''
+      message_code: error?.error.message_code || ''
     };
   }
   // else if (error.error instanceof ProgressEvent as any) {
@@ -47,18 +47,18 @@ export const handleError = (error?: HttpErrorResponse) => {
   else if (error?.error?.data) {
     const err = Object.values(error?.error?.data) as [];
     obj = {
-      error: error.error.message,
-      status: error.status,
+      error: error?.error?.message,
+      status: error?.status,
       message: err.join(', '),
-      message_code: error.error.message_code || ''
+      message_code: error?.error?.message_code || ''
     }
   }
   else {
     obj = {
       error: mapStatusCode[error.status],
       status: error.status,
-      message: error.error?.message,
-      message_code: error.error.message_code || ''
+      message: error?.error?.message,
+      message_code: error?.error?.message_code || ''
     };
   }
   console.log(obj);

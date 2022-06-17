@@ -1,16 +1,16 @@
-<div class="card p-2 user-info-card mb-1">
+<div class="p-2 user-info-card mb-1" [ngClass]="{'card': showInfo}">
   <div class="card-container flex flex-wrap" *ngIf="user">
     <div class="flex flex-wrap">
-      <div class="col-12 align-items-center">
+      <div class="col-12 align-items-center" *ngIf="showInfo">
         <a [routerLink]="['/user', user.user_name]" class="flex align-items-center">
           <app-avatar [height]="'4rem'" [user]="user"></app-avatar>
           <span class="mx-2 font-semibold">{{ user.display_name}}</span>
         </a>
       </div>
-      <div class="col-12" *ngIf="user.description">
+      <div class="col-12" *ngIf="user.description && showInfo">
         <p class="user-bio">{{ user?.description }}</p>
       </div>
-      <div class="col-12 md:col-12">
+      <div class="col-12 md:col-12" *ngIf="showInfo">
         <p-divider styleClass="mt-0"></p-divider>
         <div class="flex flex-wrap justify-content-center">
           <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
