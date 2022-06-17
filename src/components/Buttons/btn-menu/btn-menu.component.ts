@@ -8,15 +8,7 @@ import { Menu } from 'primeng/menu';
   styleUrls: ['./btn-menu.component.scss']
 })
 export class BtnMenuComponent implements OnInit {
-  @Input() items: MenuItem[] = [
-    {
-      label: 'Save',
-      icon: 'pi pi-bookmark-fill',
-      command: (event) => {
-        console.log(event);
-      }
-    }
-  ]
+  @Input() items: MenuItem[] = [];
 
   @Input() icon = 'pi pi-cog';
 

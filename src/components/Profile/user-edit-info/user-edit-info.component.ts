@@ -189,7 +189,6 @@ export class UserEditInfoComponent implements OnInit {
 
   onSubmit() {
     this.message = [];
-    console.log(this.form)
     if (this.form.invalid) {
       return;
     }

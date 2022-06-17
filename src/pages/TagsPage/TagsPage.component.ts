@@ -120,7 +120,6 @@ export class TagsPageComponent implements OnInit {
   }
 
   onPaginate(event) {
-    console.log(event);
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       ...(event.page == 0 ? { queryParams: { page: null } } : { queryParams: { page: event.page } }),

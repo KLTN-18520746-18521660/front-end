@@ -71,7 +71,6 @@ export class LanguageSelectorComponent implements OnInit {
 
   // for dropdown
   onChangeLanguage(event) {
-    console.log(event);
     if (event.value !== this.currentLanguage) {
       this.userConfig.addConfig('language', event.value);
       this.translate.use(event.value);
@@ -82,7 +81,6 @@ export class LanguageSelectorComponent implements OnInit {
   }
 
   onChangeLanguageListBox(event) {
-    console.log(event);
     if (event.value.lang !== this.currentLanguage) {
       this.userConfig.addConfig('language', event.value.lang);
       this.translate.use(event.value.lang);

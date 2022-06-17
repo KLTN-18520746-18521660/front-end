@@ -91,7 +91,6 @@ export class ReportPopupComponent implements OnInit {
         this.textInput.nativeElement.focus();
       }
     }, 100);
-    console.log(this.currentReason);
   }
 
   onClickCancel() {

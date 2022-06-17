@@ -164,7 +164,6 @@ export class CommentCardComponent implements OnInit {
   onSubmitReply() {
     const value = this.replyForm.form.value.value;
     if (value.trim()) {
-      console.log(value);
       if (!this.userService.getSessionId()) {
         this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant('message.needlogin') });
         this.appUser.openLoginPopup();

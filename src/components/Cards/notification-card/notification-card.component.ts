@@ -206,7 +206,7 @@ export class NotificationCardComponent implements OnInit {
         icon: 'pi pi-ban',
         user: notification.content.post_owner,
         command: () => {
-          console.log('reject post');
+          this.router.navigate(['/post', notification.content.post_detail.slug]);
         }
       }
       case 'new-comment': return {

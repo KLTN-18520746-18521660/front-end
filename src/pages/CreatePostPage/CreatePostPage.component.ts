@@ -380,7 +380,7 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onChangeSelectCategory(event) {
-    console.log(this.selectedCategory)
+    // console.log(this.selectedCategory)
     // this.selectedCategory = event.value;
   }
 

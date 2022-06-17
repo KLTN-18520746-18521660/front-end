@@ -76,7 +76,7 @@ export class RecommendPostCardComponent implements OnInit {
             this.onDeletePost();
           }
         },
-        ...(this.post.status === 'Approved' || this.post.status === 'Private' ? [{
+        ...(this.post.status === 'Approved' || this.post.status === 'Private' || this.post.status === 'Pending' ? [{
           id: 'status',
           label: this.translate.instant('card.recommnedCard.menu.status'),
           icon: 'pi pi-cog',
@@ -101,7 +101,7 @@ export class RecommendPostCardComponent implements OnInit {
   }
 
   onClickChangsStatus() {
-    if (this.post.status === 'Approved') {
+    if (this.status === 'Private') {
       this.changeStatus('private');
     } else {
       this.changeStatus('publish');
@@ -121,7 +121,12 @@ export class RecommendPostCardComponent implements OnInit {
         this.displayDialog = false;
         this.loading = false;
         this.isLoading = false;
-        this.post.status = "Pending";
+        if (type === 'private') {
+          this.post.status = "Private";
+        }
+        else if (type === 'publish') {
+          this.post.status = "Pending";
+        }
       }
     );
   }
