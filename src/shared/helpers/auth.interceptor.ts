@@ -21,9 +21,11 @@ export class AuthInterceptor implements HttpInterceptor {
             case 401:
               if (req.url.includes('/api/admin')) {
                 this.router.navigate(['/admin/login']);
+                window.location.reload();
                 break;
               }
               this.router.navigate(['/auth/login']);
+              window.location.reload();
               break;
             case 403:
               this.router.navigate(['/no-access']);
