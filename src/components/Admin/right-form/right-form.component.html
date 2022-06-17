@@ -2,18 +2,18 @@
   <form [formGroup]="form">
     <div class="flex justify-content-between border-1 surface-border col-12">
       <div class="flex col-4 align-items-center">
-        <p-checkbox formControlName="selected" inputId="selected" [binary]="true"></p-checkbox>
-        <label for="selected" class="ml-2" pTooltip="{{right.describe}}">{{right.display_name}} </label>
+        <p-checkbox formControlName="selected" inputId="selected-{{right.key}}" [binary]="true"></p-checkbox>
+        <label for="selected-{{right.key}}" class="ml-2" pTooltip="{{right.describe}}">{{right.display_name}} </label>
       </div>
       <div class="flex col-4 justify-content-center align-items-center"
         [ngClass]="{'opacity-60': !f['selected'].value}">
-        <label for="read" class="mr-2">Read </label>
-        <p-inputSwitch formControlName="read" inputId="read"></p-inputSwitch>
+        <label for="read-{{right.key}}" class="mr-2">Read </label>
+        <p-inputSwitch formControlName="read" inputId="read-{{right.key}}"></p-inputSwitch>
       </div>
       <div class="flex col-4 justify-content-center align-items-center"
         [ngClass]="{'opacity-60': !f['selected'].value}">
-        <label for="write" class="mr-2">Write </label>
-        <p-inputSwitch formControlName="write" inputId="write"></p-inputSwitch>
+        <label for="write-{{right.key}}" class="mr-2">Write </label>
+        <p-inputSwitch formControlName="write" inputId="write-{{right.key}}"></p-inputSwitch>
       </div>
     </div>
   </form>

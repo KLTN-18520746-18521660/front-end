@@ -88,14 +88,17 @@ export class CreateEditRoleComponent implements OnInit {
   }
 
   onChange(event: RightDetail) {
-    this.rightModel[event.key] = {
-      read: event.read,
-      write: event.write,
-    };
-    if (!event.selected || (!event.read && !event.write)) {
+    if (event.selected) {
+      this.rightModel[event.key] = {
+        read: event.read,
+        write: event.write,
+      };
+      this.rightModel = { ...this.role?.rights, ...this.rightModel };
+    }
+    else {
+      this.rightModel = { ...this.role?.rights, ...this.rightModel };
       delete this.rightModel[event.key];
     }
-    this.rightModel = { ...this.role?.rights, ...this.rightModel };
   }
 
   onSubmit() {
