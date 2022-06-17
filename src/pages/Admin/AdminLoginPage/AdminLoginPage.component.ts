@@ -1,15 +1,14 @@
-import { ThemeName } from 'models/appconfig.model';
-import { AppConfigService } from 'services/app.config.service';
-import { Message, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminLoginModel } from 'models/admin.model';
-import { AdminService } from 'services/admin.service';
-import { APPCONSTANT } from 'utils/appConstant';
+import { AppConfig, ThemeName } from 'models/appconfig.model';
+import { Message } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { AppConfig } from 'models/appconfig.model';
+import { AdminService } from 'services/admin.service';
+import { AppConfigService } from 'services/app.config.service';
 import { UserConfigService } from 'services/user-config.service';
+import { APPCONSTANT } from 'utils/appConstant';
 
 @Component({
   selector: 'app-AdminLoginPage',

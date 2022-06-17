@@ -43,7 +43,7 @@
     <ng-template [ngIf]="viewDialog === 'edit' && currentRole">
       <p class="text-2xl max-1-line">Edit role admin: <b>{{currentRole.display_name}}</b></p>
     </ng-template>
-    <ng-template [ngIf]="viewDialog === 'create' && currentRole">
+    <ng-template [ngIf]="viewDialog === 'create'">
       <p class="font-semibold text-2xl max-1-line">Create new role admin</p>
     </ng-template>
   </ng-template>
@@ -52,7 +52,7 @@
     <admin-create-edit-role [type]="'admin'" [view]="'edit'" [role]="currentRole" (onClose)="onSuccess()">
     </admin-create-edit-role>
   </ng-template>
-  <ng-template [ngIf]="viewDialog === 'create' && currentRole">
+  <ng-template [ngIf]="viewDialog === 'create'">
     <admin-create-edit-role [type]="'admin'" [view]="'create'" (onClose)="onSuccess()">
     </admin-create-edit-role>
   </ng-template>

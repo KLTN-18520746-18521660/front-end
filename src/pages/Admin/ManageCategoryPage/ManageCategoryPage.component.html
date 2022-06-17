@@ -48,7 +48,9 @@
         <tr>
           <td>{{category.id}}</td>
           <td>{{category.parent_id}}</td>
-          <td>{{category.name}}</td>
+          <td>
+            <a target="_blank" href="/category/{{category.name}}">{{category.name}}</a>
+          </td>
           <td>
             <img *ngIf="category.thumbnail" src="{{category.thumbnail}}" alt="Thumbnail" height="60px">
           </td>

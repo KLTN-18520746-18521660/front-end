@@ -37,7 +37,7 @@
 <p-dialog [(visible)]="displayDialog" [dismissableMask]="true" (onHide)="currentRight = null; displayDialog = false" [modal]="true"
   [style]="{width: '60vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
   <ng-template pTemplate="header">
-    <ng-template [ngIf]="viewDialog === 'edit'">
+    <ng-template [ngIf]="viewDialog === 'edit' && currentRight">
       <p class="text-2xl max-1-line">Edit right admin: <b>{{currentRight.display_name}}</b></p>
     </ng-template>
     <ng-template [ngIf]="viewDialog === 'create'">

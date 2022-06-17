@@ -78,7 +78,7 @@
       </ng-template>
 
       <label class="block text-900 text-lg font-medium my-3">
-        Role of user
+        Role of admin
       </label>
       <ng-template [ngIf]="!isLoadingRole" [ngIfElse]="loadingBlock">
         <div class="field-checkbox" *ngFor="let role of listRole" title="{{role.describe}}">

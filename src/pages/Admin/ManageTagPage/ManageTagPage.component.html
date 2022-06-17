@@ -40,16 +40,18 @@
           <th>Action </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-category>
+      <ng-template pTemplate="body" let-tag>
         <tr>
-          <td>{{category.id}}</td>
-          <td>{{category.tag}}</td>
-          <td>{{category.name}}</td>
-          <td>{{category.status}}</td>
-          <td title="{{category.created_timestamp}}">{{category.created_timestamp | date : 'dd/MM/yyyy'}}</td>
-          <td title="{{category.last_modified_timestamp}}">{{category.last_modified_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td>{{tag.id}}</td>
           <td>
-            <button pButton type="button" (click)="onClickEdit(category)" class="p-button-sm p-button-secondary"
+            <a target="_blank" href="/tag/{{tag.tag}}">{{tag.tag}}</a>
+          </td>
+          <td>{{tag.name}}</td>
+          <td>{{tag.status}}</td>
+          <td title="{{tag.created_timestamp}}">{{tag.created_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td title="{{tag.last_modified_timestamp}}">{{tag.last_modified_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td>
+            <button pButton type="button" (click)="onClickEdit(tag)" class="p-button-sm p-button-secondary"
               icon="pi pi-pencil"></button>
           </td>
         </tr>
