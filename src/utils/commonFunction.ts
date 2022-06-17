@@ -109,6 +109,7 @@ export const convertMarkdown = (text: string = '') => {
 }
 
 export const convertLinkRedirecting = (str: string) => {
+  if (!str) return '';
   str = str.replace(/<a[^>]*href=["']([^"']*)["']/g, (item) => {
     item = item.replace(/(?<=href=[\'\"])([^\'\"]+)/gm, (match) => {
       return `${window.location.origin}/goto?url=${match}`;

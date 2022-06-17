@@ -51,7 +51,7 @@ export class AdminLoginPageComponent implements OnInit {
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || null;
 
     this.message = this.adminService.messages;
-    this.changeTheme('tailwind-light', false);
+    // this.changeTheme('tailwind-light', false);
 
     this.form = new FormGroup({
       Admin_email: this.formBuilder.control(''),
