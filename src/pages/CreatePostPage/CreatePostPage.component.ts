@@ -156,6 +156,9 @@ export class CreatePostPageComponent implements OnInit {
 
   onClickNext() {
     if (this.activeStep < this.steps.length - 1) {
+      if (this.activeStep === 1) {
+        this.checkValidPost();
+      }
       this.activeStep++;
       this.draft['step'] = this.activeStep;
       this.saveDraft();
@@ -187,7 +190,6 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   // onChange content function
-
   onChangeContent(event) {
     this.draft[this.selectedEditorType] = event;
     this.saveDraft();
@@ -214,11 +216,6 @@ export class CreatePostPageComponent implements OnInit {
       event = event.slice(0, 200);
     }
     this.draft['short_content'] = event;
-    this.saveDraft();
-  }
-
-  onChangeThumbnail(event) {
-    this.draft['thumbnail'] = event;
     this.saveDraft();
   }
 
@@ -353,7 +350,7 @@ export class CreatePostPageComponent implements OnInit {
       if (res.data?.tags?.length === 0) {
         this.listFilterTags = [
           {
-            id: '',
+            id: null,
             tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             is_new: true
@@ -372,7 +369,7 @@ export class CreatePostPageComponent implements OnInit {
 
         if (!check) {
           this.listFilterTags.unshift({
-            id: '',
+            id: null,
             tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             is_new: true
@@ -393,28 +390,31 @@ export class CreatePostPageComponent implements OnInit {
 
   checkValidPost() {
     let result = true;
-    if (this.selectedEditorType === 'HTML' && this.content.toString().length == 0) {
-      this.message = [...this.message, {
+    if (this.selectedEditorType === 'HTML' && (this.content?.toString().length == 0 || !this.content)) {
+      this.messageService.add({
+        key: 'createPostToast',
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.content
-      }];
+      });
       result = false;
     }
-    else if (this.selectedEditorType === 'Markdown' && this.contentMd.toString().length == 0) {
-      this.message = [...this.message, {
+    else if (this.selectedEditorType === 'Markdown' && (this.contentMd.toString().length == 0 || !this.contentMd)) {
+      this.messageService.add({
+        key: 'createPostToast',
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.content
-      }]
+      });
       result = false;
     }
     if (!this.title) {
-      this.message = [...this.message, {
+      this.messageService.add({
+        key: 'createPostToast',
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.title
-      }];
+      });
       result = false;
     }
     // if (this.validThumbnail) {
@@ -426,11 +426,12 @@ export class CreatePostPageComponent implements OnInit {
     //   result = false;
     // }
     if (this.selectedCategory.length == 0) {
-      this.message = [...this.message, {
+      this.messageService.add({
+        key: 'createPostToast',
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.category
-      }];
+      });
       result = false;
     }
     // if (this.listTagModel.length == 0) {
@@ -441,7 +442,6 @@ export class CreatePostPageComponent implements OnInit {
     //   })
     //   result = false;
     // }
-    console.log(this.message)
     return result;
   }
 
@@ -479,7 +479,6 @@ export class CreatePostPageComponent implements OnInit {
   onClickPublish() {
     this.message = [];
     if (!this.userService.isAuthenticated) {
-      console.log(this.textTranslate.popup)
       this.appUser.openLoginPopup(
         this.textTranslate.popup.message,
         'warn',
@@ -489,7 +488,6 @@ export class CreatePostPageComponent implements OnInit {
     }
     else if (!this.checkValidPost()) {
       window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
-      // this.messageService.addAll(this.checkValidPost().message);
     }
     else {
       this.confirmationService.confirm({
@@ -554,7 +552,7 @@ export class CreatePostPageComponent implements OnInit {
           key: 'createPostToast',
           severity: 'error',
           summary: this.translate.instant('message.error'),
-          detail: err.message,
+          detail: this.translate.instant(`messageCode.${err.message_code}`),
           life: APPCONSTANT.TOAST_TIMEOUT
         });
       }

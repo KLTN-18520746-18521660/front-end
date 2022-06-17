@@ -10,7 +10,7 @@
           </app-tag>
         </ng-template>
         <ng-template #loadingTagBlock>
-          <app-tag [loading]="true" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of [1,2,3]">
+          <app-tag [loading]="true" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of [1]">
           </app-tag>
         </ng-template>
       </div>
@@ -21,7 +21,7 @@
           </app-category>
         </ng-template>
         <ng-template #loadingCategoryBlock>
-          <app-category [loading]="true" [size]="'base'" [width]="'w-full'" *ngFor="let category of [1,2,3]">
+          <app-category [loading]="true" [size]="'base'" [width]="'w-full'" *ngFor="let category of [1]">
           </app-category>
         </ng-template>
       </div>
@@ -44,8 +44,7 @@
           </div>
           <div class="flex flex-wrap justify-content-between align-items-center mb-3">
             <div class="main-header-left ">
-              <span class="p-2 text-md md:text-lg font-medium cursor-pointer text-600"
-                *ngFor="let type of listPostType"
+              <span class="p-2 text-md md:text-lg font-medium cursor-pointer text-600" *ngFor="let type of listPostType"
                 [ngClass]="{ 'font-bold text-blue-500 border-bottom-3 border-blue-500' : currentPostType === type}"
                 (click)="onChangeViewOption(type)">
                 {{ ('home.viewOption.' + type) | translate }}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { AuthService } from 'services/auth.service';
 
@@ -27,6 +28,7 @@ export class ForgotPasswordPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private translate: TranslateService 
   ) { }
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class ForgotPasswordPageComponent implements OnInit {
       (err) => {
         this.isLoading = false;
         this.success = false;
-        this.message = [{ severity: 'error', detail: err.message }];
+        this.message = [{ severity: 'error', detail: this.translate.instant(`messageCode.${err.message_code}`) }];
       }
     );
   }

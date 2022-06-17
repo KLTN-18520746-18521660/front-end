@@ -1,0 +1,18 @@
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
+  <p-timeline [value]="timelines" align="alternate" styleClass="customized-timeline">
+    <ng-template pTemplate="marker" let-event>
+      <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
+        <i [ngClass]="event.icon"></i>
+      </span>
+    </ng-template>
+    <ng-template pTemplate="content" let-event>
+      <p-card [header]="event.title" [title]="event.timestamp" [subheader]="event.timestamp | date : 'dd/MM/yyyy HH:mm'">
+        <!-- <app-simple-grid-view [data]="event.new_value"></app-simple-grid-view> -->
+      </p-card>
+    </ng-template>
+  </p-timeline>
+</ng-template>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

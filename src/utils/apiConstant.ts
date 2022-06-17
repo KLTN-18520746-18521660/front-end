@@ -64,6 +64,7 @@ export const REST_URL = {
     RELOAD_CONFIG: 'admin/config/reload',
 
     ADMIN: 'admin/user',
+    USER_SOCIAL: 'admin/user_social',
 
     USER: 'user',
     CHANGE_PASSWORD: 'admin/user/changepassword',
@@ -79,6 +80,14 @@ export const REST_URL = {
     POSTS: 'admin/posts',
     APPROVE_POST: 'admin/post/approve',
     REJECT_POST: 'admin/post/reject',
+
+    CATEGORY: 'admin/category',
+    TAG: 'admin/tag',
+
+    STATISTIC_POST: 'admin/statistic/post',
+
+    CHART: 'chart',
+    COUNT: 'count',
   },
 
   UPLOAD: 'upload/file',

@@ -11,6 +11,7 @@ import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-SignUpPage',
@@ -39,7 +40,8 @@ export class SignUpPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private translate: TranslateService 
   ) { }
 
   ngOnInit() {
@@ -121,22 +123,22 @@ export class SignUpPageComponent implements OnInit {
     });
 
     this.authService.register(user).subscribe(
-      (res: any) => {
+      (res) => {
         this.isLoading = false;
         this.userService.messages = this.message = [{
           severity: 'success',
           summary: '',
-          detail: 'Check your email for verification link or login now at here',
+          detail: this.translate.instant('apiResult.register.success'),
           life: APPCONSTANT.TOAST_TIMEOUT
         }];
         this.router.navigate(['/auth/login']);
       },
-      (err: any) => {
+      (err) => {
         this.isLoading = false;
         this.message = [{
           severity: 'error',
           summary: '',
-          detail: err.error,
+          detail: this.translate.instant(`messageCode.${err.message_code}`),
           life: APPCONSTANT.TOAST_TIMEOUT,
         }]
       }

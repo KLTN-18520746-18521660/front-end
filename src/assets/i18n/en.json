@@ -64,6 +64,9 @@
       "dashboard": "Admin Dashboard",
       "login": "Admin Login",
       "manage-post": "Manage Post",
+      "statistic-post": "Statistic Post",
+      "manage-category": "Manage Category",
+      "manage-tag": "Manage Tag",
       "manage-user": "Manage User",
       "manage-config": "Manage Config",
       "manage-admin": "Manage Admin",
@@ -153,11 +156,55 @@
     },
     "changepassword": {}
   },
-  "apiResult":{
+  "apiResult": {
     "login": {
-      "success": "Login successfully",
-      "fail": "Login failed"
+      "success": "Login successfully"
+    },
+    "register": {
+      "success": "Register successfully. Check your email for verification link or login now at here"
     }
+  },
+  "messageCode": {
+    "INVALID_REST_MESSAGE": "Invalid rest message",
+    "OK": "OK",
+    "NOT_FOUND": "Not found",
+    "ALREADY_EXIST": "Already exist",
+    "INTERNAL_SERVER_ERROR": "Internal server error",
+    "INVALID_REQUEST_BODY": "Invalid request body",
+    "INVALID_ORDER_PARAMS": "Invalid order params",
+    "INVALID_STATUS_PARAMS": "Invalid status params",
+    "NOT_ALLOW_SORT_BY": "Not allow sort by",
+    "PASSWORD_IS_EXPIRED": "Your password is expired",
+    "USER_HAS_BEEN_LOCKED": "You has already been locked",
+    "USER_HAS_BEEN_DELETED": "You has already been deleted",
+    "USERNAME_HAS_BEEN_USED": "This username has already been used",
+    "EMAIL_HAS_BEEN_USED": "This email has been used",
+    "SESSION_HAS_EXPIRED": "Your session has expired",
+    "MISSING_HEADER_AUTHORIZE": "Missing header authorize",
+    "INVALID_HEADER_AUTHORIZE": "Invalid header authorize",
+    "INVALID_SESSION_TOKEN": "Invalid session token",
+    "USER_NOT_FOUND_OR_INCORRECT_PASSWORD": "Username not found or incorrect password",
+    "INCORRECT_PASSWORD": "Incorrect password",
+    "INVALID_REQUEST_UPLOAD_FILE": "Invalid request upload file",
+    "EXCEED_MAX_SIZE_OF_FILES": "Exceed max size of files",
+    "NOT_ALLOW_UPLOAD_FILE_TYPE": "Not allow upload file type",
+    "NOT_ALLOW_UPLOAD_FILE_WITH_PATH": "Not allow upload file with path",
+    "USER_DOES_NOT_HAVE_PERMISSION": "You don't have permission to do this",
+    "BAD_REQUEST_PARAMS": "Bad request params",
+    "BAD_REQUEST_BODY": "Bad request body",
+    "INVALID_REQUEST_PARAMS_START_SIZE": "Invalid request params start size",
+    "INVALID_CONFIG_KEY": "Invalid config key",
+    "NOT_ALLOW_TO_DO": "Not allow to do",
+    "NOT_ACCEPT": "Not accept",
+    "EMAIL_VERIFIED": "Email verified",
+    "NO_CHANGES_DETECTED": "No changes detected",
+    "INVALID_ACTION": "Invalid action",
+    "POLICY_PASSWORD_VIOLATION": "Policy password violation",
+    "ACTION_HAS_BEEN_TAKEN": "Action has been taken",
+    "INCORRECT_OLD_PASSWORD": "Incorrect old password",
+    "EMAIL_IS_SENDING": "Email is sending",
+    "EMAIL_IS_SENT_SUCCESSFULLY": "Email is sent successfully",
+    "REQUEST_HAS_EXPIRED": "Request has expired"
   },
   "message": {
     "success": "Success",
@@ -794,12 +841,18 @@
     "serverError": {
       "pageTitle": "500 - Server error",
       "title": "Server Error",
-      "description":  "500 - Internal Server Error, please try again later"
+      "description": "500 - Internal Server Error, please try again later"
     },
     "noAccess": {
       "pageTitle": "Access Denied",
       "title": "Access Denied",
       "description": "You do not have the necesary permisions. Please try again or contact admins."
+    },
+    "timeline": {
+      "post": {
+        "create": "Created",
+        "modify": "Modified"
+      }
     }
   },
   "card": {
@@ -858,7 +911,8 @@
       "unsave": "Unsave",
       "copy": "Copy link",
       "share": "Share",
-      "report": "Report"
+      "report": "Report",
+      "history": "History"
     },
     "values": {
       "view": "Views",

@@ -66,10 +66,8 @@ export class EditPostPageComponent implements OnInit {
 
   message: Message[] = [];
 
-  @ViewChild('fileUpload') fileUpload: FileUpload;
-
-  isSelectFile: boolean = false;
   thumbnailPreview: any;
+  thumbnailFile: File;
 
   constructor(
     private translate: TranslateService,
@@ -193,7 +191,7 @@ export class EditPostPageComponent implements OnInit {
       if (res.data?.tags?.length === 0) {
         this.listFilterTags = [
           {
-            id: '',
+            id: null,
             tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             is_new: true
@@ -212,7 +210,7 @@ export class EditPostPageComponent implements OnInit {
 
         if (!check) {
           this.listFilterTags.unshift({
-            id: '',
+            id: null,
             tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
             is_new: true
@@ -223,12 +221,6 @@ export class EditPostPageComponent implements OnInit {
   }
 
   updateEditPost(edit = true) {
-    if (edit) {
-      this.editing = true;
-    }
-    else {
-      this.editing = false;
-    }
     this.editPost = {
       content: this.content,
       short_content: this.short_content,
@@ -247,6 +239,9 @@ export class EditPostPageComponent implements OnInit {
 
     const diff = getDifferenceObject(this.post, this.editPost);
     this.editing = !_.isEqual(diff, {});
+    if (edit) {
+      this.editing = true;
+    }
   }
 
   onChangeContentMd(event) {
@@ -257,25 +252,27 @@ export class EditPostPageComponent implements OnInit {
     this.updateEditPost();
   }
 
-  myUploader(event) {
-    this.isLoadingSubmit = true;
-    if (this.uploadSubscription) {
-      this.uploadSubscription.unsubscribe();
-    }
-    this.uploadSubscription = this.postService.upLoadImage('post', event.files[0]).subscribe(
+  uploadImage() {
+    this.isLoading = true;
+    this.uploadSubscription = this.postService.upLoadImage('post', this.thumbnailFile).subscribe(
       (res) => {
+        this.thumbnail = res.data.url;
         this.editPost.thumbnail = res.data.url;
         this.thumbnailPreview = res.data.url;
         this.thumbnail = res.data.url;
-        this.isSelectFile = false;
+        this.thumbnailFile = null;
         this.updateEditPost();
         const data = getDifferenceObject(this.post, this.editPost) as any;
         this.modifyPost(data);
       },
-      () => {
-        this.message = [{ severity: 'error', summary: 'Error', detail: this.translate.instant('message.uploadfail') }];
+      (err) => {
+        this.isLoading = false;
       }
     );
+  }
+
+  onChangeContent(event) {
+    this.updateEditPost();
   }
 
   onChangeTitle(event) {
@@ -295,18 +292,20 @@ export class EditPostPageComponent implements OnInit {
   }
 
   onSelectThumbnail(event) {
-    this.isSelectFile = true;
+    this.editing = true;
     var reader = new FileReader();
 
     reader.readAsDataURL(event.files[0]);
     reader.onload = (_event) => {
       this.thumbnailPreview = reader.result as string;
     }
+    this.thumbnailFile = event.files[0];
   }
 
   onClearSelect() {
-    this.isSelectFile = false;
+    this.editing = false;
     this.thumbnailPreview = null;
+    this.thumbnailFile = null;
   }
 
   onClickDiscard() {
@@ -400,8 +399,8 @@ export class EditPostPageComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         window.scrollTo(0, 0);
-        if (this.isSelectFile) {
-          this.fileUpload.upload();
+        if (this.thumbnailFile) {
+          this.uploadImage();
         }
         else {
           const data = getDifferenceObject(this.post, this.editPost) as any;

@@ -1,3 +1,4 @@
+import { PostTimlineComponent } from 'components/Timlines/post-timline/post-timline.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -10,6 +11,7 @@ import { ReportSendModel, ReportType } from 'models/report.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { MenuItem, MessageService } from 'primeng/api';
 import { DomHandler } from 'primeng/dom';
+import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { CommentService } from 'services/comment.service';
 import { PostsService } from 'services/posts.service';
@@ -95,6 +97,10 @@ export class DetailPageComponent implements OnInit {
 
   error: boolean = false;
 
+  popupSubscription: Subscription;
+
+  refPopup: DynamicDialogRef;
+
   @ViewChild('postContent') postContent: ElementRef;
 
   @ViewChild('comments') commentBlock: ElementRef;
@@ -109,7 +115,8 @@ export class DetailPageComponent implements OnInit {
     private messageService: MessageService,
     private clipboard: Clipboard,
     private router: Router,
-    private appUser: AppUserComponent
+    private appUser: AppUserComponent,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -147,6 +154,30 @@ export class DetailPageComponent implements OnInit {
             this.router.navigate(['/edit', this.post.id]);
           }
         }
+      },
+      {
+        id: 'history',
+        label: this.translate.instant('postDetail.action.history'),
+        icon: 'pi pi-history',
+        command: () => {
+          const data = {
+            postId: this.post?.id,
+          }
+          this.refPopup = this.dialogService.open(PostTimlineComponent, {
+            data,
+            header: " ",
+            footer: " ",
+            dismissableMask: true,
+            closeOnEscape: false,
+            closable: true,
+            styleClass: 'w-12 md:w-8 lg:w-8 xl:w-6'
+          });
+          this.userService.ref.push(this.refPopup);
+          this.popupSubscription = this.refPopup.onClose.subscribe(() => {
+            this.refPopup = null;
+            this.userService.ref.filter(ref => ref !== this.refPopup);
+          });
+        }
       }] : []),
       {
         id: 'save',
@@ -167,7 +198,7 @@ export class DetailPageComponent implements OnInit {
         icon: 'pi pi-copy',
         command: () => {
           this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug));
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied' });
+          this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
         }
       },
       {
@@ -555,12 +586,12 @@ export class DetailPageComponent implements OnInit {
           }
         },
         (err) => {
-          this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+          this.messageService.add({ severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });
         }
       );
     }
     else {
-      this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+      this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant('message.needlogin') });
       this.appUser.openLoginPopup();
       return;
     }
@@ -599,7 +630,7 @@ export class DetailPageComponent implements OnInit {
 
   onClickReport(type: ReportType = 'post', comment_id = null) {
     if (!this.userService.getSessionId()) {
-      this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+      this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant('message.needlogin') });
       this.appUser.openLoginPopup();
       return;
     }
@@ -652,7 +683,7 @@ export class DetailPageComponent implements OnInit {
     }
     if (input.content.trim()) {
       if (!this.userService.getSessionId()) {
-        this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+        this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant('message.needlogin') });
         this.appUser.openLoginPopup();
         return;
       }
@@ -663,13 +694,13 @@ export class DetailPageComponent implements OnInit {
       this.postCommentSubcription = this.commentService
         .postComment(this.slug, input.parent_id, input.content).subscribe(
           (res) => {
-            this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully' });
+            this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.addcomment') });
             this.listComments.unshift(res.data.comment);
             this.totalSizeComments++;
             this.isLoadingAddComment = false;
           },
           (err) => {
-            this.messageService.add({ severity: 'error', summary: '', detail: err.message });
+            this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) });
             this.isLoadingAddComment = false;
           }
         );
@@ -682,12 +713,12 @@ export class DetailPageComponent implements OnInit {
     }
     this.deleteCommentSubcription = this.commentService.deleteComment(comment.id).subscribe(
       (res) => {
-        this.messageService.add({ severity: 'success', summary: '', detail: 'Comment successfully deleted' });
+        this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.deletepostcomment') });
         this.totalSizeComments--;
         this.listComments = this.listComments.filter(item => item.id !== comment.id);
       },
       (err) => {
-        this.messageService.add({ severity: 'error', summary: '', detail: err.message });
+        this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) });
       }
     );
   }
@@ -728,5 +759,9 @@ export class DetailPageComponent implements OnInit {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
+    if (this.popupSubscription) {
+      this.popupSubscription.unsubscribe();
+    }
+
   }
 }

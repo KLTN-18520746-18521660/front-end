@@ -100,7 +100,7 @@
     </p-autoComplete>
 
     <p class="text-md font-medium mb-1 mt-3">{{'createPost.thumbnail.title' | translate}}</p>
-    <p-fileUpload #fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate"
+    <p-fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate"
       chooseIcon="pi pi-upload" [cancelLabel]="'createPost.thumbnail.cancel' | translate" [showUploadButton]="false"
       accept=".png, .jpg, .jpeg, .svg, .webp" (onSelect)="onSelectThumbnail($event)" (onClear)="onClearSelect()"
       [maxFileSize]="MAX_FILE_SIZE"></p-fileUpload>
@@ -148,10 +148,10 @@
           <p *ngIf="title" class="text-5xl font-bold" style="word-break: break-word;">{{title}}</p>
           <p *ngIf="!title" class="text-5xl font-bold text-500">{{'createPost.form.titleHere' | translate}}</p>
           <ng-template [ngIf]="selectedEditorType === 'HTML'" [ngIfElse]="markdown">
-            <div class="preview-content content-HTML" [innerHTML]="content"></div>
+            <app-render-content [content]="content"></app-render-content>
           </ng-template>
           <ng-template #markdown>
-            <div class="preview-content content-HTML" [innerHTML]="contentMdComplied"></div>
+            <app-render-content [content]="contentMdComplied"></app-render-content>
           </ng-template>
         </div>
       </p-tabPanel>

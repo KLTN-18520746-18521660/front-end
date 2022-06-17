@@ -61,7 +61,7 @@ export class NewPasswordPageComponent implements OnInit {
         (err) => {
           this.isLoading = false;
           this.error = true;
-          this.message = [{ severity: 'error', summary: '', detail: err.message }];
+          this.message = [{ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) }];
         }
       );
       this.translate.get('label.confirm').subscribe(res => {
@@ -122,7 +122,7 @@ export class NewPasswordPageComponent implements OnInit {
           {
             severity: 'error',
             summary: '',
-            detail: err.message
+            detail: this.translate.instant(`messageCode.${err.message_code}`)
           },
           {
             severity: 'warn',

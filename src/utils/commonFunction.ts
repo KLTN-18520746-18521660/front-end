@@ -5,6 +5,7 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import calendar from 'dayjs/plugin/calendar';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { SortMeta } from "models/table.model";
 import md from 'markdown-it';
 
@@ -117,8 +118,18 @@ export const convertLinkRedirecting = (str: string) => {
   return str;
 }
 
-export const getDiffDay = (date: string) => {
-  return dayjs().diff(date, 'day', true);
+/**
+ * 
+ * @param date1 > @param date2
+ * @returns 
+ */
+export const getDiffDay = (date1: string | Date, date2: string | Date = null, float = true) => {
+  if (!!date2) {
+    return dayjs(date2).diff(date1, 'day', float);
+  }
+  else {
+    return dayjs().diff(date1, 'day', float);
+  }
 }
 
 export const addDay = (addDay: number, day: Date = new Date) => {
@@ -131,6 +142,20 @@ export const minusDay = (minusDay: number, day: Date = new Date) => {
   const date = new Date(day);
   date.setDate(date.getDate() - minusDay);
   return date;
+}
+
+export const formatDate = (date: Date, format: string = 'dd/MM/yyyy') => {
+  return dayjs(date).format(format);
+}
+
+export const toDate = (date: string) => {
+  date = dayjs(date).format('YYYY-MM-DD');
+  return dayjs(date).toDate();
+}
+
+export const getWeekOfDay = (date: Date | string) => {
+  dayjs.extend(weekOfYear)
+  return dayjs(date).week();
 }
 
 export const randomArray = (arr: any[], length: number, getOne: boolean = false) => {

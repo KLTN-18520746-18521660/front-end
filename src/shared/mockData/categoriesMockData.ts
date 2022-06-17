@@ -2,7 +2,7 @@ import Category from "models/category.model";
 
 export const categoriesMockData: Category[] = [
   {
-    id: "1",
+    id: 1,
     parent_id: null,
     name: "Technology",
     display_name: "Technology",
@@ -14,7 +14,7 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "2",
+    id: 2,
     parent_id: null,
     name: "Development",
     display_name: "Development",
@@ -26,7 +26,7 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "3",
+    id: 3,
     parent_id: null,
     name: "Blogs",
     display_name: "Blogs",
@@ -38,7 +38,7 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "4",
+    id: 4,
     parent_id: null,
     name: "Discussions",
     display_name: "Discussions",
@@ -50,7 +50,7 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "5",
+    id: 5,
     parent_id: null,
     name: "Community",
     display_name: "Community",
@@ -62,7 +62,7 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "6",
+    id: 6,
     parent_id: null,
     name: "News",
     display_name: "News",
@@ -74,7 +74,7 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "7",
+    id: 7,
     parent_id: null,
     name: "Marketing",
     display_name: "Marketing",
@@ -86,8 +86,8 @@ export const categoriesMockData: Category[] = [
     last_modified_timestamp: "2020-01-01 00:00:00",
   },
   {
-    id: "8",
-    parent_id: '6',
+    id: 8,
+    parent_id: 6,
     name: "Design",
     display_name: "Design",
     describe: "Design",

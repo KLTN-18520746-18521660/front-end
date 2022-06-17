@@ -10,6 +10,7 @@
   display: -webkit-box;
   -webkit-line-clamp: $number;
   -webkit-box-orient: vertical;
+  word-break: break-word;
 }
 
 @mixin borderRadius($radius: 10) {

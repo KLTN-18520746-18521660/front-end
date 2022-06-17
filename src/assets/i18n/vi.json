@@ -64,6 +64,9 @@
       "dashboard": "Admin Dashboard",
       "login": "Admin Login",
       "manage-post": "Manage Post",
+      "statistic-post": "Statistic Post",
+      "manage-category": "Manage Category",
+      "manage-tag": "Manage Tag",
       "manage-user": "Manage User",
       "manage-config": "Manage Config",
       "manage-admin": "Manage Admin",
@@ -153,11 +156,55 @@
     },
     "changepassword": {}
   },
-  "apiResult":{
+  "apiResult": {
     "login": {
-      "success": "Đăng nhập thành công",
-      "fail": "Đăng nhập thất bại"
+      "success": "Đăng nhập thành công"
+    },
+    "register": {
+      "success": "Đăng ký thành công. Vui lòng kiểm tra email để xác nhận tài khoản hoặc đăng nhập ngay bây giờ tại đây."
     }
+  },
+  "messageCode": {
+    "INVALID_REST_MESSAGE": "Lỗi không xác định",
+    "OK": "OK",
+    "NOT_FOUND": "Không tìm thấy",
+    "ALREADY_EXIST": "Đã tồn tại",
+    "INTERNAL_SERVER_ERROR": "Lỗi hệ thống",
+    "INVALID_REQUEST_BODY": "Body yêu cầu không hợp lệ",
+    "INVALID_ORDER_PARAMS": "Params không hợp lệ",
+    "INVALID_STATUS_PARAMS": "Params trạng thái không hợp lệ",
+    "NOT_ALLOW_SORT_BY": "Không cho phép sắp xếp",
+    "PASSWORD_IS_EXPIRED": "Mật khẩu đã hết hạn",
+    "USER_HAS_BEEN_LOCKED": "Tài khoản đã bị khóa",
+    "USER_HAS_BEEN_DELETED": "Tài khoản đã bị xóa",
+    "USERNAME_HAS_BEEN_USED": "Tên tài khoản đã được sử dụng",
+    "EMAIL_HAS_BEEN_USED": "Email đã được sử dụng",
+    "SESSION_HAS_EXPIRED": "Phiên đăng nhập đã hết hạn",
+    "MISSING_HEADER_AUTHORIZE": "Thiếu header authorize",
+    "INVALID_HEADER_AUTHORIZE": "Header authorize không hợp lệ",
+    "INVALID_SESSION_TOKEN": "Token của phiên đăng nhập không hợp lệ",
+    "USER_NOT_FOUND_OR_INCORRECT_PASSWORD": "Tài khoản không tồn tại hoặc mật khẩu không đúng",
+    "INCORRECT_PASSWORD": "Mật khẩu không đúng",
+    "INVALID_REQUEST_UPLOAD_FILE": "Yêu cầu tải lên file không hợp lệ",
+    "EXCEED_MAX_SIZE_OF_FILES": "Kích thước file vượt quá giới hạn",
+    "NOT_ALLOW_UPLOAD_FILE_TYPE": "Không cho phép tải lên file này",
+    "NOT_ALLOW_UPLOAD_FILE_WITH_PATH": "Không cho phép tải lên file vào đường dẫn",
+    "USER_DOES_NOT_HAVE_PERMISSION": "Tài khoản không có quyền",
+    "BAD_REQUEST_PARAMS": "Params không hợp lệ",
+    "BAD_REQUEST_BODY": "Body yêu cầu không hợp lệ",
+    "INVALID_REQUEST_PARAMS_START_SIZE": "Params bắt đầu và kích thước không hợp lệ",
+    "INVALID_CONFIG_KEY": "Key cấu hình không hợp lệ",
+    "NOT_ALLOW_TO_DO": "Không cho phép thực hiện",
+    "NOT_ACCEPT": "Không chấp nhận",
+    "EMAIL_VERIFIED": "Email đã được xác nhận",
+    "NO_CHANGES_DETECTED": "Không có sự thay đổi",
+    "INVALID_ACTION": "Hành động không hợp lệ",
+    "POLICY_PASSWORD_VIOLATION": "Mật khẩu không hợp lệ theo chính sách",
+    "ACTION_HAS_BEEN_TAKEN": "Hành động đã được thực hiện",
+    "INCORRECT_OLD_PASSWORD": "Mật khẩu cũ không đúng",
+    "EMAIL_IS_SENDING": "Email đang được gửi",
+    "EMAIL_IS_SENT_SUCCESSFULLY": "Email đã được gửi thành công",
+    "REQUEST_HAS_EXPIRED": "Yêu cầu đã hết hạn"
   },
   "message": {
     "success": "Thành công",
@@ -794,12 +841,18 @@
     "serverError": {
       "pageTitle": "500 - Lỗi hệ thống",
       "title": "Lỗi hệ thống",
-      "description":  "500 - Lỗi hệ thống, vui lòng thử lại sau"
+      "description": "500 - Lỗi hệ thống, vui lòng thử lại sau"
     },
     "noAccess": {
       "pageTitle": "Truy cập bị từ chối",
       "title": "Truy cập bị từ chối",
       "description": "Bạn không có quyền truy cập vào trang này, vui lòng thử lại sau hoặc liên hệ với quản trị viên."
+    },
+    "timeline": {
+      "post": {
+        "create": "Đăng bài viết",
+        "modify": "Sửa bài viết"
+      }
     }
   },
   "card": {
@@ -858,7 +911,8 @@
       "unsave": "Bỏ lưu",
       "copy": "Sao chép",
       "share": "Chia sẻ",
-      "report": "Báo cáo"
+      "report": "Báo cáo",
+      "history": "Lịch sử"
     },
     "values": {
       "view": "Lượt xem",
@@ -932,7 +986,7 @@
       "private": "Riêng tư"
     },
     "thumbnail": {
-      "title": "Ảnh đại diện",
+      "title": "Hình thu nhỏ",
       "select": "Chọn ảnh",
       "upload": "Tải ảnh lên",
       "cancel": "Hủy"
@@ -954,7 +1008,7 @@
     "form": {
       "titlePlaceholder": "Nhập tiêu đề bài viết",
       "shortContentPlaceholder": "Nhập nội dung ngắn",
-      "thumbnailPlaceholder": "Điền đường dẫn ảnh đại diện",
+      "thumbnailPlaceholder": "Điền đường dẫn hình thu nhỏ",
       "thumbnailError": "Đường dẫn ảnh không hợp lệ",
       "tagPlaceHolder": "Nhập thẻ",
       "moreTagPlaceholder": "Nhập thêm thẻ",
@@ -992,7 +1046,7 @@
     "discard": "Bỏ qua",
     "title": "Tiêu đề",
     "shortContent": "Nội dung ngắn",
-    "thumnail": "Ảnh đại diện",
+    "thumnail": "Hình thu nhỏ",
     "tag": "Thẻ",
     "slug": "Đường dẫn: ",
     "timeRead": "Thời gian đọc (2-50 phút)",
@@ -1002,7 +1056,7 @@
       "titlePlaceholder": "Nhập tiêu đề bài viết",
       "shortContentPlaceholder": "Nhập nội dung ngắn",
       "shortContentLength": "Nội dung ngắn phải từ 20-200 ký tự",
-      "thumbnailPlaceholder": "Điền đường dẫn ảnh đại diện",
+      "thumbnailPlaceholder": "Điền đường dẫn hình thu nhỏ",
       "thumbnailError": "Đường dẫn ảnh không hợp lệ",
       "tagPlaceHolder": "Nhập thẻ",
       "moreTagPlaceholder": "Nhập thêm thẻ",
@@ -1023,7 +1077,7 @@
       },
       "valid": {
         "title": "Tiêu đề phải dài từ 20 đến 200 ký tự",
-        "thumbnail": "Ảnh đại diện không được để trống",
+        "thumbnail": "Hình thu nhỏ không được để trống",
         "tag": "Thẻ không được để trống",
         "category": "Bạn phải chọn ít nhất một danh mục",
         "timeRead": "Thời gian đọc phải từ 2 đến 50 phút",

@@ -1,17 +1,16 @@
-import { TranslateService } from '@ngx-translate/core';
-import { PasswordPolicy } from 'models/appconfig.model';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { AppConfigService } from 'services/app.config.service';
-import { AppConfig } from 'models/appconfig.model';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { AuthService } from 'services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { SocialUser } from 'angularx-social-login';
+import { AppConfig, PasswordPolicy } from 'models/appconfig.model';
 import { LoginUserModel } from 'models/user.model';
 import { Message, MessageService } from 'primeng/api';
-import { APPCONSTANT } from 'utils/appConstant';
+import { Subscription } from 'rxjs';
+import { AppConfigService } from 'services/app.config.service';
+import { AuthService } from 'services/auth.service';
 import { UserService } from 'services/user.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
 
 @Component({
@@ -49,11 +48,10 @@ export class LoginPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     // private socialAuthService: SocialAuthService,
-    private messageService: MessageService,
     private userService: UserService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private translate: TranslateService 
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -151,7 +149,7 @@ export class LoginPageComponent implements OnInit {
         this.message = [{
           severity: 'error',
           summary: '',
-          detail: err.message,
+          detail: this.translate.instant(`messageCode.${err.message_code}`),
           life: APPCONSTANT.TOAST_TIMEOUT
         }];
       }

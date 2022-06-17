@@ -1,0 +1,22 @@
+<div #mask class="p-image-mask p-component-overlay p-component-overlay-enter" *ngIf="visible" (click)="onMaskClick()">
+  <div class="p-image-toolbar" (click)="handleToolbarClick($event)">
+    <button class="p-image-action p-link" (click)="rotateRight()" type="button">
+      <i class="pi pi-refresh"></i>
+    </button>
+    <button class="p-image-action p-link" (click)="rotateLeft()" type="button">
+      <i class="pi pi-undo"></i>
+    </button>
+    <button class="p-image-action p-link" (click)="zoomOut()" type="button" [disabled]="isZoomOutDisabled">
+      <i class="pi pi-search-minus"></i>
+    </button>
+    <button class="p-image-action p-link" (click)="zoomIn()" type="button" [disabled]="isZoomInDisabled">
+      <i class="pi pi-search-plus"></i>
+    </button>
+    <button class="p-image-action p-link" type="button" (click)="closePreview()">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+  <div *ngIf="visible">
+    <img imageOnError [attr.src]="src" class="p-image-preview" (wheel)="onWheel($event)" (click)="previewClick = true" [ngStyle]="imagePreviewStyle()" />
+  </div>
+</div>

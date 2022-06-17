@@ -1,5 +1,5 @@
 <div class="position-sticky z-10">
-  <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '4px'}">
+  <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '3px'}">
   </p-progressBar>
 </div>
 
@@ -9,16 +9,9 @@
   <div class="grid py-4" *ngIf="!error; else errorBlock">
     <div class="col-0 md:col-1 lg:col-1">
       <div class="position-sticky hidden md:flex flex-wrap justify-content-center">
-        <ng-template [ngIf]="!isLoadingValue" [ngIfElse]="loadingValue">
-          <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
-            <app-btn-fab [data]="item"></app-btn-fab>
-          </div>
-        </ng-template>
-        <ng-template #loadingValue>
-          <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
-            <app-btn-fab [isLoading]="true" [showValue]="true"></app-btn-fab>
-          </div>
-        </ng-template>
+        <div class="col-12 p-1 flex justify-content-center mb-1" *ngFor="let item of postValues">
+          <app-btn-fab [data]="item"></app-btn-fab>
+        </div>
         <div class="col-12 p-1 flex justify-content-center mt-4">
           <span class="font-semibold text-xl">{{'postDetail.share' | translate}}</span>
         </div>
@@ -51,8 +44,8 @@
             </div>
             <div class="comment-option-right z-0">
               <span>{{'postDetail.sort' | translate }}</span>
-              <p-dropdown *ngIf="filterComments" class="comment-filter" [options]="filterComments" [(ngModel)]="currentFilter"
-                optionLabel="label" (onChange)="onFilterComments($event)">
+              <p-dropdown *ngIf="filterComments" class="comment-filter" [options]="filterComments"
+                [(ngModel)]="currentFilter" optionLabel="label" (onChange)="onFilterComments($event)">
               </p-dropdown>
             </div>
           </div>
