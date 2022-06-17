@@ -2,7 +2,7 @@
   <div class="card px-2 md:px-3 lg:px-4">
     <div class="flex justify-content-between align-items-center mb-3">
       <p class="mb-0 text-xl">Manage Role User</p>
-      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create role" class="">
+      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create role user" class="">
       </button>
     </div>
     <p-table [value]="listRoles" [scrollable]="true">
@@ -10,7 +10,7 @@
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
           </th>
-          <th pSortableColumn="role_name">Right name <p-sortIcon field="role_name"></p-sortIcon>
+          <th pSortableColumn="role_name">Role name <p-sortIcon field="role_name"></p-sortIcon>
           </th>
           <th pSortableColumn="display_name">Display name <p-sortIcon field="display_name"></p-sortIcon>
           </th>
@@ -37,22 +37,22 @@
   </div>
 </ng-template>
 
-<p-dialog [(visible)]="displayDialog" [keepInViewport]="false" [dismissableMask]="true" [modal]="true" [style]="{width: '60vw'}"
-  [maximizable]="true" [draggable]="false" [resizable]="false">
+<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" [modal]="true" [style]="{width: '60vw'}"
+  [maximizable]="true" [draggable]="false" [resizable]="false" (onHide)="currentRole = null; displayDialog = false">
   <ng-template pTemplate="header">
     <ng-template [ngIf]="viewDialog === 'edit' && currentRole">
-      <p class="text-2xl max-1-line">Edit role: <b>{{currentRole.display_name}}</b></p>
+      <p class="text-2xl max-1-line">Edit role user: <b>{{currentRole.display_name}}</b></p>
     </ng-template>
-    <ng-template [ngIf]="viewDialog === 'create'">
-      <p class="font-semibold text-2xl max-1-line">Create new role</p>
+    <ng-template [ngIf]="viewDialog === 'create' && currentRole">
+      <p class="font-semibold text-2xl max-1-line">Create new role user</p>
     </ng-template>
   </ng-template>
 
-  <ng-template [ngIf]="viewDialog === 'edit'">
+  <ng-template [ngIf]="viewDialog === 'edit' && currentRole">
     <admin-create-edit-role [type]="'user'" [view]="'edit'" [role]="currentRole" (onClose)="onSuccess()">
     </admin-create-edit-role>
   </ng-template>
-  <ng-template [ngIf]="viewDialog === 'create'">
+  <ng-template [ngIf]="viewDialog === 'create' && currentRole">
     <admin-create-edit-role [type]="'user'" [view]="'create'" (onClose)="onSuccess()">
     </admin-create-edit-role>
   </ng-template>

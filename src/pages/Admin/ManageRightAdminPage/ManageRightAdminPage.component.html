@@ -2,7 +2,7 @@
   <div class="card px-2 md:px-3 lg:px-4">
     <div class="flex justify-content-between align-items-center mb-3">
       <p class="mb-0 text-xl">Manage Right ADMIN</p>
-      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create right" class="">
+      <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create right admin" class="">
       </button>
     </div>
     <p-table [value]="listRights" [scrollable]="true">
@@ -34,11 +34,11 @@
   </div>
 </ng-template>
 
-<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" (onHide)="currentRight = null" [modal]="true"
+<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" (onHide)="currentRight = null; displayDialog = false" [modal]="true"
   [style]="{width: '60vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
   <ng-template pTemplate="header">
     <ng-template [ngIf]="viewDialog === 'edit'">
-      <p class="text-2xl max-1-line">Edit right: <b>{{currentRight.display_name}}</b></p>
+      <p class="text-2xl max-1-line">Edit right admin: <b>{{currentRight.display_name}}</b></p>
     </ng-template>
     <ng-template [ngIf]="viewDialog === 'create'">
       <p class="text-2xl max-1-line">Create new right for admin</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'lodash';
 import { ApiParams } from 'models/api.model';
@@ -22,7 +22,7 @@ export class ManagePostsPageComponent implements OnInit {
 
   isLoadingTable: boolean = false;
 
-  isLoadingDialog: boolean = true;
+  isLoadingDialog: boolean = false;
 
   error: boolean = false;
 
@@ -33,12 +33,13 @@ export class ManagePostsPageComponent implements OnInit {
   displayDialog: boolean = false;
 
   currentPost: Post;
+  viewPost: Post;
   isLoadingUser: boolean = false;
   currentUser: User;
 
   selectAll: boolean = false;
 
-  viewDialog: 'detail' | 'edit' = 'detail';
+  viewDialog: 'detail' | 'edit' | 'compare' = 'detail';
 
   getListPostSubscription: Subscription;
 
@@ -77,6 +78,10 @@ export class ManagePostsPageComponent implements OnInit {
     { label: 'Private', value: 'Private' },
     { label: 'Deleted', value: 'Deleted' }
   ];
+
+  @ViewChild('pendingContent') pendingContent: ElementRef;
+
+  viewPendingContent: boolean = true;
 
   constructor(
     private managePostService: ManagePostService,
@@ -159,8 +164,19 @@ export class ManagePostsPageComponent implements OnInit {
 
     this.getDetailSubscription = this.managePostService.getPostById(id).subscribe(
       (res) => {
-        this.isLoadingDialog = false;
         this.currentPost = res.data.post;
+
+        if (this.viewPendingContent) {
+          this.viewPost = { ...this.currentPost, ...this.currentPost.pending_content };
+        }
+        else {
+          this.viewPost = _.cloneDeep(this.currentPost);
+        }
+
+        if (this.viewDialog === 'compare') {
+          this.pendingContent.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        this.isLoadingDialog = false;
       },
       (err) => {
         this.isLoadingDialog = false;
@@ -212,7 +228,14 @@ export class ManagePostsPageComponent implements OnInit {
   }
 
   onClickViewDetail(id: number) {
+    this.viewDialog = 'detail';
     this.displayDialog = true;
+    this.getPostDetail(id);
+  }
+
+  onClickViewPendingContent(id: number) {
+    this.viewDialog = 'compare';
+    this.pendingContent.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     this.getPostDetail(id);
   }
 
@@ -298,6 +321,15 @@ export class ManagePostsPageComponent implements OnInit {
         );
       }
     });
+  }
+
+  onChangeViewPendingContent(event) {
+    if (event.checked) {
+      this.viewPost = { ...this.currentPost, ...this.currentPost.pending_content };
+    }
+    else {
+      this.viewPost = _.cloneDeep(this.currentPost);
+    }
   }
 
   onSelectionChange(value = []) {

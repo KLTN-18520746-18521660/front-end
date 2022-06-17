@@ -15,13 +15,43 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.model = [
       {
-        label: 'Home',
+        label: 'Dashboard',
         items: [
           {
             label: 'Dashboard',
             icon: 'pi pi-fw pi-home',
             routerLink: ['/admin']
           }
+        ]
+      },
+      {
+        label: 'Posts Management',
+        items: [
+          {
+            label: 'List Posts',
+            icon: 'pi pi-fw pi-list',
+            routerLink: ['./manage-post']
+          },
+          {
+            label: 'Statistic Posts',
+            icon: 'pi pi-fw pi-chart-bar',
+            routerLink: ['./statistic-post']
+          },
+        ]
+      },
+      {
+        label: 'Category & Tag Management',
+        items: [
+          {
+            label: 'List Category',
+            icon: 'pi pi-fw pi-folder',
+            routerLink: ['./manage-category']
+          },
+          {
+            label: 'List Tag',
+            icon: 'pi pi-fw pi-tags',
+            routerLink: ['./manage-tag']
+          },
         ]
       },
       {
@@ -42,16 +72,6 @@ export class MenuComponent implements OnInit {
           //   icon: 'pi pi-fw pi-unlock',
           //   routerLink: ['./unlock-user']
           // },
-          {
-            label: 'Role User',
-            icon: 'pi pi-fw pi-users',
-            routerLink: ['./role-user']
-          },
-          {
-            label: 'Right User',
-            icon: 'pi pi-fw pi-bolt',
-            routerLink: ['./right-user']
-          }
         ]
       },
       {
@@ -61,7 +81,12 @@ export class MenuComponent implements OnInit {
             label: 'List Admin',
             icon: 'pi pi-fw pi-list',
             routerLink: ['./manage-admin']
-          },
+          }
+        ]
+      },
+      {
+        label: 'Role & Right Management',
+        items: [
           {
             label: 'Role Admin',
             icon: 'pi pi-fw pi-globe',
@@ -71,17 +96,17 @@ export class MenuComponent implements OnInit {
             label: 'Right Admin',
             icon: 'pi pi-fw pi-bolt',
             routerLink: ['./right-admin']
-          }
-        ]
-      },
-      {
-        label: 'Posts Management',
-        items: [
-          {
-            label: 'List Posts',
-            icon: 'pi pi-fw pi-list',
-            routerLink: ['./manage-post']
           },
+          {
+            label: 'Role User',
+            icon: 'pi pi-fw pi-globe',
+            routerLink: ['./role-user']
+          },
+          {
+            label: 'Right User',
+            icon: 'pi pi-fw pi-bolt',
+            routerLink: ['./right-user']
+          }
         ]
       },
       {

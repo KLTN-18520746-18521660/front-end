@@ -6,17 +6,20 @@
       </button>
     </div>
     <p-table #dt [value]="listAdmins" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10,25,50]" responsiveLayout="scroll" [paginator]="true"
+      [rowsPerPageOptions]="[10,25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-      [globalFilterFields]="['name','country.name','representative.name','status']">
+      [globalFilterFields]="['id','user_name','email','display_name']">
       <ng-template pTemplate="caption">
-        <div class="table-header">
-          List of Customers
-          <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
-              placeholder="Global Search" />
-          </span>
+        <div class="table-header flex justify-content-between align-items-center">
+          <div class="header-left">
+          </div>
+          <div class="header-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
+                placeholder="Global Search" />
+            </span>
+          </div>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
@@ -31,6 +34,13 @@
           </th>
           <th pSortableColumn="roles">Roles <p-sortIcon field="roles"></p-sortIcon>
           </th>
+          <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="created_timestamp">Created <p-sortIcon field="created_timestamp"></p-sortIcon>
+          </th>
+          <th pSortableColumn="last_access_timestamp">Last Access <p-sortIcon field="last_access_timestamp">
+            </p-sortIcon>
+          </th>
           <th>Action </th>
         </tr>
       </ng-template>
@@ -42,7 +52,13 @@
           <td>{{admin.display_name}}</td>
           <td>{{admin.roles}}</td>
           <td>
-            <!-- <button pButton type="button" (click)="onClickEdit(admin)" class="p-button-sm p-button-secondary" icon="pi pi-pencil"></button> -->
+            <app-status-badge [label]="admin.status"></app-status-badge>
+          </td>
+          <td title="{{admin.created_timestamp}}">{{admin.created_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td title="{{admin.last_access_timestamp}}">{{admin.last_access_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td>
+            <button pButton type="button" (click)="onClickEdit(admin)" class="p-button-sm p-button-secondary"
+              icon="pi pi-pencil"></button>
           </td>
         </tr>
       </ng-template>
@@ -50,8 +66,8 @@
   </div>
 </ng-template>
 
-<p-dialog [(visible)]="displayDialog" [keepInViewport]="false" [dismissableMask]="true" [modal]="true"
-  [style]="{width: '60vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
+<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" [modal]="true" [style]="{width: '60vw'}"
+  [maximizable]="true" [draggable]="false" [resizable]="false" (onHide)="currentAdmin = null; displayDialog = false">
   <ng-template pTemplate="header">
     <ng-template [ngIf]="viewDialog === 'edit'">
       <p class="text-2xl max-1-line">Edit admin: <b>{{currentAdmin?.display_name}}</b></p>
@@ -62,14 +78,14 @@
   </ng-template>
 
   <ng-template [ngIf]="viewDialog === 'edit' && currentAdmin">
-    <admin-create-edit-admin [view]="'edit'" [id]="currentAdmin.user_name" (onClose)="onSuccess()">
+    <admin-create-edit-admin [view]="'edit'" [id]="currentAdmin.id" (onClose)="onSuccess()">
     </admin-create-edit-admin>
   </ng-template>
   <ng-template [ngIf]=" viewDialog==='create'">
     <admin-create-edit-admin [view]="'create'" (onClose)="onSuccess()"></admin-create-edit-admin>
   </ng-template>
 
-  <ng-template pTemplate=" footer">
+  <ng-template pTemplate="footer">
   </ng-template>
 </p-dialog>
 

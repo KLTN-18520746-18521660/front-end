@@ -1,0 +1,40 @@
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ng-template [ngIf]="view === 'edit'">
+      <ng-template [ngIf]="user.status !== 'Readonly'">
+        <label class="block text-900 text-lg font-medium mb-3">
+          Status
+        </label>
+        <p-radioButton name="status" value="Blocked" inputId="Blocked" formControlName="status"></p-radioButton>
+        <label class="ml-2 mr-6" for="Blocked">Blocked</label>
+        <p-radioButton name="status" value="Activated" inputId="Activated" formControlName="status"></p-radioButton>
+        <label class="ml-2 mr-6" for="Activated">Activated</label>
+      </ng-template>
+
+      <label class="block text-900 text-lg font-medium my-3">
+        Role of user
+      </label>
+      <ng-template [ngIf]="!isLoadingRole" [ngIfElse]="loadingBlock">
+        <div class="field-checkbox" *ngFor="let role of listRole" title="{{role.describe}}">
+          <p-checkbox formControlName="roles" value="{{role.role_name}}" inputId="{{role.role_name}}"></p-checkbox>
+          <label for="{{role.role_name}}">{{role.display_name}}</label>
+        </div>
+      </ng-template>
+
+    </ng-template>
+
+    <div *ngIf="submitted && form.invalid" class="invalid-feedback">
+      <div class="flex align-items-end">
+        <small class="p-error inline list-span">Please fill all field </small>
+      </div>
+    </div>
+
+    <button type="submit" [loading]="isLoadingSubmit" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+    </button>
+
+  </form>
+</ng-template>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

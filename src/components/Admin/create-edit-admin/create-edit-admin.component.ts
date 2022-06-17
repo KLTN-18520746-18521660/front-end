@@ -1,3 +1,4 @@
+import { ManageRoleService } from 'services/admin/manage-role.service';
 import { PasswordPolicy } from 'models/appconfig.model';
 import { AdminService } from 'services/admin.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -8,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { ManageAdminUserService } from 'services/admin/manage-admin-user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
+import { Role } from 'models/Admins/role_right.model';
 
 @Component({
   selector: 'admin-create-edit-admin',
@@ -22,13 +24,15 @@ export class CreateEditAdminComponent implements OnInit {
 
   @Input() view: 'create' | 'edit';
 
-  @Input() adminId: number;
-
   @Output() onClose = new EventEmitter();
+
+  listRole: Role[];
 
   subscription: Subscription;
 
   isLoading: boolean = false;
+
+  isLoadingRole: boolean = false;
 
   isLoadingSubmit: boolean = false;
 
@@ -38,10 +42,13 @@ export class CreateEditAdminComponent implements OnInit {
 
   getAdminSubscription: Subscription;
 
+  getListRoleSubscription: Subscription;
+
   passwordPolicy: PasswordPolicy;
 
   constructor(
     private manageAdminUserService: ManageAdminUserService,
+    private manageRoleService: ManageRoleService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private adminService: AdminService
@@ -49,30 +56,42 @@ export class CreateEditAdminComponent implements OnInit {
 
   ngOnInit() {
     this.passwordPolicy = this.adminService.getConfig().AdminPasswordPolicy;
-    console.log(this.passwordPolicy);
-    this.form = new FormGroup({
-      email: new FormControl(''),
-      display_name: new FormControl(''),
-      user_name: new FormControl(''),
-      password: new FormControl(''),
-    });
+    if (this.view === 'create') {
+      this.form = new FormGroup({
+        email: new FormControl(''),
+        display_name: new FormControl(''),
+        user_name: new FormControl(''),
+        password: new FormControl(''),
+      });
 
-    this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      display_name: ['', [Validators.required]],
-      user_name: ['', [Validators.required]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
-        Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
-        Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
-        Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
-        Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
-        Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
-      ]],
-    });
+      this.form = this.formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+        display_name: ['', [Validators.required]],
+        user_name: ['', [Validators.required]],
+        password: ['', [
+          Validators.required,
+          Validators.minLength(this.passwordPolicy.min_len || APPCONSTANT.PASSWORD_POLICY.MIN_LEN),
+          Validators.maxLength(this.passwordPolicy.max_len || APPCONSTANT.PASSWORD_POLICY.MAX_LEN),
+          Validation.minLowerCaseChar(this.passwordPolicy.min_lower_char || APPCONSTANT.PASSWORD_POLICY.MIN_LOWER_CHAR),
+          Validation.minUpperCaseChar(this.passwordPolicy.min_upper_char || APPCONSTANT.PASSWORD_POLICY.MIN_UPPER_CHAR),
+          Validation.minNumberChar(this.passwordPolicy.min_number_char || APPCONSTANT.PASSWORD_POLICY.MIN_NUMBER_CHAR),
+          Validation.minSpecialChar(this.passwordPolicy.min_special_char || APPCONSTANT.PASSWORD_POLICY.MIN_SPECIAL_CHAR),
+        ]],
+      });
+    }
 
-    if (this.view === 'edit') {
+    else if (this.view === 'edit') {
+      this.form = new FormGroup({
+        display_name: new FormControl(''),
+        status: new FormControl(''),
+        roles: new FormControl([]),
+      });
+
+      this.form = this.formBuilder.group({
+        display_name: ['', [Validators.required]],
+        status: ['', [Validators.required]],
+        roles: [[]],
+      });
       this.getAdminById();
     }
   }
@@ -86,11 +105,23 @@ export class CreateEditAdminComponent implements OnInit {
       (res) => {
         this.admin = res.data.admin;
         this.form.patchValue({
-          user_name: this.admin.user_name,
           display_name: this.admin.display_name,
-          email: this.admin.email,
+          status: this.admin.status,
+          roles: this.admin.roles,
         });
         this.isLoading = false;
+        this.getListRole();
+      }
+    );
+  }
+
+  getListRole() {
+    this.listRole = [];
+    this.isLoadingRole = true;
+    this.getListRoleSubscription = this.manageRoleService.getRoleAdmin().subscribe(
+      (res) => {
+        this.listRole = res.data.roles;
+        this.isLoadingRole = false;
       }
     );
   }
@@ -139,28 +170,28 @@ export class CreateEditAdminComponent implements OnInit {
   };
 
   editAdmin() {
-    this.isLoading = true;
+    this.isLoadingSubmit = true;
     if (this.form.valid) {
       const body = {
         display_name: this.form.value.display_name,
-        describe: this.form.value.describe,
+        status: this.form.value.status,
+        roles: this.form.value.roles,
       };
 
       this.subscription = this.manageAdminUserService.modifyAdmin(this.admin.id, body).subscribe(
         (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited admin success' });
-          this.isLoading = false;
+          this.isLoadingSubmit = false;
           this.onClose.emit();
         },
         (err) => {
-          this.isLoading = false;
-
+          this.isLoadingSubmit = false;
           this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
         }
       );
     }
     else {
-      this.isLoading = false;
+      this.isLoadingSubmit = false;
     }
   };
 
@@ -170,6 +201,9 @@ export class CreateEditAdminComponent implements OnInit {
     }
     if (this.getAdminSubscription) {
       this.getAdminSubscription.unsubscribe();
+    }
+    if (this.getListRoleSubscription) {
+      this.getListRoleSubscription.unsubscribe();
     }
   }
 

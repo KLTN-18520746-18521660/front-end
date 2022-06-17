@@ -1,0 +1,44 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <ng-template [ngIf]="view === 'create'">
+    <label requiredField for="tag" class="block text-900 text-lg font-medium mb-2">
+      Tag
+    </label>
+    <input formControlName="tag" id="tag" type="text" pInputText [placeholder]="'Tag ...'" class="w-full mb-3"
+      style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['tag'].errors }">
+  </ng-template>
+
+  <label requiredField for="name" class="block text-900 text-lg font-medium mb-2">
+    Name
+  </label>
+  <input formControlName="name" id="name" type="text" pInputText [placeholder]="'Name ...'" class="w-full mb-3"
+    style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['name'].errors }">
+
+  <label requiredField for="describe" class="block text-900 text-lg font-medium mb-2">
+    Describe
+  </label>
+  <input formControlName="describe" id="describe" type="text" pInputText class="w-full mb-3"
+    [placeholder]="'Describe ...'" style="padding:1rem;"
+    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
+
+  <ng-template [ngIf]="view === 'edit' && tag.status !== 'Readonly'">
+    <p-radioButton name="status" value="Enabled" inputId="Enabled" formControlName="status"></p-radioButton>
+    <label class="ml-2 mr-6" for="Enabled">Enabled</label>
+    <p-radioButton name="status" value="Disabled" inputId="Disabled" formControlName="status"></p-radioButton>
+    <label class="ml-2 mr-6" for="Disabled">Disabled</label>
+  </ng-template>
+
+  <div *ngIf="submitted && form.invalid" class="invalid-feedback">
+    <div class="flex align-items-end">
+      <i class="pi pi-exclamation-triangle inline p-error mr-1"></i>
+      <small class="p-error inline">Form is invalid </small>
+    </div>
+  </div>
+
+  <button type="submit" [loading]="isLoadingSubmit" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+  </button>
+
+</form>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

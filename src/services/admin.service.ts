@@ -84,6 +84,12 @@ export class AdminService {
     }));
   }
 
+  getAllSessionAdmin(): Observable<ApiResult> {
+    return this.http.get<ApiResult>(BASE_URL + REST_URL.ADMIN.SESSION, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   extendSessionAdmin(): Observable<ApiResult> {
     return this.http.post(BASE_URL + REST_URL.ADMIN.EXTEND_SESSION, {}, { ...this.httpOptions() }).pipe(catchError(error => {
       return throwError(handleError(error));

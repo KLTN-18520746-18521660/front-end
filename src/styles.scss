@@ -10,6 +10,8 @@
 @import "assets/sass/layout/_layout";
 @import "assets/sass/overrides/_overrides";
 
+@import "diff2html/bundles/css/diff2html.min.css";
+
 // Syntax highlight
 // @import 'prismjs/themes/prism-twilight.min.css';
 @import 'prismjs/themes/prism-coy.min.css';

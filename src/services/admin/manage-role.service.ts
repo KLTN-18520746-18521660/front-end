@@ -64,14 +64,14 @@ export class ManageRoleService {
     }
   }
 
-  updateRole(type: 'admin' | 'user', key: string, body): Observable<ApiResult> {
+  updateRole(type: 'admin' | 'user', id: number, body): Observable<ApiResult> {
     if (type === 'admin') {
-      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.ROLE_ADMIN + `/${key}`, body, this.httpOptions()).pipe(catchError(error => {
+      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.ROLE_ADMIN + `/${id}`, body, this.httpOptions()).pipe(catchError(error => {
         return throwError(handleError(error));
       }));
     }
     else {
-      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.ROLE_USER + `/${key}`, body, this.httpOptions()).pipe(catchError(error => {
+      return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.ROLE_USER + `/${id}`, body, this.httpOptions()).pipe(catchError(error => {
         return throwError(handleError(error));
       }));
     }

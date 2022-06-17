@@ -127,6 +127,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnInit() {
     // this.changeTheme("lara-light-blue", false);
     // this.changeTheme("tailwind-light", false);
+    document.documentElement.style.fontSize = '13px';
     this.userIdleService.setCustomActivityEvents(
       merge(
         fromEvent(window, 'mousemove'),

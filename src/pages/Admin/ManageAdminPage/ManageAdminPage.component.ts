@@ -59,8 +59,8 @@ export class ManageAdminPageComponent implements OnInit {
   }
 
   onClickEdit(admin: Admin) {
-    this.viewDialog = 'edit';
     this.currentAdmin = admin;
+    this.viewDialog = 'edit';
     this.displayDialog = true;
   }
 

@@ -1,17 +1,19 @@
 <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label requiredField for="email" class="block text-900 text-lg font-medium mb-2">
-      Email
-    </label>
-    <input formControlName="email" id="email" type="text" pInputText class="w-full mb-3" [placeholder]="'Email ...'"
-      autocomplete="off" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
+    <ng-template [ngIf]="view === 'create'">
+      <label requiredField for="email" class="block text-900 text-lg font-medium mb-2">
+        Email
+      </label>
+      <input formControlName="email" id="email" type="text" pInputText class="w-full mb-3" [placeholder]="'Email ...'"
+        autocomplete="off" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
 
-    <label requiredField for="user_name" class="block text-900 text-lg font-medium mb-2">
-      User name
-    </label>
-    <input formControlName="user_name" id="user_name" type="text" pInputText [placeholder]="'User name ...'"
-      autocomplete="off" class="w-full mb-3" style="padding:1rem;"
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['user_name'].errors }">
+      <label requiredField for="user_name" class="block text-900 text-lg font-medium mb-2">
+        User name
+      </label>
+      <input formControlName="user_name" id="user_name" type="text" pInputText [placeholder]="'User name ...'"
+        autocomplete="off" class="w-full mb-3" style="padding:1rem;"
+        [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['user_name'].errors }">
+    </ng-template>
 
     <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
       Display name
@@ -27,42 +29,65 @@
       <input formControlName="password" id="password" type="text" pInputText [placeholder]="'Password ...'"
         class="w-full mb-3" style="padding:1rem;" [type]="'password'"
         [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }">
+      <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="invalid-feedback">
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['required']">
+          <small class="p-error inline list-span">Password is required</small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlength']">
+          <small class="p-error inline list-span">
+            Password must be at least {{passwordPolicy.min_len}} characters long
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['maxlength']">
+          <small class="p-error inline list-span">
+            Password must be less than {{passwordPolicy.max_len}} characters long
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minspecial']">
+          <small class="p-error inline list-span">
+            Password must contain at least {{passwordPolicy.min_special_char}} special characters
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minnumber']">
+          <small class="p-error inline list-span">
+            Password must contain at least {{passwordPolicy.min_number_char}} numbers
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minupper']">
+          <small class="p-error inline list-span">
+            Password must contain at least {{passwordPolicy.min_upper_char}} upper case characters
+          </small>
+        </div>
+        <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlower']">
+          <small class="p-error inline list-span">
+            Password must contain at least {{passwordPolicy.min_lower_char}} lower case characters
+          </small>
+        </div>
+      </div>
     </ng-template>
-    <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="invalid-feedback">
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['required']">
-        <small class="p-error inline list-span">{{'label.signup.validation.password.required' | translate}}</small>
-      </div>
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlength']">
-        <small class="p-error inline list-span">
-          {{'label.signup.validation.password.min' | translate : { min: passwordPolicy.min_len} }}
-        </small>
-      </div>
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['maxlength']">
-        <small class="p-error inline list-span">
-          {{'label.signup.validation.password.max' | translate : { max: passwordPolicy.max_len} }}
-        </small>
-      </div>
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minspecial']">
-        <small class="p-error inline list-span">
-          {{'label.signup.validation.password.special' | translate : { num: passwordPolicy.min_special_char} }}
-        </small>
-      </div>
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minnumber']">
-        <small class="p-error inline list-span">
-          {{'label.signup.validation.password.number' | translate : { num: passwordPolicy.min_number_char} }}
-        </small>
-      </div>
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minupper']">
-        <small class="p-error inline list-span">
-          {{'label.signup.validation.password.upper' | translate : { num: passwordPolicy.min_upper_char} }}
-        </small>
-      </div>
-      <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['minlower']">
-        <small class="p-error inline list-span">
-          {{'label.signup.validation.password.lower' | translate : { num: passwordPolicy.min_lower_char} }}
-        </small>
-      </div>
-    </div>
+
+    <ng-template [ngIf]="view === 'edit'">
+      <ng-template [ngIf]="admin.status !== 'Readonly'">
+        <label class="block text-900 text-lg font-medium mb-3">
+          Status
+        </label>
+        <p-radioButton name="status" value="Blocked" inputId="Blocked" formControlName="status"></p-radioButton>
+        <label class="ml-2 mr-6" for="Blocked">Blocked</label>
+        <p-radioButton name="status" value="Activated" inputId="Activated" formControlName="status"></p-radioButton>
+        <label class="ml-2 mr-6" for="Activated">Activated</label>
+      </ng-template>
+
+      <label class="block text-900 text-lg font-medium my-3">
+        Role of user
+      </label>
+      <ng-template [ngIf]="!isLoadingRole" [ngIfElse]="loadingBlock">
+        <div class="field-checkbox" *ngFor="let role of listRole" title="{{role.describe}}">
+          <p-checkbox formControlName="roles" value="{{role.role_name}}" inputId="{{role.role_name}}"></p-checkbox>
+          <label for="{{role.role_name}}">{{role.display_name}}</label>
+        </div>
+      </ng-template>
+
+    </ng-template>
 
     <div *ngIf="submitted && form.invalid" class="invalid-feedback">
       <div class="flex align-items-end">

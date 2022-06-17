@@ -71,4 +71,30 @@ export class ManageAdminUserService {
   }
   //#endregion
 
+  //#region @User
+  getListUser(params: ApiParams): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.USER_SOCIAL, { ...this.httpOptions(), params: { ...params } }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  createUser(admin: Admin): Observable<ApiResult> {
+    return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.ADMIN.ADMIN, admin, { ...this.httpOptions() }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  getUserById(id: string): Observable<ApiResult> {
+    return this.httpClient.get<ApiResult>(BASE_URL + REST_URL.ADMIN.USER_SOCIAL + `/${id}`, { ...this.httpOptions() }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
+  modifyUser(id: string, admin: Admin): Observable<ApiResult> {
+    return this.httpClient.put<ApiResult>(BASE_URL + REST_URL.ADMIN.USER_SOCIAL + `/${id}`, admin, { ...this.httpOptions() }).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+  //#endregion
+
 }

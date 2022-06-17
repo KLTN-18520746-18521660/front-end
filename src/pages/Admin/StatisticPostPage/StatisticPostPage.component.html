@@ -1,0 +1,32 @@
+<div class="card px-2 md:px-3 py-4">
+  <div class="px-3">
+    <h3>Select range to view statistic</h3>
+    <div class="md:flex justify-content-between lign-items-center mb-3 mt-4">
+      <div class="flex field-checkbox">
+        <span class="font-medium text-lg mr-2">Range Dates ({{range}} days)</span>
+        <p-calendar [(ngModel)]="rangeDates" dateFormat="dd/mm/yy" placeholder="Select date range ..."
+          selectionMode="range" (onSelect)="onSelectRange($event)" inputId="range" [maxDate]="maxDate"></p-calendar>
+      </div>
+
+      <div>
+        <button pRipple pButton label="View Chart" (click)="onClickView()"></button>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="flex field-checkbox mr-3">
+        <span class="font-medium text-lg mr-2">Type chart</span>
+        <p-dropdown [options]="types" [(ngModel)]="type" (onChange)="onChangeType($event)">
+        </p-dropdown>
+      </div>
+      <div class="flex field-checkbox mr-3">
+        <span class="font-medium text-lg mr-2">Group by</span>
+        <p-dropdown [options]="views" [(ngModel)]="view" (onChange)="groupBy($event)">
+        </p-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <p-chart type="{{type}}" height="500px" [data]="dataChart" [options]="basicOptions"></p-chart>
+</div>
+
+<app-loading [loading]="isLoading"></app-loading>

@@ -116,8 +116,6 @@ export class UserService {
         this.session = null;
         this.remember = false;
         this.authUpdate.next({ session_id: null, user: null, isAuthenticated: false, remember: this.remember, error: true });
-        // this.messages = [{ severity: 'error', summary: err.error, detail: err.error.message }];
-        // this.logOut();
       }
     );
   }

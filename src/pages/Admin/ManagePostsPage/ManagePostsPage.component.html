@@ -6,19 +6,22 @@
     [lazy]="true" (onLazyLoad)="loadPosts($event)" sortMode="multiple" [multiSortMeta]="multiSortMeta" [(first)]="first"
     [(rows)]="rows" [globalFilterFields]="['title','owner.user_name','owner.display_name','status']">
     <ng-template pTemplate="caption">
-      <div class="table-header flex justify-content-between align-items-center">
-        <div class="header-left inline-flex align-items-center col-12 md:col-6">
+      <div class="table-header flex flex-wrap justify-content-between align-items-center">
+        <div class="header-left col-12 lg:col-6 inline-flex align-items-center col-12 md:col-6">
           <h2 class="m-0">Manage Posts</h2>
+        </div>
+        <div class="header-right inline-flex align-items-center">
+          <span>Show</span>
           <p-dropdown class="ml-2" [options]="rowsPerPageOptions" (onChange)="onChangeRows($event)"
             [(ngModel)]="selectedRow"></p-dropdown>
-          <p-button label="Clear Filter" (click)="dt.reset()" icon="pi pi-times"
-            styleClass="p-button-sm p-button-secondary ml-2"></p-button>
+          <span class="p-input-icon-left mx-2">
+            <i class="pi pi-search pr-3"></i>
+            <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
+              placeholder="Search here ..." />
+          </span>
+          <button pRipple pButton label="Clear Filter" (click)="dt.reset()"
+            class="p-button-secondary"></button>
         </div>
-        <span class="p-input-icon-left col-12 md:col-6">
-          <i class="pi pi-search"></i>
-          <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
-            placeholder="Global Search" />
-        </span>
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns="columns">
@@ -115,7 +118,7 @@
         <td title="{{post.comments}}">{{post.comments | shortNumber}}</td>
         <td>
           <button *ngIf="post.have_pending_content" pButton type="button" class="p-button-sm p-button-warning"
-            label="Pending content"></button>
+            label="Pending content" (click)="onClickViewPendingContent(post.id)"></button>
         </td>
         <td>
           <button pButton type="button" (click)="onClickViewDetail(post.id)" class="p-button-sm p-button-secondary"
@@ -137,31 +140,40 @@
 <p-dialog [(visible)]="displayDialog" [dismissableMask]="true" [modal]="true" [style]="{width: '60vw'}"
   [maximizable]="true" [draggable]="false" [resizable]="false">
   <ng-template pTemplate="header">
-    <p class="font-semibold text-2xl max-1-line" title="{{currentPost.title}}" *ngIf="currentPost">{{currentPost.title}}
-    </p>
+    <span class="font-semibold text-2xl max-1-line" title="{{currentPost.title}}"
+      *ngIf="currentPost">{{currentPost.title}}
+    </span>
   </ng-template>
 
   <ng-template [ngIf]="!isLoadingDialog" [ngIfElse]="loadingBlock">
     <ng-template [ngIf]="viewDialog === 'detail' && !!currentPost">
-      <app-view-detail-post [post]="currentPost"></app-view-detail-post>
+      <app-view-detail-post [post]="viewPost"></app-view-detail-post>
       <div class="flex justify-content-end">
         <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple
           type="button" (click)="onClickReject(currentPost.id, true)" label="Reject Pending Content"
-          class="p-button-outlined mr-2" icon="pi pi-ti"></button>
+          class="p-button-outlined p-button-danger mr-2" icon=""></button>
         <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple
           type="button" (click)="onClickApprove(currentPost.id)" label="Approve Pending Content"
-          class="p-button-outlined p-button-danger mr-2" icon="pi pi-ti"></button>
+          class="p-button-outlined mr-2" icon="pi pi-check"></button>
         <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
           (click)="onClickReject(currentPost.id)" label="Reject" class="p-button-outlined p-button-danger mr-2"
-          icon="pi pi-ti"></button>
+          icon=""></button>
         <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
           (click)="onClickApprove(currentPost.id)" label="Approve" class="p-button-raised p-button-success"
           icon="pi pi-check"></button>
       </div>
     </ng-template>
+    <ng-template [ngIf]="viewDialog === 'compare' && !!currentPost">
+      <app-compare-post [post]="currentPost" [pending]="currentPost.pending_content"></app-compare-post>
+    </ng-template>
   </ng-template>
 
   <ng-template pTemplate="footer">
+    <div class="field-checkbox mb-0 p-2" *ngIf="!isLoadingDialog && currentPost?.have_pending_content">
+      <p-checkbox [(ngModel)]="viewPendingContent" (onChange)="onChangeViewPendingContent($event)" [binary]="true"
+        inputId="binary"></p-checkbox>
+      <label for="binary">View Pending Content</label>
+    </div>
   </ng-template>
 </p-dialog>
 
@@ -170,6 +182,17 @@
     <app-loading-spinner></app-loading-spinner>
   </div>
 </ng-template>
+
+<div class="card p-2 md:p-3" #pendingContent>
+  <ng-template [ngIf]="!isLoadingDialog" [ngIfElse]="loadingBlock">
+    <ng-template [ngIf]="viewDialog === 'compare' && !!currentPost">
+      <span class="font-semibold text-2xl max-1-line" title="{{currentPost.title}}"
+        *ngIf="currentPost">{{currentPost.title}}
+      </span>
+      <app-compare-post [post]="currentPost" [pending]="currentPost.pending_content"></app-compare-post>
+    </ng-template>
+  </ng-template>
+</div>
 
 <app-loading [loading]="isLoading"></app-loading>
 

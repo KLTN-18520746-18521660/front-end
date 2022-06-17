@@ -1,4 +1,4 @@
-import { RightDetail } from './../../../models/Admins/role_right.model';
+import { RightDetail } from 'models/Admins/role_right.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Role, Right } from 'models/Admins/role_right.model';
@@ -17,8 +17,6 @@ export class CreateEditRoleComponent implements OnInit {
   @Input() role: Role;
 
   @Input() view: 'create' | 'edit' = 'create';
-
-  @Input() roleId: number;
 
   @Input() type: 'admin' | 'user' = 'admin';
 
@@ -90,15 +88,14 @@ export class CreateEditRoleComponent implements OnInit {
   }
 
   onChange(event: RightDetail) {
-    if (event.selected && (event.read || event.write)) {
-      this.rightModel[event.key] = {
-        read: true,
-        write: true,
-      };
-    }
-    else {
+    this.rightModel[event.key] = {
+      read: event.read,
+      write: event.write,
+    };
+    if (!event.selected || (!event.read && !event.write)) {
       delete this.rightModel[event.key];
     }
+    this.rightModel = { ...this.role?.rights, ...this.rightModel };
   }
 
   onSubmit() {
@@ -203,20 +200,22 @@ export class CreateEditRoleComponent implements OnInit {
       const body = {
         display_name: this.form.value.display_name,
         describe: this.form.value.describe,
+        priority: this.form.value.priority,
+        rights: this.rightModel,
       };
 
-      // this.subscription = this.manageRoleService.updateRole(this.type, this.role.role_name, body).subscribe(
-      //   (res) => {
-      //     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited role success' });
-      //     this.isLoading = false;
-      //     this.onClose.emit();
-      //   },
-      //   (err) => {
-      //     this.isLoading = false;
+      this.subscription = this.manageRoleService.updateRole(this.type, this.role.id, body).subscribe(
+        (res) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Edited role success' });
+          this.isLoading = false;
+          this.onClose.emit();
+        },
+        (err) => {
+          this.isLoading = false;
 
-      //     this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
-      //   }
-      // );
+          this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
+        }
+      );
     }
     else {
       this.isLoading = false;
