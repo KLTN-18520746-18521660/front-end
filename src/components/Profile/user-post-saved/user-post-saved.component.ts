@@ -24,7 +24,7 @@ export class UserPostSavedComponent implements OnInit {
 
   isLoadingMore: boolean = false;
 
-  listPosts: Post[];
+  listPosts: Post[] = [];
 
   tabMenu: MenuItem[];
 
