@@ -406,7 +406,7 @@ export class DetailPageComponent implements OnInit {
 
         const categories = res.data.post.categories;
         if (categories && categories.length > 2) {
-          res.data.categories.slice(0, 2)
+          res.data.post.categories.slice(0, 2)
         }
         categories.map((item) => {
           this.breadcrumbItems.push({
