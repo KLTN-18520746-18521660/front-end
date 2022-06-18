@@ -30,18 +30,18 @@ export class TopbarAdminComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      {
-        label: 'Profile',
-        icon: 'pi pi-fw pi-user'
-      },
-      {
-        label: 'Setting',
-        icon: 'pi pi-fw pi-cog'
-      },
-      {
-        label: 'Account',
-        icon: 'pi pi-fw pi-lock'
-      },
+      // {
+      //   label: 'Profile',
+      //   icon: 'pi pi-fw pi-user'
+      // },
+      // {
+      //   label: 'Setting',
+      //   icon: 'pi pi-fw pi-cog'
+      // },
+      // {
+      //   label: 'Account',
+      //   icon: 'pi pi-fw pi-lock'
+      // },
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',

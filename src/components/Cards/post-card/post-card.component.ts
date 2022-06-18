@@ -61,6 +61,10 @@ export class PostCardComponent implements OnInit {
 
     this.post.mapAction = mapActionWithPost(this.post.actions || []);
 
+    this.generateMenu();
+  }
+
+  generateMenu() {
     this.menuitem = [
       {
         id: 'save',
@@ -133,7 +137,6 @@ export class PostCardComponent implements OnInit {
     if (sessionId) {
       this.actionSubcription = this.postsService.sendActionWithPost(this.post.slug, action).subscribe(
         () => {
-          this.getPostValueWhenAction();
           if (action === 'save' || action === 'unsave') {
             this.post.mapAction.saved = !this.post.mapAction.saved;
             this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
@@ -142,6 +145,8 @@ export class PostCardComponent implements OnInit {
             this.post.mapAction.follow = !this.post.mapAction.follow;
             this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
           }
+          this.getPostValueWhenAction();
+          this.generateMenu();
         },
         (err) => {
           this.messageService.add({ severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });

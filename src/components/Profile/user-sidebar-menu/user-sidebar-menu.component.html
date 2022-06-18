@@ -7,7 +7,7 @@
           *ngFor="let i of item.items" (click)="onClickMenu(i)">
           <i class="{{i.icon}} mr-1"></i>
           <span>{{i.label}}</span>
-          <p-badge class="ml-auto" severity="{{i.badgeStyleClass}}" *ngIf="+i.badge > 0" [value]="i.badge"></p-badge>
+          <p-badge class="ml-auto" severity="{{i.badgeStyleClass}}" *ngIf="+i.badge > 0" [value]="i.badge | shortNumber"></p-badge>
         </a>
       </li>
     </ul>
