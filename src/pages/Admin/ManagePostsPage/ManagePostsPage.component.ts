@@ -167,7 +167,11 @@ export class ManagePostsPageComponent implements OnInit {
         this.currentPost = res.data.post;
 
         if (this.viewPendingContent) {
-          this.viewPost = { ...this.currentPost, ...this.currentPost.pending_content };
+          let pendingContent = { ...this.currentPost.pending_content };
+          if (pendingContent.last_modified_timestamp) {
+            delete pendingContent.last_modified_timestamp;
+          }
+          this.viewPost = { ...this.currentPost, ...pendingContent };
         }
         else {
           this.viewPost = _.cloneDeep(this.currentPost);
