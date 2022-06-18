@@ -40,7 +40,7 @@ export class ReportPopupComponent implements OnInit {
       submit: string;
       title: string;
     }
-    type?: ReportType;
+    report_type?: ReportType;
     user_name?: string;
   };
 
@@ -89,6 +89,7 @@ export class ReportPopupComponent implements OnInit {
     setTimeout(() => {
       if (this.textInput?.nativeElement) {
         this.textInput.nativeElement.focus();
+        this.textInput.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);
   }
@@ -129,28 +130,29 @@ export class ReportPopupComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
         if (this.currentReason) {
-          if (!this.reportSubcription) {
-            let data = {
-              comment_id: this.data?.comment_id,
-              user_name: this.data?.user_name,
-              post_slug: this.data?.post_slug,
-              report_type: this.currentReason.key,
-              content: this.content,
-            } as ReportSendModel;
-
-            data =  _.omitBy(data, _.isNull);
-
-            this.reportSubcription = this.postService
-              .sendReport(this.data.type, data)
-              .subscribe(
-                (res) => {
-                  this.success = true;
-                  this.currentReason = null;
-                },
-                () => {
-                }
-              );
+          if (this.reportSubcription) {
+            this.reportSubcription.unsubscribe();
           }
+          let data = {
+            comment_id: this.data?.comment_id,
+            user_name: this.data?.user_name,
+            post_slug: this.data?.post_slug,
+            report_type: this.currentReason.key,
+            content: this.content,
+          } as ReportSendModel;
+
+          data = _.omitBy(data, _.isNull);
+
+          this.reportSubcription = this.postService
+            .sendReport(this.data.report_type, data)
+            .subscribe(
+              (res) => {
+                this.success = true;
+                this.currentReason = null;
+              },
+              () => {
+              }
+            );
         }
       }
     });

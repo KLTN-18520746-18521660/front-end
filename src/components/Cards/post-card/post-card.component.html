@@ -35,12 +35,12 @@
         <div class="card-content-main cursor-pointer">
           <a [routerLink]="['/post', post.slug]">
             <div class="flex flex-wrap">
-              <div class="col-12" *ngIf="isGrid">
+              <div class="col-12" *ngIf="isGrid && showThumbnail">
                 <img imageOnError src="{{ post.thumbnail }}" alt="{{ post.title }}"
                   class="card-image border-round mt-2 shadow-4" />
               </div>
               <div class="col-12 mt-2">
-                <h3 class="text-800 text-xl font-semibold" title="{{ post.title }}"
+                <h3 class="text-800 text-2xl font-semibold" title="{{ post.title }}"
                   [ngClass]="isGrid ? 'card-heading-grid' : 'card-heading'">
                   {{ post.title }}
                 </h3>
@@ -122,7 +122,7 @@
         </div> -->
         <div class="card-content-main w-full">
           <div class="flex flex-wrap col-12">
-            <div class="col-12" *ngIf="isGrid">
+            <div class="col-12" *ngIf="isGrid && showThumbnail">
               <p-skeleton class="w-full" height="12rem" styleClass="mb-2"></p-skeleton>
             </div>
             <div class="col-12 mt-2">

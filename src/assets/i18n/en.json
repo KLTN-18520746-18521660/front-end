@@ -91,6 +91,7 @@
     "viewOption": {
       "new": "Newest ",
       "following": "Following",
+      "popular": "Most Popular",
       "trending": "Trending",
       "recommend": "For you"
     },

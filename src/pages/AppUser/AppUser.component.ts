@@ -292,6 +292,10 @@ export class AppUserComponent implements OnInit {
   }
 
   public openReportPopup(data: ReportSendModel = {}, header = ' ', footer = ' ') {
+    if (!this.authService.getSessionId()) {
+      this.openLoginPopup( ' ', 'warn', ' ', ' ');
+      return;
+    }
     this.refReport = this.dialogService.open(ReportPopupComponent, {
       data,
       header,

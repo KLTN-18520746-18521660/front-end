@@ -28,6 +28,8 @@ export class PostCardComponent implements OnInit {
 
   @Input() hasAnimation: boolean = true;
 
+  @Input() showThumbnail: boolean = true;
+
   actionSubcription: Subscription;
 
   postValuesSubcription: Subscription;
@@ -120,7 +122,7 @@ export class PostCardComponent implements OnInit {
       post_slug: this.post.slug,
       report_type: type,
     };
-    this.appUser.openReportPopup(data, text.title, null);
+    this.appUser.openReportPopup(data, text.title,  ' ');
   }
 
   actionWithPost(action: ActionType) {
