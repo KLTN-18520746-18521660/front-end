@@ -282,7 +282,7 @@ export class AppUserComponent implements OnInit {
       header,
       footer,
       dismissableMask: true,
-      styleClass: 'w-12 md:w-6 lg:w-5 xl:w-4'
+      styleClass: 'login-popup w-12 md:w-6 lg:w-5 xl:w-4'
     });
     this.userService.ref.push(this.ref);
     this.popupSubscription = this.ref.onClose.subscribe(() => {
@@ -303,7 +303,7 @@ export class AppUserComponent implements OnInit {
       dismissableMask: false,
       closeOnEscape: false,
       closable: false,
-      styleClass: 'w-12 md:w-6 lg:w-5 xl:w-4'
+      styleClass: 'report-popup w-12 md:w-6 lg:w-5 xl:w-4'
     });
     this.userService.ref.push(this.refReport);
     this.popupReportSubscription = this.refReport.onClose.subscribe(() => {
