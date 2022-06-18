@@ -404,9 +404,9 @@ export class DetailPageComponent implements OnInit {
         //   return str;
         // }
 
-        const categories = res.data.post.categories;
-        if (categories && categories.length > 2) {
-          categories.slice(0, 2)
+        let categories = res.data.post.categories;
+        if (categories && categories.length > 1) {
+          categories = categories.slice(0, 1)
         }
         categories.map((item) => {
           this.breadcrumbItems.push({
