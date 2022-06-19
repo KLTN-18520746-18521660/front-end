@@ -44,6 +44,8 @@ export class SearchPostComponent implements OnInit {
     }
     else {
       this.isLoading = true;
+      this.listPosts = [];
+      this.totalSize = 0;
     }
 
     if (this.getListSubscription) {

@@ -44,6 +44,8 @@ export class SearchUserComponent implements OnInit {
     }
     else {
       this.isLoading = true;
+      this.listUsers = [];
+      this.totalSize = 0;
     }
 
     if (this.getListSubscription) {

@@ -44,6 +44,10 @@ export class SearchAllComponent implements OnInit {
   }
 
   getListResult() {
+    this.listPosts = [];
+    this.listUsers = [];
+    this.listCategories = [];
+    this.listTags = [];
     this.isLoading = true;
 
     if (this.getListSubscription) {
