@@ -48,7 +48,7 @@ export class DashboardPageComponent implements OnInit {
           {
             id: 'pending',
             icon: 'pi-plus',
-            background: 'bg-blue-100',
+            background: 'bg-teal-100',
             label: 'Pending',
             desc,
             number: statistic?.pendings

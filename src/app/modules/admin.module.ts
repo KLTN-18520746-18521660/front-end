@@ -1,3 +1,4 @@
+import { NoAccessPageComponent } from 'pages/NoAccessPage/NoAccessPage.component';
 import { ManageCategoryPageComponent } from 'pages/Admin/ManageCategoryPage/ManageCategoryPage.component';
 import { StatisticPostPageComponent } from 'pages/Admin/StatisticPostPage/StatisticPostPage.component';
 import { ManageAdminPageComponent } from 'pages/Admin/ManageAdminPage/ManageAdminPage.component';
@@ -96,6 +97,11 @@ import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.
             path: 'security-account',
             component: AdminSecurityAcountPageComponent,
             data: { key: 'admin.security-account' }
+          },
+          {
+            path: 'access-denied',
+            component: NoAccessPageComponent,
+            data: { key: 'admin.access-denied' }
           }
         ]
       },

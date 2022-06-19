@@ -103,6 +103,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     private userIdleService: UserIdleService,
     private translate: TranslateService,
   ) {
+    this.translate.use('en');
     this.currentURL = this.router.url;
     const sessionId = this.adminService.getSessionId();
     if (sessionId) {

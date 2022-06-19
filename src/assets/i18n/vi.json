@@ -75,7 +75,8 @@
       "roleAdmin": "Role Admin",
       "rightAdmin": "Right Admin",
       "change-password": "Change password",
-      "security-account": "Security your account"
+      "security-account": "Security your account",
+      "access-denied": "Access denied"
     },
     "goto": "Đang chuyển hướng ...",
     "notFound": "Không tìm thấy trang",
