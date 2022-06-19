@@ -73,6 +73,7 @@ export interface ApiResult {
     logs?: any[];
 
     statistic?: {
+      pendings: number;
       posts: number;
       visited: number;
       views: number;

@@ -46,6 +46,14 @@ export class DashboardPageComponent implements OnInit {
 
         this.carditems = [
           {
+            id: 'pending',
+            icon: 'pi-plus',
+            background: 'bg-blue-100',
+            label: 'Pending',
+            desc,
+            number: statistic?.pendings
+          },
+          {
             id: 'posts',
             icon: 'pi-folder',
             background: 'bg-blue-100',
@@ -70,12 +78,12 @@ export class DashboardPageComponent implements OnInit {
             number: statistic.likes,
           },
           {
-            id: 'likes',
+            id: 'dislikes',
             icon: 'pi pi-thumbs-down',
             background: 'bg-gray-100',
-            label: 'Likes',
+            label: 'Dislikes',
             desc,
-            number: statistic.likes,
+            number: statistic.dislikes,
           },
           {
             id: 'visited',
