@@ -14,7 +14,8 @@ import { PostsService } from 'services/posts.service';
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.scss']
+  styleUrls: ['./post-card.component.scss'],
+  providers: [MessageService]
 })
 export class PostCardComponent implements OnInit {
 

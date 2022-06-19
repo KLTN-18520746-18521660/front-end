@@ -153,6 +153,11 @@
 
   <ng-template [ngIf]="!isLoadingDialog" [ngIfElse]="loadingBlock">
     <ng-template [ngIf]="viewDialog === 'detail' && !!currentPost">
+      <h3 class="underline ml-3">Post card</h3>
+      <div class="flex px-2 md:px-3">
+        <app-post-card [hasAnimation]="false" [post]="viewPost"></app-post-card>
+      </div>
+      <h3 class="underline ml-3">Post detail</h3>
       <app-view-detail-post [post]="viewPost"></app-view-detail-post>
       <div class="flex justify-content-end">
         <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple

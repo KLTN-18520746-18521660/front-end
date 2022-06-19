@@ -1,12 +1,10 @@
-import { ActionType } from 'utils/apiConstant';
-import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActionPostParams, ApiParams } from 'models/api.model';
 import Post from 'models/post.model';
+import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { PostsService } from 'services/posts.service';
-import { UserService } from 'services/user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 
 @Component({
@@ -46,7 +44,6 @@ export class UserPostSavedComponent implements OnInit {
 
   constructor(
     private postService: PostsService,
-    private userService: UserService,
     private translate: TranslateService
   ) { }
 

@@ -340,6 +340,7 @@ export function playerFactory() {
     MessageService,
     CookieService,
     CanDeactiveGuard,
+    AppUserComponent,
     ConfirmationService,
     // {
     //   provide: 'SocialAuthServiceConfig',
