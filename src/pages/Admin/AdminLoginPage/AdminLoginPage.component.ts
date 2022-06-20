@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AdminLoginModel } from 'models/admin.model';
 import { AppConfig, ThemeName } from 'models/appconfig.model';
 import { Message } from 'primeng/api';
@@ -41,10 +42,12 @@ export class AdminLoginPageComponent implements OnInit {
     private adminService: AdminService,
     private configService: AppConfigService,
     private userConfig: UserConfigService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit() {
+    this.translate.use('en');
 
     // get returnUrl
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || null;

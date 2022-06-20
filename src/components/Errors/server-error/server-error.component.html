@@ -10,8 +10,9 @@
         <p class="text-600 text-center">{{'label.serverError.description' | translate}}</p>
 
         <div class="col-12 mt-5 text-center">
-          <a [routerLink]="['/']" class="text-blue-500"><i class="pi pi-fw pi-arrow-left text-blue-500 mr-2"
-              style="vertical-align:center;"></i> {{'label.notfound.home' | translate}}</a>
+          <button pButton pRipple type="button" [routerLink]="['/']" icon="pi pi-home" iconPos="left"
+            label="{{'label.notfound.home' | translate}}" class="p-button-rounded">
+          </button>
         </div>
       </div>
     </div>

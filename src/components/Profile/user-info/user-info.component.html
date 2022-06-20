@@ -1,5 +1,8 @@
 <div class="user-info-wrapper flex col-12">
-  <div class="card flex flex-wrap justify-content-center" *ngIf="user">
+  <div class="card flex flex-wrap relative justify-content-center" *ngIf="user">
+    <div class="absolute right-0 top-0">
+      <button [routerLink]="'/profile/edit-info'" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded"></button>
+    </div>
     <div class="flex col-12 justify-content-center">
       <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
         <p-image class="user-avatar" alt="{{user.display_name}}" [preview]="true" src="{{ user.avatar }}"></p-image>
@@ -17,7 +20,7 @@
     </div>
     <div class="user_description flex col-12 justify-content-center">
       <div class="col-12 md:col-7 text-center">
-        <p class="inline" #textContent class="font-italic">{{user.description | nA}}</p>
+        <p class="inline" #textContent class="font-italic">{{user.description}}</p>
         <span class="read-more-link inline cursor-pointer">
           <a readMore [readMore-length]="120" [readMore-element]="textContent">
             <span class="less underline font-medium">{{'common.readLess' | translate}}<i class="fa fa-angle-right"

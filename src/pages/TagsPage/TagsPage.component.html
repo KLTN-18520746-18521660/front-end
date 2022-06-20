@@ -13,11 +13,12 @@
             <p class="tag-detail-title mb-0 text-4xl font-semibold">
               {{tag.name}}
             </p>
-            <app-button class="hidden md:flex"
-              [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate"
-              [loading]="isLoadingAction" [className]="tag.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
-              (onClick)="onClickFollow()">
-            </app-button>
+            <button pRipple pButton class="hidden md:flex"
+              [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate" tooltipPosition="top"
+              pTooltip="(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
+              [loading]="isLoadingAction" [ngClass]="tag.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
+              (click)="onClickFollow()">
+            </button>
           </div>
           <div class="flex flex-wrap my-3">
             <p #textContent class="mb-1 col-12 p-0 tag-detail-description">{{tag.describe | nA}}</p>
@@ -62,12 +63,12 @@
           </div>
         </div>
         <div class="flex col-12 md:hidden">
-          <app-button class="w-full" [icon]="tag.mapAction.follow ? 'pi pi-check-circle' : ''"
-            [tooltip]="(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
-            [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate"
+          <button pRipple pButton class="w-full" [icon]="tag.mapAction.follow ? 'pi pi-check-circle' : ''"
+            ptooltip="(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
+            tooltipPosition="top" [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate"
             [loading]="isLoadingAction" [className]="tag.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
-            (onClick)="onClickFollow()">
-          </app-button>
+            (click)="onClickFollow()">
+          </button>
         </div>
       </div>
     </div>

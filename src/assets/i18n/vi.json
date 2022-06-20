@@ -30,7 +30,8 @@
     "language": "Ngôn ngữ",
     "feedback": "Góp ý và phản hồi",
     "result": "Hiển thị <b>{{count}}</b> trong tổng số <b>{{total}}</b> kết quả",
-    "noUser": "Người dùng không tồn tại"
+    "noUser": "Người dùng không tồn tại",
+    "report": "Báo cáo"
   },
   "titlePage": {
     "prefix": "",
@@ -838,7 +839,7 @@
     "notfound": {
       "pageTitle": "Không tìm thấy trang",
       "title": "OOPS!",
-      "description": "Trang bạn đang tìm kiếm không tồn tại, vui lòng kiểm tra lại địa chỉ URL.",
+      "description": "Trang bạn đang tìm kiếm không tồn tại, vui lòng kiểm tra lại đường dẫn và thử lại.",
       "home": "Về trang chủ",
       "back": "Trở lại"
     },
@@ -857,6 +858,11 @@
         "create": "Đăng bài viết",
         "modify": "Sửa bài viết"
       }
+    },
+    "security": {
+      "title": "Những nơi bạn đã đăng nhập",
+      "description": "Bạn có thể xem những nơi bạn đã đăng nhập ở đây và có thể đăng xuất ra khỏi những nơi đó",
+      "logoutAll": "Đăng xuất tất cả"
     }
   },
   "card": {

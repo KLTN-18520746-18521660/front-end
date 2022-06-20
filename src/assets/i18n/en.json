@@ -30,7 +30,8 @@
     "language": "Language",
     "feedback": "Give feedback",
     "result": "Showing <b>{{count}}</b> of <b>{{total}}</b> results",
-    "noUser": "User is not available"
+    "noUser": "User is not available",
+    "report": "Report"
   },
   "titlePage": {
     "prefix": "",
@@ -857,6 +858,11 @@
         "create": "Created",
         "modify": "Modified"
       }
+    },
+    "security": {
+      "title": "All places you already logged in",
+      "description": "You can see all places you already logged in and can logout from all places you already logged in",
+      "logoutAll": "Logout all"
     }
   },
   "card": {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AdminService } from './../../../services/admin.service';
@@ -30,10 +31,11 @@ export class AdminForgotPasswordPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private adminService: AdminService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit() {
-
+    this.translate.use('en');
     this.form = this.formBuilder.group({
       email: [null, [Validators.required]],
     });

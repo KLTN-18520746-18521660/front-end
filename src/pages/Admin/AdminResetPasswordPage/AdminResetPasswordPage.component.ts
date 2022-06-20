@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PasswordPolicy } from 'models/appconfig.model';
 import { Message } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -42,6 +43,7 @@ export class AdminResetPasswordPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
+    private translate: TranslateService,
   ) { }
 
   get f(): { [key: string]: AbstractControl } {
@@ -49,6 +51,7 @@ export class AdminResetPasswordPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.translate.use('en');
     this.isLoading = true;
     this.routerSubcription = this.activatedRoute.queryParams.subscribe(res => {
       this.params = res;

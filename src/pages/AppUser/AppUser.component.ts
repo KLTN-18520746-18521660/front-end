@@ -145,7 +145,7 @@ export class AppUserComponent implements OnInit {
       ping: data.configs?.SocialUserIdle?.ping || APPCONSTANT.USER_IDLE.PING
     });
 
-    console.log(this.userIdleService.getConfigValue());
+    // console.log(this.userIdleService.getConfigValue());
 
     if (this.userService.isAuthenticated && !this.isWatching) {
       this.isLoading = false;
@@ -180,7 +180,7 @@ export class AppUserComponent implements OnInit {
     });
 
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
-      console.log("Time out");
+      // console.log("Time out");
       this.addMessage({
         key: 'app-message',
         severity: 'warn',
@@ -195,7 +195,7 @@ export class AppUserComponent implements OnInit {
   onStartWatching() {
     this.userIdleService.startWatching();
     this.isWatching = true;
-    console.log("Start watching");
+    // console.log("Start watching");
 
     this.pingSubscription = this.userIdleService.ping$.subscribe(() => {
       this.updateAuthenciated();
@@ -206,10 +206,10 @@ export class AppUserComponent implements OnInit {
     if (this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
       if (this.userService.isAuthenticated && !this.isVisible) {
         if (!this.remember) {
-          console.log("Extend token");
+          // console.log("Extend token");
           this.extendSession();
         }
-        console.log("Get Statistic");
+        // console.log("Get Statistic");
         this.userService.updateUserStatistic();
       }
       else if (!this.userService.isAuthenticated) {
@@ -217,7 +217,7 @@ export class AppUserComponent implements OnInit {
       }
     }
     else {
-      console.log("Ping no token")
+      // console.log("Ping no token")
       if (this.userService.alreadyLogin) {
         this.userService.updateAuth(null);
         this.openLoginPopup(this.textTranslate.expired.message);
@@ -230,7 +230,7 @@ export class AppUserComponent implements OnInit {
   }
 
   onStopWatching() {
-    console.log("Stop watching")
+    // console.log("Stop watching")
     if (this.pingSubscription) {
       this.pingSubscription.unsubscribe();
     }
@@ -250,7 +250,7 @@ export class AppUserComponent implements OnInit {
   extendSession() {
     this.authService.extendSessionUser().subscribe(
       () => {
-        console.log("Extend Session Success");
+        // console.log("Extend Session Success");
         this.lastExtend = new Date();
       },
       (err) => {
@@ -299,7 +299,7 @@ export class AppUserComponent implements OnInit {
     this.refReport = this.dialogService.open(ReportPopupComponent, {
       data,
       header,
-      footer,
+      footer: null,
       dismissableMask: false,
       closeOnEscape: false,
       closable: false,

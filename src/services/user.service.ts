@@ -70,7 +70,7 @@ export class UserService {
     private http: HttpClient,
     private cookieService: CookieService
   ) {
-    console.log("SessionID: ", this.getSessionId());
+    // console.log("SessionID: ", this.getSessionId());
     if (this.getSessionId()) {
       this.session_id = this.getSessionId();
       this.updateAuth(this.session_id);

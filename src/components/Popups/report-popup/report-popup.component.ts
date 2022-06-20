@@ -88,10 +88,10 @@ export class ReportPopupComponent implements OnInit {
   onClickReason() {
     setTimeout(() => {
       if (this.textInput?.nativeElement) {
-        this.textInput.nativeElement.focus();
         this.textInput.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.textInput.nativeElement.focus();
       }
-    }, 100);
+    }, 50);
   }
 
   onClickCancel() {
@@ -104,7 +104,8 @@ export class ReportPopupComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         acceptLabel: dialog.confirm,
         rejectLabel: dialog.cancel,
-        rejectButtonStyleClass: 'p-button-danger',
+        acceptButtonStyleClass: 'p-button-danger',
+        rejectButtonStyleClass: 'p-button-outlined',
         accept: () => {
           this.ref.close();
           this.userService.ref.pop();
@@ -127,7 +128,7 @@ export class ReportPopupComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: dialog.confirm,
       rejectLabel: dialog.cancel,
-      rejectButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-danger p-button-outlined',
       accept: () => {
         if (this.currentReason) {
           if (this.reportSubcription) {

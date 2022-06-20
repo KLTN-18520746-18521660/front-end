@@ -15,7 +15,7 @@ export class UserInfoCardComponent implements OnInit {
 
   @Input() user_name: string;
 
-  @Input() showInfo: boolean = true;
+  @Input() onlyShowButton: boolean = false;
 
   user: User;
 

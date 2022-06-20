@@ -1,1 +1,7 @@
-@import 'styles/scss/mixins.scss';
+:host ::ng-deep {
+  .report-wrapper {
+    .p-button {
+      min-width: 140px;
+    }
+  }
+}

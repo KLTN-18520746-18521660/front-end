@@ -19,16 +19,20 @@
             <p class="inline" #textContent class="font-italic">{{user.description}}</p>
             <span class="read-more-link inline cursor-pointer">
               <a readMore [readMore-length]="120" [readMore-element]="textContent">
-                <span class="less underline font-medium">{{'common.readLess' | translate}}<i
-                    class="fa fa-angle-right" aria-hidden="true"></i></span>
-                <span class="more underline font-medium">{{'common.readMore' | translate}}<i
-                    class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <span class="less underline font-medium">{{'common.readLess' | translate}}<i class="fa fa-angle-right"
+                    aria-hidden="true"></i></span>
+                <span class="more underline font-medium">{{'common.readMore' | translate}}<i class="fa fa-angle-right"
+                    aria-hidden="true"></i></span>
               </a>
             </span>
           </div>
         </div>
-        <div class="flex justify-content-center">
-          <app-user-info-card [user_name]="user_name" [showInfo]="false"></app-user-info-card>
+        <div class="flex justify-content-center" *ngIf="!isLoadingUser">
+          <app-user-info-card [user_name]="user_name" [onlyShowButton]="true"></app-user-info-card>
+          <button pRipple pButton type="button" class="p-button-warning ml-2" [disabled]="user?.mapAction?.report"
+            label="{{(user?.mapAction?.report ? 'common.report' : 'common.report') | translate}}"
+            [icon]="user?.mapAction?.report ? 'pi pi-flag-fill' : 'pi pi-flag'" (click)="onClickReport()">
+          </button>
         </div>
         <div class="user-values px-0 flex col-12 justify-content-center">
           <div class="flex col-12">
@@ -89,4 +93,4 @@
   <app-NotFoundPage></app-NotFoundPage>
 </ng-template>
 
-<app-loading [loading]="isLoading"></app-loading>
+<app-loading [loading]="isLoadingPost"></app-loading>

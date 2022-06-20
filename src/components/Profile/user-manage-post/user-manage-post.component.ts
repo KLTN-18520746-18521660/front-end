@@ -15,13 +15,13 @@ import { APPCONSTANT } from 'utils/appConstant';
 export class UserManagePostComponent implements OnInit {
   start: number = 0;
 
-  totalSize: number;
+  totalSize: number = 0;
 
   isLoading: boolean = false;
 
   isLoadingMore: boolean = false;
 
-  listPosts: Post[];
+  listPosts: Post[] = [];
 
   error: boolean = false;
 
@@ -76,10 +76,15 @@ export class UserManagePostComponent implements OnInit {
       return;
     }
 
-    if (loadMore)
+    if (loadMore) {
       this.isLoadingMore = true;
-    else
+    }
+    else {
       this.isLoading = true;
+      this.start = 0;
+      this.totalSize = 0;
+      this.listPosts = [];
+    }
 
     const params: ApiParams = {
       start: this.start,

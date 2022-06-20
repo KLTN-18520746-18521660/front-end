@@ -1,60 +1,74 @@
-<div class="p-2 user-info-card mb-1" [ngClass]="{'card': showInfo}">
-  <div class="card-container flex flex-wrap" *ngIf="user">
-    <div class="flex flex-wrap">
-      <div class="col-12 align-items-center" *ngIf="showInfo">
-        <a [routerLink]="['/user', user.user_name]" class="flex align-items-center">
-          <app-avatar [height]="'4rem'" [user]="user"></app-avatar>
-          <span class="mx-2 font-semibold">{{ user.display_name}}</span>
-        </a>
-      </div>
-      <div class="col-12" *ngIf="user.description && showInfo">
-        <p class="user-bio">{{ user?.description }}</p>
-      </div>
-      <div class="col-12 md:col-12" *ngIf="showInfo">
-        <p-divider styleClass="mt-0"></p-divider>
-        <div class="flex flex-wrap justify-content-center">
-          <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
-            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.posts" [short]="true"
-              tooltipPosition="bottom" pTooltip="{{ user.posts | number:'1.0-2' }}">
-              {{ user.posts }}
-            </p>
-            <p class="user-rate-text font-normal text-base">
-              {{ (user.posts > 1 ? 'common.posts' : 'common.post') | translate }}</p>
-          </div>
-          <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
-            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followers" [short]="true"
-              tooltipPosition="bottom" pTooltip="{{ user.followers | number:'1.0-2' }}">
-              {{ user.followers }}
-            </p>
-            <p class="user-rate-text font-normal text-base">
-              {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}
-            </p>
-          </div>
-          <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center block lg:hidden xl:block">
-            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.views" [short]="true"
-              tooltipPosition="bottom" pTooltip="{{ user.views | number:'1.0-2' }}">
-              {{ user.views }}
-            </p>
-            <p class="user-rate-text font-normal text-base">
-              {{ (user.views > 1 ? 'common.views' : 'common.view') | translate }}</p>
-          </div>
-          <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
-            <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.likes" [short]="true"
-              tooltipPosition="bottom" pTooltip="{{ user.likes | number:'1.0-2' }}">
-              {{ user.likes }}
-            </p>
-            <p class="user-rate-text font-normal text-base">
-              {{ (user.likes > 1 ? 'common.likes' : 'common.like') | translate }}</p>
+<ng-template [ngIf]="!onlyShowButton" [ngIfElse]="buttonFollow">
+  <div class="p-2 card user-info-card mb-1">
+    <div class="card-container flex flex-wrap" *ngIf="user">
+      <div class="flex flex-wrap">
+        <div class="col-12 align-items-center">
+          <a [routerLink]="['/user', user.user_name]" class="flex align-items-center">
+            <app-avatar [height]="'4rem'" [user]="user"></app-avatar>
+            <span class="mx-2 font-semibold">{{ user.display_name}}</span>
+          </a>
+        </div>
+        <div class="col-12" *ngIf="user.description">
+          <p class="user-bio">{{ user?.description }}</p>
+        </div>
+        <div class="col-12 md:col-12">
+          <p-divider styleClass="mt-0"></p-divider>
+          <div class="flex flex-wrap justify-content-center">
+            <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
+              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.posts" [short]="true"
+                tooltipPosition="bottom" pTooltip="{{ user.posts | number:'1.0-2' }}">
+                {{ user.posts }}
+              </p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.posts > 1 ? 'common.posts' : 'common.post') | translate }}</p>
+            </div>
+            <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
+              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followers" [short]="true"
+                tooltipPosition="bottom" pTooltip="{{ user.followers | number:'1.0-2' }}">
+                {{ user.followers }}
+              </p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}
+              </p>
+            </div>
+            <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center block lg:hidden xl:block">
+              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.views" [short]="true"
+                tooltipPosition="bottom" pTooltip="{{ user.views | number:'1.0-2' }}">
+                {{ user.views }}
+              </p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.views > 1 ? 'common.views' : 'common.view') | translate }}</p>
+            </div>
+            <div class="col-3 lg:col-4 xl:col-3 text-center justify-content-center">
+              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.likes" [short]="true"
+                tooltipPosition="bottom" pTooltip="{{ user.likes | number:'1.0-2' }}">
+                {{ user.likes }}
+              </p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.likes > 1 ? 'common.likes' : 'common.like') | translate }}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 md:col-12" *ngIf="showButtonFollow">
-        <app-button [label]="(user.mapAction.follow ? 'common.following' : 'common.follow') | translate"
-          [icon]="user.mapAction.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
-          [tooltip]="(user.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
-          [className]="user.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'" (onClick)="onClickFollow()">
-        </app-button>
+        <div class="col-12 md:col-12" *ngIf="showButtonFollow">
+          <button pRipple pButton type="button"
+            label="{{(user?.mapAction?.follow ? 'common.following' : 'common.follow') | translate}}"
+            [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'w-full'"
+            pTooltip="{{(user?.mapAction?.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
+            tooltipPosition="top" [icon]="user?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
+            (click)="onClickFollow()">
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+<ng-template #buttonFollow>
+  <button pRipple pButton type="button"
+    label="{{(user?.mapAction?.follow ? 'common.following' : 'common.follow') | translate}}"
+    [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'w-full'"
+    pTooltip="{{(user?.mapAction?.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
+    tooltipPosition="top" [icon]="user?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
+    (click)="onClickFollow()">
+  </button>
+</ng-template>
