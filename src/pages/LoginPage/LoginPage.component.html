@@ -9,7 +9,7 @@
       <label requiredField for="email" class="block text-900 text-lg font-medium mb-2">
         {{'label.login.email' | translate}}
       </label>
-      <input formControlName="email" id="email" type="text" autofocus
+      <input formControlName="email" id="email" type="text"
         placeholder="{{'label.login.emailPlaceholder' | translate}}" pInputText class="w-full mb-1"
         style="padding:1rem;"
         [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['email'].touched) && f['email'].errors }">

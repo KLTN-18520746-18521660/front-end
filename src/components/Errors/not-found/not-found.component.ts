@@ -12,6 +12,8 @@ export class NotFoundComponent implements OnInit {
 
   @Input() visible: boolean = true;
 
+  @Input() showButton: boolean = true;
+
   constructor(
     private title: Title,
     private translate: TranslateService

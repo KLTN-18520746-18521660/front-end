@@ -76,7 +76,9 @@
       "rightAdmin": "Right Admin",
       "change-password": "Change password",
       "security-account": "Security your account",
-      "access-denied": "Access denied"
+      "access-denied": "Access denied",
+      "forgot-password": "Forgot password",
+      "new-password": "Reset password"
     },
     "goto": "Redirecting ...",
     "notFound": "Page not found",

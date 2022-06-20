@@ -11,7 +11,7 @@
   </ng-template>
   <div class="feedback-content" *ngIf="!success; else successBlock">
     <p>{{'feedback.description' | translate}}</p>
-    <textarea #input [(ngModel)]="content" [rows]="4" pInputTextarea autofocus (ngModelChange)="onChangeContent($event)"
+    <textarea #input [(ngModel)]="content" [rows]="4" pInputTextarea (ngModelChange)="onChangeContent($event)"
       placeholder="{{'feedback.placeholder' | translate }}" class="w-full comment-input pl-3 pr-7 shadow-1">
     </textarea>
     <div *ngIf="empty" class="invalid-feedback">

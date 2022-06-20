@@ -7,7 +7,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label requiredField for="emailSignUp" class="block text-900 text-lg font-medium mb-2">{{'label.signup.email' | translate }}
     </label>
-    <input formControlName="email" id="emailSignUp" type="text" autofocus
+    <input formControlName="email" id="emailSignUp" type="text"
       placeholder="{{'label.signup.emailPlaceholder' | translate}}" pInputText class="w-full mb-1" style="padding:1rem;"
       [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['email'].touched) && f['email'].errors }">
     <div *ngIf="(submitted || f['email'].touched) && f['email'].errors" class="invalid-feedback">
@@ -38,7 +38,7 @@
         <label requiredField for="lastname" class="block text-900 text-lg font-medium mb-2 mt-3">
           {{'label.signup.lastname' | translate}}
         </label>
-        <input formControlName="lastname" id="lastname" type="text" autofocus
+        <input formControlName="lastname" id="lastname" type="text"
           [ngClass]="{ 'ng-invalid ng-dirty': (submitted || f['lastname'].touched) && f['lastname'].errors }"
           placeholder="{{'label.signup.lastnamePlaceholder' | translate}}" pInputText class="w-full mb-1"
           style="padding:1rem;">

@@ -1,3 +1,6 @@
+import { AdminNoAccessPageComponent } from './../pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
+import { AdminResetPasswordPageComponent } from './../pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
+import { AdminForgotPasswordPageComponent } from './../pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
 import { CreateEditUserComponent } from 'components/Admin/create-edit-user/create-edit-user.component';
 import { CreateEditTagComponent } from 'components/Admin/create-edit-tag/create-edit-tag.component';
 import { CreateEditCategoryComponent } from 'components/Admin/create-edit-category/create-edit-category.component';
@@ -293,6 +296,9 @@ export function playerFactory() {
     CreateEditCategoryComponent,
     CreateEditTagComponent,
     CreateEditUserComponent,
+    AdminForgotPasswordPageComponent,
+    AdminResetPasswordPageComponent,
+    AdminNoAccessPageComponent,
   ],
   imports: [
     BrowserModule,

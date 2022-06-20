@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'services/auth.service';
+import { AdminService } from './../../../services/admin.service';
 
 @Component({
-  selector: 'app-ForgotPasswordPage',
-  templateUrl: './ForgotPasswordPage.component.html',
-  styleUrls: ['./ForgotPasswordPage.component.scss']
+  selector: 'app-AdminForgotPasswordPage',
+  templateUrl: './AdminForgotPasswordPage.component.html',
+  styleUrls: ['./AdminForgotPasswordPage.component.scss']
 })
-export class ForgotPasswordPageComponent implements OnInit {
+export class AdminForgotPasswordPageComponent implements OnInit {
 
   message: Message[] = [];
 
@@ -30,8 +29,7 @@ export class ForgotPasswordPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private translate: TranslateService
+    private adminService: AdminService,
   ) { }
 
   ngOnInit() {
@@ -58,10 +56,10 @@ export class ForgotPasswordPageComponent implements OnInit {
     }
 
     if (this.subsciption) {
-      return;
+      this.subsciption.unsubscribe();
     }
 
-    this.subsciption = this.authService.sendForgotPassword(body).subscribe(
+    this.subsciption = this.adminService.sendForgotPassword(body).subscribe(
       () => {
         this.isLoading = false;
         this.success = true;
@@ -69,7 +67,7 @@ export class ForgotPasswordPageComponent implements OnInit {
       (err) => {
         this.isLoading = false;
         this.success = false;
-        this.message = [{ severity: 'error', detail: this.translate.instant(`messageCode.${err.message_code}`) }];
+        this.message = [{ severity: 'error', detail: err.message, summary: err.error }];
       }
     );
   }
@@ -79,5 +77,6 @@ export class ForgotPasswordPageComponent implements OnInit {
       this.subsciption.unsubscribe();
     }
   }
+
 
 }

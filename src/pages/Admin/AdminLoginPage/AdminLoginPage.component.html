@@ -12,7 +12,7 @@
             <label for="Admin_email" class="block text-900 text-lg font-medium mb-2">{{'admin.login.email' | translate
               }}
             </label>
-            <input formControlName="Admin_email" id="Admin_email" type="text" autofocus autocomplete="false"
+            <input formControlName="Admin_email" id="Admin_email" type="text" autocomplete="false"
               placeholder="{{'admin.login.emailPlaceholder' | translate}}" pInputText class="w-full mb-1"
               style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['Admin_email'].errors }">
             <div *ngIf="submitted && f['Admin_email'].errors" class="invalid-feedback">
@@ -47,6 +47,9 @@
                 </p-checkbox>
                 <label for="Admin_rememberme">{{'admin.login.remember' | translate }}</label>
               </div>
+              <a class="font-medium ml-2 text-right cursor-pointer button-link"
+                [routerLink]="['/admin/forgot-password']" style="color: var(--primary-color)">{{'label.login.forgot' |
+                translate }}</a>
             </div>
             <p-messages [(value)]="message" [enableService]="false"></p-messages>
             <button type="submit" pButton pRipple label="{{'admin.login.submit' | translate}}" icon="pi pi-sign-in"

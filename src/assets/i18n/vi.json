@@ -76,7 +76,9 @@
       "rightAdmin": "Right Admin",
       "change-password": "Change password",
       "security-account": "Security your account",
-      "access-denied": "Access denied"
+      "access-denied": "Access denied",
+      "forgot-password": "Forgot password",
+      "new-password": "Reset password"
     },
     "goto": "Đang chuyển hướng ...",
     "notFound": "Không tìm thấy trang",
@@ -724,7 +726,7 @@
       "home": "Trở lại trang chủ",
       "success": {
         "title": "Tuyệt vời!",
-        "description": "Email của bạn đã được xác nhận. Bạn có thể đăng nhập ngay bây giờ."
+        "description": "Email của bạn đã được xác nhận thành công."
       },
       "warning": "Bạn chỉ có 3 lần nhập sai mật khẩu liên tiếp"
     },

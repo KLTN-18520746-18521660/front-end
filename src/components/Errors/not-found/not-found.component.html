@@ -10,7 +10,7 @@
           {{'label.notfound.title' | translate}}</h1>
         <p class="text-600 text-center">{{'label.notfound.description' | translate}}</p>
 
-        <div class="col-12 mt-5 text-center">
+        <div class="col-12 mt-5 text-center" *ngIf="showButton">
           <a [routerLink]="['/']" class="text-blue-500"><i class="pi pi-fw pi-arrow-left text-blue-500 mr-2"
               style="vertical-align:center;"></i> {{'label.notfound.home' | translate}}</a>
         </div>

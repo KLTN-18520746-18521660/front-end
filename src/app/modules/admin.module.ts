@@ -1,23 +1,25 @@
-import { NoAccessPageComponent } from 'pages/NoAccessPage/NoAccessPage.component';
-import { ManageCategoryPageComponent } from 'pages/Admin/ManageCategoryPage/ManageCategoryPage.component';
-import { StatisticPostPageComponent } from 'pages/Admin/StatisticPostPage/StatisticPostPage.component';
-import { ManageAdminPageComponent } from 'pages/Admin/ManageAdminPage/ManageAdminPage.component';
-import { AdminSecurityAcountPageComponent } from 'pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
-import { AdminChangePasswordPageComponent } from 'pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
-import { AdminGuard } from 'shared/guards/admin.guard';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { AdminChangePasswordPageComponent } from 'pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
+import { AdminLoginPageComponent } from 'pages/Admin/AdminLoginPage/AdminLoginPage.component';
+import { AdminSecurityAcountPageComponent } from 'pages/Admin/AdminSecurityAcountPage/AdminSecurityAcountPage.component';
 import { AppMainComponent } from 'pages/Admin/AppMain/AppMain.component';
 import { DashboardPageComponent } from 'pages/Admin/DashboardPage/DashboardPage.component';
-import { ManageUserPageComponent } from 'pages/Admin/ManageUserPage/ManageUserPage.component';
-import { AdminLoginPageComponent } from 'pages/Admin/AdminLoginPage/AdminLoginPage.component';
-import { ManagePostsPageComponent } from 'pages/Admin/ManagePostsPage/ManagePostsPage.component';
+import { ManageAdminPageComponent } from 'pages/Admin/ManageAdminPage/ManageAdminPage.component';
+import { ManageCategoryPageComponent } from 'pages/Admin/ManageCategoryPage/ManageCategoryPage.component';
 import { ManageConfigPageComponent } from 'pages/Admin/ManageConfigPage/ManageConfigPage.component';
+import { ManagePostsPageComponent } from 'pages/Admin/ManagePostsPage/ManagePostsPage.component';
 import { ManageRightAdminPageComponent } from 'pages/Admin/ManageRightAdminPage/ManageRightAdminPage.component';
-import { ManageRoleAdminPageComponent } from 'pages/Admin/ManageRoleAdminPage/ManageRoleAdminPage.component';
 import { ManageRightUserPageComponent } from 'pages/Admin/ManageRightUserPage/ManageRightUserPage.component';
+import { ManageRoleAdminPageComponent } from 'pages/Admin/ManageRoleAdminPage/ManageRoleAdminPage.component';
 import { ManageRoleUserPageComponent } from 'pages/Admin/ManageRoleUserPage/ManageRoleUserPage.component';
 import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.component';
+import { ManageUserPageComponent } from 'pages/Admin/ManageUserPage/ManageUserPage.component';
+import { StatisticPostPageComponent } from 'pages/Admin/StatisticPostPage/StatisticPostPage.component';
+import { AdminGuard } from 'shared/guards/admin.guard';
+import { AdminForgotPasswordPageComponent } from './../../pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
+import { AdminNoAccessPageComponent } from './../../pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
+import { AdminResetPasswordPageComponent } from './../../pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
 
 @NgModule({
   imports: [
@@ -100,7 +102,7 @@ import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.
           },
           {
             path: 'access-denied',
-            component: NoAccessPageComponent,
+            component: AdminNoAccessPageComponent,
             data: { key: 'admin.access-denied' }
           }
         ]
@@ -109,6 +111,16 @@ import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.
         path: 'login',
         component: AdminLoginPageComponent,
         data: { key: 'admin.login' }
+      },
+      {
+        path: 'forgot-password',
+        component: AdminForgotPasswordPageComponent,
+        data: { key: 'admin.forgot-password' }
+      },
+      {
+        path: 'new-password',
+        component: AdminResetPasswordPageComponent,
+        data: { key: 'admin.new-password' }
       },
     ])
   ],

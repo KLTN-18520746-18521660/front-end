@@ -8,7 +8,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
       <label for="email" class="block text-900 text-lg font-medium mb-2">{{'label.confirm.email.label' | translate }}
       </label>
-      <input formControlName="email" id="email" type="text" autofocus
+      <input formControlName="email" id="email" type="text"
         placeholder="{{'label.confirm.email.placeholder' | translate}}" pInputText class="w-full mb-1"
         style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
       <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">

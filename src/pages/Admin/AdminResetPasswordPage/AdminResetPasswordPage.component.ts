@@ -1,20 +1,19 @@
-import { Subscription } from 'rxjs';
-import { PasswordPolicy } from 'models/appconfig.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { PasswordPolicy } from 'models/appconfig.model';
 import { Message } from 'primeng/api';
-import { AuthService } from 'services/auth.service';
+import { Subscription } from 'rxjs';
+import { AdminService } from 'services/admin.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
 
 @Component({
-  selector: 'app-NewPasswordPage',
-  templateUrl: './NewPasswordPage.component.html',
-  styleUrls: ['./NewPasswordPage.component.scss']
+  selector: 'app-AdminResetPasswordPage',
+  templateUrl: './AdminResetPasswordPage.component.html',
+  styleUrls: ['./AdminResetPasswordPage.component.scss']
 })
-export class NewPasswordPageComponent implements OnInit {
+export class AdminResetPasswordPageComponent implements OnInit {
 
   success: boolean = false;
 
@@ -33,8 +32,6 @@ export class NewPasswordPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  textTranslate: any = {};
-
   passwordPolicy: PasswordPolicy;
 
   routerSubcription: Subscription;
@@ -44,8 +41,7 @@ export class NewPasswordPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private translate: TranslateService
+    private adminService: AdminService,
   ) { }
 
   get f(): { [key: string]: AbstractControl } {
@@ -56,21 +52,18 @@ export class NewPasswordPageComponent implements OnInit {
     this.isLoading = true;
     this.routerSubcription = this.activatedRoute.queryParams.subscribe(res => {
       this.params = res;
-      this.authService.getForgotPassword(this.params).subscribe(
+      this.adminService.getForgotPassword(this.params).subscribe(
         () => {
           this.isLoading = false;
         },
         (err) => {
           this.isLoading = false;
           this.error = true;
-          this.message = [{ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) }];
+          this.message = [{ severity: 'error', summary: '', detail: err.message }];
         }
       );
-      this.translate.get('label.confirm').subscribe(res => {
-        this.textTranslate = res;
-      })
     });
-    this.passwordPolicy = this.authService.getConfig().SocialPasswordPolicy;
+    this.passwordPolicy = this.adminService.getConfig().SocialPasswordPolicy;
 
     this.form = this.formBuilder.group(
       {
@@ -116,11 +109,11 @@ export class NewPasswordPageComponent implements OnInit {
       this.submitSubcription.unsubscribe();
     }
 
-    this.submitSubcription = this.authService.resetPassword({ ...this.params, new_password: this.form.get('password').value }).subscribe(
+    this.submitSubcription = this.adminService.resetPassword({ ...this.params, new_password: this.form.get('password').value }).subscribe(
       () => {
         this.isLoading = false;
         this.success = true;
-        this.message = [{ severity: 'success', summary: '', detail: this.textTranslate.success }];
+        this.message = [{ severity: 'success', summary: '', detail: "Reset Password Successfully" }];
       },
       (err) => {
         this.isLoading = false;
@@ -128,12 +121,12 @@ export class NewPasswordPageComponent implements OnInit {
           {
             severity: 'error',
             summary: '',
-            detail: this.translate.instant(`messageCode.${err.message_code}`)
+            detail: err.message
           },
           {
             severity: 'warn',
             summary: '',
-            detail: this.textTranslate.warning
+            detail: "You only have x attempt to reset password. If you don't reset password in 1 hour, you will be locked out."
           }
         ];
       }

@@ -12,6 +12,8 @@ export class NoAccessComponent implements OnInit {
 
   @Input() visible: boolean = true;
 
+  @Input() showButton: boolean = true;
+
   options: AnimationOptions = {
     path: '/assets/jsons/acces-denied.json',
   };
