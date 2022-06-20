@@ -2,10 +2,10 @@ import { ManageRoleService } from 'services/admin/manage-role.service';
 import { PasswordPolicy } from 'models/appconfig.model';
 import { AdminService } from 'services/admin.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Admin } from 'models/admin.model';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { ManageAdminUserService } from 'services/admin/manage-admin-user.service';
 import { APPCONSTANT } from 'utils/appConstant';
 import Validation from 'utils/validation';
@@ -84,16 +84,25 @@ export class CreateEditAdminComponent implements OnInit {
       this.form = new FormGroup({
         display_name: new FormControl(''),
         status: new FormControl(''),
-        roles: new FormControl([]),
+        roles: new FormArray([]),
       });
 
       this.form = this.formBuilder.group({
         display_name: ['', [Validators.required]],
         status: ['', [Validators.required]],
-        roles: [[]],
+        roles: this.formBuilder.array([]),
       });
       this.getAdminById();
     }
+  }
+
+  addFormArray(arr: string[]) {
+    arr.forEach(item => {
+      const formArray = this.form.controls.roles as FormArray;
+      formArray.push(this.formBuilder.group({
+        [item]: [this.admin.roles.includes(item) ? true : false],
+      }));
+    });
   }
 
   getAdminById() {
@@ -122,6 +131,7 @@ export class CreateEditAdminComponent implements OnInit {
       (res) => {
         this.listRole = res.data.roles;
         this.isLoadingRole = false;
+        this.addFormArray(this.listRole.map(item => item.role_name));
       }
     );
   }
@@ -175,7 +185,7 @@ export class CreateEditAdminComponent implements OnInit {
       const body = {
         display_name: this.form.value.display_name,
         status: this.form.value.status,
-        roles: this.form.value.roles,
+        roles: this.form.value.roles.filter(item => Object.values(item).includes(true)).map(item => Object.keys(item)[0]),
       };
 
       if (body.status === 'Readonly') {

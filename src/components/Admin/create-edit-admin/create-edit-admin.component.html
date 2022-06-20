@@ -81,9 +81,12 @@
         Role of admin
       </label>
       <ng-template [ngIf]="!isLoadingRole" [ngIfElse]="loadingBlock">
-        <div class="field-checkbox" *ngFor="let role of listRole" title="{{role.describe}}">
-          <p-checkbox formControlName="roles" value="{{role.role_name}}" inputId="{{role.role_name}}"></p-checkbox>
-          <label for="{{role.role_name}}">{{role.display_name}}</label>
+        <div class="field-checkbox" formArrayName="roles" *ngFor="let role of listRole; let i = index"
+          title="{{role.describe}}">
+          <ng-container [formGroupName]="i">
+            <p-checkbox formControlName="{{role.role_name}}" [binary]="true" inputId="{{role.role_name}}"></p-checkbox>
+            <label for="{{role.role_name}}">{{role.display_name}} ({{role.role_name}})</label>
+          </ng-container>
         </div>
       </ng-template>
 

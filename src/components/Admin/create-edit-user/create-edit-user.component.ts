@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { Role } from 'models/Admins/role_right.model';
 import { PasswordPolicy } from 'models/appconfig.model';
 import User from 'models/user.model';
@@ -15,6 +15,7 @@ import { ManageRoleService } from 'services/admin/manage-role.service';
   styleUrls: ['./create-edit-user.component.scss']
 })
 export class CreateEditUserComponent implements OnInit {
+
   user: User;
 
   @Input() id: string;
@@ -56,15 +57,24 @@ export class CreateEditUserComponent implements OnInit {
     if (this.view === 'edit') {
       this.form = new FormGroup({
         status: new FormControl(''),
-        roles: new FormControl([]),
+        roles: new FormArray([]),
       });
 
       this.form = this.formBuilder.group({
         status: ['', [Validators.required]],
-        roles: [[]],
+        roles: this.formBuilder.array([]),
       });
       this.getUserById();
     }
+  }
+
+  addFormArray(arr: string[]) {
+    arr.forEach(item => {
+      const formArray = this.form.controls.roles as FormArray;
+      formArray.push(this.formBuilder.group({
+        [item]: [this.user.roles.includes(item) ? true : false],
+      }));
+    });
   }
 
   getUserById() {
@@ -91,6 +101,7 @@ export class CreateEditUserComponent implements OnInit {
     this.getListRoleSubscription = this.manageRoleService.getRoleUser().subscribe(
       (res) => {
         this.listRole = res.data.roles;
+        this.addFormArray(this.listRole.map(item => item.role_name));
         this.isLoadingRole = false;
       }
     );
@@ -113,7 +124,7 @@ export class CreateEditUserComponent implements OnInit {
       const body = {
         display_name: this.form.value.display_name,
         status: this.form.value.status,
-        roles: this.form.value.roles,
+        roles: this.form.value.roles.filter(item => Object.values(item).includes(true)).map(item => Object.keys(item)[0]),
       };
 
       this.subscription = this.manageAdminUserService.modifyUser(this.user.id, body).subscribe(
