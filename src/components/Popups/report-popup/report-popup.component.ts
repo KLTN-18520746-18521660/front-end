@@ -50,7 +50,7 @@ export class ReportPopupComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    public config: DynamicDialogConfig,
+    public dialogConfig: DynamicDialogConfig,
     private userService: UserService,
     private postService: PostsService,
     private confirmationService: ConfirmationService,
@@ -65,8 +65,8 @@ export class ReportPopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data = this.config.data || {};
-    console.log(this.data);
+    this.data = this.dialogConfig.data || {};
+    // console.log(this.data);
 
     if (this.userService.ref) {
       this.ref = this.userService.ref[this.userService.ref.length - 1];

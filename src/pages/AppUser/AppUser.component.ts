@@ -303,7 +303,7 @@ export class AppUserComponent implements OnInit {
       dismissableMask: false,
       closeOnEscape: false,
       closable: false,
-      styleClass: 'report-popup w-12 md:w-6 lg:w-5 xl:w-4'
+      styleClass: 'report-popup w-12 md:w-6 lg:w-5 xl:w-5'
     });
     this.userService.ref.push(this.refReport);
     this.popupReportSubscription = this.refReport.onClose.subscribe(() => {

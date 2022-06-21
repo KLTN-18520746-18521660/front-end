@@ -1,3 +1,4 @@
+import { UploadImageComponent } from 'components/Popups/upload-image/upload-image.component';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
@@ -8,6 +9,7 @@ import { filter, map } from "rxjs/operators";
 import { UserConfigService } from 'services/user-config.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { APPCONSTANT } from 'utils/appConstant';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +19,10 @@ import { APPCONSTANT } from 'utils/appConstant';
 export class AppComponent {
   menuMode = 'static';
 
+  ref: DynamicDialogRef;
+
+  popupReportSubscription: Subscription;
+
   constructor(
     private themeService: ThemeService,
     private translate: TranslateService,
@@ -24,6 +30,7 @@ export class AppComponent {
     private title: Title,
     private router: Router,
     private config: UserConfigService,
+    private dialogService: DialogService,
   ) {
     translate.addLangs(['en', 'vi', 'jp']);
 
@@ -79,5 +86,22 @@ export class AppComponent {
           );
         }
       });
+  }
+
+  public openUploadPopup(type: 'post'| 'user' | 'common') {
+    this.ref = this.dialogService.open(UploadImageComponent, {
+      data: {
+        type: type
+      },
+      header: this.translate.instant('upload.upload.title'),
+      footer: null,
+      dismissableMask: false,
+      closeOnEscape: false,
+      closable: false,
+      styleClass: 'upload-popup w-12 md:w-6 lg:w-5 xl:w-4'
+    });
+    this.popupReportSubscription = this.ref.onClose.subscribe(() => {
+      this.ref = null;
+    });
   }
 }

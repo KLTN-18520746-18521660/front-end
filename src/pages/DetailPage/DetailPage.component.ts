@@ -59,6 +59,8 @@ export class DetailPageComponent implements OnInit {
 
   routeSubscription: Subscription;
 
+  queryParamsSubscription: Subscription;
+
   slug: string;
 
   contacts: any[];
@@ -105,6 +107,12 @@ export class DetailPageComponent implements OnInit {
 
   @ViewChild('comments') commentBlock: ElementRef;
 
+  viewImage: boolean = false;
+
+  comment_id: string;
+
+  alreadyLoadedComment: boolean = false;
+
   constructor(
     private translate: TranslateService,
     private titleService: Title,
@@ -116,13 +124,14 @@ export class DetailPageComponent implements OnInit {
     private clipboard: Clipboard,
     private router: Router,
     private appUser: AppUserComponent,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
     this.routeSubscription = this.activatedRoute.params.subscribe(
       (params) => {
         this.slug = params.slug;
+
         // this.slug = decodeURI(this.slug);
 
         this.commentService.current_Slug = this.slug;
@@ -140,6 +149,24 @@ export class DetailPageComponent implements OnInit {
         this.home = { icon: 'pi pi-home', routerLink: '/' };
       }
     );
+    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe(
+      (params) => {
+        this.comment_id = params.comment_id;
+        if (!!this.comment_id) {
+          this.alreadyLoadedComment = true;
+          this.getPostWithComment();
+        }
+      }
+    );
+  }
+
+  onShowGallery(event) {
+    if (!this.viewImage) {
+      this.viewImage = true;
+    }
+    else {
+      this.viewImage = event;
+    }
   }
 
   getTranslate() {
@@ -435,6 +462,9 @@ export class DetailPageComponent implements OnInit {
         this.getOtherPost();
         this.isLoading = false;
         this.isLoadingValue = false;
+        setTimeout(() => {
+          this.commentBlock.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1000);
       },
       (err) => {
         this.error = true;
@@ -597,6 +627,18 @@ export class DetailPageComponent implements OnInit {
     }
   }
 
+  getPostWithComment() {
+    this.isLoadingComments = true;
+
+    const params: ApiParams = {
+      start: 0,
+      size: APPCONSTANT.NUMBER_COMMENT_PER_PAGE,
+      comment_id: this.comment_id
+    };
+
+    this.getComments(params);
+  }
+
   getComments(data?: ApiParams) {
     if (this.commentSubcription) {
       this.commentSubcription.unsubscribe();
@@ -620,6 +662,7 @@ export class DetailPageComponent implements OnInit {
         this.listComments = this.listComments.concat(res.data.comments);
         this.isLoadingComments = false;
         this.isLoadingMoreComments = false;
+        this.alreadyLoadedComment = true;
       },
       () => {
         this.isLoadingMoreComments = false;
@@ -645,9 +688,10 @@ export class DetailPageComponent implements OnInit {
   }
 
   initLoadComment() {
-    this.isLoadingComments = true;
-
-    this.getComments();
+    if (!this.alreadyLoadedComment) {
+      this.getComments();
+      this.isLoadingComments = true;
+    }
   }
 
   loadMoreComment() {
@@ -761,6 +805,9 @@ export class DetailPageComponent implements OnInit {
     }
     if (this.popupSubscription) {
       this.popupSubscription.unsubscribe();
+    }
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
     }
 
   }

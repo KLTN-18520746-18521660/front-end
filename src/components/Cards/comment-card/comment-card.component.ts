@@ -82,12 +82,12 @@ export class CommentCardComponent implements OnInit {
         }
       },
       {
-        id: 'unlike',
+        id: 'dislike',
         label: this.translate.instant('postDetail.commentMenu.unlike'),
         disabled: false,
         icon: 'pi pi-thumbs-down',
         command: () => {
-          this.actionWithComment('unlike');
+          this.actionWithComment('dislike');
         }
       },
       ...(this.comment.reply_comments ? [{
@@ -132,12 +132,13 @@ export class CommentCardComponent implements OnInit {
   }
 
   loadReplyComment(size: number) {
+    this.isLoadingMoreComment = true;
     if (this.getCommentSubcription) {
       this.getCommentSubcription.unsubscribe();
     }
 
     let params = {
-      parrent_comment_id: this.comment.id,
+      parent_comment_id: this.comment.id,
       start: 0,
       size: size
     }
@@ -145,12 +146,13 @@ export class CommentCardComponent implements OnInit {
     this.getCommentSubcription = this.commentService.getCommentByPostSlug(this.commentService.current_Slug, params).subscribe(
       (res) => {
         this.comment.reply_comments.comments = res.data.comments;
+        this.comment.replies = res.data.total_size;
         this.comment.mapAction = mapActionWithComment(res.data?.post?.actions || []);
 
-        this.isLoading = false;
+        this.isLoadingMoreComment = false;
       },
       () => {
-        this.isLoading = false;
+        this.isLoadingMoreComment = false;
       }
     );
   }
@@ -174,7 +176,7 @@ export class CommentCardComponent implements OnInit {
       }
       this.postCommentSubcription = this.commentService.postComment(this.commentService.current_Slug, this.comment.id, value).subscribe(
         (res) => {
-          this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.addcomment') });
+          // this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.addcomment') });
           this.comment.reply_comments.comments.unshift(res.data.comment);
           this.sizeComment++;
           this.isLoading = false;
@@ -218,6 +220,10 @@ export class CommentCardComponent implements OnInit {
       this.actionSubcription = this.commentService.sendActionWithComment(this.comment.id, action).subscribe(
         () => {
           if (action === 'like') {
+            if (this.comment.mapAction.dislike) {
+              this.comment.mapAction.dislike = false;
+              this.comment.dislikes--;
+            }
             this.comment.mapAction.like = true;
             this.comment.likes++;
           }
@@ -226,6 +232,10 @@ export class CommentCardComponent implements OnInit {
             this.comment.likes--;
           }
           else if (action === 'dislike') {
+            if (this.comment.mapAction.like) {
+              this.comment.mapAction.like = false;
+              this.comment.likes--;
+            }
             this.comment.mapAction.dislike = true;
             this.comment.dislikes++;
           }

@@ -1,5 +1,12 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { convertMarkdown, convertLinkRedirecting } from 'utils/commonFunction';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { convertLinkRedirecting, convertMarkdown } from 'utils/commonFunction';
+
+export interface ImageGallery {
+  previewImageSrc?: string;
+  thumbnailImageSrc?: string;
+  alt?: string;
+  title?: string;
+};
 
 @Component({
   selector: 'app-render-content',
@@ -14,14 +21,16 @@ export class RenderContentComponent implements OnInit {
    */
   @Input() type: string = 'HTML';
 
-  markdownCompile: string = '';
+  @Input() viewImage: boolean = false;
+
+  @Output() onClickImage = new EventEmitter<any>();
 
   imgSrc: string = '';
 
-  viewImage: boolean = false;;
+  markdownCompile: string = '';
 
   constructor(
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
   ) { }
 
   ngOnInit() {
@@ -35,7 +44,10 @@ export class RenderContentComponent implements OnInit {
     }
   }
 
-  
+  onHideImage() {
+    this.onClickImage.emit(false);
+  }
+
   ngAfterViewInit() {
     // add event to image in content
     const images = this.elementRef.nativeElement.querySelectorAll('#post-content img');
@@ -44,21 +56,15 @@ export class RenderContentComponent implements OnInit {
       image.addEventListener('click', () => {
         this.imgSrc = image.src;
         this.viewImage = true;
+        this.onClickImage.emit(true);
       });
     });
-  }
-
-  onHideImage() {
-    this.imgSrc = '';
-    this.viewImage = false;
   }
 
   ngOnDestroy() {
     //remove listener
     const images = this.elementRef.nativeElement.querySelectorAll('#post-content img');
     images.forEach(image => {
-      this.imgSrc = '';
-      this.viewImage = false;
       image.removeEventListener('click', () => { });
     });
   }

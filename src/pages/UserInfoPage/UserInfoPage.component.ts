@@ -26,7 +26,11 @@ export class UserInfoPageComponent implements OnInit {
 
   listPosts: Post[] = [];
 
-  subscription: Subscription;
+  getUserSubscription: Subscription;
+
+  getPostSubscription: Subscription;
+
+  showButtonAction: boolean = false;
 
   constructor(
     private postService: PostsService,
@@ -37,13 +41,24 @@ export class UserInfoPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user_name = this.activatedRoute.snapshot.params['username'];
-    this.isLoadingPost = true;
+    this.activatedRoute.params.subscribe(
+      (params) => {
+        this.user_name = params.username;
+        this.getUserInfo();
+        this.getPosts();
+        if (this.userService.user && this.userService.user.user_name !== this.user_name) {
+          this.showButtonAction = true;
+        }
+      }
+    );
+  }
+
+  getUserInfo() {
     this.isLoadingUser = true;
     const params = {
     }
 
-    this.postService.getPostOfUser(this.user_name, params).subscribe(
+    this.getUserSubscription = this.postService.getPostOfUser(this.user_name, params).subscribe(
       (res) => {
         this.listPosts = res.data.posts;
         this.isLoadingPost = false;
@@ -53,8 +68,11 @@ export class UserInfoPageComponent implements OnInit {
         this.isLoadingPost = false;
       }
     );
+  }
 
-    this.subscription = this.postService.getUserByUsername(this.user_name).subscribe(
+  getPosts() {
+    this.isLoadingPost = true;
+    this.getPostSubscription = this.postService.getUserByUsername(this.user_name).subscribe(
       (res) => {
         this.user = res.data.user;
         this.user.mapAction = this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
@@ -68,7 +86,6 @@ export class UserInfoPageComponent implements OnInit {
   }
 
   onClickReport() {
-    console.log('onClickReport');
     if (!this.userService.getSessionId()) {
       this.appUser.openLoginPopup();
       return;
@@ -84,8 +101,11 @@ export class UserInfoPageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.getPostSubscription) {
+      this.getPostSubscription.unsubscribe();
+    }
+    if (this.getUserSubscription) {
+      this.getUserSubscription.unsubscribe();
     }
   }
 

@@ -13,11 +13,11 @@ import { Subscription } from 'rxjs';
 })
 export class UserInfoCardComponent implements OnInit {
 
+  @Input() user: User;
+
   @Input() user_name: string;
 
   @Input() onlyShowButton: boolean = false;
-
-  user: User;
 
   subcription: Subscription;
 
@@ -33,6 +33,9 @@ export class UserInfoCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.onlyShowButton) {
+      return;
+    }
     this.getUserInfo();
   }
 

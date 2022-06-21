@@ -1,3 +1,4 @@
+<div *ngIf="viewImage">Hiiiii</div>
 <div id="post-content" class="post-content ql-editor">
   <ng-template [ngIf]="type === 'HTML'" [ngIfElse]="markdown">
     <div class="content-HTML" [innerHTML]="content"></div>

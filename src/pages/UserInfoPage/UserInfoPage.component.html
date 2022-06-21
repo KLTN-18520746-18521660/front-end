@@ -27,9 +27,9 @@
             </span>
           </div>
         </div>
-        <div class="flex justify-content-center" *ngIf="!isLoadingUser">
-          <app-user-info-card [user_name]="user_name" [onlyShowButton]="true"></app-user-info-card>
-          <button pRipple pButton type="button" class="p-button-warning ml-2" [disabled]="user?.mapAction?.report"
+        <div class="flex justify-content-center" *ngIf="!isLoadingUser && showButtonAction">
+          <app-user-info-card [user_name]="user_name" [user]="user" [onlyShowButton]="true"></app-user-info-card>
+          <button pRipple pButton type="button" class="p-button-warning p-button-outlined ml-2" [disabled]="user?.mapAction?.report"
             label="{{(user?.mapAction?.report ? 'common.report' : 'common.report') | translate}}"
             [icon]="user?.mapAction?.report ? 'pi pi-flag-fill' : 'pi pi-flag'" (click)="onClickReport()">
           </button>
@@ -41,23 +41,27 @@
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.posts" [short]="true">
                 {{ user.posts }}
               </p>
-              <p class="user-rate-text font-normal text-base">{{ (user.posts > 1 ? 'common.posts' : 'common.post') |
-                translate }}</p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.posts > 1 ? 'common.posts' : 'common.post') | translate }}
+              </p>
             </div>
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.followers | number:'1.0-2' }}">
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followers" [short]="true">
                 {{ user.followers }}
               </p>
-              <p class="user-rate-text font-normal text-base">{{ (user.followers > 1 ? 'common.followers' :
-                'common.follower') | translate }}</p>
+              <p class="user-rate-text font-normal text-base">
+                {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}
+              </p>
             </div>
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.following | number:'1.0-2' }}">
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.following" [short]="true">
                 {{ user.following }}
               </p>
-              <p class="user-rate-text font-normal text-base">{{ 'common.following' | translate }}</p>
+              <p class="user-rate-text font-normal text-base">
+                {{ 'common.following' | translate }}
+              </p>
             </div>
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.views | number:'1.0-2' }}">

@@ -16,7 +16,8 @@
       <i class="pi pi-times"></i>
     </button>
   </div>
-  <div *ngIf="visible">
-    <img imageOnError [attr.src]="src" class="p-image-preview" (wheel)="onWheel($event)" (click)="previewClick = true" [ngStyle]="imagePreviewStyle()" />
+  <div>
+    <img imageOnError [attr.src]="src" class="p-image-preview" (wheel)="onWheel($event)" (click)="previewClick = true"
+      [ngStyle]="imagePreviewStyle()" />
   </div>
 </div>

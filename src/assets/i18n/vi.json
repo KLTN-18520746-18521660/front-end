@@ -31,7 +31,8 @@
     "feedback": "Góp ý và phản hồi",
     "result": "Hiển thị <b>{{count}}</b> trong tổng số <b>{{total}}</b> kết quả",
     "noUser": "Người dùng không tồn tại",
-    "report": "Báo cáo"
+    "report": "Báo cáo",
+    "copy": "Sao chép"
   },
   "titlePage": {
     "prefix": "",
@@ -228,6 +229,7 @@
     "login": "Đăng nhập thành công",
     "register": "Đăng ký thành công",
     "confirm": "Xác nhận thành công",
+    "uploadsucess": "Tải lên thành công",
     "uploadfail": "Tải lên thất bại",
     "needlogin": "Bạn cần đăng nhập để tiếp tục",
     "filesize": "Kích thước file quá lớn",

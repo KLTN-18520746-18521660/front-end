@@ -1,0 +1,8 @@
+<div class="flex">
+  <p-messages [(value)]="message" [enableService]="false"></p-messages>
+  <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"></p-fileUpload>
+  <div class="flex" *ngIf="url">
+    <button pRipple pButton type="button" label="{{(copied ? 'message.copied' : 'common.copy' ) | translate}}" class="w-full"
+      [ngClass]="copied ? 'p-button-success p-button-outlined' : ''" (click)="onClickCopy()"></button>
+  </div>
+</div>

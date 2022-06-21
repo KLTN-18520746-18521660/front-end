@@ -3,7 +3,7 @@
   </p-progressBar>
 </div>
 
-<app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input>
+<!-- <app-search-input [wFull]="true" [hasAnimation]="true"></app-search-input> -->
 
 <div class="detail-post-layout container" *ngIf="!isLoading">
   <div class="grid py-4" *ngIf="!error; else errorBlock">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-11 lg:col-8">
+    <div class="col-12 md:col-11 lg:col-8 p-0 md:p-2">
       <p-breadcrumb [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
       <!-- <div class="position-sticky mt-1 z-index-999">
         <p-progressBar [value]="progressBar" [showValue]="false" [style]="{'height': '3px', 'z-index': '100000'}">
@@ -28,7 +28,8 @@
       </div> -->
       <div class="detail-wrapper mt-3" *ngIf="!isLoading; else loadingSpinner">
         <div #postContent class="detail-container border-round surface-0 shadow-2" *ngIf="post">
-          <app-view-detail-post [post]="post" [menu]="menuitem"></app-view-detail-post>
+          <app-view-detail-post [post]="post" [menu]="menuitem" [viewImage]="viewImage"
+            (onClickImage)="onShowGallery($event)"></app-view-detail-post>
         </div>
         <div class="lg:hidden mt-4">
           <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
@@ -63,8 +64,11 @@
                   [comment]="comment" (delete)="onDeleteComment($event)">
                 </app-comment-card>
                 <div class="pb-4 pt-2" *ngIf="totalSizeComments > listComments?.length">
-                  <span class="text-primary text-lg font-medium cursor-pointer button-link" (click)="loadMoreComment()">
-                    {{'postDetail.showMoreComment' | translate}}
+                  <span
+                    class="text-primary text-md font-medium cursor-pointer button-link inline-flex align-items-center"
+                    (click)="loadMoreComment()">
+                    {{'postDetail.showMoreComment' | translate}} 
+                    ({{totalSizeComments - listComments.length}})
                     <i *ngIf="isLoadingMoreComments" class="pi pi-spin pi-spinner" style="font-size: 1.2rem"></i>
                   </span>
                 </div>

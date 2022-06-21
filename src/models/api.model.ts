@@ -113,6 +113,8 @@ export interface ApiParams {
   tags?: string;
   status?: string;
   categories?: string;
+  parent_comment_id?: string;
+  comment_id?: string;
   /**
    * 'views,likes, ...'
    */

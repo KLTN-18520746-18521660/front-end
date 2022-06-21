@@ -1,17 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { DomHandler } from 'primeng/dom';
 
 @Component({
   selector: 'app-view-image',
   templateUrl: './view-image.component.html',
   styleUrls: ['./view-image.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewImageComponent implements OnInit {
+export class ViewImageComponent implements OnChanges {
 
   @Input() src: string = '';
 
-  @Input() visible: boolean = false;
+  @Input() visible: boolean = true;
 
   @Output() onHide: EventEmitter<any> = new EventEmitter();
 
@@ -28,9 +27,6 @@ export class ViewImageComponent implements OnInit {
   }
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   ngOnChanges() {
     if (this.visible) {

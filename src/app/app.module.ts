@@ -161,6 +161,7 @@ import { UserSidebarMenuComponent } from 'components/Profile/user-sidebar-menu/u
 import { OpenNewWindowDirective } from 'shared/directives/openNewWindow.directive';
 import { SearchUserComponent } from 'components/Searchs/search-user/search-user.component';
 import { DynamicFormComponent } from 'components/Admin/dynamic-form/dynamic-form.component';
+import { UploadImageComponent } from 'components/Popups/upload-image/upload-image.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -268,6 +269,7 @@ export function playerFactory() {
     RenderContentComponent,
     ComparePostComponent,
     DiffTextComponent,
+    UploadImageComponent,
 
     SwitchThemeComponent,
 

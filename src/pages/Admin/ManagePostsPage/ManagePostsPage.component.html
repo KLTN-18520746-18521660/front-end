@@ -7,20 +7,23 @@
     [(rows)]="rows" [globalFilterFields]="['title','owner.user_name','owner.display_name','status']">
     <ng-template pTemplate="caption">
       <div class="table-header flex flex-wrap justify-content-between align-items-center">
-        <div class="header-left col-12 lg:col-6 inline-flex align-items-center col-12 md:col-6">
+        <div class="header-left col-12 inline-flex align-items-center px-0">
           <h2 class="m-0">Manage Posts</h2>
         </div>
-        <div class="header-right inline-flex align-items-center">
+        <div class="flex align-items-center col-12 md:col-6 px-0">
           <span>Show</span>
           <p-dropdown class="ml-2" [options]="rowsPerPageOptions" (onChange)="onChangeRows($event)"
-            [(ngModel)]="selectedRow"></p-dropdown>
-          <span class="p-input-icon-left mx-2">
+            [(ngModel)]="selectedRow">
+          </p-dropdown>
+
+          <button pRipple pButton label="Clear Filter" (click)="dt.reset()" class="p-button-secondary mx-2"></button>
+        </div>
+        <div class="flex justify-content-end col-12 md:col-4 px-0">
+          <span class="p-input-icon-left w-full">
             <i class="pi pi-search pr-3"></i>
-            <input #globalText pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
+            <input #globalText class=" w-full" pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
               placeholder="Search here ..." />
           </span>
-          <button pRipple pButton label="Clear Filter" (click)="dt.reset()"
-            class="p-button-secondary"></button>
         </div>
       </div>
     </ng-template>
@@ -59,7 +62,8 @@
         </th>
         <th pSortableColumn="comments">CMT <p-sortIcon field="comments"></p-sortIcon>
         </th>
-        <th pSortableColumn="have_pending_content">Pending <p-sortIcon field="have_pending_content"></p-sortIcon></th>
+        <th pSortableColumn="have_pending_content">Pending <p-sortIcon field="have_pending_content"></p-sortIcon>
+        </th>
         <th>Actions</th>
       </tr>
     </ng-template>

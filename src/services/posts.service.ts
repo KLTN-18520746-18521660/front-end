@@ -276,7 +276,7 @@ export class PostsService {
   }
   //#endregion
 
-  upLoadImage(path: 'post' | 'user', file: File): Observable<ApiResult> {
+  upLoadImage(path: 'post' | 'user' | 'common', file: File): Observable<ApiResult> {
     const formData = new FormData();
     formData.append('__FormFile', file);
     return this.httpClient.post<ApiResult>(BASE_URL + REST_URL.UPLOAD + `/${path}`, formData, this.httpOptionsFile()).pipe(catchError(error => {

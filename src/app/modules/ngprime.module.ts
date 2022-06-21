@@ -22,6 +22,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
+import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -88,6 +89,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     EditorModule,
     FieldsetModule,
     FileUploadModule,
+    GalleriaModule,
     ImageModule,
     InputMaskModule,
     InputNumberModule,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import Post from 'models/post.model';
 import { MenuItem } from 'primeng/api';
@@ -16,6 +16,10 @@ export class ViewDetailPostComponent implements OnInit {
 
   @Input() menu: MenuItem[];
 
+  @Input() viewImage: boolean = false;
+
+  @Output() onClickImage = new EventEmitter<any>();
+
   constructor(
     private translate: TranslateService,
   ) { }
@@ -26,6 +30,10 @@ export class ViewDetailPostComponent implements OnInit {
       approved: this.post.approved_timestamp ? convertDateTime(this.post.approved_timestamp, this.translate.currentLang, true, false) : null,
       updated: this.post.last_modified_timestamp ? convertDateTime(this.post.last_modified_timestamp, this.translate.currentLang, true, false) : null
     }
+  }
+
+  onClick(event) {
+    this.onClickImage.emit(event);
   }
 
 }
