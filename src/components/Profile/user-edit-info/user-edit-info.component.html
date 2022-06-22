@@ -15,7 +15,7 @@
             <p-fileUpload #fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"
               [chooseIcon]="'pi pi-pencil'" (onSelect)="onSelectAvatar($event)" (onClear)="onClearSelect()"
               (onError)="onErrorSelectFile($event)" [styleClass]="'ml-3 p-2'" [showUploadButton]="false"
-              accept=".png, .jpg, .jpeg, .svg, .webp" [showCancelButton]="isSelect" accept="image/*"
+              accept=".png, .jpg, .jpeg, .svg, .webp" [showCancelButton]="isSelect"
               [maxFileSize]="3000000">
             </p-fileUpload>
           </div>

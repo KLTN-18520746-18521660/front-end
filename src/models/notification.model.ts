@@ -14,6 +14,7 @@ export default class Notification {
     comment_owner?: User;
     comment_content?: string;
     error?: string;
+    comment_id?: number;
   };
   user_action?: {
     admin?: boolean;

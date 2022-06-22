@@ -1,8 +1,33 @@
-<div class="flex">
-  <p-messages [(value)]="message" [enableService]="false"></p-messages>
-  <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"></p-fileUpload>
-  <div class="flex" *ngIf="url">
-    <button pRipple pButton type="button" label="{{(copied ? 'message.copied' : 'common.copy' ) | translate}}" class="w-full"
-      [ngClass]="copied ? 'p-button-success p-button-outlined' : ''" (click)="onClickCopy()"></button>
+<ng-template [ngIf]="type === 'advanced'">
+  <div class="flex">
+    <p-messages [(value)]="message" [enableService]="false"></p-messages>
+    <p-fileUpload name="myfile[]" class="{{className}}" [customUpload]="true" (uploadHandler)="myUploader($event)"
+      [disabled]="isUploading"
+      [invalidFileLimitMessageDetail]="'label.upload.error.invalidFileLimitMessageDetail' | translate"
+      [invalidFileLimitMessageSummary]="'label.upload.error.invalidFileLimitMessageSummary' | translate"
+      [invalidFileSizeMessageDetail]="'label.upload.error.invalidFileSizeMessageDetail' | translate"
+      [invalidFileSizeMessageSummary]="'label.upload.error.invalidFileSizeMessageSummary' | translate"
+      [invalidFileTypeMessageDetail]="'label.upload.error.invalidFileTypeMessageDetail' | translate"
+      [invalidFileTypeMessageSummary]="'label.upload.error.invalidFileTypeMessageSummary' | translate"
+      accept=".png, .jpg, .jpeg, .svg, .webp" [maxFileSize]="MAX_FILE_SIZE">
+    </p-fileUpload>
+    <div class="flex" *ngIf="url && showCopy">
+      <button pRipple pButton type="button" label="{{(copied ? 'message.copied' : 'common.copy' ) | translate}}"
+        class="w-full" [ngClass]="copied ? 'p-button-success p-button-outlined' : ''" (click)="onClickCopy()"></button>
+    </div>
   </div>
-</div>
+</ng-template>
+<ng-template [ngIf]="type === 'basic'">
+  <p-fileUpload mode="basic" name="myfile[]" class="{{className}}"
+    [chooseIcon]="isUploading ? 'pi pi-spin pi-spinner' : 'pi pi-folder'" [customUpload]="true"
+    (uploadHandler)="myUploader($event)" [auto]="auto" chooseLabel="{{'label.upload.browse' | translate}}"
+    [disabled]="isUploading"
+    [invalidFileLimitMessageDetail]="'label.upload.error.invalidFileLimitMessageDetail' | translate"
+    [invalidFileLimitMessageSummary]="'label.upload.error.invalidFileLimitMessageSummary' | translate"
+    [invalidFileSizeMessageDetail]="'label.upload.error.invalidFileSizeMessageDetail' | translate"
+    [invalidFileSizeMessageSummary]="'label.upload.error.invalidFileSizeMessageSummary' | translate"
+    [invalidFileTypeMessageDetail]="'label.upload.error.invalidFileTypeMessageDetail' | translate"
+    [invalidFileTypeMessageSummary]="'label.upload.error.invalidFileTypeMessageSummary' | translate"
+    accept=".png, .jpg, .jpeg, .svg, .webp" [maxFileSize]="MAX_FILE_SIZE">
+  </p-fileUpload>
+</ng-template>

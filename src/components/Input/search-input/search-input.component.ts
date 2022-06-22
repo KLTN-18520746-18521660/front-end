@@ -1,16 +1,13 @@
-import { ApiParams } from 'models/api.model';
-import { PostsService } from 'services/posts.service';
-import { AppConfig } from 'models/appconfig.model';
-import { Subscription } from 'rxjs';
-import { UserService } from 'services/user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiParams } from 'models/api.model';
+import { AppConfig } from 'models/appconfig.model';
 import { Tag } from 'models/tag.model';
-import { tagsMockData } from 'shared/mockData/tagsMockData';
-import { randomArray } from 'utils/commonFunction';
-import { query } from '@angular/animations';
+import { Subscription } from 'rxjs';
 import { AppConfigService } from 'services/app.config.service';
+import { PostsService } from 'services/posts.service';
+import { UserService } from 'services/user.service';
 
 @Component({
   selector: 'app-search-input',

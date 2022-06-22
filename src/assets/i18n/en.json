@@ -80,7 +80,8 @@
       "security-account": "Security your account",
       "access-denied": "Access denied",
       "forgot-password": "Forgot password",
-      "new-password": "Reset password"
+      "new-password": "Reset password",
+      "manage-file": "Upload Image"
     },
     "goto": "Redirecting ...",
     "notFound": "Page not found",
@@ -867,7 +868,18 @@
       "logoutAll": "Logout all"
     },
     "upload": {
-      "title": "Upload Image"
+      "title": "Upload Image",
+      "browse": "Browse",
+      "upload": "Upload",
+      "cancel": "Cancel",
+      "error": {
+        "invalidFileSizeMessageSummary": "{0}: Invalid file size, ",
+        "invalidFileSizeMessageDetail": "maximum upload size is {0}.",
+        "invalidFileTypeMessageSummary": "{0}: Invalid file type, ",
+        "invalidFileLimitMessageSummary": "Maximum number of files exceeded, ",
+        "invalidFileLimitMessageDetail": "limit is {0} at most.",
+        "invalidFileTypeMessageDetail": "allowed file types: {0}."
+      }
     }
   },
   "card": {

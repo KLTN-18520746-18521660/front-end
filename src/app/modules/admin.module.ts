@@ -1,3 +1,4 @@
+import { ManageFilePageComponent } from './../../pages/Admin/ManageFilePage/ManageFilePage.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AdminChangePasswordPageComponent } from 'pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
@@ -104,6 +105,11 @@ import { AdminResetPasswordPageComponent } from './../../pages/Admin/AdminResetP
             path: 'access-denied',
             component: AdminNoAccessPageComponent,
             data: { key: 'admin.access-denied' }
+          },
+          {
+            path: 'manage-file',
+            component: ManageFilePageComponent,
+            data: { key: 'admin.manage-file' }
           }
         ]
       },

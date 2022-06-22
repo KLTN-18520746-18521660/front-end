@@ -4,29 +4,35 @@
       Name
     </label>
     <input formControlName="name" id="name" type="text" pInputText [placeholder]="'Name ...'" class="w-full mb-3"
-      style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['name'].errors }">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['name'].errors }">
   </ng-template>
 
   <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
     Display name
   </label>
   <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
-    class="w-full mb-3" style="padding:1rem;"
-    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
+    class="w-full mb-3" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
 
   <label requiredField for="describe" class="block text-900 text-lg font-medium mb-2">
     Describe
   </label>
   <input formControlName="describe" id="describe" type="text" pInputText class="w-full mb-3"
-    [placeholder]="'Describe ...'" style="padding:1rem;"
-    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
+    [placeholder]="'Describe ...'" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
 
   <label requiredField for="thumbnail" class="block text-900 text-lg font-medium mb-2">
     Thumbnail
   </label>
-  <input formControlName="thumbnail" id="thumbnail" type="text" pInputText class="w-full mb-3"
-    [placeholder]="'Thumbnail URL ...'" style="padding:1rem;"
-    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['thumbnail'].errors }">
+  <div class="flex relative">
+    <div class="pr-4 w-full">
+      <input formControlName="thumbnail" id="thumbnail" type="text" pInputText class="w-full mb-3 pr-8"
+        [placeholder]="'Thumbnail URL ...'" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['thumbnail'].errors }">
+    </div>
+    <div class="absolute right-0">
+      <app-upload-image (onSuccess)="onUploadSuccess($event)" [type]="'basic'" [isAdmin]="true" [auto]="true"
+        [path]="'common'">
+      </app-upload-image>
+    </div>
+  </div>
 
   <ng-template [ngIf]="view === 'edit' && category.status !== 'Readonly'">
     <p-radioButton name="status" value="Enabled" inputId="Enabled" formControlName="status"></p-radioButton>

@@ -1,18 +1,15 @@
-import { ReportSendModel, ReportType } from 'models/report.model';
-import { ActionPostParams, ApiParams } from 'models/api.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { ApiResult } from 'models/api.model';
-import Category from 'models/category.model';
+import { ActionPostParams, ApiParams, ApiResult } from 'models/api.model';
 import Post, { PostModel, PostTypeView } from 'models/post.model';
-import { Tag } from 'models/tag.model';
+import { ReportSendModel, ReportType } from 'models/report.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ActionType, REST_URL } from 'utils/apiConstant';
+import { STORAGE_KEY } from 'utils/appConstant';
 import { handleError } from 'utils/commonFunction';
 import { CookieService } from './cookie.service';
-import { STORAGE_KEY } from 'utils/appConstant';
 
 const BASE_URL = environment.baseApiUrl;
 

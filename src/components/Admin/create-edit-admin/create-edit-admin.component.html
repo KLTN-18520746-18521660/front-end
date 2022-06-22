@@ -5,13 +5,13 @@
         Email
       </label>
       <input formControlName="email" id="email" type="text" pInputText class="w-full mb-3" [placeholder]="'Email ...'"
-        autocomplete="off" style="padding:1rem;" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
+        autocomplete="off" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }">
 
       <label requiredField for="user_name" class="block text-900 text-lg font-medium mb-2">
         User name
       </label>
       <input formControlName="user_name" id="user_name" type="text" pInputText [placeholder]="'User name ...'"
-        autocomplete="off" class="w-full mb-3" style="padding:1rem;"
+        autocomplete="off" class="w-full mb-3"
         [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['user_name'].errors }">
     </ng-template>
 
@@ -19,7 +19,7 @@
       Display name
     </label>
     <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
-      autocomplete="off" class="w-full mb-3" style="padding:1rem;"
+      autocomplete="off" class="w-full mb-3"
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
 
     <ng-template [ngIf]="view === 'create'">
@@ -27,7 +27,7 @@
         Password
       </label>
       <input formControlName="password" id="password" type="text" pInputText [placeholder]="'Password ...'"
-        class="w-full mb-3" style="padding:1rem;" [type]="'password'"
+        class="w-full mb-3" [type]="'password'"
         [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }">
       <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="invalid-feedback">
         <div class="flex align-items-end mb-1" *ngIf="f['password'].errors['required']">

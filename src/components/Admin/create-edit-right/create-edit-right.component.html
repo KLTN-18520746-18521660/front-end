@@ -4,23 +4,20 @@
       Right name
     </label>
     <input formControlName="right_name" id="right_name" type="text" pInputText [placeholder]="'Right name ...'"
-      class="w-full mb-3" style="padding:1rem;"
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['right_name'].errors }">
+      class="w-full mb-3" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['right_name'].errors }">
   </ng-template>
 
   <label requiredField for="display_name" class="block text-900 text-lg font-medium mb-2">
     Display name
   </label>
   <input formControlName="display_name" id="display_name" type="text" pInputText [placeholder]="'Display name ...'"
-    class="w-full mb-3" style="padding:1rem;"
-    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
+    class="w-full mb-3" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['display_name'].errors }">
 
   <label requiredField for="describe" class="block text-900 text-lg font-medium mb-2">
     Describe
   </label>
   <input formControlName="describe" id="describe" type="text" pInputText class="w-full mb-3"
-    [placeholder]="'Describe ...'" style="padding:1rem;"
-    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
+    [placeholder]="'Describe ...'" [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['describe'].errors }">
 
   <div *ngIf="submitted && form.invalid" class="invalid-feedback">
     <div class="flex align-items-end">

@@ -151,8 +151,8 @@ export class DetailPageComponent implements OnInit {
     );
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe(
       (params) => {
-        this.comment_id = params.comment_id;
-        if (!!this.comment_id) {
+        if (params.comment_id) {
+          this.comment_id = params.comment_id;
           this.alreadyLoadedComment = true;
           this.getPostWithComment();
         }
@@ -462,9 +462,11 @@ export class DetailPageComponent implements OnInit {
         this.getOtherPost();
         this.isLoading = false;
         this.isLoadingValue = false;
-        setTimeout(() => {
-          this.commentBlock.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 1000);
+        if (this.alreadyLoadedComment) {
+          setTimeout(() => {
+            this.commentBlock.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 1000);
+        }
       },
       (err) => {
         this.error = true;

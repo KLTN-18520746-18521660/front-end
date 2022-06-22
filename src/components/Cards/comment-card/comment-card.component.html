@@ -15,12 +15,14 @@
                 <span class="font-semibold text-lg mr-2">{{ comment.owner.display_name}}</span>
               </a>
               &#183;
-              <span class="mx-2 text-sm" title="{{ comment.created_timestamp }}">{{ comment.fromNow.created }}</span>
+              <span class="mx-2 text-sm" pTooltip="{{ comment.created_timestamp | date : 'dd/MM/yyyy hh:mm z' }}" tooltipPosition="top">
+                {{ comment.fromNow.created }}
+              </span>
               <ng-template [ngIf]="comment?.last_modified_timestamp">
                 &#183;
                 <p-chip label="{{'postDetail.edited' | translate}}" styleClass="mx-2"
                   pTooltip="{{ 'postDetail.edited' | translate }} {{ comment.fromNow.updated }}"
-                  tooltipPosition="bottom" title="{{ comment.last_modified_timestamp }}">
+                  tooltipPosition="top" title="{{ comment.last_modified_timestamp }}">
                 </p-chip>
               </ng-template>
             </div>
@@ -78,7 +80,7 @@
             (click)="loadMoreComment()">
             <i class="pi pi-angle-down mr-1" style="font-size: 1.2rem"></i>
             <span class="button-link">
-              {{'postDetail.showMoreReply' | translate}} 
+              {{'postDetail.showMoreReply' | translate}}
               ({{comment?.reply_comments?.total_size - comment?.reply_comments?.comments?.length}})
             </span>
             <i *ngIf="isLoadingMoreComment" class="pi pi-spin pi-spinner" style="font-size: 1.2rem"></i>

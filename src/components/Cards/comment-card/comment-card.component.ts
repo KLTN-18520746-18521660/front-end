@@ -64,7 +64,7 @@ export class CommentCardComponent implements OnInit {
     this.comment = {
       ...this.comment,
       fromNow: {
-        created: convertDateTime(this.comment.created_timestamp, this.translate.currentLang, true, true),
+        created: convertDateTime(this.comment.created_timestamp, this.translate.currentLang, false, true),
         updated: convertDateTime(this.comment.last_modified_timestamp, this.translate.currentLang, true, true) || null
       }
     };

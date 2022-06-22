@@ -221,7 +221,14 @@ export class NotificationCardComponent implements OnInit {
         icon: 'pi pi-comments',
         user: notification.content.comment_owner,
         command: () => {
-          this.router.navigate(['/post', notification.content?.post_detail.slug]);
+          this.router.navigate(
+            ['/post', notification.content?.post_detail.slug],
+            {
+              queryParams: {
+                comment_id: notification.content?.comment_id
+              }
+            }
+          );
         }
       }
       case 'reply-comment': return {
@@ -236,7 +243,14 @@ export class NotificationCardComponent implements OnInit {
         icon: 'pi pi-comments',
         user: notification.content.comment_owner,
         command: () => {
-          this.router.navigate(['/post', notification.content?.post_detail.slug]);
+          this.router.navigate(
+            ['/post', notification.content?.post_detail.slug],
+            {
+              queryParams: {
+                comment_id: notification.content?.comment_id
+              }
+            }
+          );
         }
       }
       case 'like-comment': return {
@@ -251,7 +265,14 @@ export class NotificationCardComponent implements OnInit {
         icon: 'pi pi-comments',
         user: notification.content.comment_owner,
         command: () => {
-          this.router.navigate(['/post', notification.content?.post_detail.slug]);
+          this.router.navigate(
+            ['/post', notification.content?.post_detail.slug],
+            {
+              queryParams: {
+                comment_id: notification.content?.comment_id
+              }
+            }
+          );
         }
       }
       case 'follow-user': return {

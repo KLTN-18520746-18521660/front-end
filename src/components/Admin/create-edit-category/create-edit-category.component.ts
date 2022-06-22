@@ -57,6 +57,12 @@ export class CreateEditCategoryComponent implements OnInit {
     return this.form.controls;
   }
 
+  onUploadSuccess(event: string) {
+    this.form.patchValue({
+      thumbnail: event
+    });
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.view === 'edit') {

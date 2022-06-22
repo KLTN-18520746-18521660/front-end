@@ -143,6 +143,16 @@ export class MenuComponent implements OnInit {
             routerLink: ['./security-account']
           }
         ]
+      },
+      {
+        label: 'File',
+        items: [
+          {
+            label: 'Upload Image',
+            icon: 'pi pi-fw pi-cloud-upload',
+            routerLink: ['./manage-file']
+          }
+        ]
       }
     ];
   }

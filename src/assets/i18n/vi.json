@@ -80,7 +80,8 @@
       "security-account": "Security your account",
       "access-denied": "Access denied",
       "forgot-password": "Forgot password",
-      "new-password": "Reset password"
+      "new-password": "Reset password",
+      "manage-file": "Upload Image"
     },
     "goto": "Đang chuyển hướng ...",
     "notFound": "Không tìm thấy trang",
@@ -865,6 +866,20 @@
       "title": "Những nơi bạn đã đăng nhập",
       "description": "Bạn có thể xem những nơi bạn đã đăng nhập ở đây và có thể đăng xuất ra khỏi những nơi đó",
       "logoutAll": "Đăng xuất tất cả"
+    },
+    "upload": {
+      "title": "Tải lên hình ảnh",
+      "browse": "Chọn hình ảnh",
+      "upload": "Tải lên",
+      "cancel": "Hủy",
+      "error": {
+        "invalidFileSizeMessageSummary": "{0}: Kích thước tệp không hợp lệ, ",
+        "invalidFileSizeMessageDetail": "kích thước tải lên tối đa là {0}.",
+        "invalidFileTypeMessageSummary": "{0}: Loại tệp không hợp lệ, ",
+        "invalidFileLimitMessageSummary": "Đã vượt quá số tệp tối đa, ",
+        "invalidFileLimitMessageDetail": "giới hạn tối đa là {0}.",
+        "invalidFileTypeMessageDetail": "loại tệp được phép: {0}."
+      }
     }
   },
   "card": {

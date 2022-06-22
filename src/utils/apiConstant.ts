@@ -88,6 +88,7 @@ export const REST_URL = {
 
     CHART: 'chart',
     COUNT: 'count',
+    UPLOAD: 'upload/file/admin',
   },
 
   UPLOAD: 'upload/file',

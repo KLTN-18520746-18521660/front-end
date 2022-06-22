@@ -1,3 +1,4 @@
+import { ManageFilePageComponent } from './../pages/Admin/ManageFilePage/ManageFilePage.component';
 import { AdminNoAccessPageComponent } from './../pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
 import { AdminResetPasswordPageComponent } from './../pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
 import { AdminForgotPasswordPageComponent } from './../pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
@@ -301,6 +302,7 @@ export function playerFactory() {
     AdminForgotPasswordPageComponent,
     AdminResetPasswordPageComponent,
     AdminNoAccessPageComponent,
+    ManageFilePageComponent,
   ],
   imports: [
     BrowserModule,
