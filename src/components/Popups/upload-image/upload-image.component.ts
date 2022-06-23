@@ -96,14 +96,11 @@ export class UploadImageComponent implements OnInit {
   onClickCopy() {
     if (!this.copied) {
       this.copied = true;
-      this.clipboard.copy(decodeURI(this.url));
+      this.clipboard.copy(window.location.origin + decodeURI(this.url));
+      setTimeout(() => {
+        this.copied = false;
+      }, 5000);
     }
-    else {
-      return;
-    }
-    setTimeout(() => {
-      this.copied = false;
-    }, 2000);
   }
 
   ngOnDestroy() {

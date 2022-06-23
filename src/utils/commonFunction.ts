@@ -110,9 +110,10 @@ export const convertMarkdown = (text: string = '') => {
 
 export const convertLinkRedirecting = (str: string) => {
   if (!str) return '';
-  str = str.replace(/<a[^>]*href=["']([^"']*)["']/g, (item) => {
-    item = item.replace(/(?<=href=[\'\"])([^\'\"]+)/gm, (match) => {
-      return `${window.location.origin}/goto?url=${match}`;
+  var regex = new RegExp(/<a[^>]*href=["']([^"']*)["']/g);
+  str = str.replace(regex, (item) => {
+    item = item.replace(/href="([^\'\"]+)/g, (match) => {
+      return `href="${window.location.origin}/goto?url=${match.substring(6, match.length)}"`;
     })
     return item;
   })

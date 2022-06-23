@@ -1,5 +1,5 @@
 <ng-template [ngIf]="type === 'advanced'">
-  <div class="flex">
+  <div class="">
     <p-messages [(value)]="message" [enableService]="false"></p-messages>
     <p-fileUpload name="myfile[]" class="{{className}}" [customUpload]="true" (uploadHandler)="myUploader($event)"
       [disabled]="isUploading"
@@ -13,7 +13,8 @@
     </p-fileUpload>
     <div class="flex" *ngIf="url && showCopy">
       <button pRipple pButton type="button" label="{{(copied ? 'message.copied' : 'common.copy' ) | translate}}"
-        class="w-full" [ngClass]="copied ? 'p-button-success p-button-outlined' : ''" (click)="onClickCopy()"></button>
+        icon="{{copied ? 'pi pi-check' : 'pi pi-copy'}}" class="w-full"
+        [ngClass]="copied ? 'p-button-success p-button-outlined' : ''" (click)="onClickCopy()"></button>
     </div>
   </div>
 </ng-template>
