@@ -32,6 +32,7 @@ export interface ApiResult {
     total_size?: number;
     session_id?: string;
     user_id?: string;
+    unread_notifications?: number;
 
     /**
      * search result

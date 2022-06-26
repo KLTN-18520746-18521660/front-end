@@ -1,5 +1,7 @@
+import { APPCONSTANT } from './../../utils/appConstant';
+import { ApiParams } from './../../models/api.model';
 import { AppUserComponent } from 'pages/AppUser/AppUser.component';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import Category from 'models/category.model';
@@ -14,6 +16,9 @@ import { categoriesMockData } from 'shared/mockData/categoriesMockData';
 import { SearchInputComponent } from 'components/Input/search-input/search-input.component';
 import { TopBarMenuItem } from './menu-item';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { PostsService } from 'services/posts.service';
+import Notification from 'models/notification.model';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-top-bar',
@@ -49,6 +54,20 @@ export class TopBarComponent implements OnInit {
 
   textTranslation: any;
 
+  listNotifications: Notification[];
+
+  isLoadingNotification: boolean = false;
+
+  getListNotificationSubscription: Subscription;
+
+  isShowNotification: boolean = false;
+
+  totalSizeNotification: number = 0;
+
+  sizeNotification: number = APPCONSTANT.DEFAULT_PAGE_SIZE;
+
+  @ViewChild('overlayNofication') overlayNofication: OverlayPanel;
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -57,7 +76,8 @@ export class TopBarComponent implements OnInit {
     private confirmationService: ConfirmationService,
     public dialogService: DialogService,
     private appUser: AppUserComponent,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private postService: PostsService,
   ) { }
 
   ngOnInit() {
@@ -66,6 +86,7 @@ export class TopBarComponent implements OnInit {
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((e: any) => {
         this.showSidebar = false;
+        this.onHideNotification(null);
         this.activeLink = this.getActiveLink(e.url);
       });
     this.items = TopBarMenuItem;
@@ -139,6 +160,57 @@ export class TopBarComponent implements OnInit {
     else {
       this.isScrolling = false;
     }
+    if (this.isShowNotification) {
+      this.onHideNotification(null);
+    }
+  }
+
+  onShowNotification(event) {
+    if (this.isShowNotification) {
+      this.onHideNotification(null);
+      return;
+    }
+    this.overlayNofication.show(event);
+    this.isShowNotification = true;
+    this.getListNotifications();
+  }
+
+  onHideNotification(event) {
+    this.overlayNofication.hide();
+    this.isShowNotification = false;
+    if (this.getListNotificationSubscription) {
+      this.getListNotificationSubscription.unsubscribe();
+    }
+  }
+
+  getListNotifications() {
+    this.listNotifications = [];
+    this.totalSizeNotification = 0;
+    this.isLoadingNotification = true;
+    if (this.getListNotificationSubscription) {
+      this.getListNotificationSubscription.unsubscribe();
+    }
+
+    const params: ApiParams = {
+      start: 0,
+      size: this.sizeNotification,
+    };
+
+    this.getListNotificationSubscription = this.postService.getNotification(params).subscribe(
+      (res) => {
+        this.listNotifications = res.data.notifications;
+        this.user.unread_notifications = res.data?.unread_notifications || this.user.unread_notifications;
+        this.totalSizeNotification = res.data.total_size;
+        this.isLoadingNotification = false;
+      },
+      (err) => {
+        this.isLoadingNotification = false;
+      }
+    );
+  }
+
+  handleDeleteNotification(notification: Notification) {
+    this.listNotifications = this.listNotifications.filter(item => item.id !== notification.id);
   }
 
   getActiveLink(link: any) {
@@ -207,6 +279,9 @@ export class TopBarComponent implements OnInit {
     }
     if (this.userStatisticSubscription) {
       this.userStatisticSubscription.unsubscribe();
+    }
+    if (this.getListNotificationSubscription) {
+      this.getListNotificationSubscription.unsubscribe();
     }
   }
 }

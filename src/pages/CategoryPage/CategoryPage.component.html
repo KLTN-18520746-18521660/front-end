@@ -1,6 +1,6 @@
 <ng-template [ngIf]="!error" [ngIfElse]="errorBlock">
   <div class="category-page-wrapper container pt-4" *ngIf="!isLoading">
-    <div class="category-detail card" *ngIf="!isLoadingCategory; else loadingCategory">
+    <div class="category-detail card p-1 md:p-4" *ngIf="!isLoadingCategory; else loadingCategory">
       <div class="flex flex-wrap">
         <div class="category-detail-image flex h-10rem col-5 md:col-3">
           <img imageOnError class="border-round" src="{{category?.thumbnail}}" alt="{{ category.display_name }}">
@@ -14,16 +14,16 @@
               [label]="(category.mapAction.follow ? 'common.following' : 'common.follow') | translate"
               [loading]="isLoadingAction" tooltipPosition="top"
               pTooltip="{{(category.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
-              [ngClass]="category.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'" (click)="onClickFollow()">
+              [ngClass]="category.mapAction.follow ? 'p-button-outlined' : ''" (click)="onClickFollow()">
             </button>
           </div>
           <div class="flex flex-wrap my-3">
             <p #textContent class="mb-1 col-12 p-0 category-detail-description">{{category.describe | nA}}</p>
             <span class="read-more-link inline cursor-pointer">
               <a readMore [readMore-length]="120" [readMore-element]="textContent">
-                <span class="less underline font-medium">{{'common.readLess' | translate}}<i class="fa fa-angle-right"
+                <span class="less underline font-medium no-select">{{'common.readLess' | translate}}<i class="fa fa-angle-right"
                     aria-hidden="true"></i></span>
-                <span class="more underline font-medium">{{'common.readMore' | translate}}<i class="fa fa-angle-right"
+                <span class="more underline font-medium no-select">{{'common.readMore' | translate}}<i class="fa fa-angle-right"
                     aria-hidden="true"></i></span>
               </a>
             </span>
@@ -68,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="main card" *ngIf="!isLoadingPost; else loadingPost">
+    <div class="main card p-1 md:p-4" *ngIf="!isLoadingPost; else loadingPost">
       <div class="list-post flex flex-wrap">
         <div class="col-12 lg:col-6" *ngFor="let item of listPosts">
           <app-post-card [hasAnimation]="false" [post]="item"></app-post-card>

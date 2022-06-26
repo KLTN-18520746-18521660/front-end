@@ -137,20 +137,7 @@ export class UserNotificationComponent implements OnInit {
   }
 
   handleDelete(notification: Notification) {
-    this.postService.deleteNotification(notification.id).subscribe(
-      () => {
-        this.messageService.add({
-          key: 'notification',
-          severity: 'success',
-          summary: '',
-          detail: this.translate.instant('notification.deleteSuccess')
-        });
-        this.listNotifications = this.listNotifications.filter(item => item.id !== notification.id);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.listNotifications = this.listNotifications.filter(item => item.id !== notification.id);
   }
 
   onScroll() {

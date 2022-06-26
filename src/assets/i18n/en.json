@@ -216,7 +216,7 @@
   "message": {
     "success": "Success",
     "error": "Error",
-    "needRefresh": "You don't access to this page a long time. Please refresh (F5) the page to continue",
+    "needRefresh": "You don't access to this page a long time. Please refresh (F5) the page to get latest data",
     "nochange": "No changes to save",
     "update": "Update successfully",
     "updateFail": "Failed to update",
@@ -314,6 +314,14 @@
       "help": "Help & Support",
       "separator": "|",
       "logout": "Logout"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "You have <b>({{size}})</b> unread notifications",
+      "empty": "No notifications",
+      "readAll": "View all notifications <b>({{size}})</b>",
+      "read": "Read",
+      "unread": "Unread"
     }
   },
   "footer": {

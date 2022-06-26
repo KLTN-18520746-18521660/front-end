@@ -34,7 +34,7 @@
   --gray-900: #212121;
   --content-padding:1.25rem;
   --inline-spacing:0.5rem;
-  --border-radius:4px;
+  --border-radius:5px;
   --surface-ground:#eff3f8;
   --surface-section:#ffffff;
   --surface-card:#ffffff;
@@ -1736,7 +1736,11 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-  border-radius: 6px;
+  border-radius:var(--border-radius);
+  -webkit-border-radius:var(--border-radius);
+  -moz-border-radius:var(--border-radius);
+  -ms-border-radius:var(--border-radius);
+  -o-border-radius:var(--border-radius);
 }
 .p-button:enabled:hover {
   background: #6366F1;

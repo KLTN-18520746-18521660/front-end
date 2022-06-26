@@ -60,7 +60,7 @@ const routes: Routes = [
         component: UserInfoPageComponent
       },
       {
-        path: 'category/:id',
+        path: 'c/:id',
         component: CategoryPageComponent
       },
       {

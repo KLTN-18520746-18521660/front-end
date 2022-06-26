@@ -22,7 +22,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "dayjs/locale",
-              "lodash"
+              "lodash",
+              "hogan"
             ],
             "outputPath": "dist/app",
             "index": "src/index.html",

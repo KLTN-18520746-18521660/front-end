@@ -39,9 +39,9 @@
             <div #textContent [innerHTML]="comment.content | linkify"></div>
             <span class="read-more-link cursor-pointer">
               <a readMore [readMore-length]="300" [readMore-element]="textContent">
-                <span class="less underline font-medium">{{'common.readLess' | translate}}<i class="fa fa-angle-right"
+                <span class="less underline font-medium no-select">{{'common.readLess' | translate}}<i class="fa fa-angle-right"
                     aria-hidden="true"></i></span>
-                <span class="more underline font-medium">{{'common.readMore' | translate}}<i class="fa fa-angle-right"
+                <span class="more underline font-medium no-select">{{'common.readMore' | translate}}<i class="fa fa-angle-right"
                     aria-hidden="true"></i></span>
               </a>
             </span>

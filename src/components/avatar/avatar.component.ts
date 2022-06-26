@@ -13,6 +13,8 @@ export class AvatarComponent implements OnInit {
 
   @Input() badge: string;
 
+  @Input() badgeClass: string;
+
   colorMapping = {
     A: 'surface-500',
     B: 'bg-blue-500',

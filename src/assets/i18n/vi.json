@@ -314,6 +314,14 @@
       "help": "Trợ giúp",
       "separator": "|",
       "logout": "Đăng xuất"
+    },
+    "notifications": {
+      "title": "Thông báo",
+      "description": "Bạn có <b>({{size}})</b> thông báo chưa đọc",
+      "empty": "Không có thông báo",
+      "readAll": "Xem tất cả thông báo <b>({{size}})</b>",
+      "read": "Đã đọc",
+      "unread": "Chưa đọc"
     }
   },
   "footer": {

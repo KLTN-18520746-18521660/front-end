@@ -10,8 +10,8 @@
     </p-avatar>
   </ng-template>
   <div *ngIf="badge" class="absolute right-0 bottom-0">
-    <span class="p-2 bg-primary border-circle">
+    <div class="p-2 border-circle {{badgeClass}}">
       <i class="pi {{badge}}"></i>
-    </span>
+    </div>
   </div>
 </div>

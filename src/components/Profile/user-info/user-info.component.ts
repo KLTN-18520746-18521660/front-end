@@ -1,15 +1,11 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import dayjs from 'dayjs';
-import 'dayjs/locale/en';
-import 'dayjs/locale/vi';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import User from 'models/user.model';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { UserService } from 'services/user.service';
-import { mapActionWithUser } from 'utils/commonFunction';
+import { convertDateTime, mapActionWithUser } from 'utils/commonFunction';
 
 @Component({
   selector: 'app-user-info',
@@ -41,14 +37,12 @@ export class UserInfoComponent implements OnInit {
 
         this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
 
-        dayjs.extend(relativeTime);
-        dayjs.locale(this.translate.currentLang);
         this.user = {
           ...this.user,
           fromNow: {
-            created: dayjs(this.user.created_timestamp).fromNow(),
-            updated: dayjs(this.user.last_access_timestamp).fromNow(),
-            password: dayjs(this.user.settings.password.last_change_password || this.user.created_timestamp).fromNow(),
+            created: convertDateTime(this.user.created_timestamp, this.translate.currentLang),
+            updated: convertDateTime(this.user.last_access_timestamp, this.translate.currentLang),
+            password: convertDateTime(this.user.settings.password.last_change_password || this.user.created_timestamp, this.translate.currentLang),
           }
         };
 

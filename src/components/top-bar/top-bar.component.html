@@ -8,8 +8,7 @@
           <a [routerLink]="['/']">
             <img src="/assets/images/logo/logo-purple.png" style="height: 3.5rem;" class="hidden lg:block"
               alt="oOwlet Logo">
-            <img src="/assets/images/logo/oOwlet.png" class="ml-2 h-2rem lg:hidden"
-              alt="oOwlet Logo">
+            <img src="/assets/images/logo/oOwlet.png" class="ml-2 h-2rem lg:hidden" alt="oOwlet Logo">
           </a>
         </div>
         <!-- <div class="flex top-bar-menu">
@@ -51,10 +50,42 @@
         <ng-template [ngIf]="isLoggedin" [ngIfElse]="noLogin">
           <div
             class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
-            [routerLink]="['/profile/notifications']" [routerLinkActive]="'btn-active'">
+            [routerLink]="['/profile/notifications']" [routerLinkActive]="'btn-active'"
+            (mouseenter)="onShowNotification($event)">
             <div>
               <i class="pi pi-bell p-text-secondary" pBadge [value]="user?.unread_notifications.toString()"
                 style="font-size: 1.2rem"></i>
+              <p-overlayPanel styleClass="notification-overlay" #overlayNofication [dismissable]="true"
+                (onHide)="onHideNotification($event)" [style]="{width: '500px'}">
+                <ng-template pTemplate>
+                  <ng-template [ngIf]="!isLoadingNotification" [ngIfElse]="loadingNotification">
+                    <div class="flex flex-wrap justify-content-center">
+                      <div class="col-12"
+                        [innerHTML]="'topbar.notifications.description' | translate : {size: user.unread_notifications}">
+                      </div>
+                      <div class="col-12 px-0 py-1" *ngFor="let item of listNotifications">
+                        <app-notification-card (delete)="handleDeleteNotification($event)" [notification]="item"
+                          [showButtonMenu]="false">
+                        </app-notification-card>
+                      </div>
+                      <div class="col-12 text-center mt-3">
+                        <a [routerLink]="['/profile/notifications']" class="button-link"
+                          [innerHTML]="'topbar.notifications.readAll' | translate : {size: totalSizeNotification}">
+                        </a>
+                      </div>
+                      <div class="col-8" *ngIf="listNotifications?.length === 0">
+                        <app-empty [visible]="true" [title]="'topbar.notifications.empty' | translate">
+                        </app-empty>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </p-overlayPanel>
+              <ng-template #loadingNotification>
+                <div class="col-12 px-0 py-1" *ngFor="let i of [1,2,3]">
+                  <app-notification-card [loading]="true"></app-notification-card>
+                </div>
+              </ng-template>
             </div>
           </div>
           <p-menu #menu [popup]="true" [model]="menuUser"></p-menu>
@@ -115,8 +146,7 @@
       <div class="flex flex-wrap mb-2 justify-content-center align-items-center">
         <div class="col-12 text-center">
           <p class="text-4xl text-600 font-semibold">{{'topbar.wellcome' | translate}}</p>
-          <img src="/assets/images/logo/logo-purple.png" class="h-4rem"
-            alt="App Logo">
+          <img src="/assets/images/logo/logo-purple.png" class="h-4rem" alt="App Logo">
           <p class="text-600 text-sm">{{'topbar.description' | translate}}</p>
         </div>
         <div class="col-12 text-center px-0">

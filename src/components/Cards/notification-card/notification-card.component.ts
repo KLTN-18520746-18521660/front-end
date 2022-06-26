@@ -15,6 +15,7 @@ export interface NotificationInfo {
   content?: string;
   user?: User;
   icon?: string;
+  badgeClass?: string;
   read?: boolean;
   command?: Function;
 }
@@ -32,7 +33,10 @@ export class NotificationCardComponent implements OnInit {
 
   @Input() loading: boolean = false;
 
+  @Input() showButtonMenu: boolean = true;
+
   subscription: Subscription;
+  deleteSubscription: Subscription;
 
   info: NotificationInfo;
 
@@ -67,7 +71,25 @@ export class NotificationCardComponent implements OnInit {
 
   handleDelete() {
     this.loading = true;
-    this.delete.emit(this.notification);
+    if (this.deleteSubscription) {
+      this.deleteSubscription.unsubscribe();
+    }
+
+    this.deleteSubscription = this.postService.deleteNotification(this.notification.id).subscribe(
+      () => {
+        this.messageService.add({
+          key: 'notification',
+          severity: 'success',
+          summary: '',
+          detail: this.translate.instant('notification.deleteSuccess')
+        });
+        this.loading = false;
+        this.delete.emit(this.notification);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   mapNotification(notification: Notification): NotificationInfo {
@@ -87,6 +109,10 @@ export class NotificationCardComponent implements OnInit {
               () => {
                 this.notification.read = false;
                 this.info = this.mapNotification(this.notification);
+                this.userService.userStatistic.next({
+                  ...this.userService.user,
+                  unread_notifications: this.userService.user.unread_notifications + 1
+                });
                 this.messageService.add({
                   key: 'appToast',
                   severity: 'success',
@@ -117,6 +143,10 @@ export class NotificationCardComponent implements OnInit {
               (res) => {
                 this.notification.read = true;
                 this.info = this.mapNotification(this.notification);
+                this.userService.userStatistic.next({
+                  ...this.userService.user,
+                  unread_notifications: this.userService.user.unread_notifications - 1
+                });
                 this.messageService.add({
                   key: 'appToast',
                   severity: 'success',
@@ -154,6 +184,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-thumbs-up',
+        badgeClass: 'bg-blue-500 text-50',
         user: new User({
           ...notification.user_action,
         }),
@@ -172,6 +203,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-thumbs-up',
+        badgeClass: 'bg-orange-400 text-50',
         user: notification.content.post_owner,
         command: () => {
           this.router.navigate(['/post', notification.content.post_detail.slug]);
@@ -187,6 +219,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-check',
+        badgeClass: 'bg-green-500 text-50',
         user: new User({
           ...notification.user_action,
         }),
@@ -204,6 +237,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-ban',
+        badgeClass: 'bg-red-500 text-50',
         user: notification.content.post_owner,
         command: () => {
           this.router.navigate(['/post', notification.content.post_detail.slug]);
@@ -219,6 +253,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-comments',
+        badgeClass: 'bg-blue-500 text-50',
         user: notification.content.comment_owner,
         command: () => {
           this.router.navigate(
@@ -241,6 +276,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-comments',
+        badgeClass: 'bg-bluegray-500 text-50',
         user: notification.content.comment_owner,
         command: () => {
           this.router.navigate(
@@ -263,6 +299,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-comments',
+        badgeClass: 'bg-blue-500 text-50',
         user: notification.content.comment_owner,
         command: () => {
           this.router.navigate(
@@ -285,6 +322,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-user-plus',
+        badgeClass: 'bg-indigo-500 text-50',
         user: new User({
           ...notification.user_action,
         }),
@@ -298,6 +336,7 @@ export class NotificationCardComponent implements OnInit {
           'notification.type.default',
         ),
         icon: 'pi pi-bell',
+        badgeClass: 'bg-indigo-500 text-50',
         user: new User({
           ...notification.user_action,
         }),
@@ -337,6 +376,9 @@ export class NotificationCardComponent implements OnInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.deleteSubscription) {
+      this.deleteSubscription.unsubscribe();
     }
   }
 

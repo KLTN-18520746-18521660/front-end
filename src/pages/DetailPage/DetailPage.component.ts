@@ -438,7 +438,7 @@ export class DetailPageComponent implements OnInit {
         categories.map((item) => {
           this.breadcrumbItems.push({
             label: item.display_name,
-            routerLink: `/category/${item.slug}`
+            routerLink: `/c/${item.slug}`
           });
         });
         this.breadcrumbItems.push({
