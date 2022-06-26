@@ -1,3 +1,4 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CommentInputComponent } from 'components/Input/comment-input/comment-input.component';
@@ -52,6 +53,7 @@ export class CommentCardComponent implements OnInit {
     private messageService: MessageService,
     private commentService: CommentService,
     private appUser: AppUserComponent,
+    private clipboard: Clipboard,
   ) { }
 
   ngOnInit() {
@@ -90,6 +92,15 @@ export class CommentCardComponent implements OnInit {
           this.actionWithComment('dislike');
         }
       },
+      {
+        id: 'copy',
+        label: this.translate.instant('postDetail.commentMenu.copy'),
+        disabled: false,
+        icon: 'pi pi-copy',
+        command: () => {
+          this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.commentService.current_Slug + '?comment_id=' + this.comment.id));
+        }
+      },
       ...(this.comment.reply_comments ? [{
         id: 'reply',
         label: this.translate.instant('postDetail.commentMenu.reply'),
@@ -125,7 +136,7 @@ export class CommentCardComponent implements OnInit {
         command: () => {
           this.onClickReport();
         }
-      }] : [])
+      }] : []),
     ];
 
     this.isLoadingComment = false;

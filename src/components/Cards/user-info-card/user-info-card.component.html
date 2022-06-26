@@ -1,7 +1,7 @@
 <ng-template [ngIf]="!onlyShowButton" [ngIfElse]="buttonFollow">
   <div class="p-2 card user-info-card mb-1">
     <div class="card-container flex flex-wrap" *ngIf="user">
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap w-full">
         <div class="col-12 align-items-center">
           <a [routerLink]="['/user', user.user_name]" class="flex align-items-center">
             <app-avatar [height]="'4rem'" [user]="user"></app-avatar>
@@ -52,7 +52,7 @@
         <div class="col-12 md:col-12" *ngIf="showButtonFollow">
           <button pRipple pButton type="button"
             label="{{(user?.mapAction?.follow ? 'common.following' : 'common.follow') | translate}}"
-            [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'w-full'"
+            [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'p-button-primary w-full'"
             pTooltip="{{(user?.mapAction?.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
             tooltipPosition="top" [icon]="user?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
             (click)="onClickFollow()">
@@ -66,7 +66,7 @@
 <ng-template #buttonFollow>
   <button pRipple pButton type="button"
     label="{{(user?.mapAction?.follow ? 'common.following' : 'common.follow') | translate}}"
-    [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'w-full'"
+    [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'p-button-primary w-full'"
     pTooltip="{{(user?.mapAction?.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
     tooltipPosition="top" [icon]="user?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
     (click)="onClickFollow()">

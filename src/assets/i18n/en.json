@@ -981,7 +981,8 @@
       "reply": "Reply",
       "edit": "Edit",
       "delete": "Delete",
-      "report": "Report"
+      "report": "Report",
+      "copy":"Copy link"
     },
     "sort": "Sort by ",
     "commentFilter": {

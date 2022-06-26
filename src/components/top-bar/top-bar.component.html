@@ -2,8 +2,8 @@
   <div class="container">
     <div class="flex justify-content-between align-items-center top-bar h-5rem">
       <div class="flex align-items-center menu-left">
-        <p-button type="text" class="flex p-button-secondary lg:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
-        </p-button>
+        <button pRipple pButton type="text" class="flex p-button-text lg:hidden" (click)="onOpenSidebar()" icon="pi pi-bars">
+        </button>
         <div class="logo">
           <a [routerLink]="['/']">
             <img src="/assets/images/logo/logo-purple.png" style="height: 3.5rem;" class="hidden lg:block"
