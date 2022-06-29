@@ -95,10 +95,10 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
       modules: {
         ...modules,
         imageResize: {
-          modules: ['Resize', 'DisplaySize']
+          modules: ['Resize', 'DisplaySize', 'Toolbar']
         },
         videoResize: {
-          modules: ['Resize', 'DisplaySize']
+          modules: ['Resize', 'DisplaySize', 'Toolbar']
         },
         imageDropAndPaste: {
           handler: this.imageHandler.bind(this),
@@ -199,6 +199,14 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
   }
 
   uploadImage(file: File) {
+    this.messageService.add({
+      key: 'editor',
+      severity: 'info',
+      summary: '',
+      detail: this.translate.instant('message.uploading'),
+      life: 3000
+    });
+
     this.uploadSubscription = this.postService.upLoadImage('post', file).subscribe(
       (res) => {
         // Insert image into the editor.
@@ -218,6 +226,9 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
               insert: {
                 image: url
               }
+            },
+            {
+              insert: "\n"
             }
           ]
         }
@@ -230,6 +241,15 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
         this.quill.setSelection({
           index: range.index + 1,
           length: range.length
+        });
+
+        // Show a success message.
+        this.messageService.add({
+          key: 'editor',
+          severity: 'success',
+          summary: '',
+          detail: this.translate.instant('message.uploadsucess'),
+          life: 4000
         });
       },
       (err) => {

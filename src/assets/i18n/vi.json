@@ -230,6 +230,7 @@
     "login": "Đăng nhập thành công",
     "register": "Đăng ký thành công",
     "confirm": "Xác nhận thành công",
+    "uploading": "Đang tải lên ...",
     "uploadsucess": "Tải lên thành công",
     "uploadfail": "Tải lên thất bại",
     "needlogin": "Bạn cần đăng nhập để tiếp tục",

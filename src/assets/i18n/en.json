@@ -230,6 +230,7 @@
     "login": "Login successfully",
     "register": "Register successfully",
     "confirm": "Confirm successfully",
+    "uploading": "Uploading...",
     "uploadsucess": "Upload successfully",
     "uploadfail": "Upload failed",
     "needlogin": "You need to login to continue",
