@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
@@ -19,7 +20,6 @@ import { DividerModule } from 'primeng/divider';
 import { DockModule } from 'primeng/dock';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { EditorModule } from 'primeng/editor';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
@@ -27,13 +27,12 @@ import { ImageModule } from 'primeng/image';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
-import { MenubarModule } from 'primeng/menubar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import { NgModule } from '@angular/core';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelModule } from 'primeng/panel';
@@ -86,7 +85,6 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     DockModule,
     DropdownModule,
     DynamicDialogModule,
-    EditorModule,
     FieldsetModule,
     FileUploadModule,
     GalleriaModule,

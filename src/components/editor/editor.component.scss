@@ -1,0 +1,20 @@
+.p-editor-container .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options .ql-picker-item {
+  width: auto;
+  height: auto;
+}
+
+.p-editor-content {
+  height: 70vh !important;
+  padding: 0 !important;
+  font-size: calc(1rem + 1px) !important;
+  line-height: 2 !important;
+
+  p img {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  iframe {
+    pointer-events: none;
+  }
+}

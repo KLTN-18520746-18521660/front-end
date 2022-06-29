@@ -14,7 +14,7 @@ export interface Tag {
   };
 
   posts?: number;
-  likes?: number;
+  follows?: number;
   views?: number;
   is_new?: boolean;
 }

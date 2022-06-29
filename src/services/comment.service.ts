@@ -75,14 +75,14 @@ export class CommentService {
     return result;
   }
 
-  sortComments(sortField = 'created_timestamp', sortOrder = 'asc', list: any[]) {
-    list = _.orderBy(list, [sortField], [sortOrder]);
-    list.map((item) => {
-      if (item.children && item.children.length > 0) {
-        this.sortComments(sortField, sortOrder, item.children);
-      }
-    });
-    // this.listNested = list;
-    return list;
-  }
+  // sortComments(sortField = 'created_timestamp', sortOrder = 'asc', list: any[]) {
+  //   list = _.orderBy(list, [sortField], [sortOrder]);
+  //   list.map((item) => {
+  //     if (item.children && item.children.length > 0) {
+  //       this.sortComments(sortField, sortOrder, item.children);
+  //     }
+  //   });
+  //   // this.listNested = list;
+  //   return list;
+  // }
 }

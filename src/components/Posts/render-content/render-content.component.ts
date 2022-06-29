@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { convertLinkRedirecting, convertMarkdown } from 'utils/commonFunction';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export interface ImageGallery {
   previewImageSrc?: string;
@@ -15,7 +16,7 @@ export interface ImageGallery {
 })
 export class RenderContentComponent implements OnInit {
 
-  @Input() content: string;
+  @Input() content: string | SafeHtml;
   /**
    * @value 'HTML' | 'Markdown'
    */
@@ -31,20 +32,23 @@ export class RenderContentComponent implements OnInit {
 
   constructor(
     private elementRef: ElementRef,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
 
     if (this.type.toUpperCase() === 'MARKDOWN') {
-      this.markdownCompile = convertMarkdown(this.content);
+      this.markdownCompile = convertMarkdown(this.content as string);
       this.markdownCompile = convertLinkRedirecting(this.markdownCompile);
     }
     else {
-      this.content = convertLinkRedirecting(this.content);
+      this.content = convertLinkRedirecting(this.content as string);
+      this.content = this.sanitizer.bypassSecurityTrustHtml(this.content as string);
     }
   }
 
   onHideImage() {
+    this.viewImage = false;
     this.onClickImage.emit(false);
   }
 

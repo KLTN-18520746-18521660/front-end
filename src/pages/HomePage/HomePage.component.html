@@ -72,6 +72,13 @@
                   <app-post-card [post]="item"></app-post-card>
                 </div>
               </ng-template>
+              <ng-template [ngIf]="listPosts.length === 0">
+                <div class="col-12 flex justify-content-center">
+                  <div class="col-6">
+                    <app-empty></app-empty>
+                  </div>
+                </div>
+              </ng-template>
               <ng-template [ngIf]="isLoadingMorePosts">
                 <div class="col-12">
                   <app-loading-spinner></app-loading-spinner>

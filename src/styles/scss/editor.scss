@@ -1,6 +1,7 @@
 :host ::ng-deep #post-content {
   padding: 0;
   font-size: calc(1rem + 1px);
+  line-height: 1.6;
 
   .content-HTML {
     blockquote {
@@ -10,10 +11,14 @@
       padding-left: 16px;
     }
 
+    p {
+      line-height: 2;
+    }
+
     code,
     pre {
       background-color: #f0f0f0;
-      color: #23241f;
+      color: #002b36;
       border-radius: 4px;
       line-height: 1.6;
     }
@@ -31,7 +36,7 @@
     }
 
     pre.ql-syntax {
-      background-color: #23241f;
+      background-color: #002b36;
       color: #f8f8f2;
       overflow: visible;
     }

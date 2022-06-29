@@ -1,0 +1,67 @@
+<div [ngClass]="'p-editor-container'" [class]="styleClass">
+  <div class="p-editor-toolbar" *ngIf="toolbar || headerTemplate">
+    <ng-content select="p-header"></ng-content>
+    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+  </div>
+  <div class="p-editor-toolbar" *ngIf="!toolbar && !headerTemplate">
+    <span class="ql-formats">
+      <select class="ql-header">
+        <option value="1">Heading 1</option>
+        <option value="2">Heading 2</option>
+        <option value="3">Heading 3</option>
+        <option value="4">Heading 4</option>
+        <option value="5">Heading 5</option>
+        <option value="6">Heading 6</option>
+        <option selected>Normal</option>
+      </select>
+      <select class="ql-font">
+        <option selected>Sans Serif</option>
+        <option value="serif">Serif</option>
+        <option value="monospace">Monospace</option>
+      </select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-bold" aria-label="Bold" type="button"></button>
+      <button class="ql-italic" aria-label="Italic" type="button"></button>
+      <button class="ql-underline" aria-label="Underline" type="button"></button>
+      <button class="ql-strike" aria-label="Strike" type="button"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-blockquote" aria-label="Blockquote" type="button"></button>
+      <button class="ql-code-block" aria-label="Insert Code Block" type="button"></button>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-color"></select>
+      <select class="ql-background"></select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-script" value="sub" aria-label="Subscript" type="button"></button>
+      <button class="ql-script" value="super" aria-label="Superscript" type="button"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-indent" value="-1" aria-label="Outdent" type="button"></button>
+      <button class="ql-indent" value="+1" aria-label="Indent" type="button"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-list" value="ordered" aria-label="Ordered List" type="button"></button>
+      <button class="ql-list" value="bullet" aria-label="Unordered List" type="button"></button>
+      <select class="ql-align">
+        <option selected></option>
+        <option value="center">center</option>
+        <option value="right">right</option>
+        <option value="justify">justify</option>
+      </select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-link" aria-label="Insert Link" type="button"></button>
+      <button class="ql-image" aria-label="Insert Image" type="button"></button>
+      <button class="ql-video" aria-label="Insert Video" type="button"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-clean" aria-label="Remove Styles" type="button"></button>
+    </span>
+  </div>
+  <div class="p-editor-content" [ngStyle]="style"></div>
+</div>
+
+<p-toast [key]="'editor'" [preventOpenDuplicates]="true"></p-toast>

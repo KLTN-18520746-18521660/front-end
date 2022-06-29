@@ -45,7 +45,7 @@ export const CONTACT_INFO: LinkItem[] = [
     iconColor: '#3b5998',
     color: '',
     style: 'p-button-rounded',
-    url: 'https://www.facebook.com/tnvinh00',
+    url: 'https://www.facebook.com',
   },
   {
     id: 'youtube',
@@ -54,7 +54,7 @@ export const CONTACT_INFO: LinkItem[] = [
     iconColor: '#ff0000',
     color: 'p-button-danger',
     style: 'p-button-rounded',
-    url: '#',
+    url: 'https://www.youtube.com',
   },
   {
     id: 'github',

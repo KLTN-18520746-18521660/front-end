@@ -169,7 +169,7 @@ export const randomArray = (arr: any[], length: number, getOne: boolean = false)
     return _.sampleSize(arr, length);
 }
 
-export const convertToSlug = (str) => {
+export const convertToSlug = (str: string) => {
   str = str.normalize('NFD')
     .replace(/\s\s+/g, ' ')	// Replaces multiple hyphens by one hyphen
     .replace(/[\u0300-\u036f]/g, '')

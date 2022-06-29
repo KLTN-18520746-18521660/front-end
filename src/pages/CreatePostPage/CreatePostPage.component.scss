@@ -64,24 +64,12 @@
     border-top-left-radius: 6px !important;
   }
 
-  .ql-container {
-    font-family: inherit !important;
-    font-size: 1rem !important;
-    line-height: 1.5rem !important;
-  }
-
   .p-dialog .p-dialog-footer {
     text-align: right !important;
   }
 }
 
 :host ::ng-deep {
-  .p-editor-container {
-    .p-editor-content {
-      height: 70vh !important;
-    }
-  }
-
   .p-steps {
     .p-steps-item {
       .p-menuitem-link {

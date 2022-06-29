@@ -126,9 +126,9 @@
           <!-- <i class="ml-2 pi pi-pencil"></i> -->
         </ng-template>
         <ng-template [ngIf]="selectedEditorType == 'HTML'" [ngIfElse]="markdownEditor">
-          <p-editor [(ngModel)]="content" (ngModelChange)="onChangeContent($event)"
+          <app-editor [(ngModel)]="content" (ngModelChange)="onChangeContent($event)"
             [placeholder]="'createPost.placeholder' | translate" [style]="{'min-height':'420px'}">
-          </p-editor>
+          </app-editor>
         </ng-template>
         <ng-template #markdownEditor>
           <textarea [(ngModel)]="contentMd" class="w-full" classs="markdown-editor"

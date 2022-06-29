@@ -15,6 +15,6 @@ export default class Category {
   };
 
   posts?: number;
-  likes?: number;
+  follows?: number;
   views?: number;
 }
