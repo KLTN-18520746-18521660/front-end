@@ -86,6 +86,7 @@ export class ViewImageComponent implements OnChanges {
   closePreview(): void {
     this.rotate = 0;
     this.scale = this.zoomSettings.default;
+    this.previewClick = false;
     this.onHide.emit();
   }
 
