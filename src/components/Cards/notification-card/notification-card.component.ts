@@ -111,7 +111,7 @@ export class NotificationCardComponent implements OnInit {
                 this.info = this.mapNotification(this.notification);
                 this.userService.userStatistic.next({
                   ...this.userService.user,
-                  unread_notifications: this.userService.user.unread_notifications + 1
+                  unread_notifications: this.userService.user?.unread_notifications + 1 || 0
                 });
                 this.messageService.add({
                   key: 'appToast',
@@ -145,7 +145,7 @@ export class NotificationCardComponent implements OnInit {
                 this.info = this.mapNotification(this.notification);
                 this.userService.userStatistic.next({
                   ...this.userService.user,
-                  unread_notifications: this.userService.user.unread_notifications - 1
+                  unread_notifications: this.userService.user?.unread_notifications - 1 || 0
                 });
                 this.messageService.add({
                   key: 'appToast',
@@ -359,7 +359,7 @@ export class NotificationCardComponent implements OnInit {
         () => {
           this.userService.userStatistic.next({
             ...this.userService.user,
-            unread_notifications: this.userService.user.unread_notifications - 1
+            unread_notifications: this.userService.user?.unread_notifications - 1 || 0
           });
           this.notification.read = true;
           this.info = this.mapNotification(this.notification);

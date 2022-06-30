@@ -61,7 +61,7 @@
                   <ng-template [ngIf]="!isLoadingNotification" [ngIfElse]="loadingNotification">
                     <div class="flex flex-wrap justify-content-center">
                       <div class="col-12"
-                        [innerHTML]="'topbar.notifications.description' | translate : {size: user.unread_notifications}">
+                        [innerHTML]="'topbar.notifications.description' | translate : {size: user?.unread_notifications}">
                       </div>
                       <div class="col-12 px-0 py-1" *ngFor="let item of listNotifications">
                         <app-notification-card (delete)="handleDeleteNotification($event)" [notification]="item"

@@ -199,7 +199,7 @@ export class TopBarComponent implements OnInit {
     this.getListNotificationSubscription = this.postService.getNotification(params).subscribe(
       (res) => {
         this.listNotifications = res.data.notifications;
-        this.user.unread_notifications = res.data?.unread_notifications || this.user.unread_notifications;
+        this.user.unread_notifications = res.data?.unread_notifications || this.user?.unread_notifications;
         this.totalSizeNotification = res.data.total_size;
         this.isLoadingNotification = false;
       },

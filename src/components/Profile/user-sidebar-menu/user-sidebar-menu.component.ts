@@ -148,10 +148,10 @@ export class UserSidebarMenuComponent implements OnInit {
   }
 
   updateUserStatistic(user: User) {
-    this.menu.find(item => item.id === 'notifications').items[0].badge = `${user.unread_notifications}`;
-    this.menu.find(item => item.id === 'post').items[0].badge = `${user.posts}`;
-    this.menu.find(item => item.id === 'post').items[2].badge = `${user.following}`;
-    this.menu.find(item => item.id === 'post').items[3].badge = `${user.followers}`;
+    this.menu.find(item => item.id === 'notifications').items[0].badge = `${user?.unread_notifications}`;
+    this.menu.find(item => item.id === 'post').items[0].badge = `${user?.posts}`;
+    this.menu.find(item => item.id === 'post').items[2].badge = `${user?.following}`;
+    this.menu.find(item => item.id === 'post').items[3].badge = `${user?.followers}`;
   }
 
   onClickMenu(item) {

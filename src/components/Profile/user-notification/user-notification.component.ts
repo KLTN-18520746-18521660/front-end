@@ -55,11 +55,11 @@ export class UserNotificationComponent implements OnInit {
   ngOnInit() {
     this.viewOnlyUnRead = this.activatedRoute.snapshot.queryParams?.view === 'read';
 
-    this.sizeUnread = this.userService.user.unread_notifications;
+    this.sizeUnread = this.userService.user?.unread_notifications || 0;
 
     this.userStatisticSubscription = this.userService.userStatistic$.subscribe(
       (user) => {
-        this.sizeUnread = user.unread_notifications;
+        this.sizeUnread = user?.unread_notifications || 0;
         if (this.sizeUnread > 0) {
           this.title.setTitle(`(${this.sizeUnread}) ${this.translate.instant('notification.title')}`);
         }

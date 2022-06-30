@@ -232,6 +232,7 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
             }
           ]
         }
+        console.log(this.quill.insertEmbed(range.index, 'image', url));
         this.quill.updateContents(delta, 'user');
 
         // Focus on editor.
