@@ -348,14 +348,16 @@ export class CreatePostPageComponent implements OnInit {
 
     this.getTagSubscription = this.postsService.getListTags(params).subscribe((res) => {
       if (res.data?.tags?.length === 0) {
-        this.listFilterTags = [
-          {
-            id: null,
-            tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
-            name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
-            is_new: true
-          }
-        ];
+        if (event.query) {
+          this.listFilterTags = [
+            {
+              id: null,
+              tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+              name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+              is_new: true
+            }
+          ];
+        }
       }
       else {
         this.listFilterTags = res?.data.tags;
@@ -368,12 +370,14 @@ export class CreatePostPageComponent implements OnInit {
         });
 
         if (!check) {
-          this.listFilterTags.unshift({
-            id: null,
-            tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
-            name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
-            is_new: true
-          });
+          if (event.query) {
+            this.listFilterTags.unshift({
+              id: null,
+              tag: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+              name: event.query.toLowerCase().trim().replace(/\s/g, '-'),
+              is_new: true
+            });
+          }
         }
       }
     });

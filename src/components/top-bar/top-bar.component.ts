@@ -30,7 +30,6 @@ export class TopBarComponent implements OnInit {
 
   category: Category[] = categoriesMockData;
 
-  items: MenuItem[];
   ref: DynamicDialogRef;
   searchSubscription: Subscription;
 
@@ -89,18 +88,27 @@ export class TopBarComponent implements OnInit {
         this.onHideNotification(null);
         this.activeLink = this.getActiveLink(e.url);
       });
-    this.items = TopBarMenuItem;
 
     this.user = this.userService.user;
     this.session_id = this.userService.session_id;
     this.isLoggedin = this.userService.isAuthenticated;
-
+    this.getMenu();
+    
     this.subscription = this.userService.authUpdate$.subscribe(res => {
       this.user = res.user;
       this.session_id = res.session_id;
       this.isLoggedin = res.isAuthenticated;
+      this.getMenu();
     });
 
+    this.textTranslation = this.translate.instant('dialog.logout');
+
+    this.userStatisticSubscription = this.userService.userStatistic$.subscribe(user => {
+      this.user = { ...this.user, ...user };
+    })
+  }
+
+  getMenu() {
     this.menuUser = [
       // {
       //   id: 'dashboard',
@@ -142,14 +150,6 @@ export class TopBarComponent implements OnInit {
         }
       }
     ];
-
-    this.translate.get('dialog.logout').subscribe((res) => {
-      this.textTranslation = res;
-    });
-
-    this.userStatisticSubscription = this.userService.userStatistic$.subscribe(user => {
-      this.user = { ...this.user, ...user };
-    })
   }
 
   @HostListener('window:scroll', ['$event']) // for window scroll events

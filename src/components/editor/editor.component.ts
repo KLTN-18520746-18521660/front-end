@@ -95,10 +95,10 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
       modules: {
         ...modules,
         imageResize: {
-          modules: ['Resize', 'DisplaySize', 'Toolbar']
+          modules: ['Resize', 'DisplaySize']
         },
         videoResize: {
-          modules: ['Resize', 'DisplaySize', 'Toolbar']
+          modules: ['Resize', 'DisplaySize']
         },
         imageDropAndPaste: {
           handler: this.imageHandler.bind(this),
@@ -214,25 +214,20 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
 
         // Get the current cursor position.
         const range = this.quill.getSelection();
+        console.log(range);
 
         // Insert the image at the current cursor position.
         // Delta is defined in the Quill API: https://quilljs.com/guides/designing-the-delta-format/
         let delta: any = {
           ops: [
-            {
-              retain: range.index,
-            },
+            ...(range.index !== 0 ? [{ retain: range.index }] : []),
             {
               insert: {
                 image: url
               }
-            },
-            {
-              insert: "\n"
             }
           ]
         }
-        console.log(this.quill.insertEmbed(range.index, 'image', url));
         this.quill.updateContents(delta, 'user');
 
         // Focus on editor.

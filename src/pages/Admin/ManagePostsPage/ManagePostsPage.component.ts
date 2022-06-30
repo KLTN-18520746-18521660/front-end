@@ -67,7 +67,7 @@ export class ManagePostsPageComponent implements OnInit {
 
   currentData: TableData;
 
-  rowsPerPageOptions = [10, 20, 30, 50];
+  rowsPerPageOptions = [25, 50, 100, 200];
   RESULT_PAGE_SIZE = this.rowsPerPageOptions[0];
   selectedRow: number;
 

@@ -142,20 +142,45 @@ export class DetailPageComponent implements OnInit {
 
         this.breadcrumbItems = [];
 
+        this.comment_id = '';
+
+        this.post = null;
+
+        this.otherPosts = [];
+
+        this.relatedPosts = [];
+
+        this.alreadyLoadedComment = false;
+
         this.getPostDetail();
 
         this.getListRelatedPost();
 
         this.home = { icon: 'pi pi-home', routerLink: '/' };
-      }
-    );
-    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe(
-      (params) => {
-        if (params.comment_id) {
-          this.comment_id = params.comment_id;
-          this.alreadyLoadedComment = true;
-          this.getPostWithComment();
-        }
+
+        this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe(
+          (params) => {
+            this.alreadyLoadedComment = params.comment_id ? true : false;
+            if (params.comment_id) {
+              this.comment_id = params.comment_id;
+              this.getPostWithComment();
+            }
+          }
+        );
+
+        //get fragment from url
+        this.activatedRoute.fragment.subscribe(
+          (res) => {
+            if (res) {
+              setTimeout(() => {
+                const element = document.getElementById(res);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }, 500);
+            }
+          }
+        );
       }
     );
   }
@@ -578,6 +603,7 @@ export class DetailPageComponent implements OnInit {
         color: 'p-button-secondary',
         style: 'p-button-rounded' + (!post.mapAction.comment ? ' p-button-outlined' : ''),
         command: () => {
+          this.router.navigate([], { fragment: "comments" });
           this.commentBlock.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }

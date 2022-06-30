@@ -18,3 +18,10 @@
     pointer-events: none;
   }
 }
+
+:host ::ng-deep {
+  .ql-tooltip.ql-editing {
+    left:auto !important;
+    right: 0 !important;
+  }
+}
