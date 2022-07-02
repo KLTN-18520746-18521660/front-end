@@ -9,11 +9,12 @@
 </div>
 <div class="grid">
   <div class="col-6 md:col-4 lg:col-3 xl:col-3 p-1 md:p-2 lg:p-1 xl:p-2" *ngFor="let item of carditems">
-    <div class="card card-user-value mb-0">
+    <div class="card card-user-value mb-0 relative">
+      <a *ngIf="item.link" routerLink="{{item.link}}" class="absolute top-0 left-0 w-full h-full"></a>
       <div class="flex justify-content-between mb-3">
         <div>
           <span class="block text-700 font-medium mb-3">{{item.label}}</span>
-          <div class="text-900 font-medium text-xl">+{{item.number}}</div>
+          <div class="text-900 font-medium text-2xl">+{{item.number}}</div>
         </div>
         <div class="flex align-items-center justify-content-center {{item.background}} border-round"
           style="width: 2.5rem; height: 2.5rem">

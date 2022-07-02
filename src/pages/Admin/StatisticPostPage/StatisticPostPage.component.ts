@@ -1,4 +1,5 @@
-import { minusDay, getDiffDay, formatDate, getWeekOfDay } from 'utils/commonFunction';
+import { addDay } from 'utils/commonFunction';
+import { minusDay, getDiffDay, formatDate, getWeekOfDay, getFirstDayOfWeek } from 'utils/commonFunction';
 import { ApiParams } from 'models/api.model';
 import { StatisticService } from 'services/admin/statistic.service';
 import { Subscription } from 'rxjs';
@@ -140,7 +141,9 @@ export class StatisticPostPageComponent implements OnInit {
               dateKey = `M${date.getMonth() + 1}/${date.getFullYear()}`;
               break;
             case 'week':
-              dateKey = `W${getWeekOfDay(date)}/${date.getFullYear()}`;
+              // dateKey = `W${getWeekOfDay(date)}/${date.getFullYear()}`;
+              const dateWeek = getFirstDayOfWeek(getWeekOfDay(date), date.getFullYear());
+              dateKey = `${formatDate(dateWeek, 'D/M')}-${formatDate(addDay(6, dateWeek), 'D/M/YYYY')}`;
               break;
             case 'year':
               dateKey = `${date.getFullYear()}`;
@@ -151,8 +154,8 @@ export class StatisticPostPageComponent implements OnInit {
 
           if (!dataChart[dateKey]) {
             dataChart[dateKey] = {
-              created: 0,
-              approved: 0,
+              created: element.created,
+              approved: element.approved,
             };
           }
           else {
@@ -161,6 +164,15 @@ export class StatisticPostPageComponent implements OnInit {
           }
         }
       }
+      // rename key dataChart for week view
+      // if (this.view === 'week') {
+      //   for (const key in dataChart) {
+      //     const split = key.substring(0, 1).split('/');
+      //     const dateWeek = getFirstDayOfWeek(+split[0], +split[1]);
+      //     const newKey = `${formatDate(dateWeek, 'DD/MM')}-${formatDate(addDay(6, dateWeek), 'DD/MM/YYYY')}`;
+      //     delete Object.assign(dataChart, { [newKey]: dataChart[key] })[key];
+      //   }
+      // }
     }
 
     let temp = {

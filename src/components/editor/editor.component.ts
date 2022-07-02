@@ -214,7 +214,6 @@ export class EditorComponent implements AfterViewInit, AfterContentInit, Control
 
         // Get the current cursor position.
         const range = this.quill.getSelection();
-        console.log(range);
 
         // Insert the image at the current cursor position.
         // Delta is defined in the Quill API: https://quilljs.com/guides/designing-the-delta-format/

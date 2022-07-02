@@ -15,7 +15,7 @@
             </p>
             <button pRipple pButton class="hidden md:flex"
               [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate" tooltipPosition="top"
-              pTooltip="(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
+              pTooltip="{{(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
               [loading]="isLoadingAction" [ngClass]="tag.mapAction.follow ? 'p-button-outlined' : ''"
               (click)="onClickFollow()">
             </button>
@@ -64,7 +64,7 @@
         </div>
         <div class="flex col-12 md:hidden">
           <button pRipple pButton class="w-full" [icon]="tag.mapAction.follow ? 'pi pi-check-circle' : ''"
-            ptooltip="(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate"
+            pTooltip="{{(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
             tooltipPosition="top" [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate"
             [loading]="isLoadingAction" [className]="tag.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
             (click)="onClickFollow()">

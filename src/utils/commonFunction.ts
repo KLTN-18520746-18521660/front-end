@@ -146,6 +146,19 @@ export const minusDay = (minusDay: number, day: Date = new Date) => {
   return date;
 }
 
+export const getFirstDayOfWeek = (week: number, year: number) => {
+  let date = new Date(year, 0, 1);
+  for (let i = 0; i < 7; i--) {
+    let dayOfWeek = dayjs(minusDay(i, date)).day();
+    if (dayOfWeek === 0) {
+      date = minusDay(i, date);
+      break;
+    }
+  }
+  date = addDay((week - 2) * 7 + 1, date);
+  return date;
+}
+
 export const formatDate = (date: Date, format: string = 'dd/MM/yyyy') => {
   return dayjs(date).format(format);
 }

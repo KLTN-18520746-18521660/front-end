@@ -176,7 +176,9 @@ export class TopBarComponent implements OnInit {
   }
 
   onHideNotification(event) {
-    this.overlayNofication.hide();
+    if (this.isShowNotification) {
+      this.overlayNofication.hide();
+    }
     this.isShowNotification = false;
     if (this.getListNotificationSubscription) {
       this.getListNotificationSubscription.unsubscribe();

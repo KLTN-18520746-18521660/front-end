@@ -298,7 +298,7 @@
     "register": "Đăng ký",
     "profile": "Hồ sơ",
     "search": "Tìm kiếm",
-    "searchTitle": "Tìm kiếm bài viết, thẻ, người dùng ...",
+    "searchTitle": "Tìm kiếm bài viết, từ khóa, người dùng ...",
     "home": "Trang chủ",
     "more": "Thêm",
     "createPost": "Tạo bài viết",
@@ -616,14 +616,14 @@
     "search": "Bắt đầu tìm kiếm tại đây ...",
     "recommend": {
       "foryou": "Dành cho bạn: ",
-      "tags": "Gợi ý thẻ: ",
+      "tags": "Gợi ý từ khóa: ",
       "posts": "Gợi ý bài viết:"
     },
     "popular": {
-      "tags": "Thẻ phổ biến: ",
+      "tags": "Từ khóa phổ biến: ",
       "posts": "Bài viết phổ biến:: ",
       "category": "Danh mục phổ biến: ",
-      "posts_by_tag": "Bài viết phổ biến theo thẻ: "
+      "posts_by_tag": "Bài viết phổ biến theo từ khóa: "
     },
     "trending": "Xu hướng",
     "connectus": "Kết nối với chúng tôi",
@@ -1028,10 +1028,10 @@
       "upload": "Tải ảnh lên",
       "cancel": "Hủy"
     },
-    "tag": "Thẻ",
+    "tag": "Từ khóa",
     "slug": "Đường dẫn: ",
     "timeRead": "Thời gian đọc (2-50 phút)",
-    "moreTag": "Thêm thẻ",
+    "moreTag": "Thêm từ khóa",
     "category": "Danh mục",
     "step": {
       "start": "Bắt đầu",
@@ -1047,11 +1047,11 @@
       "shortContentPlaceholder": "Nhập nội dung ngắn",
       "thumbnailPlaceholder": "Điền đường dẫn hình thu nhỏ",
       "thumbnailError": "Đường dẫn ảnh không hợp lệ",
-      "tagPlaceHolder": "Nhập thẻ",
-      "moreTagPlaceholder": "Nhập thêm thẻ",
+      "tagPlaceHolder": "Nhập từ khóa",
+      "moreTagPlaceholder": "Nhập thêm từ khóa",
       "categoryPlaceHolder": "Chọn danh mục",
       "titleHere": "Tiêu đề trống",
-      "chipHelp": "Thêm thẻ"
+      "chipHelp": "Thêm từ khóa"
     },
     "textTranslate": {
       "confirmation": "Xác nhận",
@@ -1084,10 +1084,10 @@
     "title": "Tiêu đề",
     "shortContent": "Nội dung ngắn",
     "thumnail": "Hình thu nhỏ",
-    "tag": "Thẻ",
+    "tag": "Từ khóa",
     "slug": "Đường dẫn: ",
     "timeRead": "Thời gian đọc (2-50 phút)",
-    "moreTag": "Thêm thẻ",
+    "moreTag": "Thêm từ khóa",
     "category": "Danh mục",
     "form": {
       "titlePlaceholder": "Nhập tiêu đề bài viết",
@@ -1095,11 +1095,11 @@
       "shortContentLength": "Nội dung ngắn phải từ 20-200 ký tự",
       "thumbnailPlaceholder": "Điền đường dẫn hình thu nhỏ",
       "thumbnailError": "Đường dẫn ảnh không hợp lệ",
-      "tagPlaceHolder": "Nhập thẻ",
-      "moreTagPlaceholder": "Nhập thêm thẻ",
+      "tagPlaceHolder": "Nhập từ khóa",
+      "moreTagPlaceholder": "Nhập thêm từ khóa",
       "categoryPlaceHolder": "Chọn danh mục",
       "titleHere": "Tiêu đề trống",
-      "chipHelp": "Thêm thẻ"
+      "chipHelp": "Thêm từ khóa"
     },
     "dialog": {
       "title": "Xác nhận",
@@ -1115,7 +1115,7 @@
       "valid": {
         "title": "Tiêu đề phải dài từ 20 đến 200 ký tự",
         "thumbnail": "Hình thu nhỏ không được để trống",
-        "tag": "Thẻ không được để trống",
+        "tag": "Từ khóa không được để trống",
         "category": "Bạn phải chọn ít nhất một danh mục",
         "timeRead": "Thời gian đọc phải từ 2 đến 50 phút",
         "content": "Nội dung không được để trống",
@@ -1208,7 +1208,7 @@
     "searchAll": {
       "post": "Bài viết",
       "user": "Nguời dùng",
-      "tag": "Thẻ",
+      "tag": "Từ khóa",
       "category": "Danh mục"
     },
     "result": "Kết quả tìm kiếm cho <b>\"{{query}}\"</b>",
@@ -1221,7 +1221,7 @@
       "likesAsc": "Ít yêu thích nhất"
     },
     "form": {
-      "placeholder": "Tìm kiếm bài viết, người dùng, thẻ..."
+      "placeholder": "Tìm kiếm bài viết, người dùng, từ khóa..."
     }
   },
   "primeng": {
