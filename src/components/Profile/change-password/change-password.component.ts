@@ -121,6 +121,7 @@ export class ChangePasswordComponent implements OnInit {
           summary: '',
           detail: this.translate.instant('message.update')
         }];
+        this.submitted = false;
       },
       (err) => {
         this.isLoading = false;

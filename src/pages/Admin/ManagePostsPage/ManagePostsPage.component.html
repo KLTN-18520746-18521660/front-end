@@ -10,6 +10,31 @@
         <div class="header-left col-12 inline-flex align-items-center px-0">
           <h2 class="m-0">Manage Posts</h2>
         </div>
+        <div class="filter-tag-category flex col-12 p-0 justify-content-between">
+          <p-autoComplete class="col-12 md:col-6 pl-0" [(ngModel)]="selectedCategories" [showEmptyMessage]="true"
+            [suggestions]="listCategories" [autoHighlight]="true" [delay]="500" [placeholder]="'Select category'"
+            [dropdown]="true" (ngModelChange)="onChangeCategory($event)" (completeMethod)="onFilterCategory($event)"
+            field="name" [unique]="true" [multiple]="true">
+            <ng-template let-item pTemplate="item">
+              <div class="flex justify-content-between" pTooltip="{{ item.display_name }}" tooltipPosition="top">
+                {{item.display_name}}
+              </div>
+            </ng-template>
+            <ng-template let-item pTemplate="selectedItem">
+              <i class="pi pi-hashtag mr-1"></i>{{item.display_name}}
+            </ng-template>
+          </p-autoComplete>
+          <p-autoComplete class="col-12 md:col-6 pl-0" [(ngModel)]="selectedTags" [showEmptyMessage]="true"
+            [suggestions]="listTags" [autoHighlight]="true" [delay]="500" [placeholder]="'Select tag'" [dropdown]="true"
+            (ngModelChange)="onChangeTag($event)" (completeMethod)="onFilterTag($event)" field="tag" [unique]="true"
+            [multiple]="true">
+            <ng-template let-item pTemplate="item">
+              <div class="flex" pTooltip="{{ item.display_name }}" tooltipPosition="top">
+                <i class="pi pi-hashtag mr-1"></i>{{item.tag}}
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
         <div class="flex align-items-center col-12 md:col-6 px-0">
           <span>Show</span>
           <p-dropdown class="ml-2" [options]="rowsPerPageOptions" (onChange)="onChangeRows($event)"
@@ -21,8 +46,8 @@
         <div class="flex justify-content-end col-12 md:col-4 px-0">
           <span class="p-input-icon-left w-full">
             <i class="pi pi-search pr-3"></i>
-            <input #globalText class=" w-full" pInputText type="text" (input)="dt.filterGlobal(globalText.value, 'contains')"
-              placeholder="Search here ..." />
+            <input #globalText class=" w-full" pInputText type="text"
+              (input)="dt.filterGlobal(globalText.value, 'contains')" placeholder="Search here ..." />
           </span>
         </div>
       </div>

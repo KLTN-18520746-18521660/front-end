@@ -28,4 +28,6 @@ export interface QueryParams {
   status?: string;
   sortBy?: string;
   orderBy?: string;
+  tag?: string;
+  category?: string;
 }

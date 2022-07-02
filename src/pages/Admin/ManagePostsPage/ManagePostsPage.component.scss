@@ -23,4 +23,14 @@
   .p-dialog-content {
     padding: 1rem 0 !important;
   }
+
+  .filter-tag-category {
+    .p-autocomplete {
+      width: 100%;
+    }
+
+    .p-autocomplete-multiple-container {
+      width: 100%;
+    }
+  }
 }

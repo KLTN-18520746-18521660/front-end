@@ -75,21 +75,21 @@
         <label class="ml-2 mr-6" for="Blocked">Blocked</label>
         <p-radioButton name="status" value="Activated" inputId="Activated" formControlName="status"></p-radioButton>
         <label class="ml-2 mr-6" for="Activated">Activated</label>
-      </ng-template>
 
-      <label class="block text-900 text-lg font-medium my-3">
-        Role of admin
-      </label>
-      <ng-template [ngIf]="!isLoadingRole" [ngIfElse]="loadingBlock">
-        <div class="field-checkbox" formArrayName="roles" *ngFor="let role of listRole; let i = index"
-          title="{{role.describe}}">
-          <ng-container [formGroupName]="i">
-            <p-checkbox formControlName="{{role.role_name}}" [binary]="true" inputId="{{role.role_name}}"></p-checkbox>
-            <label for="{{role.role_name}}">{{role.display_name}} ({{role.role_name}})</label>
-          </ng-container>
-        </div>
+        <label class="block text-900 text-lg font-medium my-3">
+          Role of admin
+        </label>
+        <ng-template [ngIf]="!isLoadingRole" [ngIfElse]="loadingBlock">
+          <div class="field-checkbox" formArrayName="roles" *ngFor="let role of listRole; let i = index"
+            title="{{role.describe}}">
+            <ng-container [formGroupName]="i">
+              <p-checkbox formControlName="{{role.role_name}}" [binary]="true" inputId="{{role.role_name}}">
+              </p-checkbox>
+              <label for="{{role.role_name}}">{{role.display_name}} ({{role.role_name}})</label>
+            </ng-container>
+          </div>
+        </ng-template>
       </ng-template>
-
     </ng-template>
 
     <div *ngIf="submitted && form.invalid" class="invalid-feedback">

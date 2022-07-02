@@ -1,3 +1,6 @@
+import Category from 'models/category.model';
+import { Tag } from 'models/tag.model';
+import { ManageCategoryTagService } from 'services/admin/manage-category-tag.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'lodash';
@@ -53,8 +56,6 @@ export class ManagePostsPageComponent implements OnInit {
   globalFilter: string;
   multiSortMeta: SortMeta[];
   rows: number;
-  sortField: string;
-  sortOrder: number;
   filters: {
     [key: string]: [
       {
@@ -79,6 +80,27 @@ export class ManagePostsPageComponent implements OnInit {
     { label: 'Deleted', value: 'Deleted' }
   ];
 
+  isLoadingCategory: boolean = false;
+  listCategories: Category[] = [];
+  selectedCategories: Category[] = [];
+  getCategorySubscription: Subscription;
+
+  isLoadingTag: boolean = false;
+  listTags: Tag[] = [];
+  selectedTags: Tag[] = [];
+  getTagSubscription: Subscription;
+
+  params: {
+    page?: number;
+    size?: number;
+    sortBy?: string;
+    orderBy?: string;
+    search?: string;
+    status?: any;
+    tag?: string;
+    category?: string;
+  };
+
   @ViewChild('pendingContent') pendingContent: ElementRef;
 
   viewPendingContent: boolean = true;
@@ -89,18 +111,19 @@ export class ManagePostsPageComponent implements OnInit {
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private manageCategoryTagService: ManageCategoryTagService
   ) { }
 
   ngOnInit() {
-    const params = this.activatedRoute.snapshot.queryParams;
-    this.selectedRow = params?.size || this.RESULT_PAGE_SIZE; 4
-    this.rows = params?.size || this.RESULT_PAGE_SIZE;
-    this.first = ((params.page - 1) >= 0 ? (params.page - 1) : 0) * this.rows;
-    this.multiSortMeta = convertToMultiSortMeta(params.sortBy, params.orderBy);
-    this.globalFilter = params.search || '';
-    this.filters = params?.status ? {
-      status: params?.status?.split(',').length > 0 ? params.status.split(',').map(item => {
+    this.params = this.activatedRoute.snapshot.queryParams;
+    this.selectedRow = this.params?.size || this.RESULT_PAGE_SIZE; 4
+    this.rows = this.params?.size || this.RESULT_PAGE_SIZE;
+    this.first = ((this.params.page - 1) >= 0 ? (this.params.page - 1) : 0) * this.rows;
+    this.multiSortMeta = convertToMultiSortMeta(this.params.sortBy, this.params.orderBy);
+    this.globalFilter = this.params.search || '';
+    this.filters = this.params?.status ? {
+      status: this.params?.status?.split(',').length > 0 ? this.params.status.split(',').map(item => {
         return {
           value: item,
           matchMode: 'contains',
@@ -108,8 +131,22 @@ export class ManagePostsPageComponent implements OnInit {
         }
       }) : [],
     } : {};
-    this.sortField = params.sortBy || '';
-    this.sortOrder = params.sortBy || 1;
+
+    this.selectedTags = this.params?.tag ? this.params.tag.split(',').map(item => {
+      return {
+        id: 0,
+        tag: item
+      }
+    }) : [];
+
+    this.selectedCategories = this.params?.category ? this.params.category.split(',').map(item => {
+      return {
+        id: 0,
+        display_name: item,
+        name: item
+      }
+    }) : [];
+
     this.isLoading = false;
   }
 
@@ -131,9 +168,9 @@ export class ManagePostsPageComponent implements OnInit {
 
         this.listPosts.map(item => {
           item.fromNow = {
-            created: convertDateTime(item.created_timestamp, 'en', true, false),
-            approved: convertDateTime(item.approved_timestamp, 'en', true, false),
-            updated: item.last_modified_timestamp ? convertDateTime(item.last_modified_timestamp, 'en', true, false) : '',
+            created: item.created_timestamp ? convertDateTime(item.created_timestamp, 'en', true, false) : null,
+            approved: item.approved_timestamp ? convertDateTime(item.approved_timestamp, 'en', true, false) : null,
+            updated: item.last_modified_timestamp ? convertDateTime(item.last_modified_timestamp, 'en', true, false) : null,
           }
         });
       },
@@ -195,6 +232,74 @@ export class ManagePostsPageComponent implements OnInit {
     );
   }
 
+  onFilterCategory(event) {
+    this.isLoadingCategory = true;
+    if (this.getCategorySubscription) {
+      this.getCategorySubscription.unsubscribe();
+    }
+
+    const params: ApiParams = {
+      start: 0,
+      size: 24,
+      search_term: event.query,
+    }
+
+    this.getCategorySubscription = this.manageCategoryTagService.getCategoryList(params).subscribe(
+      (res) => {
+        this.listCategories = res?.data.categories;
+        this.isLoadingCategory = false;
+      },
+      (err) => {
+        this.listCategories = [];
+        this.isLoadingCategory = false;
+        this.messageService.add({
+          key: 'manage-post',
+          severity: 'error',
+          summary: err.error,
+          detail: err.message
+        });
+      }
+    );
+  }
+
+  onChangeCategory(event) {
+    this.loadPosts(this.currentData);
+  }
+
+  onFilterTag(event) {
+    this.isLoadingTag = true;
+    if (this.getTagSubscription) {
+      this.getTagSubscription.unsubscribe();
+    }
+
+    const params: ApiParams = {
+      start: 0,
+      size: 24,
+      search_term: event.query,
+    }
+
+    this.getTagSubscription = this.manageCategoryTagService.getTagList(params).subscribe(
+      (res) => {
+        this.listTags = res.data.tags;
+        this.isLoadingTag = false;
+      },
+      (err) => {
+        this.listTags = [];
+        this.isLoadingTag = false;
+        this.messageService.add({
+          key: 'manage-post',
+          severity: 'error',
+          summary: err.error,
+          detail: err.message
+        });
+      }
+    );
+  }
+
+  onChangeTag(event) {
+    this.loadPosts(this.currentData);
+  }
+
   getUserInfo(user_name: string) {
     if (this.currentUser?.user_name === user_name) {
       return;
@@ -219,16 +324,20 @@ export class ManagePostsPageComponent implements OnInit {
     );
   }
 
-  loadPosts(event: TableData) {
+  loadPosts(event?: TableData) {
     this.isLoading = false;
-    console.log(event);
-    this.currentData = event;
-    this.router.navigate([], {
-      queryParams: {
-        ...this.getQuery(event)
-      }
-    });
-    this.getListPost(event);
+    if (event) {
+      this.currentData = event;
+      this.router.navigate([], {
+        queryParams: {
+          ...this.getQuery(event)
+        }
+      });
+      this.getListPost(event);
+    }
+    else {
+      this.getListPost();
+    }
   }
 
   onClickViewDetail(id: number) {
@@ -256,14 +365,7 @@ export class ManagePostsPageComponent implements OnInit {
         this.isLoading = true;
         this.managePostService.approvePostByPostId(id).subscribe(
           () => {
-            this.isLoading = false;
-            this.listPosts = this.listPosts.map(item => {
-              if (item.id === id) {
-                item.status = 'Approved';
-                item.approved_timestamp = new Date().toLocaleDateString();
-              }
-              return item;
-            });
+            this.loadPosts(this.currentData);
             this.displayDialog = false;
             this.messageService.add({
               key: 'manage-post',
@@ -271,6 +373,7 @@ export class ManagePostsPageComponent implements OnInit {
               summary: 'Approved',
               detail: 'Post approved successfully'
             });
+            this.isLoading = false;
           },
           (err) => {
             this.isLoading = false;
@@ -299,13 +402,7 @@ export class ManagePostsPageComponent implements OnInit {
         this.isLoading = true;
         this.managePostService.rejectPostByPostId(id, pending).subscribe(
           () => {
-            this.isLoading = false;
-            this.listPosts = this.listPosts.map(item => {
-              if (item.id === id) {
-                item.status = 'Rejected';
-              }
-              return item;
-            });
+            this.loadPosts(this.currentData);
             this.displayDialog = false;
             this.messageService.add({
               key: 'manage-post',
@@ -313,6 +410,7 @@ export class ManagePostsPageComponent implements OnInit {
               summary: 'Rejected',
               detail: 'Post rejected successfully'
             });
+            this.isLoading = false;
           },
           (err) => {
             this.isLoading = false;
@@ -373,6 +471,8 @@ export class ManagePostsPageComponent implements OnInit {
         status: data.filters?.status && data.filters?.status[0].value ? data.filters?.status.filter(item => !!item.value).map(item => item.value).join(',') : null,
         sort_by: data.multiSortMeta ? data.multiSortMeta.map(item => item.field).join(',') : null,
         order: data.multiSortMeta ? data.multiSortMeta.map(item => item.order === 1 ? 'desc' : 'asc').join(',') : null,
+        tags: this.selectedTags.length > 0 ? this.selectedTags.map(item => item.tag).join(',') : null,
+        categories: this.selectedCategories.length > 0 ? this.selectedCategories.map(item => item.name).join(',') : null,
       }
     }
     else {
@@ -383,6 +483,8 @@ export class ManagePostsPageComponent implements OnInit {
         status: this.filters?.status && this.filters?.status[0].value ? this.filters?.status.filter(item => !!item.value).map(item => item.value).join(',') : null,
         sort_by: this.multiSortMeta ? this.multiSortMeta.map(item => item.field).join(',') : null,
         order: this.multiSortMeta ? this.multiSortMeta.map(item => item.order === 1 ? 'desc' : 'asc').join(',') : null,
+        tags: this.selectedTags.length > 0 ? this.selectedTags.map(item => item.tag).join(',') : null,
+        categories: this.selectedCategories.length > 0 ? this.selectedCategories.map(item => item.name).join(',') : null,
       }
     }
     params = _.omitBy(params, _.isNull);
@@ -399,6 +501,8 @@ export class ManagePostsPageComponent implements OnInit {
         status: data.filters?.status && data.filters?.status[0].value ? data.filters?.status.filter(item => !!item.value).map(item => item.value).join(',') : null,
         sortBy: data.multiSortMeta ? data.multiSortMeta.map(item => item.field).join(',') : null,
         orderBy: data.multiSortMeta ? data.multiSortMeta.map(item => item.order === 1 ? 'desc' : 'asc').join(',') : null,
+        tag: this.selectedTags.length > 0 ? this.selectedTags.map(item => item.tag).join(',') : null,
+        category: this.selectedCategories.length > 0 ? this.selectedCategories.map(item => item.name).join(',') : null,
       }
     }
     else {
@@ -409,6 +513,8 @@ export class ManagePostsPageComponent implements OnInit {
         status: this.filters?.status && this.filters?.status[0].value ? this.filters?.status.filter(item => !!item.value).map(item => item.value).join(',') : null,
         sortBy: this.multiSortMeta ? this.multiSortMeta.map(item => item.field).join(',') : null,
         orderBy: this.multiSortMeta ? this.multiSortMeta.map(item => item.order === 1 ? 'desc' : 'asc').join(',') : null,
+        tag: this.selectedTags.length > 0 ? this.selectedTags.map(item => item.tag).join(',') : null,
+        category: this.selectedCategories.length > 0 ? this.selectedCategories.map(item => item.name).join(',') : null,
       }
     }
     if (query.page === 1) {
@@ -428,6 +534,12 @@ export class ManagePostsPageComponent implements OnInit {
 
     if (this.getDetailSubscription) {
       this.getDetailSubscription.unsubscribe();
+    }
+    if (this.getCategorySubscription) {
+      this.getCategorySubscription.unsubscribe();
+    }
+    if (this.getTagSubscription) {
+      this.getTagSubscription.unsubscribe();
     }
   }
 

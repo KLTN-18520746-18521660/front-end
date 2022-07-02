@@ -58,7 +58,7 @@ export class ForgotPasswordPageComponent implements OnInit {
     }
 
     if (this.subsciption) {
-      return;
+      this.subsciption.unsubscribe();
     }
 
     this.subsciption = this.authService.sendForgotPassword(body).subscribe(

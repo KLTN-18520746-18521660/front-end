@@ -120,6 +120,7 @@ export class AdminChangePasswordPageComponent implements OnInit {
           summary: '',
           detail: 'Password changed successfully'
         }];
+        this.submitted = false;
       },
       (err) => {
         this.isLoading = false;

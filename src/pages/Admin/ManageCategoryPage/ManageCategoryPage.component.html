@@ -8,7 +8,7 @@
     <p-table #dt [value]="listData" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10,25,50]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-      [globalFilterFields]="['id','name','describe','display_name']">
+      [globalFilterFields]="['name','display_name']">
       <ng-template pTemplate="caption">
         <div class="table-header flex justify-content-between align-items-center">
           <div class="header-left">

@@ -336,6 +336,7 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   onFilterTag(event) {
+    this.listFilterTags = [];
     if (this.getTagSubscription) {
       this.getTagSubscription.unsubscribe();
     }
