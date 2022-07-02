@@ -33,6 +33,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelModule } from 'primeng/panel';
@@ -98,6 +99,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
     MenuModule,
     MessageModule,
     MessagesModule,
+    MultiSelectModule,
     OverlayPanelModule,
     PaginatorModule,
     PanelModule,

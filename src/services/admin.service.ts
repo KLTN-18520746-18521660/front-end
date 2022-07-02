@@ -165,7 +165,7 @@ export class AdminService {
   }
 
   resetPassword(body: any): Observable<ApiResult> {
-    return this.http.post<ApiResult>(BASE_URL + REST_URL.ADMIN.FORGOT_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.ADMIN.NEW_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

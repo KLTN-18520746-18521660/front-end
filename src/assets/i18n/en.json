@@ -808,7 +808,7 @@
       "home": "Go to home page",
       "success": {
         "title": "Good job!",
-        "description": "Your password has been reset successfully. Please check your email to get new password"
+        "description": "Please check your email to get new password"
       },
       "warning": "You only have 3 times to try to reset your password"
     },

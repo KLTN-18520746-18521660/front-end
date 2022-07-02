@@ -2,15 +2,15 @@
   <p-dropdown class="language-dropdown" *ngIf="selectedLanguage" [options]="listLanguages" [(ngModel)]="selectedLanguage.lang" optionLabel="name"
     optionValue="lang" (onChange)="onChangeLanguage($event)">
     <ng-template pTemplate="selectedItem">
-      <div class="country-item country-item-value flex align-items-center" *ngIf="selectedLanguage">
-        <img src="assets/styles/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + selectedLanguage.flag" />
-        <div>{{selectedLanguage.short_name}}</div>
+      <div class="country-item-selected country-item-value flex align-items-center" *ngIf="selectedLanguage">
+        <img src="assets/styles/flags/flag_placeholder.png" [class]="'flag flag-' + selectedLanguage.flag" />
+        <!-- <div>{{selectedLanguage.short_name}}</div> -->
       </div>
     </ng-template>
     <ng-template let-language pTemplate="item">
       <div class="country-item flex align-items-center">
-        <img src="assets/styles/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + language.flag" />
-        <div>{{language.short_name}}</div>
+        <img src="assets/styles/flags/flag_placeholder.png" [class]="'flag flag-' + language.flag" />
+        <!-- <div>{{language.short_name}}</div> -->
       </div>
     </ng-template>
   </p-dropdown>

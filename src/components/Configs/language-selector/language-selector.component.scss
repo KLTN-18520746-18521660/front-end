@@ -18,8 +18,24 @@
       box-shadow: none !important;
     }
 
+    .p-dropdown {
+      background: transparent !important;
+      border: none !important;
+    }
+
     .p-dropdown-trigger {
       width: 2rem !important;
+      display: none ;
+    }
+
+    .p-dropdown-items .p-dropdown-item {
+      padding: 0.75rem !important;
+    }
+
+    .country-item {
+      .flag {
+        width: 36px !important;
+      }
     }
   }
 }

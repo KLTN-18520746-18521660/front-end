@@ -144,7 +144,7 @@ export class AuthService {
   }
 
   resetPassword(body: any): Observable<ApiResult> {
-    return this.http.post<ApiResult>(BASE_URL + REST_URL.FORGOT_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
+    return this.http.post<ApiResult>(BASE_URL + REST_URL.NEW_PASSWORD, { ...body }, this.httpOptions()).pipe(catchError(error => {
       return throwError(handleError(error));
     }));
   }

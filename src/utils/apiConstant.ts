@@ -19,6 +19,7 @@ export const REST_URL = {
 
   CHANGE_PASSWORD: 'user/changepassword',
   FORGOT_PASSWORD: 'user/forgotpassword',
+  NEW_PASSWORD: 'user/newpassword',
 
   USER: 'user',
   FOLLOWER: 'follower',
@@ -69,6 +70,7 @@ export const REST_URL = {
     USER: 'user',
     CHANGE_PASSWORD: 'admin/user/changepassword',
     FORGOT_PASSWORD: 'admin/user/forgotpassword',
+    NEW_PASSWORD: 'admin/user/newpassword',
 
     RIGHT_ADMIN: 'admin/right/admin',
     RIGHT_USER: 'admin/right/social',
