@@ -157,6 +157,9 @@ export class ManagePostsPageComponent implements OnInit {
 
     this.isLoadingTable = true;
 
+    this.currentPost = null;
+    this.viewDialog = null;
+
     const params: ApiParams = this.getParams(data);
 
     this.getListPostSubscription = this.managePostService.getListPosts(params).subscribe(

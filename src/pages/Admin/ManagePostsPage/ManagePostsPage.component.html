@@ -10,7 +10,7 @@
         <div class="header-left col-12 inline-flex align-items-center px-0">
           <h2 class="m-0">Manage Posts</h2>
         </div>
-        <div class="filter-tag-category flex col-12 p-0 justify-content-between">
+        <div class="filter-tag-category flex flex-wrap col-12 p-0 justify-content-between">
           <p-autoComplete class="col-12 md:col-6 pl-0" [(ngModel)]="selectedCategories" [showEmptyMessage]="true"
             [suggestions]="listCategories" [autoHighlight]="true" [delay]="500" [placeholder]="'Select category'"
             [dropdown]="true" (ngModelChange)="onChangeCategory($event)" (completeMethod)="onFilterCategory($event)"
