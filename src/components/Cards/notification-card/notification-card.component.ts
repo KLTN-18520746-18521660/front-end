@@ -227,6 +227,24 @@ export class NotificationCardComponent implements OnInit {
           this.router.navigate(['/post', notification.content.post_detail.slug]);
         }
       }
+      case 'approve-modify-post': return {
+        ...result,
+        content: this.translate.instant(
+          'notification.type.approveModifyPost',
+          {
+            user: notification.user_action.display_name,
+            content: notification.content.post_detail.title
+          }
+        ),
+        icon: 'pi pi-pencil',
+        badgeClass: 'bg-green-500 text-50',
+        user: new User({
+          ...notification.user_action,
+        }),
+        command: () => {
+          this.router.navigate(['/post', notification.content.post_detail.slug]);
+        }
+      }
       case 'reject-post': return {
         ...result,
         content: this.translate.instant(
@@ -237,6 +255,22 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-ban',
+        badgeClass: 'bg-red-500 text-50',
+        user: notification.content.post_owner,
+        command: () => {
+          this.router.navigate(['/post', notification.content.post_detail.slug]);
+        }
+      }
+      case 'reject-modify-post': return {
+        ...result,
+        content: this.translate.instant(
+          'notification.type.rejectModifyPost',
+          {
+            user: notification.user_action.display_name,
+            content: notification.content.post_detail.title || ''
+          }
+        ),
+        icon: 'pi pi-pencil',
         badgeClass: 'bg-red-500 text-50',
         user: notification.content.post_owner,
         command: () => {

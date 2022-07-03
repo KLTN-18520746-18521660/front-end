@@ -10,8 +10,13 @@
       }
     }
   }
+
   .max1line {
     @include maxline(1);
     word-break: break-all;
+  }
+
+  .min-button-follow {
+    min-width: 160px;
   }
 }

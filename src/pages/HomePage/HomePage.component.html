@@ -6,7 +6,7 @@
       <div class="popular-tags w-full mt-8 mb-6 hidden md:block">
         <p class="font-semibold text-lg mt-4">{{ 'label.popular.tags' | translate }}</p>
         <ng-template [ngIf]="!isLoadingTag" [ngIfElse]="loadingTagBlock">
-          <app-tag [tag]="tag" [color]="'bg-bluegray'" [width]="'auto'" [size]="'base'" *ngFor="let tag of popularTags">
+          <app-tag [tag]="tag" [width]="'auto'" [size]="'base'" *ngFor="let tag of popularTags">
           </app-tag>
         </ng-template>
         <ng-template #loadingTagBlock>

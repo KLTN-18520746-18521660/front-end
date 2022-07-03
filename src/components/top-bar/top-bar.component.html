@@ -51,7 +51,7 @@
           <div
             class="btn-notification cursor-pointer flex justify-content-center align-items-center border-circle w-3rem h-3rem"
             [routerLink]="['/profile/notifications']" [routerLinkActive]="'btn-active'"
-            (mouseenter)="onShowNotification($event)">
+            (mouseenter)="onShowNotification($event)" (mouseleave)="isHoverNotification = false">
             <div>
               <i class="pi pi-bell p-text-secondary" pBadge [value]="user?.unread_notifications.toString()"
                 style="font-size: 1.2rem"></i>

@@ -143,7 +143,9 @@
       "likePost": "<b>{{user}}</b> liked your post: <b>{{content}}</b>",
       "deletePost": "<b>{{user}}</b> deleted your post: <b>{{content}}</b>",
       "approvePost": "<b>{{user}}</b> approved your post: <b>{{content}}</b>",
-      "rejectPost": "<b>{{user}}</b> rejected your post: <b>{{content}}</b>"
+      "approveModifyPost": "<b>{{user}}</b> approved your modify on post: <b>{{content}}</b>",
+      "rejectPost": "<b>{{user}}</b> rejected your post: <b>{{content}}</b>",
+      "rejectModifyPost": "<b>{{user}}</b> rejected your modify on post: <b>{{content}}</b>"
     }
   },
   "dialog": {

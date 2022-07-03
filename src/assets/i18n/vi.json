@@ -143,7 +143,9 @@
       "likePost": "<b>{{user}}</b> đã thích bài viết của bạn: <b>{{content}}</b>",
       "deletePost": "<b>{{user}}</b> đã xóa bài viết của bạn: <b>{{content}}</b>",
       "approvePost": "<b>{{user}}</b> đã chấp nhận bài viết của bạn: <b>{{content}}</b>",
-      "rejectPost": "<b>{{user}}</b> đã từ chối bài viết của bạn: <b>{{content}}</b>"
+      "approveModifyPost": "<b>{{user}}</b> đã chấp nhận chỉnh sửa của bạn cho bài viết: <b>{{content}}</b>",
+      "rejectPost": "<b>{{user}}</b> đã từ chối bài viết của bạn: <b>{{content}}</b>",
+      "rejectModifyPost": "<b>{{user}}</b> đã từ chối chỉnh sửa của bạn cho bài viết: <b>{{content}}</b>"
     }
   },
   "dialog": {

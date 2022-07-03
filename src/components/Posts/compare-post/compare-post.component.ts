@@ -34,6 +34,7 @@ export class ComparePostComponent implements OnInit {
     this.newPost = getDifferenceObject(this.post, this.pending);
     this.newPost = _.omitBy(this.newPost, _.isNull);
     this.newPost = _.omitBy(this.newPost, _.isUndefined);
+    delete this.newPost.last_modified_timestamp;
 
     this.oldPost = _.pick(this.post, Object.keys(this.newPost));
 
@@ -53,7 +54,6 @@ export class ComparePostComponent implements OnInit {
         });
       }
     }
-    console.log(this.outputDiff);
   }
 
 }

@@ -67,8 +67,8 @@ export class DashboardPageComponent implements OnInit {
               url: '/admin/manage-post',
               queryParams: {
                 status: 'Pending',
-                sortBy: 'created_timestamp',
-                orderBy: 'desc'
+                sortBy: 'have_pending_content,created_timestamp',
+                orderBy: 'desc,desc'
               }
             }
           },

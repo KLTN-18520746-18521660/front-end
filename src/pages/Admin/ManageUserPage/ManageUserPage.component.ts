@@ -38,7 +38,9 @@ export class ManageUserPageComponent implements OnInit {
 
     const params: ApiParams = {
       start: 0,
-      size: 100
+      size: 100,
+      sort_by: 'created_timestamp',
+      order: 'desc',
     }
 
     this.getListSubscription = this.manageAdminUserService.getListUser(params).subscribe(

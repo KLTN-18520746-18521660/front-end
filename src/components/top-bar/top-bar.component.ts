@@ -51,6 +51,8 @@ export class TopBarComponent implements OnInit {
 
   textTranslation: any;
 
+  isHoverNotification: boolean = false;
+
   listNotifications: Notification[];
 
   isLoadingNotification: boolean = false;
@@ -60,6 +62,8 @@ export class TopBarComponent implements OnInit {
   isShowNotification: boolean = false;
 
   totalSizeNotification: number = 0;
+
+  delayShowNotification: number= 500;
 
   sizeNotification: number = APPCONSTANT.DEFAULT_PAGE_SIZE;
 
@@ -162,16 +166,22 @@ export class TopBarComponent implements OnInit {
   }
 
   onShowNotification(event) {
+    this.isHoverNotification = true;
     if (this.isShowNotification) {
       this.onHideNotification(null);
       return;
     }
-    this.overlayNofication.show(event);
-    this.isShowNotification = true;
-    this.getListNotifications();
+    setTimeout(() => {
+      if (this.isHoverNotification) {
+        this.overlayNofication.show(event);
+        this.isShowNotification = true;
+        this.getListNotifications();
+      }
+    }, this.delayShowNotification);
   }
 
   onHideNotification(event) {
+    this.isHoverNotification = false;
     if (this.isShowNotification) {
       this.overlayNofication.hide();
     }

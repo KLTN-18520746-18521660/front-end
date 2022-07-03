@@ -20,7 +20,7 @@ export class TopbarAdminComponent implements OnInit {
 
   isLoggedin: boolean = false;
 
-  subscription: Subscription
+  subscription: Subscription;
 
   constructor(
     public appMain: AppMainComponent,

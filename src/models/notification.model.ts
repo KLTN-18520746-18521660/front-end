@@ -32,4 +32,4 @@ export default class Notification {
 }
 
 export type NotificationType = 'new-post' | 'approve-post' | 'reject-post' | 'private-post' | 'delete-post' | 'like-post' |
-  'new-comment' | 'like-comment' | 'reply-comment' | 'follow-user';
+  'new-comment' | 'like-comment' | 'reply-comment' | 'follow-user' | 'approve-modify-post' | 'reject-modify-post';

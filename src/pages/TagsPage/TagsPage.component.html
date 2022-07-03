@@ -13,11 +13,11 @@
             <p class="tag-detail-title mb-0 text-4xl font-semibold">
               {{tag.name}}
             </p>
-            <button pRipple pButton class="hidden md:flex"
+            <button pRipple pButton class="hidden md:flex min-button-follow"
               [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate" tooltipPosition="top"
               pTooltip="{{(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
-              [loading]="isLoadingAction" [ngClass]="tag.mapAction.follow ? 'p-button-outlined' : ''"
-              (click)="onClickFollow()">
+              [icon]="tag?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoadingAction"
+              [ngClass]="tag.mapAction.follow ? 'p-button-outlined' : ''" (click)="onClickFollow()">
             </button>
           </div>
           <div class="flex flex-wrap my-3">
@@ -66,8 +66,8 @@
           <button pRipple pButton class="w-full" [icon]="tag.mapAction.follow ? 'pi pi-check-circle' : ''"
             pTooltip="{{(tag.mapAction.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
             tooltipPosition="top" [label]="(tag.mapAction.follow ? 'common.following' : 'common.follow') | translate"
-            [loading]="isLoadingAction" [className]="tag.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'"
-            (click)="onClickFollow()">
+            [icon]="tag?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoadingAction"
+            [className]="tag.mapAction.follow ? 'p-button-outlined w-full' : 'w-full'" (click)="onClickFollow()">
           </button>
         </div>
       </div>
