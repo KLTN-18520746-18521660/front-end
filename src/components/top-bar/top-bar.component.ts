@@ -1,24 +1,22 @@
-import { APPCONSTANT } from './../../utils/appConstant';
-import { ApiParams } from './../../models/api.model';
-import { AppUserComponent } from 'pages/AppUser/AppUser.component';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { SearchInputComponent } from 'components/Input/search-input/search-input.component';
 import Category from 'models/category.model';
+import Notification from 'models/notification.model';
 import User from 'models/user.model';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DomHandler } from 'primeng/dom';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { OverlayPanel } from 'primeng/overlaypanel';
 import { filter, Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
+import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
 import { categoriesMockData } from 'shared/mockData/categoriesMockData';
-import { SearchInputComponent } from 'components/Input/search-input/search-input.component';
-import { TopBarMenuItem } from './menu-item';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { PostsService } from 'services/posts.service';
-import Notification from 'models/notification.model';
-import { OverlayPanel } from 'primeng/overlaypanel';
+import { ApiParams } from './../../models/api.model';
+import { APPCONSTANT } from './../../utils/appConstant';
 
 @Component({
   selector: 'app-top-bar',
@@ -74,7 +72,6 @@ export class TopBarComponent implements OnInit {
     private translate: TranslateService,
     private confirmationService: ConfirmationService,
     public dialogService: DialogService,
-    private appUser: AppUserComponent,
     private clipboard: Clipboard,
     private postService: PostsService,
   ) { }

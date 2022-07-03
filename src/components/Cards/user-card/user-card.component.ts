@@ -1,9 +1,10 @@
+import { Component, Input, OnInit } from '@angular/core';
+import User from 'models/user.model';
+import { AppUserComponent } from 'pages/AppUser/AppUser.component';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { ActionType } from 'utils/apiConstant';
 import { UserService } from 'services/user.service';
-import User from 'models/user.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { ActionType } from 'utils/apiConstant';
 import { mapActionWithUser } from 'utils/commonFunction';
 
 @Component({
@@ -24,7 +25,8 @@ export class UserCardComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private appUser: AppUserComponent,
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,11 @@ export class UserCardComponent implements OnInit {
   }
 
   actionUser(action: ActionType) {
+    if (!this.userService.getSessionId()) {
+      this.appUser.openLoginPopup();
+      return;
+    }
+
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
