@@ -54,8 +54,8 @@
           <td>
             <app-status-badge [translation]="false" [label]="admin.status"></app-status-badge>
           </td>
-          <td title="{{admin.created_timestamp}}">{{admin.created_timestamp | date : 'dd/MM/yyyy'}}</td>
-          <td title="{{admin.last_access_timestamp}}">{{admin.last_access_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td pTooltip="{{admin.created_timestamp}}">{{admin.created_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td pTooltip="{{admin.last_access_timestamp}}">{{admin.last_access_timestamp | date : 'dd/MM/yyyy'}}</td>
           <td>
             <button pButton type="button" (click)="onClickEdit(admin)" class="p-button-sm p-button-secondary"
               icon="pi pi-pencil"></button>

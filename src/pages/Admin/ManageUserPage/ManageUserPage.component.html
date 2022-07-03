@@ -35,6 +35,8 @@
           </th>
           <th pSortableColumn="roles">Roles <p-sortIcon field="roles"></p-sortIcon>
           </th>
+          <th pSortableColumn="last_access_timestamp">Last Access <p-sortIcon field="last_access_timestamp"></p-sortIcon>
+          </th>
           <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
           </th>
           <th>Action </th>
@@ -57,6 +59,7 @@
           <td>{{user.user_name}}</td>
           <td>{{user.email}}</td>
           <td>{{user.roles}}</td>
+          <td pTooltip="{{user.last_access_timestamp}}">{{user.last_access_timestamp | date : 'dd/MM/yyyy'}}</td>
           <td>
             <app-status-badge [translation]="false" [label]="user.status"></app-status-badge>
           </td>
