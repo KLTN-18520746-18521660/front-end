@@ -1,6 +1,6 @@
 <div class="container-fluid py-4 user-infor-page-wrapper">
   <div class="flex flex-wrap" *ngIf="!error; else errorBlock">
-    <div class="flex col-12">
+    <div class="flex col-12 p-0">
       <div class="card w-full" *ngIf="user">
         <div class="flex col-12 justify-content-center">
           <ng-template [ngIf]="user.avatar" [ngIfElse]="avatar">
@@ -39,7 +39,7 @@
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.posts | number:'1.0-2' }}">
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.posts" [short]="true">
-                {{ user.posts }}
+                {{ user?.posts || 0 }}
               </p>
               <p class="user-rate-text font-normal text-base">
                 {{ (user.posts > 1 ? 'common.posts' : 'common.post') | translate }}
@@ -48,7 +48,7 @@
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.followers | number:'1.0-2' }}">
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.followers" [short]="true">
-                {{ user.followers }}
+                {{ user?.followers || 0 }}
               </p>
               <p class="user-rate-text font-normal text-base">
                 {{ (user.followers > 1 ? 'common.followers' : 'common.follower') | translate }}
@@ -56,8 +56,8 @@
             </div>
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.following | number:'1.0-2' }}">
-              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.following" [short]="true">
-                {{ user.following }}
+              <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user?.following || 0" [short]="true">
+                {{ user?.following || 0 }}
               </p>
               <p class="user-rate-text font-normal text-base">
                 {{ 'common.following' | translate }}
@@ -66,7 +66,7 @@
             <div class="col text-center justify-content-center" tooltipPosition="top"
               pTooltip="{{ user.views | number:'1.0-2' }}">
               <p class="user-rate-value font-bold text-xl mb-2" [countUp]="user.views" [short]="true">
-                {{ user.views }}
+                {{ user?.views || 0 }}
               </p>
               <p class="user-rate-text font-normal text-base">
                 {{ (user.views > 1 ? 'common.views' : 'common.view') | translate }}
@@ -85,7 +85,7 @@
       </div>
     </div>
     <p class="font-semibold text-2xl w-full">{{'common.post' | translate}} ({{listPosts?.length}})</p>
-    <div class="grid col-12">
+    <div class="grid col-12 p-0">
       <div class="col-12 md:col-6 lg:col-4 xl:col-4" *ngFor="let item of listPosts">
         <app-recommend-post-card [isSmall]="false" [post]="item"></app-recommend-post-card>
       </div>

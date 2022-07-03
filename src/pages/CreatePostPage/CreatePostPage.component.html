@@ -81,9 +81,10 @@
     </p-inputNumber>
 
     <p class="text-md font-medium mb-1 mt-3">{{'createPost.tag' | translate}}</p>
-    <p-autoComplete [(ngModel)]="listTags" field="tag" [suggestions]="listFilterTags" (ngModelChange)="onChangeTags($event)"
-      (completeMethod)="onFilterTag($event)" [unique]="true" [virtualScroll]="true" [multiple]="true" [dropdown]="true"
-      [autoHighlight]="true" [delay]="500" [placeholder]="'createPost.form.tagPlaceHolder' | translate">
+    <p-autoComplete [(ngModel)]="listTags" field="tag" [suggestions]="listFilterTags"
+      (ngModelChange)="onChangeTags($event)" (completeMethod)="onFilterTag($event)" [unique]="true"
+      [virtualScroll]="true" [multiple]="true" [dropdown]="true" [autoHighlight]="true" [delay]="500"
+      [placeholder]="'createPost.form.tagPlaceHolder' | translate">
       <ng-template let-item pTemplate="item">
         <div class="flex justify-content-between" pTooltip="{{ item.name }}" tooltipPosition="top">
           <div class="left">
@@ -100,8 +101,8 @@
     </p-autoComplete>
 
     <p class="text-md font-medium mb-1 mt-3">{{'createPost.thumbnail.title' | translate}}</p>
-    <p-fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate"
-      chooseIcon="pi pi-upload" [cancelLabel]="'createPost.thumbnail.cancel' | translate" [showUploadButton]="false"
+    <p-fileUpload name="myfile[]" [chooseLabel]="'createPost.thumbnail.select' | translate" chooseIcon="pi pi-upload"
+      [cancelLabel]="'createPost.thumbnail.cancel' | translate" [showUploadButton]="false"
       accept=".png, .jpg, .jpeg, .svg, .webp" (onSelect)="onSelectThumbnail($event)" (onClear)="onClearSelect()"
       [maxFileSize]="MAX_FILE_SIZE"></p-fileUpload>
     <!-- <input type="text" hidden class="w-full" [placeholder]="'createPost.form.thumbnailPlaceholder' | translate"
