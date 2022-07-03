@@ -58,7 +58,7 @@
           <td>{{user.email}}</td>
           <td>{{user.roles}}</td>
           <td>
-            <app-status-badge [label]="user.status"></app-status-badge>
+            <app-status-badge [translation]="false" [label]="user.status"></app-status-badge>
           </td>
           <td>
             <button pButton type="button" (click)="onClickEdit(user)" class="p-button-sm p-button-secondary"

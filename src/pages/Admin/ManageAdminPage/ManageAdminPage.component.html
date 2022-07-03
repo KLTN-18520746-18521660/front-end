@@ -52,7 +52,7 @@
           <td>{{admin.display_name}}</td>
           <td>{{admin.roles}}</td>
           <td>
-            <app-status-badge [label]="admin.status"></app-status-badge>
+            <app-status-badge [translation]="false" [label]="admin.status"></app-status-badge>
           </td>
           <td title="{{admin.created_timestamp}}">{{admin.created_timestamp | date : 'dd/MM/yyyy'}}</td>
           <td title="{{admin.last_access_timestamp}}">{{admin.last_access_timestamp | date : 'dd/MM/yyyy'}}</td>

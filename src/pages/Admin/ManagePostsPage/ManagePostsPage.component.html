@@ -74,7 +74,7 @@
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
               <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
                 <ng-template let-option pTemplate="item">
-                  <app-status-badge [label]="option.label"></app-status-badge>
+                  <app-status-badge [translation]="false" [label]="option.label"></app-status-badge>
                 </ng-template>
               </p-dropdown>
             </ng-template>
