@@ -101,14 +101,13 @@ export class TopBarComponent implements OnInit {
       this.getMenu();
     });
 
-    this.textTranslation = this.translate.instant('dialog.logout');
-
     this.userStatisticSubscription = this.userService.userStatistic$.subscribe(user => {
       this.user = { ...this.user, ...user };
     })
   }
 
   getMenu() {
+    this.textTranslation = this.translate.instant('dialog.logout');
     this.menuUser = [
       // {
       //   id: 'dashboard',
