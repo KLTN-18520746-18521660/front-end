@@ -14,6 +14,17 @@ import { convertDateTime, convertToMultiSortMeta } from 'utils/commonFunction';
 import { ManagePostService } from 'services/admin/manage-post.service';
 import { ManageAdminUserService } from 'services/admin/manage-admin-user.service';
 
+export interface PageParams {
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  orderBy?: string;
+  search?: string;
+  status?: string;
+  tag?: string;
+  category?: string;
+}
+
 @Component({
   selector: 'app-ManagePostsPage',
   templateUrl: './ManagePostsPage.component.html',
@@ -56,7 +67,7 @@ export class ManagePostsPageComponent implements OnInit {
   globalFilter: string;
   multiSortMeta: SortMeta[];
   rows: number;
-  filters: {
+  filters?: {
     [key: string]: [
       {
         value?: string;
@@ -90,17 +101,6 @@ export class ManagePostsPageComponent implements OnInit {
   selectedTags: Tag[] = [];
   getTagSubscription: Subscription;
 
-  params: {
-    page?: number;
-    size?: number;
-    sortBy?: string;
-    orderBy?: string;
-    search?: string;
-    status?: any;
-    tag?: string;
-    category?: string;
-  };
-
   @ViewChild('pendingContent') pendingContent: ElementRef;
 
   viewPendingContent: boolean = true;
@@ -116,14 +116,14 @@ export class ManagePostsPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.params = this.activatedRoute.snapshot.queryParams;
-    this.selectedRow = this.params?.size || this.RESULT_PAGE_SIZE; 4
-    this.rows = this.params?.size || this.RESULT_PAGE_SIZE;
-    this.first = ((this.params.page - 1) >= 0 ? (this.params.page - 1) : 0) * this.rows;
-    this.multiSortMeta = convertToMultiSortMeta(this.params.sortBy, this.params.orderBy);
-    this.globalFilter = this.params.search || '';
-    this.filters = this.params?.status ? {
-      status: this.params?.status?.split(',').length > 0 ? this.params.status.split(',').map(item => {
+    const params = this.activatedRoute.snapshot.queryParams;
+    this.selectedRow = params?.size || this.RESULT_PAGE_SIZE; 4
+    this.rows = params?.size || this.RESULT_PAGE_SIZE;
+    this.first = ((params.page - 1) >= 0 ? (params.page - 1) : 0) * this.rows;
+    this.multiSortMeta = convertToMultiSortMeta(params.sortBy, params.orderBy);
+    this.globalFilter = params.search || '';
+    this.filters = params?.status ? {
+      status: params?.status?.split(',').length > 0 ? params?.status?.split(',').map(item => {
         return {
           value: item,
           matchMode: 'contains',
@@ -132,14 +132,14 @@ export class ManagePostsPageComponent implements OnInit {
       }) : [],
     } : {};
 
-    this.selectedTags = this.params?.tag ? this.params.tag.split(',').map(item => {
+    this.selectedTags = params?.tag ? params.tag.split(',').map(item => {
       return {
         id: 0,
         tag: item
       }
     }) : [];
 
-    this.selectedCategories = this.params?.category ? this.params.category.split(',').map(item => {
+    this.selectedCategories = params?.category ? params.category.split(',').map(item => {
       return {
         id: 0,
         display_name: item,
@@ -329,6 +329,7 @@ export class ManagePostsPageComponent implements OnInit {
 
   loadPosts(event?: TableData) {
     this.isLoading = false;
+    console.log(event);
     if (event) {
       this.currentData = event;
       this.router.navigate([], {

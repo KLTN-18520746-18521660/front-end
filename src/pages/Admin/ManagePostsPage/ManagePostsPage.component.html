@@ -1,6 +1,6 @@
 <div class="card px-2 md:px-3 lg:px-4 manage-post-wrapper" *ngIf="!isLoading && !error">
   <p-table #dt [value]="listPosts" dataKey="id" responsiveLayout="scroll" [paginator]="true" [rowHover]="true"
-    [loading]="isLoadingTable" [totalRecords]="totalRecords" [(selection)]="selectedPosts"
+    [loading]="isLoadingTable" [totalRecords]="totalRecords" [(selection)]="selectedPosts" [filters]="filters"
     (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll" (selectAllChange)="onSelectAllChange($event)"
     [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [lazy]="true" (onLazyLoad)="loadPosts($event)" sortMode="multiple" [multiSortMeta]="multiSortMeta" [(first)]="first"

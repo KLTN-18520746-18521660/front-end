@@ -90,8 +90,8 @@ export class RecommendPostCardComponent implements OnInit {
     this.post = {
       ...this.post,
       fromNow: {
-        created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, false, true),
-        approved: convertDateTime(this.post.approved_timestamp, this.translate.currentLang, false, true),
+        created: this.post.created_timestamp ? convertDateTime(this.post.created_timestamp, this.translate.currentLang, false, true) : null,
+        approved: this.post.approved_timestamp ? convertDateTime(this.post.approved_timestamp, this.translate.currentLang, false, true) : null,
       }
     };
 

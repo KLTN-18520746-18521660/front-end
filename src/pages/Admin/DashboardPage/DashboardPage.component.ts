@@ -20,7 +20,10 @@ export class DashboardPageComponent implements OnInit {
     label: string,
     desc: string,
     number: number,
-    link?: string,
+    link?: {
+      url: string,
+      queryParams: any;
+    },
   }[] = [];
 
   getStatisticPostSubscription: Subscription;
@@ -60,7 +63,14 @@ export class DashboardPageComponent implements OnInit {
             label: 'Pending posts',
             desc,
             number: statistic?.pendings,
-            link: '/admin/manage-post?status=Pending&sortBy=created_timestamp&orderBy=desc',
+            link: {
+              url: '/admin/manage-post',
+              queryParams: {
+                status: 'Pending',
+                sortBy: 'created_timestamp',
+                orderBy: 'desc'
+              }
+            }
           },
           {
             id: 'posts',
@@ -77,7 +87,13 @@ export class DashboardPageComponent implements OnInit {
             label: 'Views',
             desc,
             number: statistic.views,
-            link: '/admin/manage-post?sortBy=views&orderBy=desc',
+            link: {
+              url: '/admin/manage-post',
+              queryParams: {
+                sortBy: 'views',
+                orderBy: 'desc'
+              }
+            }
           },
           {
             id: 'likes',
@@ -86,7 +102,13 @@ export class DashboardPageComponent implements OnInit {
             label: 'Likes',
             desc,
             number: statistic.likes,
-            link: '/admin/manage-post?sortBy=likes&orderBy=desc',
+            link: {
+              url: '/admin/manage-post',
+              queryParams: {
+                sortBy: 'likes',
+                orderBy: 'desc'
+              }
+            }
           },
           {
             id: 'dislikes',
@@ -95,7 +117,13 @@ export class DashboardPageComponent implements OnInit {
             label: 'Dislikes',
             desc,
             number: statistic.dislikes,
-            link: '/admin/manage-post?sortBy=dislikes&orderBy=desc',
+            link: {
+              url: '/admin/manage-post',
+              queryParams: {
+                sortBy: 'dislikes',
+                orderBy: 'desc'
+              }
+            }
           },
           {
             id: 'visited',
@@ -120,7 +148,13 @@ export class DashboardPageComponent implements OnInit {
             label: 'Comments',
             desc,
             number: statistic.comments,
-            link: '/manage-post?sortBy=comments&orderBy=desc'
+            link: {
+              url: '/admin/manage-post',
+              queryParams: {
+                sortBy: 'comments',
+                orderBy: 'desc'
+              }
+            }
           },
         ];
       }
