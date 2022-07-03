@@ -540,6 +540,7 @@ export class CreatePostPageComponent implements OnInit {
 
         // discard draft
         this.selectedCategory = [];
+        this.isSelectThumbnail = false;
         this.thumbnailFile = null;
         this.thumbnailPreview = null;
         localStorage.removeItem(STORAGE_KEY.POST_DRAFT);
