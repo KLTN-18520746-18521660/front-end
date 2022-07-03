@@ -10,6 +10,7 @@ import { UserConfigService } from 'services/user-config.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { APPCONSTANT } from 'utils/appConstant';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,7 +27,6 @@ export class AppComponent {
   constructor(
     private themeService: ThemeService,
     private translate: TranslateService,
-    private primeConfig: PrimeNGConfig,
     private title: Title,
     private router: Router,
     private config: UserConfigService,
@@ -34,24 +34,11 @@ export class AppComponent {
   ) {
     translate.addLangs(['en', 'vi', 'jp']);
 
-    if (this.config.getConfigByKey('language')) {
-      const lang = this.config.getConfigByKey('language').match(/vi|en|jp/) ? this.config.getConfigByKey('language') : 'en';
-      translate.use(lang);
-      this.config.addConfig('language', this.translate.currentLang);
-    }
-    else {
-      const browserLang = this.translate.getBrowserLang();
-      this.translate.use(browserLang.match(/vi|en|jp/) ? browserLang : 'en');
-      this.config.addConfig('language', this.translate.currentLang);
-    }
-
     config.getConfigs();
   }
 
   ngOnInit() {
     this.setupTitleListener();
-    this.translate.get('primeng').subscribe(res => this.primeConfig.setTranslation(res));
-    this.primeConfig.ripple = true;
 
     // set font size for all pages ... = 1rem
     document.documentElement.style.fontSize = APPCONSTANT.FONT_SIZE + 'px';

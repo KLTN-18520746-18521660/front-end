@@ -14,7 +14,7 @@
         <div class="card-hear-right flex align-items-center"
           [ngClass]="isGrid ? 'pl-0 w-full justify-content-between' : 'pl-2'">
           <div class="post-time flex">
-            <span class="text-600" title="{{ post.approved_timestamp | date : 'dd/MM/yyyy HH:mm z' }}">
+            <span class="text-600" pTooltip="{{ post.approved_timestamp | date : 'dd/MM/yyyy HH:mm z' }}" tooltipPosition="top">
               {{ post.fromNow.approved }}
             </span>
             <span class="text-600 hidden md:flex">

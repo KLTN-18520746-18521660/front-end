@@ -103,7 +103,6 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     private userIdleService: UserIdleService,
     private translate: TranslateService,
   ) {
-    this.translate.use('en');
     this.currentURL = this.router.url;
     const sessionId = this.adminService.getSessionId();
     if (sessionId) {
@@ -128,6 +127,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnInit() {
     // this.changeTheme("lara-light-blue", false);
     // this.changeTheme("tailwind-light", false);
+    this.translate.use('en');
     document.documentElement.style.fontSize = '13px';
     this.userIdleService.setCustomActivityEvents(
       merge(

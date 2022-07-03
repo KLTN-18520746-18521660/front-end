@@ -6,7 +6,7 @@
       </button>
     </div>
     <p-table #dt [value]="listAdmins" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10,25,50,100]" responsiveLayout="scroll" [paginator]="true"
+      [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['id','user_name','email','display_name']">
       <ng-template pTemplate="caption">

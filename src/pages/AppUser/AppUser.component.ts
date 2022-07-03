@@ -6,7 +6,7 @@ import { UserIdleService } from 'angular-user-idle';
 import { ReportPopupComponent } from 'components/Popups/report-popup/report-popup.component';
 import { ReportSendModel } from 'models/report.model';
 import { LoginPageComponent } from 'pages/LoginPage/LoginPage.component';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { filter, fromEvent, map, merge, Subscription } from 'rxjs';
 import { AuthService } from 'services/auth.service';
@@ -76,10 +76,25 @@ export class AppUserComponent implements OnInit {
     private authService: AuthService,
     private messageService: MessageService,
     public dialogService: DialogService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private primeConfig: PrimeNGConfig,
   ) {
     this.userConfigService.getConfigs();
     this.currentURL = this.router.url;
+
+    this.primeConfig.ripple = true;
+
+    if (this.userConfigService.getConfigByKey('language')) {
+      const lang = this.userConfigService.getConfigByKey('language').match(/vi|en|jp/) ? this.userConfigService.getConfigByKey('language') : 'en';
+      translate.use(lang);
+      this.userConfigService.addConfig('language', this.translate.currentLang);
+    }
+    else {
+      const browserLang = this.translate.getBrowserLang();
+      this.translate.use(browserLang.match(/vi|en|jp/) ? browserLang : 'en');
+      this.userConfigService.addConfig('language', this.translate.currentLang);
+    }
+    this.translate.get('primeng').subscribe(res => this.primeConfig.setTranslation(res));
   }
 
   ngOnInit() {
