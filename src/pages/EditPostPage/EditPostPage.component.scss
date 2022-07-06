@@ -6,6 +6,10 @@
   }
 }
 
+.min-button-width {
+  min-width: 120px;
+}
+
 :host ::ng-deep .p-tabview {
   .p-tabview-panels {
     min-height: 500px;
@@ -61,6 +65,7 @@
     .p-fileupload-content {
       display: none !important;
     }
+
     .p-fileupload-buttonbar {
       background: transparent !important;
       padding: 0 !important;

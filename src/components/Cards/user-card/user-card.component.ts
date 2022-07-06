@@ -62,7 +62,6 @@ export class UserCardComponent implements OnInit {
       () => {
         this.user.mapAction.follow = !this.user.mapAction.follow;
         this.isLoading = false;
-        this.subscription.unsubscribe();
       },
       (err) => {
         this.isLoading = false;

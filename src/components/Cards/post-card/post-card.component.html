@@ -14,8 +14,8 @@
         <div class="card-hear-right flex align-items-center"
           [ngClass]="isGrid ? 'pl-0 w-full justify-content-between' : 'pl-2'">
           <div class="post-time flex">
-            <span class="text-600" pTooltip="{{ post.approved_timestamp | date : 'dd/MM/yyyy HH:mm z' }}" tooltipPosition="top">
-              {{ post.fromNow.approved }}
+            <span class="text-600" pTooltip="{{ post?.approved_timestamp | date : 'dd/MM/yyyy HH:mm z' }}" tooltipPosition="top">
+              {{ post.fromNow?.approved }}
             </span>
             <span class="text-600 hidden md:flex">
               <span class="mx-2">&#183;</span>{{ "card.time_read" | translate: post }}
@@ -58,21 +58,21 @@
           <div
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{ post.likes | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'text-primary': post.mapAction.like && showAction}">
+            [ngClass]="{'text-primary': post?.mapAction?.like && showAction}">
             <span class="text-sm mr-1 font-normal">{{ post.likes | shortNumber }}</span>
             <i style="font-size: 1.1rem" class="pi pi-thumbs-up"></i>
           </div>
           <div
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{post.comments | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'text-primary': post.mapAction.comment && showAction}">
+            [ngClass]="{'text-primary': post?.mapAction?.comment && showAction}">
             <span class="text-sm mr-1 font-normal">{{ post.comments | shortNumber }}</span>
             <i style="font-size: 1.2rem" class="pi pi-comment"></i>
           </div>
           <div
             class="card-block-action inline-flex justify-content-between align-items-center mr-2 hover:surface-200 p-1 border-round cursor-default"
             pTooltip="{{post.views | number:'1.0-2'}}" tooltipPosition="bottom"
-            [ngClass]="{'text-primary': post.mapAction.visited && showAction}">
+            [ngClass]="{'text-primary': post?.mapAction?.visited && showAction}">
             <span class="text-sm mr-1 font-normal">{{ post.views | shortNumber }}</span>
             <i style="font-size: 1.25rem" class="pi pi-eye"></i>
           </div>

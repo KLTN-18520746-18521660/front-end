@@ -219,8 +219,8 @@ export class AppUserComponent implements OnInit {
 
   updateAuthenciated() {
     if (this.cookieService.check(STORAGE_KEY.USER_SESSIONS_TOKEN)) {
-      if (this.userService.isAuthenticated && !this.isVisible) {
-        if (!this.remember) {
+      if (this.userService.isAuthenticated) {
+        if (!this.isVisible && !this.remember) {
           // console.log("Extend token");
           this.extendSession();
         }

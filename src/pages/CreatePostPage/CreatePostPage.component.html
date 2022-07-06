@@ -37,8 +37,8 @@
   <div class="col-12 md:col-6">
     <p requiredField class="text-md font-medium mb-1 mt-3">{{'createPost.title' | translate}}</p>
     <input [(ngModel)]="title" [placeholder]="'createPost.form.titlePlaceholder' | translate"
-      (ngModelChange)="onChangeTitle($event)" class="input-title w-full mb-2" pInputText>
-    <span id="more-chip-help" class="block">{{'createPost.slug' | translate}}
+      (ngModelChange)="onChangeTitle($event)" class="input-title w-full" pInputText>
+    <span id="more-chip-help" class="block mt-2" *ngIf="slug">{{'createPost.slug' | translate}}
       <span class="underline text-primary word-break-all">{{slug}}</span>
     </span>
 
@@ -47,7 +47,10 @@
       [placeholder]="'createPost.form.shortContentPlaceholder' | translate" class="w-full" rows="4"
       pInputTextarea></textarea>
 
-    <p class="text-md font-medium mb-1 mt-3">{{'createPost.status.title' | translate}}</p>
+    <p class="text-md font-medium mb-1 mt-3">
+      {{'createPost.status.title' | translate}}
+      <i class="pi pi-info-circle" pTooltip="{{'createPost.status.subtitle' | translate}}"></i>
+    </p>
     <p-selectButton [options]="statusOptions" (onChange)="onChangeStatus($event)" [(ngModel)]="private"
       optionLabel="label" optionValue="value">
       <ng-template let-item>

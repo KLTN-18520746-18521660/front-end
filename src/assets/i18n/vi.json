@@ -303,6 +303,7 @@
     "searchTitle": "Tìm kiếm bài viết, từ khóa, người dùng ...",
     "home": "Trang chủ",
     "more": "Thêm",
+    "changeLanguage": "Đổi ngôn ngữ",
     "createPost": "Tạo bài viết",
     "notification": "Thông báo",
     "wellcome": "Chào mừng bạn đến với",
@@ -747,10 +748,10 @@
     },
     "changepassword": {
       "title": "Đổi mật khẩu",
-      "description": "Nhập mật khẩu cũ và mật khẩu mới để đổi mật khẩu",
+      "description": "Nhập mật khẩu hiện tại và mật khẩu mới để đổi mật khẩu",
       "oldPassword": {
-        "label": "Mật khẩu cũ",
-        "placeholder": "Vui lòng nhập mật khẩu cũ"
+        "label": "Mật khẩu hiện tại",
+        "placeholder": "Vui lòng nhập mật khẩu hiện tại"
       },
       "newPassword": {
         "label": "Mật khẩu mới",
@@ -769,8 +770,8 @@
       },
       "validation": {
         "oldPassword": {
-          "required": "Vui lòng nhập mật khẩu cũ",
-          "min": "Mật khẩu cũ {{min}} ký tự",
+          "required": "Vui lòng nhập mật khẩu hiện tại",
+          "min": "Mật khẩu hiện tại {{min}} ký tự",
           "max": "New password must be less than {{max}} ký tự"
         },
         "newPassword": {
@@ -1016,8 +1017,8 @@
     "cancel": "Hủy",
     "discard": "Bỏ qua",
     "editor": "Trình soạn thảo",
-    "title": "Tiêu đề",
-    "shortContent": "Nội dung ngắn",
+    "title": "Tiêu đề (2-200 ký tự)",
+    "shortContent": "Nội dung ngắn (2-200 ký tự)",
     "status": {
       "title": "Trạng thái",
       "subtitle": "Chọn trạng thái cho bài viết, chỉ mình tôi hoặc mọi người có thể xem",
@@ -1065,12 +1066,13 @@
         "footer": " "
       },
       "valid": {
-        "title": "Title must be length between 20 and 200 ký tự",
-        "thumbnail": "Thumbnail is required",
-        "tag": "Tag is required",
-        "category": "You must select at less a category",
-        "timeRead": "Time to read is between 2 and 50 minutes",
-        "content": "Content is empty"
+        "title": "Tiêu đề bắt buộc dài từ 20 đến 200 ký tự",
+        "thumbnail": "Hình thu nhỏ là bắt buộc",
+        "tag": "Từ khóa là bắt buộc",
+        "category": "Bắt buộc phải chọn ít nhất danh mục",
+        "timeRead": "Thời gian đọc phải lớn hơn 2 phút và nhỏ hơn 50 phút",
+        "content": "Nội dung không được đễ trống",
+        "shortContent": "Nội dung ngắn bắt buộc dài từ 20 đến 200 ký tự"
       }
     }
   },

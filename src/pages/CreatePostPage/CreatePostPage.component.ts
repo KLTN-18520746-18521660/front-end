@@ -253,8 +253,8 @@ export class CreatePostPageComponent implements OnInit {
       this.selectedEditorType = this.draft['type'] || 'HTML';
       this.thumbnail = this.draft['thumbnail'] || null;
       this.thumbnailPreview = this.thumbnail ? this.thumbnail : null;
-      this.title = this.draft['title'] || null;
-      this.short_content = this.draft['short_content'] || null;
+      this.title = this.draft['title'] || '';
+      this.short_content = this.draft['short_content'] || '';
       this.listTags = this.draft['tags'] || [];
       this.content = this.draft['HTML'] || null;
       this.contentMd = this.draft['Markdown'] || null;
@@ -394,7 +394,7 @@ export class CreatePostPageComponent implements OnInit {
 
   checkValidPost() {
     let result = true;
-    if (this.selectedEditorType === 'HTML' && (this.content?.toString().length == 0 || !this.content)) {
+    if (this.selectedEditorType === 'HTML' && (this.content?.toString().length == 0 || !this.content) && this.activeStep !== 1) {
       this.messageService.add({
         key: 'createPostToast',
         severity: 'error',
@@ -403,7 +403,7 @@ export class CreatePostPageComponent implements OnInit {
       });
       result = false;
     }
-    else if (this.selectedEditorType === 'Markdown' && (this.contentMd.toString().length == 0 || !this.contentMd)) {
+    else if (this.selectedEditorType === 'Markdown' && (this.contentMd.toString().length == 0 || !this.contentMd) && this.activeStep !== 1) {
       this.messageService.add({
         key: 'createPostToast',
         severity: 'error',
@@ -412,12 +412,21 @@ export class CreatePostPageComponent implements OnInit {
       });
       result = false;
     }
-    if (!this.title) {
+    if (!this.title.trim() || (this.title.length > 200 && this.title.length < 2)) {
       this.messageService.add({
         key: 'createPostToast',
         severity: 'error',
         summary: '',
         detail: this.textTranslate.valid.title
+      });
+      result = false;
+    }
+    if (!this.short_content.trim() || (this.short_content.length > 200 && this.short_content.length < 2)) {
+      this.messageService.add({
+        key: 'createPostToast',
+        severity: 'error',
+        summary: '',
+        detail: this.textTranslate.valid.shortContent
       });
       result = false;
     }

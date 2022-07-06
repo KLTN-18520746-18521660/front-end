@@ -303,6 +303,7 @@
     "searchTitle": "Search posts, users, tags, etc...",
     "home": "Home",
     "more": "More",
+    "changeLanguage": "Change Language",
     "createPost": "Create Post",
     "notification": "Notification",
     "wellcome": "Wellcome to",
@@ -1016,8 +1017,8 @@
     "cancel": "Cancel",
     "discard": "Discard",
     "editor": "Select editor",
-    "title": "Title",
-    "shortContent": "Short content",
+    "title": "Title (2-200 characters)",
+    "shortContent": "Short content (2-200 characters)",
     "status": {
       "title": "Visibility",
       "subtitle": "Choose the visibility of your post, who can see it, public or private",
@@ -1070,7 +1071,8 @@
         "tag": "Tag is required",
         "category": "You must select at less a category",
         "timeRead": "Time to read is between 2 and 50 minutes",
-        "content": "Content is empty"
+        "content": "Content is empty",
+        "shortContent": "Short content must be length between 20 and 200 characters"
       }
     }
   },

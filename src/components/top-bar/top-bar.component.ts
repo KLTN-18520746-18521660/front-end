@@ -63,7 +63,7 @@ export class TopBarComponent implements OnInit {
 
   totalSizeNotification: number = 0;
 
-  delayShowNotification: number= 300;
+  delayShowNotification: number = 300;
 
   sizeNotification: number = APPCONSTANT.DEFAULT_PAGE_SIZE;
 
@@ -94,7 +94,7 @@ export class TopBarComponent implements OnInit {
     this.session_id = this.userService.session_id;
     this.isLoggedin = this.userService.isAuthenticated;
     this.getMenu();
-    
+
     this.subscription = this.userService.authUpdate$.subscribe(res => {
       this.user = res.user;
       this.session_id = res.session_id;
@@ -166,7 +166,7 @@ export class TopBarComponent implements OnInit {
   }
 
   onShowNotification(event) {
-    if (window.innerWidth < BREAKPOINT.lg) {
+    if (window.innerWidth < BREAKPOINT.lg || this.activeLink === 'notifications') {
       return;
     }
     this.isHoverNotification = true;
@@ -184,7 +184,7 @@ export class TopBarComponent implements OnInit {
   }
 
   onHideNotification(event) {
-    if (window.innerWidth < BREAKPOINT.md) {
+    if (window.innerWidth < BREAKPOINT.md || this.activeLink === 'notifications') {
       return;
     }
     this.isHoverNotification = false;

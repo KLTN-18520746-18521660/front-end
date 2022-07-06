@@ -96,7 +96,7 @@
               <span>{{'editPost.preview' | translate}}</span>
               <i class="ml-2 pi pi-eye"></i>
             </ng-template>
-            <div id="post-content" class="post-content ql-editor">
+            <div id="post-content" class="post-content ql-editor px-3">
               <img imageOnError *ngIf="thumbnail" src="{{ thumbnail }}" alt=""
                 class="post-thumbnail-image border-round-top shadow-4" />
               <p class="text-5xl font-bold mt-2" style="word-break: break-word;">
@@ -117,9 +117,9 @@
   <app-dock>
     <div class="flex justify-content-center py-2">
       <button pButton pRipple type="button" [disabled]="!editing" label="{{'editPost.discard' | translate}}"
-        (click)="onClickDiscard()" class="p-button-outlined p-button-danger mx-1 md:mx-2"></button>
+        (click)="onClickDiscard()" class="min-button-width p-button-outlined p-button-danger mx-1 md:mx-2"></button>
       <button pButton pRipple type="button" [disabled]="!editing" label="{{'editPost.publish' | translate}}"
-        (click)="onClickPublish()" class="p-button-raised mx-1 md:mx-2"></button>
+        (click)="onClickPublish()" class="min-button-width p-button-raised mx-1 md:mx-2"></button>
     </div>
   </app-dock>
 </ng-template>

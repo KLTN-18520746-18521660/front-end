@@ -5,7 +5,7 @@
       <!-- <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create user user" class="">
       </button> -->
     </div>
-    <p-table #dt dataKey="id" [value]="listUsers" [rowHover]="true" [rows]="10"
+    <p-table #dt dataKey="id" [value]="listUsers" [rowHover]="true" [rows]="25"
       [showCurrentPageReport]="true" [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['user_name','display_name','first_name','last_name','email']">
@@ -59,7 +59,7 @@
           <td>{{user.user_name}}</td>
           <td>{{user.email}}</td>
           <td>{{user.roles}}</td>
-          <td pTooltip="{{user.last_access_timestamp}}">{{user.last_access_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td pTooltip="{{user.last_access_timestamp | date : 'dd/MM/yyyy HH:mm z'}}">{{user.fromNow.updated}}</td>
           <td>
             <app-status-badge [translation]="false" [label]="user.status"></app-status-badge>
           </td>

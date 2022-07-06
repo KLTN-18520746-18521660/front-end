@@ -170,7 +170,7 @@ export class NotificationCardComponent implements OnInit {
 
     if (!this.notification.user_action) {
       this.notification.user_action = {
-        display_name: "USERNOTFOUND"
+        display_name: "ADMIN"
       };
     }
     switch (notification.type) {
@@ -202,7 +202,7 @@ export class NotificationCardComponent implements OnInit {
             content: notification.content.post_detail.title
           }
         ),
-        icon: 'pi pi-thumbs-up',
+        icon: 'pi pi-book',
         badgeClass: 'bg-orange-400 text-50',
         user: notification.content.post_owner,
         command: () => {
@@ -248,14 +248,14 @@ export class NotificationCardComponent implements OnInit {
       case 'reject-post': return {
         ...result,
         content: this.translate.instant(
-          'notification.type.approvePost',
+          'notification.type.rejectPost',
           {
             user: notification.user_action.display_name,
             content: notification.content.post_detail.title || ''
           }
         ),
         icon: 'pi pi-ban',
-        badgeClass: 'bg-red-500 text-50',
+        badgeClass: 'bg-orange-500 text-50',
         user: notification.content.post_owner,
         command: () => {
           this.router.navigate(['/post', notification.content.post_detail.slug]);
@@ -271,7 +271,7 @@ export class NotificationCardComponent implements OnInit {
           }
         ),
         icon: 'pi pi-pencil',
-        badgeClass: 'bg-red-500 text-50',
+        badgeClass: 'bg-orange-500 text-50',
         user: notification.content.post_owner,
         command: () => {
           this.router.navigate(['/post', notification.content.post_detail.slug]);

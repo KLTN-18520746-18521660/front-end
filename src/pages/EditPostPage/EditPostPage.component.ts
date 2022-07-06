@@ -325,7 +325,7 @@ export class EditPostPageComponent implements OnInit {
 
   checkValid(): boolean {
     let result = true;
-    if (!this.content.trim()) {
+    if (!this.content?.trim() || !this.content) {
       this.message = [...this.message, {
         severity: 'error',
         summary: '',
@@ -333,7 +333,7 @@ export class EditPostPageComponent implements OnInit {
       }]
       result = false;
     }
-    if (!this.title.trim()) {
+    if (!this.title.trim() || (this.title.length > 200 && this.title.length < 2)) {
       this.message = [...this.message, {
         severity: 'error',
         summary: '',
@@ -341,7 +341,7 @@ export class EditPostPageComponent implements OnInit {
       }];
       result = false;
     }
-    if (!this.short_content.trim()) {
+    if (!this.short_content.trim() || (this.short_content.length > 200 && this.short_content.length < 2)) {
       this.message = [...this.message, {
         severity: 'error',
         summary: '',

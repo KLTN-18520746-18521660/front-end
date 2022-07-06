@@ -5,7 +5,7 @@
       <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create category" class="">
       </button>
     </div>
-    <p-table #dt [value]="listData" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    <p-table #dt [value]="listData" [rowHover]="true" [rows]="25" [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['name','display_name']">

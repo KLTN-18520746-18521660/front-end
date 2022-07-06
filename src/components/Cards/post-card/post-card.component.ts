@@ -54,8 +54,8 @@ export class PostCardComponent implements OnInit {
     this.post = {
       ...this.post,
       fromNow: {
-        created: convertDateTime(this.post.created_timestamp, this.translate.currentLang, true, false),
-        approved: convertDateTime(this.post.approved_timestamp, this.translate.currentLang, true, false),
+        created: this.post.created_timestamp ? convertDateTime(this.post?.created_timestamp, this.translate.currentLang, true, false) : '',
+        approved: this.post.approved_timestamp ? convertDateTime(this.post?.approved_timestamp, this.translate.currentLang, true, false) : '',
       },
       new: getDiffDay(this.post.approved_timestamp) < 3,
     };
