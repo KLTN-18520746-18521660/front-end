@@ -35,6 +35,8 @@ export class ManageConfigPageComponent implements OnInit {
     [key: string]: ConfigFormat;
   };
 
+  collaspedAll: boolean = false;
+
   constructor(
     private manageConfigService: ManageConfigService,
     private messageService: MessageService

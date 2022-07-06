@@ -197,7 +197,7 @@ export class AppUserComponent implements OnInit {
     this.timeOutSubscription = this.userIdleService.onTimeout().subscribe(() => {
       // console.log("Time out");
       this.addMessage({
-        key: 'app-message',
+        key: 'idle-time',
         severity: 'warn',
         summary: this.translate.instant('message.needRefresh'),
         sticky: true
@@ -274,6 +274,12 @@ export class AppUserComponent implements OnInit {
     )
   }
 
+  onCloseToast() {
+    if (this.userService.getSessionId()) {
+      window.location.reload();
+    }
+  }
+
   public addMessage(message: Message) {
     this.messageService.add(message);
   }
@@ -308,7 +314,7 @@ export class AppUserComponent implements OnInit {
 
   public openReportPopup(data: ReportSendModel = {}, header = ' ', footer = ' ') {
     if (!this.authService.getSessionId()) {
-      this.openLoginPopup( ' ', 'warn', ' ', ' ');
+      this.openLoginPopup(' ', 'warn', ' ', ' ');
       return;
     }
     this.refReport = this.dialogService.open(ReportPopupComponent, {

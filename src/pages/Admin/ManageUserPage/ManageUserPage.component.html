@@ -5,7 +5,7 @@
       <!-- <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create user user" class="">
       </button> -->
     </div>
-    <p-table #dt dataKey="id" [value]="listUsers" [scrollable]="true" [rowHover]="true" [rows]="10"
+    <p-table #dt dataKey="id" [value]="listUsers" [rowHover]="true" [rows]="10"
       [showCurrentPageReport]="true" [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['user_name','display_name','first_name','last_name','email']">

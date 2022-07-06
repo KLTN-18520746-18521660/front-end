@@ -154,7 +154,7 @@ export class UserService {
   }
 
   updateUserStatistic() {
-    if (this.user) {
+    if (this.getSessionId()) {
       this.getUserStatistic(this.user.user_name).subscribe(
         (res) => {
           this.user = { ...this.user, ...res.data.user };

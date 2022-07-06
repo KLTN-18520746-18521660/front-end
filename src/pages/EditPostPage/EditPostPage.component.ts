@@ -253,7 +253,7 @@ export class EditPostPageComponent implements OnInit {
   }
 
   uploadImage() {
-    this.isLoading = true;
+    this.isLoadingSubmit = true;
     this.uploadSubscription = this.postService.upLoadImage('post', this.thumbnailFile).subscribe(
       (res) => {
         this.thumbnail = res.data.url;
@@ -266,7 +266,7 @@ export class EditPostPageComponent implements OnInit {
         this.modifyPost(data);
       },
       (err) => {
-        this.isLoading = false;
+        this.isLoadingSubmit = false;
       }
     );
   }

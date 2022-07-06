@@ -34,7 +34,7 @@
         <div class="lg:hidden mt-4">
           <app-user-info-card *ngIf="post" [user_name]="post.owner.user_name"></app-user-info-card>
         </div>
-        <div #comments class="post-comment pt-6" id="comments">
+        <div #comments class="post-comment pt-5 px-2 md:px-0" id="comments">
           <div class="flex justify-content-between align-items-center comment-option my-3">
             <div class="comment-option-left">
               <div class="post-comment-header my-4">
@@ -76,7 +76,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="read-next-wrapper mt-4 md:mt-8">
+        <div class="read-next-wrapper px-2 md:px-0 mt-4 md:mt-8">
           <p class="font-semibold text-2xl">{{'postDetail.readNext' | translate}}</p>
           <ng-template [ngIf]="!isLoadingOtherPost && otherPosts" [ngIfElse]="loadingOtherPost">
             <app-post-card-vertical *ngFor="let item of otherPosts" [post]="item"></app-post-card-vertical>

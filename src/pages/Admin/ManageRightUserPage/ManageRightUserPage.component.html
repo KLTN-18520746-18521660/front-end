@@ -5,7 +5,7 @@
       <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create right user" class="">
       </button>
     </div>
-    <p-table [value]="listRights" [scrollable]="true">
+    <p-table [value]="listRights">
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>

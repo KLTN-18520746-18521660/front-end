@@ -42,6 +42,8 @@
           </p-dropdown>
 
           <button pRipple pButton label="Clear Filter" (click)="dt.reset()" class="p-button-secondary mx-2"></button>
+          <button pRipple pButton icon="pi pi-refresh" (click)="getListPost()" pTooltip="Refresh data"
+            tooltipPosition="top" class="p-button-warning mx-2"></button>
         </div>
         <div class="flex justify-content-end col-12 md:col-4 px-0">
           <span class="p-input-icon-left w-full">

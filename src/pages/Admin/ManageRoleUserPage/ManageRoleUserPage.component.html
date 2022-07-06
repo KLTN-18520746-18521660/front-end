@@ -5,7 +5,7 @@
       <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create role user" class="">
       </button>
     </div>
-    <p-table [value]="listRoles" [scrollable]="true">
+    <p-table [value]="listRoles">
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>

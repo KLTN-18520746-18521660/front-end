@@ -15,8 +15,8 @@ import { AuthService } from 'services/auth.service';
 import { PostsService } from 'services/posts.service';
 import { UserService } from 'services/user.service';
 import { categoriesMockData } from 'shared/mockData/categoriesMockData';
-import { ApiParams } from './../../models/api.model';
-import { APPCONSTANT } from './../../utils/appConstant';
+import { ApiParams } from 'models/api.model';
+import { APPCONSTANT, BREAKPOINT } from 'utils/appConstant';
 
 @Component({
   selector: 'app-top-bar',
@@ -63,7 +63,7 @@ export class TopBarComponent implements OnInit {
 
   totalSizeNotification: number = 0;
 
-  delayShowNotification: number= 500;
+  delayShowNotification: number= 300;
 
   sizeNotification: number = APPCONSTANT.DEFAULT_PAGE_SIZE;
 
@@ -166,6 +166,9 @@ export class TopBarComponent implements OnInit {
   }
 
   onShowNotification(event) {
+    if (window.innerWidth < BREAKPOINT.lg) {
+      return;
+    }
     this.isHoverNotification = true;
     if (this.isShowNotification) {
       this.onHideNotification(null);
@@ -181,6 +184,9 @@ export class TopBarComponent implements OnInit {
   }
 
   onHideNotification(event) {
+    if (window.innerWidth < BREAKPOINT.md) {
+      return;
+    }
     this.isHoverNotification = false;
     if (this.isShowNotification) {
       this.overlayNofication.hide();

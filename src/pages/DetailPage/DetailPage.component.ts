@@ -451,20 +451,12 @@ export class DetailPageComponent implements OnInit {
     this.isLoadingValue = true;
     this.postsService.getPostBySlug(this.slug).subscribe(
       (res) => {
-        // const convert = (str) => {
-        //   str = str.replace(/<img /g, '<p-image [preview]="true" ').replace(/>/g, '></p-image>')
-        //   return str;
-        // }
-
-        let categories = res.data.post.categories;
-        if (categories && categories.length > 1) {
-          categories = categories.slice(0, 1)
-        }
-        categories.map((item) => {
-          this.breadcrumbItems.push({
-            label: item.display_name,
-            routerLink: `/c/${item.slug}`
-          });
+        const categories = res.data.post.categories;
+        const tooltipCategory = categories.map(category => category.display_name).join(', ');
+        this.breadcrumbItems.push({
+          label: categories[0].display_name,
+          routerLink: `/c/${categories[0].slug}`,
+          title: tooltipCategory,
         });
         this.breadcrumbItems.push({
           label: res.data.post.title,

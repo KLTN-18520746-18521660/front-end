@@ -16,6 +16,8 @@
 
 <p-toast key="app-message" [preventOpenDuplicates]="true"></p-toast>
 
+<p-toast key="idle-time" (onClose)="onCloseToast()" [preventOpenDuplicates]="true"></p-toast>
+
 <app-loading [loading]="isLoading || isLoadingConfig"></app-loading>
 
 <ng-template #error>

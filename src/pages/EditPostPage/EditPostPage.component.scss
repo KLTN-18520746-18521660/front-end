@@ -9,6 +9,7 @@
 :host ::ng-deep .p-tabview {
   .p-tabview-panels {
     min-height: 500px;
+    padding: 0 !important;
 
     a {
       color: var(--primary-color) !important;
@@ -95,6 +96,7 @@
 
   .p-treeselect {
     width: 100% !important;
+    min-height: 3.5rem;
 
     .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {
       box-shadow: none !important;

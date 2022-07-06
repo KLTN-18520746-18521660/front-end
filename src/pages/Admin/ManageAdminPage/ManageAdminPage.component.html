@@ -5,7 +5,7 @@
       <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create admin user" class="">
       </button>
     </div>
-    <p-table #dt [value]="listAdmins" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    <p-table #dt [value]="listAdmins" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['id','user_name','email','display_name']">

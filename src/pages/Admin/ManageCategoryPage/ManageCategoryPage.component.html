@@ -5,7 +5,7 @@
       <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create category" class="">
       </button>
     </div>
-    <p-table #dt [value]="listData" [scrollable]="true" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    <p-table #dt [value]="listData" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['name','display_name']">
@@ -52,12 +52,14 @@
             <a target="_blank" href="/c/{{category.name}}">{{category.name}}</a>
           </td>
           <td>
-            <img *ngIf="category.thumbnail" src="{{category.thumbnail}}" alt="Thumbnail" height="60px">
+            <img *ngIf="category.thumbnail" src="{{category.thumbnail}}" alt="Thumbnail" style="max-width: unset !important"
+              height="60px">
           </td>
           <td>{{category.display_name}}</td>
           <td>{{category.status}}</td>
           <td title="{{category.created_timestamp}}">{{category.created_timestamp | date : 'dd/MM/yyyy'}}</td>
-          <td title="{{category.last_modified_timestamp}}">{{category.last_modified_timestamp | date : 'dd/MM/yyyy'}}</td>
+          <td title="{{category.last_modified_timestamp}}">{{category.last_modified_timestamp | date : 'dd/MM/yyyy'}}
+          </td>
           <td>
             <button pButton type="button" (click)="onClickEdit(category)" class="p-button-sm p-button-secondary"
               icon="pi pi-pencil"></button>
