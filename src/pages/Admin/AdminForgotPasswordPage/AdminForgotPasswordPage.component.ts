@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { AdminService } from './../../../services/admin.service';
+import { AdminService } from 'services/admin.service';
 
 @Component({
   selector: 'app-AdminForgotPasswordPage',

@@ -8,18 +8,16 @@
         <ul class="text-sm pl-4">
           <li class="my-2">
             <span pTooltip="{{session.last_interaction_time | date: 'dd/MM/yyyy HH:mm z'}}" tooltipPosition="top">
-              {{'profile.security.session.lastAccess' | translate}} {{session.fromNow.updated}}
+              {{'profile.security.session.lastAccess' | translate}} <b>{{session.fromNow.updated}}</b>
             </span>
           </li>
           <li class="my-2">
             <span pTooltip="{{session.created_timestamp | date: 'dd/MM/yyyy HH:mm z'}}" tooltipPosition="top">
-              {{'profile.security.session.created' | translate}} {{session.fromNow.created}}
+              {{'profile.security.session.created' | translate}} <b>{{session.fromNow.created}}</b>
             </span>
           </li>
           <li class="my-2">
-            <span>
-              {{'profile.security.session.savePassword' | translate}}
-            </span>
+            <span><b>{{'profile.security.session.savePassword' | translate}}</b></span>
           </li>
           <li class="my-2">
             <span>{{'profile.security.session.data' | translate}}:</span>

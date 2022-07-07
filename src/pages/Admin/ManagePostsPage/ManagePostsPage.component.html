@@ -102,10 +102,10 @@
         <td>
           <div class="cursor-pointer inline-flex align-items-center"
             (click)="overlayUser.toggle($event); getUserInfo(post.owner.user_name)">
-            <p-overlayPanel #overlayUser [dismissable]="true">
+            <p-overlayPanel styleClass="app-overlay" #overlayUser [dismissable]="true">
               <ng-template pTemplate>
                 <ng-template [ngIf]="!isLoadingUser && !!currentUser" [ngIfElse]="loadingBlock">
-                  <app-simple-grid-view [data]="currentUser"></app-simple-grid-view>
+                  <app-stringfy-object [object]="currentUser"></app-stringfy-object>
                 </ng-template>
               </ng-template>
             </p-overlayPanel>
@@ -137,7 +137,7 @@
         <td>
           <div class="cursor-pointer inline-flex align-items-center" (click)="overlayDate.toggle($event)"
             (mouseenter)="overlayDate.toggle($event)" (mouseleave)="overlayDate.hide()">
-            <p-overlayPanel #overlayDate [dismissable]="true">
+            <p-overlayPanel styleClass="app-overlay" #overlayDate [dismissable]="true">
               <ng-template pTemplate>
                 <p><strong>Created:</strong> {{post.created_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}</p>
                 <p><strong>Approved:</strong> {{post.approved_timestamp | date: 'dd/mm/yyyy hh:mm:ss z'}}</p>

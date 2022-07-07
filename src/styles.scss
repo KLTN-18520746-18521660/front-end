@@ -95,6 +95,10 @@ ion-icon:before {
     max-height: 70vh;
     left: calc(100% - 503px) !important;
   }
+  &.app-overlay {
+    overflow: auto;
+    max-height: 70vh;
+  }
 }
 
 // For ripples effect

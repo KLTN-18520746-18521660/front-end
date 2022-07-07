@@ -1,4 +1,4 @@
-import { ManageFilePageComponent } from './../../pages/Admin/ManageFilePage/ManageFilePage.component';
+import { ManageFilePageComponent } from 'pages/Admin/ManageFilePage/ManageFilePage.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AdminChangePasswordPageComponent } from 'pages/Admin/AdminChangePasswordPage/AdminChangePasswordPage.component';
@@ -18,9 +18,9 @@ import { ManageTagPageComponent } from 'pages/Admin/ManageTagPage/ManageTagPage.
 import { ManageUserPageComponent } from 'pages/Admin/ManageUserPage/ManageUserPage.component';
 import { StatisticPostPageComponent } from 'pages/Admin/StatisticPostPage/StatisticPostPage.component';
 import { AdminGuard } from 'shared/guards/admin.guard';
-import { AdminForgotPasswordPageComponent } from './../../pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
-import { AdminNoAccessPageComponent } from './../../pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
-import { AdminResetPasswordPageComponent } from './../../pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
+import { AdminForgotPasswordPageComponent } from 'pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
+import { AdminNoAccessPageComponent } from 'pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
+import { AdminResetPasswordPageComponent } from 'pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
 
 @NgModule({
   imports: [

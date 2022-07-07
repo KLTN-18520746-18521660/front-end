@@ -26,6 +26,8 @@ export class DashboardPageComponent implements OnInit {
     },
   }[] = [];
 
+  isLoading: boolean = false;
+
   getStatisticPostSubscription: Subscription;
 
   timeStatisticPost: number = 7;
@@ -43,6 +45,8 @@ export class DashboardPageComponent implements OnInit {
   }
 
   getStatisticPost() {
+    this.isLoading = true;
+    this.carditems = [];
     if (this.getStatisticPostSubscription) {
       this.getStatisticPostSubscription.unsubscribe();
     }
@@ -157,6 +161,11 @@ export class DashboardPageComponent implements OnInit {
             }
           },
         ];
+        this.isLoading = false;
+      },
+      (err) => {
+        this.isLoading = false;
+        this.messageService.add({ severity: 'error', summary: err.error, detail: err.message });
       }
     );
   }

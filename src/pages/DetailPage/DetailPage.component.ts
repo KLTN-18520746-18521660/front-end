@@ -632,11 +632,11 @@ export class DetailPageComponent implements OnInit {
           if (action === 'save' || action === 'unsave') {
             this.post.mapAction.saved = !this.post.mapAction.saved;
             this.getTranslate();
-            this.messageService.add({ severity: 'success', summary: action.toUpperCase(), detail: this.translate.instant('status.success').toString() });
+            this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
           }
         },
         (err) => {
-          this.messageService.add({ severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });
+          this.messageService.add({ severity: 'error', summary: '', detail: this.translate.instant(`messageCode.${err.message_code}`) });
         }
       );
     }

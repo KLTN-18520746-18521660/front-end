@@ -265,13 +265,13 @@ export class CreatePostPageComponent implements OnInit {
       this.private = this.draft['private'] || false;
     }
     else {
-      this.content = null;
-      this.contentMd = null;
+      this.content = '';
+      this.contentMd = '';
       this.thumbnail = null;
-      this.short_content = null;
+      this.short_content = '';
       this.listTags = [];
       this.validThumbnail = true;
-      this.title = null;
+      this.title = '';
       this.selectedEditorType = 'HTML';
       this.time_read = 5;
       this.activeStep = 0;
@@ -279,8 +279,8 @@ export class CreatePostPageComponent implements OnInit {
 
       this.draft = {
         type: null,
-        title: null,
-        short_content: null,
+        title: '',
+        short_content: '',
         tags: [],
         thumbnail: null,
         HTML: null,

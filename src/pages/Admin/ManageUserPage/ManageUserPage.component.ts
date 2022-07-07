@@ -50,8 +50,8 @@ export class ManageUserPageComponent implements OnInit {
 
         this.listUsers.forEach(user => {
           user.fromNow = {
-            created: user.created_timestamp ? convertDateTime(user.created_timestamp, 'en', true, true) : null,
-            updated: user.last_access_timestamp ? convertDateTime(user.last_access_timestamp, 'en', true, true) : null,
+            created: user.created_timestamp ? convertDateTime(user.created_timestamp, 'en', true, true, true) : null,
+            updated: user.last_access_timestamp ? convertDateTime(user.last_access_timestamp, 'en', true, true, true) : null,
           }
         });
         this.isLoading = false;

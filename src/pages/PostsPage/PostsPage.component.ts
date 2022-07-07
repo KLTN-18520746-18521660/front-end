@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { postsMockData } from 'shared/mockData/postsMockData';
 import { APPCONSTANT } from 'utils/appConstant';
 import { randomArray } from 'utils/commonFunction';
-import { PostsService } from './../../services/posts.service';
+import { PostsService } from 'services/posts.service';
 
 @Component({
   selector: 'app-PostsPage',

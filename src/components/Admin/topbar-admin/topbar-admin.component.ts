@@ -42,13 +42,13 @@ export class TopbarAdminComponent implements OnInit {
       //   label: 'Account',
       //   icon: 'pi pi-fw pi-lock'
       // },
-      {
-        label: 'Logout',
-        icon: 'pi pi-fw pi-sign-out',
-        command: () => {
-          this.onClickLogout();
-        }
-      }
+      // {
+      //   label: 'Logout',
+      //   icon: 'pi pi-fw pi-sign-out',
+      //   command: () => {
+      //     this.onClickLogout();
+      //   }
+      // }
     ];
 
     this.isLoggedin = this.adminService.isAuthenticated;

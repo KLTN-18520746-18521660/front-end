@@ -1,5 +1,5 @@
-import { APPCONSTANT } from './../../../utils/appConstant';
-import { UserService } from './../../../services/user.service';
+import { APPCONSTANT } from 'utils/appConstant';
+import { UserService } from 'services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PostsService } from 'services/posts.service';
 import { Subscription } from 'rxjs';

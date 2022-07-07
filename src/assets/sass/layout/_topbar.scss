@@ -28,6 +28,7 @@
 
         &:focus {
             @include focused();
+            box-shadow: none !important;
         }
     }
 

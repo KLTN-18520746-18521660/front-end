@@ -1,4 +1,5 @@
-import { EditorComponent } from './../components/editor/editor.component';
+import { StringfyObjectComponent } from 'components/stringfy-object/stringfy-object.component';
+import { EditorComponent } from 'components/editor/editor.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -60,10 +61,10 @@ import { EditPostPageComponent } from 'pages/EditPostPage/EditPostPage.component
 import { ServerErrorPageComponent } from 'pages/ServerErrorPage/ServerErrorPage.component';
 import { UserInfoPageComponent } from 'pages/UserInfoPage/UserInfoPage.component';
 import { APPCONSTANT } from 'utils/appConstant';
-import { AdminForgotPasswordPageComponent } from './../pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
-import { AdminNoAccessPageComponent } from './../pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
-import { AdminResetPasswordPageComponent } from './../pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
-import { ManageFilePageComponent } from './../pages/Admin/ManageFilePage/ManageFilePage.component';
+import { AdminForgotPasswordPageComponent } from 'pages/Admin/AdminForgotPasswordPage/AdminForgotPasswordPage.component';
+import { AdminNoAccessPageComponent } from 'pages/Admin/AdminNoAccessPage/AdminNoAccessPage.component';
+import { AdminResetPasswordPageComponent } from 'pages/Admin/AdminResetPasswordPage/AdminResetPasswordPage.component';
+import { ManageFilePageComponent } from 'pages/Admin/ManageFilePage/ManageFilePage.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -273,6 +274,7 @@ export function playerFactory() {
     UploadImageComponent,
     EditorComponent,
     SwitchThemeComponent,
+    StringfyObjectComponent,
 
     ManagePostsPageComponent,
     TopbarAdminComponent,

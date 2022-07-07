@@ -35,7 +35,7 @@
     </div>
     <div class="col-12 md:col-9 lg:col-10 xl:col-10">
       <div class="grid">
-        <div class="col-12 md:col-12 lg:col-9 xl:col-8 p-0 min-h-screen">
+        <div class="col-12 md:col-12 lg:col-9 xl:col-8 p-0 mb-4 min-h-screen">
           <div class="col-12 p-0 flex mb-3">
             <app-avatar class="mr-2" *ngIf="currentUser" [user]="currentUser"></app-avatar>
             <button pButton pRipple type="button" label="{{'home.createPostPlaceholder' | translate}}"
@@ -92,7 +92,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="col-12 md:col-12 lg:col-3 xl:col-4 md:px-2 xl:px-4">
+        <div class="col-12 md:col-12 lg:col-3 xl:col-4 p-0 md:px-2 xl:px-4">
           <div class="card-wrapper border-round px-3 py-2"
             [ngClass]="config?.dark ? 'bg-black-alpha-20' : 'bg-bluegray-100'">
             <p class="text-xl font-semibold py-1">{{'label.trending' | translate}}</p>

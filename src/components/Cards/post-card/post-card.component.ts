@@ -98,8 +98,8 @@ export class PostCardComponent implements OnInit {
         label: this.translate.instant('card.action.copy'),
         icon: 'pi pi-copy',
         command: () => {
-          this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
           this.clipboard.copy(decodeURI(window.location.origin + '/post/' + this.post.slug));
+          this.messageService.add({ key: 'post-card', severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
         }
       },
       {
@@ -127,7 +127,7 @@ export class PostCardComponent implements OnInit {
       post_slug: this.post.slug,
       report_type: type,
     };
-    this.appUser.openReportPopup(data, text.title,  ' ');
+    this.appUser.openReportPopup(data, text.title, ' ');
   }
 
   actionWithPost(action: ActionType) {
@@ -140,22 +140,22 @@ export class PostCardComponent implements OnInit {
         () => {
           if (action === 'save' || action === 'unsave') {
             this.post.mapAction.saved = !this.post.mapAction.saved;
-            this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
+            this.messageService.add({ key: 'post-card', severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
           }
           else if (action === 'follow' || action === 'unfollow') {
             this.post.mapAction.follow = !this.post.mapAction.follow;
-            this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
+            this.messageService.add({ key: 'post-card', severity: 'success', summary: '', detail: this.translate.instant('status.success').toString() });
           }
           this.getPostValueWhenAction();
           this.generateMenu();
         },
         (err) => {
-          this.messageService.add({ severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });
+          this.messageService.add({ key: 'post-card', severity: 'error', summary: err.error, detail: this.translate.instant(`messageCode.${err.message_code}`) });
         }
       );
     }
     else {
-      this.messageService.add({ severity: 'error', summary: '', detail: 'Please login to countinue!' });
+      this.messageService.add({ key: 'post-card', severity: 'error', summary: '', detail: 'Please login to countinue!' });
       this.appUser.openLoginPopup();
       return;
     }

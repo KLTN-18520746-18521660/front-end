@@ -5,8 +5,8 @@
       <!-- <button icon="pi pi-plus" (click)="onClickCreate()" pButton pRipple label="Create user user" class="">
       </button> -->
     </div>
-    <p-table #dt dataKey="id" [value]="listUsers" [rowHover]="true" [rows]="25"
-      [showCurrentPageReport]="true" [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
+    <p-table #dt dataKey="id" [value]="listUsers" [rowHover]="true" [rows]="25" [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[25,50,100]" responsiveLayout="scroll" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
       [globalFilterFields]="['user_name','display_name','first_name','last_name','email']">
       <ng-template pTemplate="caption">
@@ -24,7 +24,6 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
           <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
           </th> -->
           <th pSortableColumn="display_name">Display name <p-sortIcon field="display_name"></p-sortIcon>
@@ -35,7 +34,11 @@
           </th>
           <th pSortableColumn="roles">Roles <p-sortIcon field="roles"></p-sortIcon>
           </th>
-          <th pSortableColumn="last_access_timestamp">Last Access <p-sortIcon field="last_access_timestamp"></p-sortIcon>
+          <th pSortableColumn="created_timestamp">Created <p-sortIcon field="created_timestamp">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="last_access_timestamp">Last Access <p-sortIcon field="last_access_timestamp">
+            </p-sortIcon>
           </th>
           <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
           </th>
@@ -44,21 +47,27 @@
       </ng-template>
       <ng-template pTemplate="body" let-user let-expanded="expanded">
         <tr>
-          <td>
-            <button type="button" pButton pRipple [pRowToggler]="user"
-              class="p-button-text p-button-rounded p-button-plain"
-              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-          </td>
           <!-- <td>{{user.id}}</td> -->
           <td>
-            <a class="flex align-items-center" [href]="'/user/' + user.user_name" target="_blank">
+            <div class="cursor-pointer inline-flex align-items-center" (click)="overlayUser.toggle($event)">
+              <p-overlayPanel styleClass="app-overlay" #overlayUser [dismissable]="true">
+                <ng-template pTemplate>
+                  <app-stringfy-object [object]="user"></app-stringfy-object>
+                </ng-template>
+              </p-overlayPanel>
               <app-avatar [user]="user"></app-avatar>
-              <span class="image-text ml-2">{{user.display_name}}</span>
+              <span class="image-text ml-2">{{user?.display_name}}</span>
+              <i class="pi pi-angle-down"></i>
+            </div>
+          </td>
+          <td>
+            <a class="flex align-items-center" [href]="'/user/' + user.user_name" target="_blank">
+              {{user.user_name}}
             </a>
           </td>
-          <td>{{user.user_name}}</td>
           <td>{{user.email}}</td>
           <td>{{user.roles}}</td>
+          <td pTooltip="{{user.created_timestamp | date : 'dd/MM/yyyy HH:mm z'}}">{{user.fromNow.created}}</td>
           <td pTooltip="{{user.last_access_timestamp | date : 'dd/MM/yyyy HH:mm z'}}">{{user.fromNow.updated}}</td>
           <td>
             <app-status-badge [translation]="false" [label]="user.status"></app-status-badge>
