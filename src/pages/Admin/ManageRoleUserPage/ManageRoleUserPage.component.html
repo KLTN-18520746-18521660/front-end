@@ -16,6 +16,8 @@
           </th>
           <th pSortableColumn="priority">Priority <p-sortIcon field="priority"></p-sortIcon>
           </th>
+          <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
+          </th>
           <th pSortableColumn="describe">Describe <p-sortIcon field="describe"></p-sortIcon>
           </th>
           <th>Action </th>
@@ -27,6 +29,9 @@
           <td>{{role.role_name}}</td>
           <td>{{role.display_name}}</td>
           <td>{{role.priority}}</td>
+          <td>
+            <app-status-badge [translation]="false" [label]="role.status"></app-status-badge>
+          </td>
           <td>{{role.describe}}</td>
           <td>
             <button pButton type="button" (click)="onClickEdit(role)" class="p-button-sm p-button-secondary" icon="pi pi-pencil"></button>

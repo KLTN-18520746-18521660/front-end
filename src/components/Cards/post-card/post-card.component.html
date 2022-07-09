@@ -29,7 +29,7 @@
       </div>
 
       <div class="card-content" [ngClass]="{ 'flex-order-0': isGrid }" [ngClass]="{ 'flex flex-wrap-reverse': isGrid }">
-        <div class="card-content-top p-2 inline">
+        <div class="card-content-top p-2">
           <app-tag [tag]="tag" [size]="'xs'" [color]="'bg-bluegray'" *ngFor="let tag of post?.tags"></app-tag>
         </div>
         <div class="card-content-main cursor-pointer">

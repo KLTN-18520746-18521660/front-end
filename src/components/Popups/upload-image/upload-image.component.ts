@@ -62,6 +62,7 @@ export class UploadImageComponent implements OnInit {
   }
 
   myUploader(event) {
+    this.url = null;
     if (this.uploadSubcription) {
       this.uploadSubcription.unsubscribe();
     }
@@ -101,6 +102,10 @@ export class UploadImageComponent implements OnInit {
         this.copied = false;
       }, 5000);
     }
+  }
+
+  onClear() {
+    this.url = null;
   }
 
   ngOnDestroy() {

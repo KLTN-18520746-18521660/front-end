@@ -40,7 +40,8 @@
     </admin-right-form>
   </ng-template>
 
-  <button type="submit" [loading]="isLoading" pButton pRipple label="Submit" class="w-full py-3 text-lg mt-3">
+  <button type="submit" *ngIf="role.status !== 'Readonly'" [loading]="isLoading" pButton pRipple label="Submit"
+    class="w-full py-3 text-lg mt-3">
   </button>
 
 </form>

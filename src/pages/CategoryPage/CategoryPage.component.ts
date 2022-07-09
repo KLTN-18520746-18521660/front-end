@@ -122,6 +122,7 @@ export class CategoryPageComponent implements OnInit {
   }
 
   onPaginate(event) {
+    window.scrollTo(0, 0);
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       ...(event.page == 0 ? { queryParams: { page: null } } : { queryParams: { page: event.page } }),

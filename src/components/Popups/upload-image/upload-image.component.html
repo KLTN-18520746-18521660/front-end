@@ -2,7 +2,7 @@
   <div class="">
     <p-messages [(value)]="message" [enableService]="false"></p-messages>
     <p-fileUpload name="myfile[]" class="{{className}}" [customUpload]="true" (uploadHandler)="myUploader($event)"
-      [disabled]="isUploading"
+      [disabled]="isUploading" (onClear)="onClear()"
       [invalidFileLimitMessageDetail]="'label.upload.error.invalidFileLimitMessageDetail' | translate"
       [invalidFileLimitMessageSummary]="'label.upload.error.invalidFileLimitMessageSummary' | translate"
       [invalidFileSizeMessageDetail]="'label.upload.error.invalidFileSizeMessageDetail' | translate"

@@ -89,7 +89,7 @@
 
   <ng-template pTemplate="footer">
     <button pButton pRipple type="button" label="{{'card.recommnedCard.changeStatus.cancel' | translate}}"
-      (click)="displayDialog = false" class="min-button-width p-button-outlined"></button>
+      (click)="displayDialog = false" class="min-button-width p-button-danger p-button-outlined"></button>
     <button pButton pRipple type="button" [disabled]="post.status === status" [loading]="isLoading"
       label="{{'card.recommnedCard.changeStatus.ok' | translate}}" (click)="onClickChangsStatus()"
       class="min-button-width p-button-raised"></button>

@@ -93,10 +93,15 @@ export class StatusBadgeComponent implements OnInit {
         color: 'gray-600',
         backgroundColor: 'bg-gray-100'
       },
-      Enaled: {
+      Enabled: {
         text: text.Enaled,
         color: 'blue-600',
         backgroundColor: 'bg-blue-100'
+      },
+      Readonly: {
+        text: text.Readonly,
+        color: 'orange-600',
+        backgroundColor: 'bg-orange-100'
       }
     }
 

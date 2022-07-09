@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
               window.location.reload();
               break;
             case 403:
-              if (req.url.includes('/api/admin')) {
+              if (req.url.includes('/api/admin') || req.url.includes('/admin')) {
                 this.router.navigate(['/admin/access-denied']);
                 break;
               }

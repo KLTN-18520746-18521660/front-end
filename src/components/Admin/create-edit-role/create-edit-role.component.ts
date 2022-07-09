@@ -132,7 +132,11 @@ export class CreateEditRoleComponent implements OnInit {
         (res) => {
           this.listRights = res.data.rights;
 
-          this.listRightControl = this.convertListRights(this.listRights);
+          const list = this.convertListRights(this.listRights);
+          this.listRightControl = list;
+          list.map((item) => {
+            this.onChange(item);
+          });
           this.isLoadingRights = false;
         }
       );

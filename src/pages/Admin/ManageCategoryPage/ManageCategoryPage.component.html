@@ -26,8 +26,8 @@
         <tr>
           <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
           </th>
-          <th pSortableColumn="parent_id">Parent Id <p-sortIcon field="parent_id"></p-sortIcon>
-          </th>
+          <!-- <th pSortableColumn="parent_id">Parent Id <p-sortIcon field="parent_id"></p-sortIcon>
+          </th> -->
           <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
           </th>
           <th>Thumnail
@@ -47,7 +47,7 @@
       <ng-template pTemplate="body" let-category>
         <tr>
           <td>{{category.id}}</td>
-          <td>{{category.parent_id}}</td>
+          <!-- <td>{{category.parent_id}}</td> -->
           <td>
             <a target="_blank" href="/c/{{category.name}}">{{category.name}}</a>
           </td>
