@@ -5,7 +5,6 @@ import { StatisticService } from 'services/admin/statistic.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import _ from 'lodash';
 
 export interface ChartPost {
@@ -78,7 +77,7 @@ export class StatisticPostPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.rangeDates = [minusDay(30), new Date()];
+    this.rangeDates = [minusDay(14), new Date()];
 
     //get date bettween 2 value in rangeDates
     this.range = getDiffDay(this.rangeDates[0], this.rangeDates[1], false);

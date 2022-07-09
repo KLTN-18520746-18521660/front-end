@@ -8,7 +8,7 @@
             <i class="pi pi-times-circle cursor-pointer" (click)="onClear()" *ngIf="showButton"></i>
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
               <input type="text" formControlName="search" class="shadow-1" pInputText (focus)="onFocus()"
-                (blur)="onBlur()"
+                (blur)="onBlur()" autofocus="{{autoFocus}}"
                 placeholder="{{userName ? ('label.searchWithName' | translate: { name: userName } ) : ('label.search' | translate)}}">
             </form>
           </span>

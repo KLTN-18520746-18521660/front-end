@@ -368,7 +368,7 @@ export class DetailPageComponent implements OnInit {
         color: 'p-button-secondary',
         style: 'p-button-rounded',
         command: () => {
-          window.open('sharing/share-offsite/?url=' + decodeURI(window.location.href), '_blank');
+          window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + decodeURI(window.location.href), '_blank');
         }
       },
       {

@@ -1,4 +1,4 @@
-<div class="card px-2 md:px-3 lg:px-4 manage-post-wrapper" *ngIf="!isLoading && !error">
+<div class="card px-2 md:px-3 lg:px-4 manage-post-wrapper" *ngIf="!isLoading">
   <p-table #dt [value]="listPosts" dataKey="id" responsiveLayout="scroll" [paginator]="true" [rowHover]="true"
     [loading]="isLoadingTable" [totalRecords]="totalRecords" [(selection)]="selectedPosts" [filters]="filters"
     (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll" (selectAllChange)="onSelectAllChange($event)"
@@ -237,8 +237,6 @@
 </div>
 
 <app-loading [loading]="isLoading"></app-loading>
-
-<app-NotFoundPage [visible]="error"></app-NotFoundPage>
 
 <p-toast [key]="'manage-post'" [preventOpenDuplicates]="true"></p-toast>
 

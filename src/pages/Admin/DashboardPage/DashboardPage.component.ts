@@ -30,7 +30,7 @@ export class DashboardPageComponent implements OnInit {
 
   getStatisticPostSubscription: Subscription;
 
-  timeStatisticPost: number = 7;
+  timeStatisticPost: number = 1;
   timeStatisticPosts: number[] = [-1, 1, 7, 14, 30, 60];
 
   constructor(

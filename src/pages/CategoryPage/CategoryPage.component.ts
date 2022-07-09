@@ -31,7 +31,7 @@ export class CategoryPageComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  PAGE_SIZE = APPCONSTANT.DEFAULT_PAGE_SIZE;
+  PAGE_SIZE: number;
 
   totalPosts: number = 0;
 
@@ -63,6 +63,7 @@ export class CategoryPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.PAGE_SIZE = APPCONSTANT.DEFAULT_PAGE_SIZE;
     this.categoryID = this.activatedRoute.snapshot.params.id || null;
 
     this.currentPage = this.activatedRoute.snapshot.queryParams.page || 1;
@@ -94,6 +95,8 @@ export class CategoryPageComponent implements OnInit {
 
   getPosts(page: number) {
     this.isLoadingPost = true;
+    this.totalPosts = 0;
+    this.listPosts = [];
 
     if (this.getPostSubcription) {
       this.getPostSubcription.unsubscribe();

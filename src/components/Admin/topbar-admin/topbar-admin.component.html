@@ -13,7 +13,7 @@
 
   <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
     <ng-template [ngIf]="isLoggedin">
-      <div class="user-info flex align-items-center cursor-pointer" (click)="menu.toggle($event)">
+      <div class="user-info flex align-items-center cursor-pointer" (click)="items.length > 0 && menu.toggle($event)">
         <p class="font-medium text-md mb-0 mr-2">{{ admin?.display_name }}</p>
         <app-avatar [user]="admin"></app-avatar>
       </div>

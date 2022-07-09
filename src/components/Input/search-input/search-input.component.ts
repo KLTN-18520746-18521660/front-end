@@ -26,6 +26,8 @@ export class SearchInputComponent implements OnInit {
 
   @Input() showPopular: boolean = true;
 
+  @Input() autoFocus: boolean = true;
+
   form: FormGroup;
 
   popularTags: Tag[] = [];

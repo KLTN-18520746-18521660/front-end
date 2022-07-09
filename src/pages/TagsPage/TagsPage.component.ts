@@ -21,7 +21,6 @@ import { mapActionWithTag } from 'utils/commonFunction';
 })
 export class TagsPageComponent implements OnInit {
 
-
   tagID: string;
 
   tag: Tag;
@@ -95,6 +94,8 @@ export class TagsPageComponent implements OnInit {
 
   getPosts(page: number) {
     this.isLoadingPost = true;
+    this.totalPosts = 0;
+    this.listPosts = [];
 
     if (this.getPostSubcription) {
       this.getPostSubcription.unsubscribe();

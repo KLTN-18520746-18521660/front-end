@@ -38,8 +38,6 @@ export class ManagePostsPageComponent implements OnInit {
 
   isLoadingDialog: boolean = false;
 
-  error: boolean = false;
-
   listPosts: Post[];
 
   selectedPosts: Post[] = [];
@@ -186,7 +184,6 @@ export class ManagePostsPageComponent implements OnInit {
           summary: err.error,
           detail: err.message
         });
-        this.error = true;
       }
     );
   }
@@ -230,7 +227,6 @@ export class ManagePostsPageComponent implements OnInit {
           summary: err.error,
           detail: err.message
         });
-        this.error = true;
       }
     );
   }
