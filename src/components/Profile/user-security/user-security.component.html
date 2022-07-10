@@ -4,8 +4,9 @@
   </div>
   <div>
     <button pRipple pButton type="button" label="{{'label.security.logoutAll' | translate}}" class="p-button-danger"
-      [disabled]="listSession.length == 1" icon="pi pi-sign-out" [loading]="isLoadingDeleteAll"
-      (click)="deleteAll()"></button>
+      [disabled]="listSession.length == 1 || isLoading" icon="pi pi-sign-out" [loading]="isLoadingDeleteAll"
+      (click)="deleteAll()">
+    </button>
   </div>
 </div>
 <p class="text-sm px-2">{{'label.security.description' | translate}}</p>

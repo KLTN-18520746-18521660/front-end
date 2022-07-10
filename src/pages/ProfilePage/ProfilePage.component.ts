@@ -48,7 +48,7 @@ export class ProfilePageComponent implements OnInit {
     //   this.router.navigate(['/auth/login']);
     // }
 
-    this.labelHeader = this.title.getTitle().split('-')[0];
+    this.labelHeader = this.title.getTitle().split('|')[0];
     this.config = this.configService.config;
     this.configSubscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
@@ -64,7 +64,7 @@ export class ProfilePageComponent implements OnInit {
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.labelHeader = this.title.getTitle().split('-')[0];;
+        this.labelHeader = this.title.getTitle().split('|')[0];;
       });
 
     this.userService.updateUserStatistic();

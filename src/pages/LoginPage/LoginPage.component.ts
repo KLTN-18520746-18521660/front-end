@@ -130,7 +130,12 @@ export class LoginPageComponent implements OnInit {
             }
             else {
               setTimeout(() => {
-                this.router.navigateByUrl(decodeURIComponent(this.userService.history[0] || '/'));
+                if (this.userService.history[0]) {
+                  this.router.navigateByUrl(decodeURIComponent(this.userService.history[0] || '/'));
+                }
+                else {
+                  this.router.navigateByUrl(decodeURIComponent(window.location.pathname));
+                }
               }, APPCONSTANT.LOADING_TIMEOUT);
             }
           }
