@@ -35,8 +35,8 @@
     "copy": "Copy"
   },
   "titlePage": {
-    "prefix": "",
-    "suffix": " - oOwlet, the social media platform for the all-round developer and everyone",
+    "prefix": "oOwlet Blog",
+    "suffix": " | oOwlet, the social media platform for the all-round developer and everyone",
     "home": "Home",
     "post": "Post",
     "postdetail": "Post Detail",

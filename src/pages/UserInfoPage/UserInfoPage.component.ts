@@ -9,6 +9,7 @@ import { PostsService } from 'services/posts.service';
 import Post from 'models/post.model';
 import User from 'models/user.model';
 import { ReportSendModel, ReportType } from 'models/report.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-UserInfoPage',
@@ -38,6 +39,7 @@ export class UserInfoPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private appUser: AppUserComponent,
     private translate: TranslateService,
+    private title: Title,
   ) { }
 
   ngOnInit() {
@@ -53,8 +55,8 @@ export class UserInfoPageComponent implements OnInit {
     );
   }
 
-  getUserInfo() {
-    this.isLoadingUser = true;
+  getPosts() {
+    this.isLoadingPost = true;
     const params = {
     }
 
@@ -70,11 +72,12 @@ export class UserInfoPageComponent implements OnInit {
     );
   }
 
-  getPosts() {
-    this.isLoadingPost = true;
+  getUserInfo() {
+    this.isLoadingUser = true;
     this.getPostSubscription = this.postService.getUserByUsername(this.user_name).subscribe(
       (res) => {
         this.user = res.data.user;
+        this.title.setTitle(res.data.user.display_name + " | " + this.translate.instant('titlePage.prefix'));
         this.user.mapAction = this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
         this.isLoadingUser = false;
       },
