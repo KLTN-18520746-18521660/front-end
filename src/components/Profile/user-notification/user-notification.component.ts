@@ -53,7 +53,7 @@ export class UserNotificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.viewOnlyUnRead = this.activatedRoute.snapshot.queryParams?.view === 'read';
+    this.viewOnlyUnRead = this.activatedRoute.snapshot.queryParams?.view === 'unread';
 
     this.sizeUnread = this.userService.user?.unread_notifications || 0;
 
@@ -61,10 +61,10 @@ export class UserNotificationComponent implements OnInit {
       (user) => {
         this.sizeUnread = user?.unread_notifications || 0;
         if (this.sizeUnread > 0) {
-          this.title.setTitle(`(${this.sizeUnread}) ${this.translate.instant('notification.title')}`);
+          this.title.setTitle(`(${this.sizeUnread}) ${this.translate.instant('notification.title')}` + this.translate.instant('titlePage.suffix'));
         }
         else {
-          this.title.setTitle(this.translate.instant('notification.title'));
+          this.title.setTitle(this.translate.instant('notification.title') + this.translate.instant('titlePage.suffix'));
         }
       }
     );
@@ -111,6 +111,7 @@ export class UserNotificationComponent implements OnInit {
   }
 
   onClickMarkAllAsRead() {
+    this.isLoading = true;
     this.postService.readAllNotification().subscribe(
       () => {
         this.messageService.add({
@@ -119,7 +120,13 @@ export class UserNotificationComponent implements OnInit {
           summary: '',
           detail: this.translate.instant('notification.markAllReadSuccess')
         });
-        this.listNotifications = this.listNotifications.filter(item => item.status === 'Sent');
+        this.sizeUnread = 0;
+        this.listNotifications = this.listNotifications.map(item => {
+          item.status = 'Read';
+          item.read = true;
+          return item;
+        });
+        this.isLoading = false;
       }
     );
   }

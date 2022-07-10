@@ -102,6 +102,12 @@ export class AdminService {
     }));
   }
 
+  deleteAllSessionAdmin(): Observable<ApiResult> {
+    return this.http.post(BASE_URL + REST_URL.ADMIN.DELETE_ALL_SESSION, this.httpOptions()).pipe(catchError(error => {
+      return throwError(handleError(error));
+    }));
+  }
+
   authAdminUpdate = new Subject<AuthUpdateUser>();
 
   authAdminUpdate$ = this.authAdminUpdate.asObservable();

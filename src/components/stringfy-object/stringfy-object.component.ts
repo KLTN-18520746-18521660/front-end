@@ -19,7 +19,7 @@ export class StringfyObjectComponent implements OnInit {
       indent: '   ',
       singleQuotes: false,
     });
-    console.log(this.stringfy);
+    // console.log(this.stringfy);
   }
 
 }

@@ -253,14 +253,14 @@ export class DetailPageComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
         }
       },
-      {
-        id: 'share',
-        label: this.translate.instant('postDetail.action.share'),
-        icon: 'pi pi-share-alt',
-        command: (event) => {
-          console.log(event);
-        }
-      },
+      // {
+      //   id: 'share',
+      //   label: this.translate.instant('postDetail.action.share'),
+      //   icon: 'pi pi-share-alt',
+      //   command: (event) => {
+      //     console.log(event);
+      //   }
+      // },
       {
         id: 'report',
         label: this.translate.instant('postDetail.action.report'),
@@ -556,7 +556,7 @@ export class DetailPageComponent implements OnInit {
         color: 'p-button-secondary',
         style: 'p-button-rounded' + (!post.mapAction.visited ? ' p-button-outlined' : ''),
         command: (item) => {
-          console.log(item);
+          // console.log(item);
         }
       },
       {

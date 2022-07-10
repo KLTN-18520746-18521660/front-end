@@ -1,4 +1,13 @@
-<h3>All devices you already login</h3>
+<div class="flex justify-content-between my-3 mx-2">
+  <div>
+    <h3>All devices you already login</h3>
+  </div>
+  <div>
+    <button pRipple pButton type="button" label="{{'label.security.logoutAll' | translate}}" class="p-button-danger"
+      [disabled]="listSession.length == 1" icon="pi pi-sign-out" [loading]="isLoadingDeleteAll"
+      (click)="deleteAll()"></button>
+  </div>
+</div>
 <div class="grid col-12">
   <ng-template [ngIf]="!isLoading" [ngIfElse]="loadingBlock">
     <div class="col-12 md:col-6 lg:col-6 xl:col-4" *ngFor="let item of listSession">

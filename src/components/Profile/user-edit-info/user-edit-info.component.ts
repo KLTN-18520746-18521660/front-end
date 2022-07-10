@@ -207,7 +207,7 @@ export class UserEditInfoComponent implements OnInit {
         const data = getDifferenceObject(this.initData, this.form.value) as any;
         // this.submitted = true;
     
-        console.log(data);
+        // console.log(data);
         if (this.isSelect) {
           this.fileUpload.upload();
         }

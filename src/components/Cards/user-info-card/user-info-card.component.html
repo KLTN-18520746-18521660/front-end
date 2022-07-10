@@ -52,7 +52,7 @@
         <div class="col-12 md:col-12" *ngIf="showButtonFollow">
           <button pRipple pButton type="button"
             label="{{(user?.mapAction?.follow ? 'common.following' : 'common.follow') | translate}}"
-            [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'p-button-primary w-full'"
+            [ngClass]="user?.mapAction?.follow ? 'p-button-outlined w-full' : 'w-full'"
             pTooltip="{{(user?.mapAction?.follow ? 'common.clickUnfollow' : 'common.clickFollow') | translate}}"
             tooltipPosition="top" [icon]="user?.mapAction?.follow ? 'pi pi-check-circle' : ''" [loading]="isLoading"
             (click)="onClickFollow()">

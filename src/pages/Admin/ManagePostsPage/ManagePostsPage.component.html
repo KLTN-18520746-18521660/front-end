@@ -197,10 +197,10 @@
         <button *ngIf="currentPost.status === 'Approved' && currentPost.have_pending_content" pButton pRipple
           type="button" (click)="onClickApprove(currentPost.id)" label="Approve Pending Content"
           class="p-button-outlined mr-2" icon="pi pi-check"></button>
-        <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
-          (click)="onClickReject(currentPost.id)" label="Reject" class="p-button-outlined p-button-danger mr-2"
+        <button *ngIf="currentPost.status !== 'Rejected'" pButton pRipple type="button"
+          (click)="onClickReject(currentPost.id)" label="Reject" class="p-button-danger mr-2"
           icon=""></button>
-        <button *ngIf="currentPost.status === 'Pending'" pButton pRipple type="button"
+        <button *ngIf="currentPost.status !== 'Approved'" pButton pRipple type="button"
           (click)="onClickApprove(currentPost.id)" label="Approve" class="p-button-raised p-button-success"
           icon="pi pi-check"></button>
       </div>

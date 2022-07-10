@@ -78,7 +78,7 @@ export class NotificationCardComponent implements OnInit {
     this.deleteSubscription = this.postService.deleteNotification(this.notification.id).subscribe(
       () => {
         this.messageService.add({
-          key: 'notification',
+          key: 'notification-card' + this.notification.id,
           severity: 'success',
           summary: '',
           detail: this.translate.instant('notification.deleteSuccess')
@@ -114,7 +114,7 @@ export class NotificationCardComponent implements OnInit {
                   unread_notifications: this.userService.user?.unread_notifications + 1 || 0
                 });
                 this.messageService.add({
-                  key: 'appToast',
+                  key: 'notification-card' + this.notification.id,
                   severity: 'success',
                   summary: '',
                   detail: this.translate.instant('notification.markReadSuccess')
@@ -148,7 +148,7 @@ export class NotificationCardComponent implements OnInit {
                   unread_notifications: this.userService.user?.unread_notifications - 1 || 0
                 });
                 this.messageService.add({
-                  key: 'appToast',
+                  key: 'notification-card' + this.notification.id,
                   severity: 'success',
                   summary: '',
                   detail: this.translate.instant('notification.markReadSuccess')

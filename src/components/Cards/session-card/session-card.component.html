@@ -16,7 +16,7 @@
               {{'profile.security.session.created' | translate}} <b>{{session.fromNow.created}}</b>
             </span>
           </li>
-          <li class="my-2">
+          <li class="my-2" *ngIf="session.saved">
             <span><b>{{'profile.security.session.savePassword' | translate}}</b></span>
           </li>
           <li class="my-2">

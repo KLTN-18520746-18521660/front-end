@@ -36,6 +36,8 @@
       </div>
     </div>
   </div>
+
+  <p-toast [key]="'notification-card' + notification.id" [preventOpenDuplicates]="true"></p-toast>
 </ng-template>
 
 <ng-template #loadingCard>
@@ -61,5 +63,3 @@
     </div>
   </div>
 </ng-template>
-
-<p-toast [key]="'notification'" [preventOpenDuplicates]="true"></p-toast>

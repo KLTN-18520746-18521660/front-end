@@ -1,4 +1,4 @@
-<div class="user-notification-wrapper flex flex-wrap p-0 md:p-3" infiniteScroll [infiniteScrollDistance]="1"
+<div class="user-notification-wrapper flex flex-wrap justify-content-center p-0 md:p-3" infiniteScroll [infiniteScrollDistance]="1"
   [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
   <div class="col-12">
     <h5>{{'notification.title' | translate}}</h5>
@@ -34,11 +34,10 @@
   </ng-template>
 
   <ng-template [ngIf]="!isLoading && listNotifications.length == 0">
-    <div class="col-12">
-      <p class="text-center font-semibold text-lg text-700 py-6">{{'notification.noNotification' | translate}}</p>
+    <div class="col-8 md:col-6">
+      <app-empty [visible]="true" [title]="'notification.noNotification' | translate"></app-empty>
     </div>
   </ng-template>
 </div>
-
 
 <p-toast [key]="'notification'" [preventOpenDuplicates]="true"></p-toast>

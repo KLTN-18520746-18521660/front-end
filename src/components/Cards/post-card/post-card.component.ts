@@ -102,14 +102,14 @@ export class PostCardComponent implements OnInit {
           this.messageService.add({ key: 'post-card', severity: 'success', summary: '', detail: this.translate.instant('message.copied') });
         }
       },
-      {
-        id: 'share',
-        label: this.translate.instant('card.action.share'),
-        icon: 'pi pi-share-alt',
-        command: (event) => {
-          console.log(event);
-        }
-      },
+      // {
+      //   id: 'share',
+      //   label: this.translate.instant('card.action.share'),
+      //   icon: 'pi pi-share-alt',
+      //   command: (event) => {
+      //     console.log(event);
+      //   }
+      // },
       ...(!this.post.mapAction.report ? [{
         id: 'report',
         label: this.translate.instant('card.action.report'),

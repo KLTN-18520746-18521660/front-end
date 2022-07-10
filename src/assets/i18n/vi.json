@@ -157,6 +157,12 @@
       "yes": "Đăng xuất",
       "no": "Hủy"
     },
+    "logoutAll": {
+      "header": "Đăng xuất tất cả",
+      "title": "Bạn có chắc chắn muốn đăng xuất tất cả các thiết bị khác?",
+      "yes": "Đăng xuất tất cả",
+      "no": "Hủy"
+    },
     "unsavechange": {
       "header": "Xác nhận hủy lưu",
       "title": "Bạn chưa lưu thay đổi. Thay đổi của bạn sẽ bị mất nếu bạn không lưu chúng. Nhấn Hủy để quay lại và lưu chúng.",
@@ -550,7 +556,7 @@
       "session": {
         "title": "Thiết bị đang đăng nhập",
         "location": "Địa điểm",
-        "created": "Thời gian đăng nhập",
+        "created": "Đăng nhập vào",
         "lastAccess": "Thời gian truy cập gần nhất",
         "logout": "Đăng xuất",
         "delete": "Xóa",

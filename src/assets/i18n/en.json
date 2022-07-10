@@ -157,6 +157,12 @@
       "yes": "Log Out",
       "no": "Cancel"
     },
+    "logoutAll": {
+      "header": "Log out all devices?",
+      "title": "Are you sure you want to logout all devices?",
+      "yes": "Yes, Log Out All",
+      "no": "Cancel"
+    },
     "unsavechange": {
       "header": "Unsave changes?",
       "title": "You have unsaved changes. Your changes will be lost if you don't save them. Press Cancel to go back and save these changes.",
@@ -550,7 +556,7 @@
       "session": {
         "title": "Session",
         "location": "Location",
-        "created": "Created",
+        "created": "Logged in",
         "lastAccess": "Last access",
         "logout": "Logout",
         "delete": "Delete",

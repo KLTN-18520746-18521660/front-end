@@ -60,6 +60,7 @@ export const REST_URL = {
 
     SESSION: 'admin/session',
     EXTEND_SESSION: 'admin/session/extension',
+    DELETE_ALL_SESSION: 'admin/session/removeall',
 
     CONFIG: 'admin/config',
     RELOAD_CONFIG: 'admin/config/reload',
