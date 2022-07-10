@@ -30,7 +30,7 @@ export class UserInfoPageComponent implements OnInit {
 
   getPostSubscription: Subscription;
 
-  showButtonAction: boolean = false;
+  showButtonAction: boolean = true;
 
   constructor(
     private postService: PostsService,
@@ -46,8 +46,8 @@ export class UserInfoPageComponent implements OnInit {
         this.user_name = params.username;
         this.getUserInfo();
         this.getPosts();
-        if (this.userService.user && this.userService.user.user_name !== this.user_name) {
-          this.showButtonAction = true;
+        if (this.userService.user && this.userService.user.user_name === this.user_name) {
+          this.showButtonAction = false;
         }
       }
     );

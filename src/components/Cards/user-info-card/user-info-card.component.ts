@@ -25,7 +25,7 @@ export class UserInfoCardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  showButtonFollow: boolean = false;
+  showButtonFollow: boolean = true;
 
   constructor(
     private userService: UserService,
@@ -56,8 +56,8 @@ export class UserInfoCardComponent implements OnInit {
 
         this.user.mapAction = mapActionWithUser(res.data.user.actions || []);
 
-        if (this.userService.user && this.userService.user.user_name !== this.user_name) {
-          this.showButtonFollow = true;
+        if (this.userService.user && this.userService?.user?.user_name === this.user_name) {
+          this.showButtonFollow = false;
         }
         this.isLoading = false;
       },
